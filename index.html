@@ -34,7 +34,7 @@
     background:var(--bg);
     color:var(--off-white);
     font-family:'IBM Plex Mono', monospace;
-    height:100dvh;
+    height:calc(var(--vh, 1vh) * 100);
     display:flex;
     justify-content:center;
   }
@@ -46,7 +46,6 @@
     display:flex;
     flex-direction:column;
     padding:env(safe-area-inset-top,10px) 16px 0;
-    padding-bottom:var(--navh, 60px);
     min-height:0;
   }
 
@@ -297,14 +296,15 @@
 
   /* ---------- BOTTOM NAV ---------- */
   .bottomnav{
-    position:fixed;
-    left:0; right:0; bottom:0;
-    max-width:460px; margin:0 auto;
+    flex-shrink:0;
     display:flex;
     border-top:1px solid rgba(242,240,236,0.12);
     padding-bottom:env(safe-area-inset-bottom,4px);
     background:var(--bg-nav);
-    z-index:20;
+    margin:0 -16px;
+    padding-left:16px;
+    padding-right:16px;
+    width:calc(100% + 32px);
   }
   .nav-btn{
     flex:1;
@@ -1105,24 +1105,27 @@ navBtns.forEach(btn=>{
   });
 });
 
-function syncNavHeight(){
-  const navH = document.querySelector(".bottomnav").offsetHeight;
-  document.documentElement.style.setProperty("--navh", navH + "px");
+/* Measure the real, visible viewport height in pixels (window.innerHeight),
+   which is far more reliable across browsers/embedded webviews (Instagram,
+   etc.) than the CSS dvh/vh units, which some of them compute incorrectly. */
+function setRealVH(){
+  document.documentElement.style.setProperty("--vh", window.innerHeight + "px");
 }
 
 setFavs(getFavs());
 calibrateSharedFontSize();
-syncNavHeight();
+setRealVH();
 if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); syncNavHeight(); });
+  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); });
 }
 window.addEventListener("resize", ()=>{
+  setRealVH();
   calibrateSharedFontSize();
-  syncNavHeight();
   if(views.card.classList.contains("showing")){
     document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
   }
 });
+window.addEventListener("orientationchange", setRealVH);
 </script>
 </body>
 </html>
