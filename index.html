@@ -59,7 +59,7 @@
   .topbar .k1{
     font-size:10px;
     letter-spacing:0.16em;
-    color:rgba(242,240,236,0.55);
+    color:var(--off-white);
   }
   .topbar .k2{
     font-family:'Fraunces', serif;
@@ -154,7 +154,7 @@
   .home-note{
     margin-top:12px;
     font-size:11px;
-    color:rgba(242,240,236,0.55);
+    color:var(--off-white);
     text-align:center;
     line-height:1.5;
     flex-shrink:0;
@@ -176,11 +176,6 @@
     padding:14px 14px 12px;
     box-shadow:0 12px 24px rgba(28,37,65,0.16);
     position:relative;
-  }
-  .card::before{
-    content:"";
-    position:absolute; top:7px; left:7px; right:7px; bottom:7px;
-    border:1px dashed var(--line); border-radius:9px; pointer-events:none;
   }
   .card-head{
     flex-shrink:0;
@@ -246,7 +241,7 @@
   #themesView .list-head, #favView .list-head{
     flex-shrink:0; margin-bottom:8px;
   }
-  .list-head .card-num{ color:rgba(242,240,236,0.55); }
+  .list-head .card-num{ color:var(--off-white); }
   .list-head .card-title{ font-size:17px; color:var(--off-white); }
   .grid-list{
     flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
@@ -256,7 +251,13 @@
     align-content:start;
     font-size:14px;
     padding-bottom:4px;
+    padding-right:4px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(242,240,236,0.35) transparent;
   }
+  .grid-list::-webkit-scrollbar{ width:5px; }
+  .grid-list::-webkit-scrollbar-track{ background:transparent; }
+  .grid-list::-webkit-scrollbar-thumb{ background:rgba(242,240,236,0.35); border-radius:4px; }
   .tile{
     background:var(--paper-dark);
     border:1.5px solid var(--ink);
@@ -277,7 +278,13 @@
     display:flex; flex-direction:column; justify-content:flex-start; gap:6px;
     font-size:14px;
     padding-bottom:4px;
+    padding-right:4px;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(242,240,236,0.35) transparent;
   }
+  .fav-list::-webkit-scrollbar{ width:5px; }
+  .fav-list::-webkit-scrollbar-track{ background:transparent; }
+  .fav-list::-webkit-scrollbar-thumb{ background:rgba(242,240,236,0.35); border-radius:4px; }
   .fav-row{
     display:flex; justify-content:space-between; align-items:center;
     background:var(--paper-dark); border:1.5px solid var(--ink); border-radius:9px;
@@ -286,7 +293,7 @@
   .fav-row .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; }
   .fav-row .count{ font-size:0.72em; color:var(--ink-soft); }
   .fav-empty{
-    text-align:center; color:rgba(242,240,236,0.55); font-size:12.5px; line-height:1.6;
+    text-align:center; color:var(--off-white); font-size:12.5px; line-height:1.6;
     margin:auto; padding:0 10px;
   }
 
@@ -303,13 +310,13 @@
     display:flex; flex-direction:column; align-items:center; gap:3px;
     background:none; border:none; padding:9px 4px 6px;
     font-family:'IBM Plex Mono', monospace;
-    font-size:10px; letter-spacing:0.02em;
-    color:rgba(242,240,236,0.6);
+    font-size:10px; letter-spacing:0.02em; font-weight:500;
+    color:var(--off-white);
     cursor:pointer;
   }
-  .nav-btn svg{ width:19px; height:19px; }
-  .nav-btn.active{ color:var(--off-white); }
-  .nav-btn.active svg{ stroke-width:2.1; }
+  .nav-btn svg{ width:19px; height:19px; stroke-width:1.5; }
+  .nav-btn.active{ color:var(--off-white); font-weight:700; }
+  .nav-btn.active svg{ stroke-width:2.2; }
 </style>
 </head>
 <body>
@@ -939,7 +946,8 @@ const drawBtn = document.getElementById("drawBtn");
 function showView(name){
   Object.values(views).forEach(v=>v.classList.remove("showing"));
   views[name].classList.add("showing");
-  navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===name));
+  const activeTab = name === "card" ? ctx.origin : name;
+  navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===activeTab));
 }
 
 function pickRandom(pool){
