@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Carnet d'Anglais</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Carnet d'Anglais">
+<meta name="theme-color" content="#F5F2EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE7D9;
+    --paper-dark:#E2DAC7;
+    --ink:#1C2541;
+    --ink-soft:#3B4368;
+    --stamp:#A32F1F;
+    --airmail:#2B4C7E;
+    --line:rgba(28,37,65,0.16);
+    --gold:#B8862E;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(28,37,65,0.035) 0, transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(163,47,31,0.035) 0, transparent 45%);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    height:100dvh;
+    display:flex;
+    justify-content:center;
+  }
+
+  .shell{
+    width:100%;
+    max-width:460px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    padding:env(safe-area-inset-top,10px) 16px 0;
+    min-height:0;
+  }
+
+  /* ---------- HEADER ---------- */
+  .topbar{
+    flex-shrink:0;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:6px 2px 10px;
+  }
+  .topbar .k1{
+    font-size:10px;
+    letter-spacing:0.16em;
+    color:var(--ink-soft);
+  }
+  .topbar .k2{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink);
+  }
+
+  /* ---------- MAIN CONTENT AREA ---------- */
+  .content{
+    flex:1;
+    min-height:0;
+    position:relative;
+    overflow:hidden;
+  }
+  .view{
+    position:absolute;
+    inset:0;
+    margin:4px 3px 16px;
+    display:none;
+    flex-direction:column;
+    min-height:0;
+  }
+  .view.showing{ display:flex; }
+
+  /* ---------- HOME / STACK ---------- */
+  #homeView{ align-items:center; justify-content:center; gap:0; }
+  .stack-wrap{
+    position:relative;
+    width:44%;
+    max-width:190px;
+    aspect-ratio:0.82;
+    margin-bottom:6%;
+    flex-shrink:1;
+  }
+  .stub{
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+    border:1.5px solid var(--ink);
+    background:var(--paper-dark);
+    box-shadow:0 10px 18px rgba(28,37,65,0.14);
+  }
+  .stub.s3{ transform:rotate(7deg) translate(4px,2px); }
+  .stub.s2{ transform:rotate(-5deg) translate(-3px,4px); }
+  .stub.s1{ display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .stub.s1 .stripes{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(-45deg,
+      var(--paper-dark) 0 10px, var(--paper-dark) 10px 10px,
+      var(--stamp) 10px 16px, var(--paper-dark) 16px 26px, var(--paper-dark) 26px 26px,
+      var(--airmail) 26px 32px, var(--paper-dark) 32px 42px);
+    -webkit-mask-image:linear-gradient(#000 0,#000 14px,transparent 14px,transparent calc(100% - 14px),#000 calc(100% - 14px));
+    mask-image:linear-gradient(#000 0,#000 14px,transparent 14px,transparent calc(100% - 14px),#000 calc(100% - 14px));
+    opacity:0.9;
+  }
+  .stub.s1 .compass{
+    position:relative; z-index:2;
+    width:34%; height:34%;
+    border-radius:50%;
+    border:1.5px solid var(--ink);
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-style:italic; font-weight:700;
+    font-size:clamp(16px,7vw,26px);
+    color:var(--ink);
+  }
+  .stack-wrap.shuffle .s1{ animation:shuffle1 .55s ease; }
+  .stack-wrap.shuffle .s2{ animation:shuffle2 .55s ease; }
+  .stack-wrap.shuffle .s3{ animation:shuffle3 .55s ease; }
+  @keyframes shuffle1{0%{transform:rotate(0) translate(0,0);}35%{transform:rotate(-10deg) translate(-14px,-10px) scale(1.02);}70%{transform:rotate(6deg) translate(10px,-6px);}100%{transform:rotate(0) translate(0,0);}}
+  @keyframes shuffle2{0%{transform:rotate(-5deg) translate(-3px,4px);}35%{transform:rotate(10deg) translate(12px,-4px);}70%{transform:rotate(-8deg) translate(-8px,2px);}100%{transform:rotate(-5deg) translate(-3px,4px);}}
+  @keyframes shuffle3{0%{transform:rotate(7deg) translate(4px,2px);}35%{transform:rotate(-9deg) translate(-10px,-2px);}70%{transform:rotate(9deg) translate(8px,4px);}100%{transform:rotate(7deg) translate(4px,2px);}}
+
+  .draw-btn{
+    width:100%;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    border-radius:10px;
+    padding:15px 18px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.05em;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .draw-btn:active{ transform:translateY(1px); }
+  .draw-btn:disabled{ opacity:0.55; }
+  .home-note{
+    margin-top:12px;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+    line-height:1.5;
+    flex-shrink:0;
+  }
+  .home-note b{ color:var(--ink); }
+  #homeView .draw-btn, #homeView .home-note{ width:88%; }
+
+  /* ---------- CARD VIEW ---------- */
+  #cardView.showing{ animation:flipin .4s cubic-bezier(.2,.7,.3,1); }
+  @keyframes flipin{0%{opacity:0;transform:rotateY(70deg) scale(.95);}100%{opacity:1;transform:rotateY(0) scale(1);}}
+  .card{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    background:var(--paper-dark);
+    border:1.5px solid var(--ink);
+    border-radius:14px;
+    padding:14px 14px 12px;
+    box-shadow:0 12px 24px rgba(28,37,65,0.16);
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute; top:7px; left:7px; right:7px; bottom:7px;
+    border:1px dashed var(--line); border-radius:9px; pointer-events:none;
+  }
+  .card-head{
+    flex-shrink:0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:8px;
+  }
+  .card-num{ font-size:10px; color:var(--ink-soft); letter-spacing:0.07em; }
+  .card-title{
+    font-family:'Fraunces', serif; font-weight:700; font-style:italic;
+    font-size:19px; margin-top:1px; color:var(--ink);
+  }
+  .star-btn{ background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft); }
+  .star-btn svg{ width:20px; height:20px; }
+  .star-btn.active{ color:var(--gold); }
+  .star-btn.active svg{ fill:var(--gold); }
+
+  .items{
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:0.4em;
+    font-size:19px;
+  }
+  .item{
+    padding:0.42em 0.1em 0.58em;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .item:last-child{ border-bottom:none; }
+  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.3em; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink); }
+  .pair .en{
+    display:inline-block;
+    font-family:'IBM Plex Sans', sans-serif; font-size:0.92em; font-weight:600;
+    color:var(--paper);
+    background:var(--ink);
+    padding:0.22em 0.55em;
+    border-radius:6px;
+    line-height:1.25;
+  }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:rgba(28,37,65,0.7); margin-top:0.28em; }
+
+  .card-actions{
+    flex-shrink:0;
+    display:flex; gap:8px; margin-top:10px;
+  }
+  .btn-ghost{
+    flex:1; background:rgba(28,37,65,0.09); border:2px solid var(--ink); color:var(--ink);
+    border-radius:9px; padding:10.5px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+  }
+  .btn-solid{
+    flex:1.3; background:var(--ink); border:1.5px solid var(--ink); color:var(--paper);
+    border-radius:9px; padding:11px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+  }
+  .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
+
+  /* ---------- THEMES VIEW ---------- */
+  #themesView .list-head, #favView .list-head{
+    flex-shrink:0; margin-bottom:8px;
+  }
+  .list-head .card-title{ font-size:17px; }
+  .grid-list{
+    flex:1; min-height:0; overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    align-content:center;
+  }
+  .tile{
+    background:var(--paper-dark);
+    border:1.5px solid var(--ink);
+    border-radius:9px;
+    padding:0.55em 0.6em;
+    display:flex; flex-direction:column; justify-content:center;
+    cursor:pointer;
+  }
+  .tile .name{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
+    line-height:1.2;
+  }
+  .tile .count{ font-size:0.72em; color:var(--ink-soft); margin-top:0.15em; }
+
+  /* ---------- FAVORITES VIEW ---------- */
+  .fav-list{
+    flex:1; min-height:0; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center; gap:6px;
+  }
+  .fav-row{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--paper-dark); border:1.5px solid var(--ink); border-radius:9px;
+    padding:0.6em 0.8em; cursor:pointer; flex-shrink:0;
+  }
+  .fav-row .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; }
+  .fav-row .count{ font-size:0.72em; color:var(--ink-soft); }
+  .fav-empty{
+    text-align:center; color:var(--ink-soft); font-size:12.5px; line-height:1.6;
+    margin:auto; padding:0 10px;
+  }
+
+  /* ---------- BOTTOM NAV ---------- */
+  .bottomnav{
+    flex-shrink:0;
+    display:flex;
+    border-top:1.5px solid var(--ink);
+    padding-bottom:env(safe-area-inset-bottom,8px);
+    background:var(--paper);
+  }
+  .nav-btn{
+    flex:1;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; padding:9px 4px 6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:0.02em;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .nav-btn svg{ width:19px; height:19px; }
+  .nav-btn.active{ color:var(--ink); }
+  .nav-btn.active svg{ stroke-width:2.1; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="topbar">
+    <span class="k1">CARNET</span>
+    <span class="k2">d'anglais</span>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME -->
+    <div class="view showing" id="homeView">
+      <div class="stack-wrap" id="stackWrap">
+        <div class="stub s3"></div>
+        <div class="stub s2"></div>
+        <div class="stub s1">
+          <div class="stripes"></div>
+          <div class="compass">A</div>
+        </div>
+      </div>
+      <button class="draw-btn" id="drawBtn">PIOCHER UNE CARTE</button>
+      <p class="home-note">Une carte = un thème à apprendre.<br><b>103 cartes</b> · chiffres, couleurs, phrases utiles.</p>
+    </div>
+
+    <!-- CARD -->
+    <div class="view" id="cardView">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-num" id="cardNum">CARTE 00/18</div>
+            <div class="card-title" id="cardTitle">Titre</div>
+          </div>
+          <button class="star-btn" id="starBtn">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+          </button>
+        </div>
+        <div class="items" id="itemsWrap"></div>
+        <div class="card-actions">
+          <button class="btn-ghost" id="backBtn">◂ Retour</button>
+          <button class="btn-solid" id="anotherBtn">Autre carte</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEMES -->
+    <div class="view" id="themesView">
+      <div class="list-head">
+        <div class="card-num">TOUS LES THÈMES</div>
+        <div class="card-title">Choisir un thème</div>
+      </div>
+      <div class="grid-list" id="themeGrid"></div>
+    </div>
+
+    <!-- FAVORITES -->
+    <div class="view" id="favView">
+      <div class="list-head">
+        <div class="card-num">MES FAVORIS</div>
+        <div class="card-title">Cartes enregistrées</div>
+      </div>
+      <div class="fav-list" id="favList"></div>
+    </div>
+
+  </div>
+
+  <div class="bottomnav">
+    <button class="nav-btn active" data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="12" height="16" rx="2" transform="rotate(-8 10 13)"/><rect x="8" y="3" width="12" height="16" rx="2"/></svg>
+      Cartes
+    </button>
+    <button class="nav-btn" data-tab="themes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Thèmes
+    </button>
+    <button class="nav-btn" data-tab="favorites">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+      <span id="favLabel">Favoris</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+const DECK = [
+  { id:"nb1a", cat:"Les chiffres 0 à 5", items:[
+    ["zéro","zero","zi-rôou"],["un","one","ouane"],["deux","two","tou"],
+    ["trois","three","thri"],["quatre","four","for"],["cinq","five","faïve"]
+  ]},
+  { id:"nb1b", cat:"Les chiffres 6 à 10", items:[
+    ["six","six","sixe"],["sept","seven","sèv'n"],
+    ["huit","eight","éte"],["neuf","nine","naïne"],["dix","ten","tènne"]
+  ]},
+  { id:"nb2a", cat:"Les chiffres 11 à 15", items:[
+    ["onze","eleven","i-lèv'n"],["douze","twelve","touèlve"],["treize","thirteen","theur-tine"],
+    ["quatorze","fourteen","for-tine"],["quinze","fifteen","fif-tine"]
+  ]},
+  { id:"nb2b", cat:"Les chiffres 16 à 20", items:[
+    ["seize","sixteen","six-tine"],["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],
+    ["dix-neuf","nineteen","naïne-tine"],["vingt","twenty","touènti"]
+  ]},
+  { id:"nb3a", cat:"Dizaines : 20 à 60", items:[
+    ["vingt","twenty","touènti"],["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
+    ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"]
+  ]},
+  { id:"nb3b", cat:"Dizaines et grands nombres", items:[
+    ["soixante-dix","seventy","sèv'n-ti"],["quatre-vingts","eighty","éi-ti"],
+    ["quatre-vingt-dix","ninety","naïne-ti"],["cent","hundred","heunn-dreud"],["mille","thousand","thaou-zeund"]
+  ]},
+  { id:"col1", cat:"Les couleurs (1/2)", items:[
+    ["rouge","red","rèdde"],["bleu","blue","blou"],["vert","green","grine"],
+    ["jaune","yellow","yèlôou"],["noir","black","blak"]
+  ]},
+  { id:"col2", cat:"Les couleurs (2/2)", items:[
+    ["blanc","white","ouaïte"],["orange","orange","orinje"],["violet","purple","peurpeul"],
+    ["rose","pink","pinke"],["gris","grey","gréi"]
+  ]},
+  { id:"jrs1", cat:"Les jours (1/2)", items:[
+    ["lundi","Monday","meunn-déi"],["mardi","Tuesday","tiouz-déi"],
+    ["mercredi","Wednesday","ouènz-déi"],["jeudi","Thursday","theurz-déi"]
+  ]},
+  { id:"jrs2", cat:"Les jours (2/2)", items:[
+    ["vendredi","Friday","fraï-déi"],["samedi","Saturday","sate-eur-déi"],["dimanche","Sunday","seunn-déi"]
+  ]},
+  { id:"renc1a", cat:"Se présenter (1/3)", items:[
+    ["Bonjour","Hello","hèl-lôou"],["Ton prénom ?","What's your name?","ouotss yor néime"],
+    ["Je m'appelle...","My name is...","maï néime iz"],["Ravi de te rencontrer","Nice to meet you","naïsse tou mite you"]
+  ]},
+  { id:"renc1b", cat:"Se présenter (2/3)", items:[
+    ["Tu viens d'où ?","Where are you from?","ouère ar you from"],["Je viens de France","I'm from France","aïme from frânce"],
+    ["Quel âge as-tu ?","How old are you?","haou ôould ar you"],["À plus tard","See you later","si you léi-teur"]
+  ]},
+  { id:"renc1c", cat:"Se présenter (3/3)", items:[
+    ["Au revoir","Goodbye","goud-baï"],["Prends soin de toi","Take care","téik kère"]
+  ]},
+  { id:"renc2a", cat:"Petite conversation (1/2)", items:[
+    ["Comment vas-tu ?","How are you?","haou ar you"],["Ça va bien merci","I'm fine thanks","aïme faïne thênks"],
+    ["Ton métier ?","What do you do?","ouotte dou you dou"],["Je travaille comme...","I work as a...","aïe oueurk az e"]
+  ]},
+  { id:"renc2b", cat:"Petite conversation (2/2)", items:[
+    ["Des passe-temps ?","Do you have any hobbies?","dou you hav èni ho-bize"],["J'aime...","I like...","aïe laïke"],
+    ["Ton numéro ?","Can I get your number?","kèn aïe guèt yor neum-beur"],["Restons en contact","Let's stay in touch","lètss stéi ine teutch"]
+  ]},
+  { id:"aero1", cat:"À l'aéroport (1/3)", items:[
+    ["La porte... ?","Where is gate...?","ouère iz guéite"],["Carte d'embarquement","Boarding pass","bor-dinng passe"],
+    ["Contrôle de sécurité","Security check","si-kiou-ri-ti tchèque"],["Vol retardé","My flight is delayed","maï flaïte iz di-léide"]
+  ]},
+  { id:"aero2", cat:"À l'aéroport (2/3)", items:[
+    ["Les bagages ?","Where is baggage claim?","ouère iz bag-idje kléime"],["En vacances","I'm here on vacation","aïme hire onne véi-kéi-cheune"],
+    ["Vol de correspondance","Connecting flight","ko-nèk-tinng flaïte"]
+  ]},
+  { id:"aero3", cat:"À l'aéroport (3/3)", items:[
+    ["Je m'enregistre pour mon vol","I'd like to check in for my flight","aïde laïke tou tchèque ine for maï flaïte"],
+    ["Un siège fenêtre, svp","A window seat, please","e ouine-dôou site plize"],
+    ["Le vol est-il à l'heure ?","Is the flight on time?","iz the flaïte onne taïme"],
+    ["À quelle porte dois-je aller ?","Which gate should I go to?","ouitche guéite choude aïe goh tou"]
+  ]},
+  { id:"douane1", cat:"Douane et frontière (1/2)", items:[
+    ["Quel est le but de votre visite ?","What is the purpose of your visit?","watte iz the peur-pose of yor vi-zitte"],
+    ["Tourisme ou affaires ?","Tourism or business?","tou-ri-zeum or bi-zi-nesse"],
+    ["Combien de temps restez-vous ?","How long are you staying?","haou lonng ar you stéi-inng"],
+    ["Avez-vous quelque chose à déclarer ?","Do you have anything to declare?","dou you hav èni-thinng tou di-klère"]
+  ]},
+  { id:"douane2", cat:"Douane et frontière (2/2)", items:[
+    ["Rien à déclarer","Nothing to declare","na-thinng tou di-klère"],
+    ["Où séjournez-vous ?","Where are you staying?","ouère ar you stéi-inng"]
+  ]},
+  { id:"hotel1", cat:"À l'hôtel (1/4)", items:[
+    ["J'ai une réservation","I have a reservation","aïe hav e rèze-eur-véi-cheune"],
+    ["Chambre disponible ?","Do you have a room available?","dou you hav e roume e-véi-le-beul"],
+    ["Le check-out ?","What time is check-out?","ouotte taïme iz tchèque aoute"],
+    ["Réveil demandé","Could I have a wake-up call?","koud aïe hav e ouéike eup kol"]
+  ]},
+  { id:"hotel2", cat:"À l'hôtel (2/4)", items:[
+    ["Petit-déj inclus ?","Is breakfast included?","iz brèque-feust ine-klou-did"],
+    ["Mot de passe wifi","The wifi password please","the ouaï-faï passe-oueurde plize"]
+  ]},
+  { id:"hotel3", cat:"À l'hôtel (3/4)", items:[
+    ["La clé / le code","The key / the code","the ki / the côoude"],
+    ["Le chauffage / la clim","The heating / air conditioning","the hi-tinng / ère keun-di-cheu-ninng"],
+    ["Il y a un problème","There is a problem","thère iz e prob-leume"],
+    ["Où laisser les bagages ?","Where can I leave my luggage?","ouère kèn aïe live maï leu-guidje"]
+  ]},
+  { id:"hotel4", cat:"À l'hôtel (4/4)", items:[
+    ["Le wifi ne fonctionne pas","The wifi isn't working","the ouaï-faï i-zeunte oueur-kinng"],
+    ["J'ai perdu ma clé","I've lost my key card","aïve loste maï ki karde"],
+    ["Y a-t-il un coffre ?","Is there a safe in the room?","iz thère e séife ine the roume"],
+    ["Facture détaillée, svp","Could I have an itemized bill?","koud aïe hav èn aïteu-maïzde bile"]
+  ]},
+  { id:"transp1", cat:"Les transports (1/4)", items:[
+    ["Comment aller à... ?","How do I get to...?","haou dou aïe guèt tou"],
+    ["Le bon quai ?","Is this the right platform?","iz diss the raïte plate-forme"],
+    ["Un billet","Ticket for one","ti-kite for oueune"],
+    ["Aller / aller-retour","One-way / return","oueune-ouéi / ri-teurne"]
+  ]},
+  { id:"transp2", cat:"Les transports (2/4)", items:[
+    ["Garder la monnaie","Keep the change","kipe the tchéindje"],
+    ["Un taxi ?","Can you call me a taxi?","kèn you kol mi e tak-si"]
+  ]},
+  { id:"transp3", cat:"Les transports (3/4)", items:[
+    ["À quelle heure part le train ?","What time does the train leave?","watte taïme deuze the tréine live"],
+    ["Le train est en retard ?","Is the train delayed?","iz the tréine di-léide"],
+    ["Je dois changer où ?","Where do I change?","ouère dou aïe tchéindje"],
+    ["J'ai raté ma correspondance","I've missed my connection","aïve miste maï ko-nèk-cheune"]
+  ]},
+  { id:"transp4", cat:"Les transports (4/4)", items:[
+    ["Fenêtre ou couloir ?","Window or aisle seat?","ouine-dôou or aïle site"],
+    ["Ce siège est libre ?","Is this seat free?","iz dhisse site fri"],
+    ["Je descends au prochain arrêt","I'm getting off at the next stop","aïme guè-tinng offe at the nèxte stope"],
+    ["J'ai perdu mon billet","I've lost my ticket","aïve loste maï ti-kite"]
+  ]},
+  { id:"resto1", cat:"Au restaurant (1/4)", items:[
+    ["Table pour deux","Table for two","téi-beul for tou"],["Voir le menu","Could I see the menu?","koud aïe si the mè-niou"],
+    ["Je commande","I'd like to order","aïde laïke tou or-deur"],["L'addition","The bill please","the bile plize"]
+  ]},
+  { id:"resto2", cat:"Au restaurant (2/4)", items:[
+    ["C'est délicieux","It's delicious","itss di-li-cheusse"],["Je suis allergique à...","I'm allergic to...","aïme e-leur-djique tou"],
+    ["De l'eau ?","Can we get some water?","kèn wii guèt seum ouo-teur"]
+  ]},
+  { id:"resto3", cat:"Au restaurant (3/4)", items:[
+    ["Comment est-ce cuit ?","How would you like it cooked?","haou woude you laïke itte koukte"],
+    ["Saignant / à point / bien cuit","Rare / medium / well done","rère / mi-di-eum / ouèl deune"],
+    ["Sans gluten, svp","Gluten-free, please","glou-teune fri plize"],
+    ["Ce n'est pas ma commande","This isn't what I ordered","dhisse i-zeunte watte aïe or-deurde"]
+  ]},
+  { id:"resto4", cat:"Au restaurant (4/4)", items:[
+    ["Vous pouvez l'emballer ?","Could you wrap this up to go?","koud you rape dhisse eup tou goh"],
+    ["On paie séparément","We'd like to pay separately","ouide laïke tou péi sèp-reut-li"],
+    ["Le service est inclus ?","Is service included?","iz seur-visse ine-klou-did"],
+    ["Que recommandez-vous ?","What do you recommend?","watte dou you rè-ko-mènde"]
+  ]},
+  { id:"urg1", cat:"En cas d'urgence (1/4)", items:[
+    ["Au secours !","Help!","hèlpe"],["Appelez la police","Call the police","kol the peu-lisse"],
+    ["Besoin d'un médecin","I need a doctor","aïe nide e doc-teur"],
+    ["L'hôpital le plus proche","Where is the nearest hospital?","ouère iz the ni-reuste hosse-pi-teul"]
+  ]},
+  { id:"urg2", cat:"En cas d'urgence (2/4)", items:[
+    ["Passeport perdu","I lost my passport","aïe loste maï passe-porte"],
+    ["Je ne comprends pas","I don't understand","aïe dônnte eun-deur-stande"]
+  ]},
+  { id:"urg3", cat:"En cas d'urgence (3/4)", items:[
+    ["Appelez une ambulance !","Call an ambulance!","kol e-neu am-biou-leunce"],
+    ["J'ai besoin d'aide, vite !","I need help immediately","aïe nide hèlpe i-mi-di-eut-li"],
+    ["Je suis blessé(e)","I'm injured","aïme ine-djeurde"],
+    ["Je suis perdu(e)","I'm lost","aïme loste"]
+  ]},
+  { id:"urg4", cat:"En cas d'urgence (4/4)", items:[
+    ["On m'a volé","I've been robbed","aïve bine robde"],
+    ["J'ai mal à la tête","I have a headache","aïe hav e hè-déike"],
+    ["J'ai de la fièvre","I have a fever","aïe hav e fi-veur"],
+    ["Je me sens mal","I feel unwell","aïe file eune-ouèl"]
+  ]},
+  { id:"shop1", cat:"Shopping (1/4)", items:[
+    ["Le prix ?","How much is this?","haou meutch iz diss"],
+    ["Carte acceptée ?","Do you accept card?","dou you ak-septe karde"],
+    ["Je peux essayer ?","Can I try it on?","kèn aïe traï itte onne"],
+    ["Trop cher","It's too expensive","itss tou ik-spèn-sive"]
+  ]},
+  { id:"shop2", cat:"Shopping (2/4)", items:[
+    ["Taille plus petite ?","Do you have a smaller size?","dou you hav e smo-leur saïze"],
+    ["Je le prends","I'll take it","aïlle téik itte"]
+  ]},
+  { id:"shop3", cat:"Shopping (3/4)", items:[
+    ["Les cabines d'essayage ?","Where are the fitting rooms?","ouère ar the fi-tinng roumze"],
+    ["C'est en solde ?","Is it on sale?","iz itte onne séile"],
+    ["Je peux l'échanger si besoin ?","Can I exchange it if needed?","kèn aïe ex-tchéindje itte if ni-dide"],
+    ["Je regarde juste, merci","I'm just browsing, thanks","aïme djeuste braou-zinng thènks"]
+  ]},
+  { id:"shop4", cat:"Shopping (4/4)", items:[
+    ["Je voudrais un remboursement","I'd like a refund","aïde laïke e ri-feunde"],
+    ["Le produit est défectueux","The item is faulty","thi aï-teum iz fol-ti"],
+    ["En espèces","In cash","ine kèche"],
+    ["C'est un cadeau","It's a gift","itss e guifte"]
+  ]},
+  { id:"meteo1", cat:"Météo et temps (1/2)", items:[
+    ["Il fait soleil","It's sunny","itss seu-ni"],["Il pleut","It's raining","itss réi-ninng"],
+    ["Il fait froid","It's cold","itss côoulde"],["Il fait chaud","It's hot","itss hotte"]
+  ]},
+  { id:"meteo2", cat:"Météo et temps (2/2)", items:[
+    ["Quelle heure est-il ?","What time is it?","ouotte taïme iz itte"],
+    ["Quel jour sommes-nous ?","What day is it today?","ouotte déi iz itte tou-déi"]
+  ]},
+  { id:"emo1", cat:"Émotions et sensations (1/2)", items:[
+    ["Je suis content","I'm happy","aïme ha-pi"],["Je suis fatigué","I'm tired","aïme taï-eurde"],
+    ["J'ai faim","I'm hungry","aïme heunn-gri"],["J'ai soif","I'm thirsty","aïme theurss-ti"]
+  ]},
+  { id:"emo2", cat:"Émotions et sensations (2/2)", items:[
+    ["Je suis inquiet","I'm worried","aïme oueu-ride"],["J'ai hâte","I'm excited","aïme ik-saï-tide"]
+  ]},
+  { id:"travail1", cat:"Au travail (1/7)", items:[
+    ["Une réunion","Let's have a meeting","lètss hav e mi-tinng"],
+    ["Envoie le fichier","Can you send me the file?","kèn you sènde mi the faïle"],
+    ["Je réponds bientôt","I'll get back to you","aïlle guèt bak tou you"]
+  ]},
+  { id:"travail2", cat:"Au travail (2/7)", items:[
+    ["Date limite","Deadline","dèd-laïne"],
+    ["Peux-tu répéter ?","Could you repeat that please?","koud you ri-pite dhat plize"]
+  ]},
+  { id:"travail3", cat:"Au travail (3/7)", items:[
+    ["Bureau","Office","o-fisse"],["Réunion","Meeting","mi-tinng"],["Collègue","Colleague","ko-lige"],
+    ["Patron","Boss","bosse"],["Salaire","Salary","sal-eu-ri"],["Contrat","Contract","konne-trakte"]
+  ]},
+  { id:"travail4", cat:"Au travail (4/7)", items:[
+    ["Entreprise","Company","keum-peu-ni"],["Entretien","Interview","inne-teur-viou"],
+    ["Candidature","Application","a-pli-kéi-cheune"],["Retraite","Retirement","ri-taïeur-meunte"]
+  ]},
+  { id:"etudes1", cat:"Études (1/2)", items:[
+    ["École","School","skoule"],["Université","University","you-ni-veur-si-ti"],["Cours","Class","klasse"],
+    ["Examen","Exam","ègue-zame"],["Diplôme","Degree","di-gri"],["Professeur","Teacher","ti-tcheur"]
+  ]},
+  { id:"etudes2", cat:"Études (2/2)", items:[
+    ["Étudiant","Student","stiou-deunte"],["Devoirs","Homework","ho-meu-oueurke"],
+    ["Bibliothèque","Library","laï-breu-ri"],["Manuel","Textbook","tèxte-bouke"],["Stage","Internship","inn-teurne-chippe"]
+  ]},
+  { id:"tech1", cat:"Technologie et médias (1/4)", items:[
+    ["Ordinateur","Computer","keum-piou-teur"],["Portable","Laptop","lap-toppe"],["Tablette","Tablet","ta-bleute"],
+    ["Écran","Screen","skrine"],["Clavier","Keyboard","ki-borde"],["Souris","Mouse","maousse"]
+  ]},
+  { id:"tech2", cat:"Technologie et médias (2/4)", items:[
+    ["Application","App","ape"],["Réseau social","Social media","soh-cheul mi-di-eu"],["Partager","To share","tou chère"],
+    ["Publier","To post","tou pôouste"],["Abonné","Follower","fo-lô-oueur"],["Lien","Link","linnque"]
+  ]},
+  { id:"media1", cat:"Technologie et médias (3/4)", items:[
+    ["Émission","Show","choh"],["Série","TV series","ti-vi si-rize"],["Film","Movie","mou-vi"],
+    ["Chanson","Song","songue"],["Album","Album","al-beume"],["Concert","Concert","konne-seurte"]
+  ]},
+  { id:"media2", cat:"Technologie et médias (4/4)", items:[
+    ["Podcast","Podcast","pod-kaste"],["Journal","Newspaper","nyouze-péi-peur"],["Magazine","Magazine","ma-ga-zine"],
+    ["Streaming","Streaming","stri-minng"],["En direct","Live","laïve"],["Sous-titres","Subtitles","seube-taï-teulz"]
+  ]},
+  { id:"pro1", cat:"Au travail (5/7)", items:[
+    ["Je reviens vers vous là-dessus","I'll get back to you on that","aïlle guète bak tou you onne dhatte"],
+    ["Pouvez-vous clarifier ce point ?","Could you clarify that point?","koud you kla-ri-faï dhatte pointe"],
+    ["Je suis en réunion jusqu'à 14h","I'm in a meeting until 2pm","aïme ine e mi-tinng eune-tile tou pi-èm"],
+    ["Je vous mets en copie","I'll copy you in on the email","aïlle ko-pi you ine onne the i-méile"]
+  ]},
+  { id:"pro2", cat:"Au travail (6/7)", items:[
+    ["On est dans les temps","We're on schedule","oui-ar onne skè-diou-le"],
+    ["Il y a un problème de budget","There's a budget issue","thèrze e beu-djèt i-chou"],
+    ["Je ferai de mon mieux","I'll do my best","aïlle dou maï bèste"],
+    ["Passons au point suivant","Let's move on to the next point","lètss mouve onne tou the nèxte pointe"]
+  ]},
+  { id:"pro3", cat:"Au travail (7/7)", items:[
+    ["Avez-vous des questions ?","Does anyone have any questions?","deuze èni-oueune hav èni kouès-tcheunze"],
+    ["Quel est le délai prévu ?","What's the expected timeline?","ouotss the ik-spèk-tide taïme-laïne"],
+    ["Qui est responsable de cette partie ?","Who's in charge of that section?","houze ine tcharje of dhatte sèk-cheune"],
+    ["Quand est la prochaine réunion ?","When's the next check-in?","ouènze the nèxte tchèque-ine"]
+  ]},
+  { id:"social1", cat:"Réseaux sociaux et numérique (1/5)", items:[
+    ["Tu peux me suivre sur Instagram ?","Can you follow me on Instagram?","kèn you fo-lô mi onne ine-sta-grame"],
+    ["J'ai posté une photo","I posted a photo","aïe pôous-tide e fôou-tôou"],
+    ["C'est viral en ce moment","It's going viral right now","itss gôou-inng vaï-reul raïte naou"],
+    ["Tu streames en direct ?","Are you going live?","ar you gôou-inng laïve"]
+  ]},
+  { id:"social2", cat:"Réseaux sociaux et numérique (2/5)", items:[
+    ["Coupe le son","You're on mute","your onne miou-te"],
+    ["Coupe ta caméra","Turn off your camera","teurne offe yor ka-meu-ra"],
+    ["Je t'entends mal","You're breaking up","your bréi-kinng eupe"],
+    ["Télécharge l'appli","Download the app","daoune-lôoude the ape"]
+  ]},
+  { id:"social3", cat:"Réseaux sociaux et numérique (3/5)", items:[
+    ["Envoie-moi le lien","Send me the link","sènde mi the linnque"],
+    ["Batterie à 5%, besoin d'une prise","My battery is at 5%, I need to plug in","maï ba-teu-ri iz atte faïve peur-cente aïe nide tou pleugue ine"],
+    ["Tu utilises quel VPN ?","What VPN do you use?","ouotte vi-pi-ène dou you iouze"]
+  ]},
+  { id:"survie1", cat:"Réseaux sociaux et numérique (4/5)", items:[
+    ["Charger / chargeur","To charge / Charger","tou tcharje / tchar-djeur"],
+    ["Prise électrique","Power socket","paou-eur so-kite"],
+    ["Batterie faible","Low battery","lôou ba-teu-ri"],
+    ["Pas de réseau","No signal","nôou sigue-neule"]
+  ]},
+  { id:"survie2", cat:"Réseaux sociaux et numérique (5/5)", items:[
+    ["Wifi disponible ?","Is there wifi?","iz thère ouaï-faï"],
+    ["Mon téléphone est mort","My phone is dead","maï fôoune iz dède"],
+    ["Vous avez une prise ?","Do you have a socket?","dou you hav e so-kite"],
+    ["Billet en QR code","QR code ticket","kiou-ar côoude ti-kite"]
+  ]},
+  { id:"expr1", cat:"Expressions courantes (1/2)", items:[
+    ["Pas de souci","No worries","nôou oueu-rize"],["Ça marche","Sounds good","saoundz goude"],
+    ["Au fait","By the way","baï the ouéi"],["En fait","Actually","ak-tchou-e-li"]
+  ]},
+  { id:"expr2", cat:"Expressions courantes (2/2)", items:[
+    ["Je pense que oui","I guess so","aïe guèss sôou"],["Ça dépend","It depends","itte di-pèndze"]
+  ]},
+  { id:"food1", cat:"Nourriture (1/7)", items:[
+    ["Pain","Bread","brèdde"],["Pâtes","Pasta","pass-ta"],["Riz","Rice","raïsse"],
+    ["Pizza","Pizza","pi-tsa"],["Viande","Meat","mite"],["Poulet","Chicken","tchi-keune"]
+  ]},
+  { id:"food2", cat:"Nourriture (2/7)", items:[
+    ["Poisson","Fish","fiche"],["Oeuf","Egg","ègue"],["Fromage","Cheese","tchize"],
+    ["Beurre","Butter","beu-teur"],["Huile","Oil","oïle"],["Sel","Salt","solte"]
+  ]},
+  { id:"food3", cat:"Nourriture (3/7)", items:[
+    ["Poivre","Pepper","pè-peur"],["Sucre","Sugar","chou-gueur"],["Ail","Garlic","gar-lique"],
+    ["Tomate","Tomato","teu-méi-tôou"],["Salade","Salad","sa-leude"]
+  ]},
+  { id:"food4", cat:"Nourriture (4/7)", items:[
+    ["Pomme de terre","Potato","peu-téi-tôou"],["Oignon","Onion","eune-yeune"],["Carotte","Carrot","ka-reute"],
+    ["Champignons","Mushrooms","meuche-roumze"],["Pomme","Apple","a-peule"]
+  ]},
+  { id:"food5", cat:"Nourriture (5/7)", items:[
+    ["Banane","Banana","beu-na-na"],["Fraise","Strawberry","stro-bè-ri"],["Orange","Orange","o-rinje"],
+    ["Citron","Lemon","lè-meune"],["Glace","Ice cream","aïsse krime"]
+  ]},
+  { id:"food6", cat:"Nourriture (6/7)", items:[
+    ["Dessert","Dessert","di-zeurte"],["Eau minérale","Mineral water","mi-neu-reul ouo-teur"],["Jus","Juice","djouce"],
+    ["Petit-déjeuner","Breakfast","brèque-feuste"],["Déjeuner","Lunch","leunntche"]
+  ]},
+  { id:"food7", cat:"Nourriture (7/7)", items:[
+    ["Dîner","Dinner","di-neur"],["Vin","Wine","ouaïne"],["Bière","Beer","bi-eur"],
+    ["Café","Coffee","ko-fi"],["Croissant","Croissant","kroi-seunte"]
+  ]},
+  { id:"corps1", cat:"Corps et vêtements (1/6)", items:[
+    ["Tête","Head","hède"],["Visage","Face","féisse"],["Oeil / Yeux","Eye / Eyes","aïe / aïze"],
+    ["Nez","Nose","nôouze"],["Bouche","Mouth","maouthe"]
+  ]},
+  { id:"corps2", cat:"Corps et vêtements (2/6)", items:[
+    ["Oreille","Ear","ire"],["Cou","Neck","nèque"],["Épaule","Shoulder","choul-deur"],
+    ["Bras","Arm","arme"],["Main","Hand","hande"]
+  ]},
+  { id:"corps3", cat:"Corps et vêtements (3/6)", items:[
+    ["Dos","Back","bak"],["Ventre","Stomach","steu-meuk"],["Jambe","Leg","lègue"],
+    ["Pied","Foot","foute"],["Genou","Knee","ni"]
+  ]},
+  { id:"corps4", cat:"Corps et vêtements (4/6)", items:[
+    ["Chemise","Shirt","cheurte"],["T-shirt","T-shirt","ti-cheurte"],["Pantalon","Trousers","traou-zeurze"],
+    ["Jean","Jeans","djine-ze"],["Robe","Dress","drèsse"]
+  ]},
+  { id:"corps5", cat:"Corps et vêtements (5/6)", items:[
+    ["Jupe","Skirt","skeurte"],["Veste","Jacket","dja-kite"],["Manteau","Coat","kôoute"],
+    ["Pull","Jumper","djeume-peur"],["Chaussures","Shoes","chouze"]
+  ]},
+  { id:"corps6", cat:"Corps et vêtements (6/6)", items:[
+    ["Baskets","Trainers","tréi-neurze"],["Chaussettes","Socks","sokse"],["Chapeau","Hat","hatte"],
+    ["Écharpe","Scarf","skarfe"],["Sac","Bag","bague"]
+  ]},
+  { id:"sports1", cat:"Sports et activités (1/2)", items:[
+    ["Football","Football","foute-bol"],["Natation","Swimming","soui-minng"],["Course à pied","Running","reu-ninng"],
+    ["Cyclisme","Cycling","saï-klinng"],["Tennis","Tennis","tè-nisse"],["Basket","Basketball","bas-kite-bol"]
+  ]},
+  { id:"sports2", cat:"Sports et activités (2/2)", items:[
+    ["Boxe","Boxing","bok-sinng"],["Yoga","Yoga","yôou-ga"],["Randonnée","Hiking","haï-kinng"],["Musculation","Weightlifting","ouéite-lif-tinng"]
+  ]},
+  { id:"nature1", cat:"Nature et environnement (1/4)", items:[
+    ["Mer","Sea","si"],["Océan","Ocean","ôou-cheune"],["Montagne","Mountain","maoune-tine"],
+    ["Forêt","Forest","fo-rèste"],["Rivière","River","ri-veur"],["Lac","Lake","léike"]
+  ]},
+  { id:"nature2", cat:"Nature et environnement (2/4)", items:[
+    ["Plage","Beach","bitche"],["Île","Island","aï-leunde"],["Campagne","Countryside","keunn-tri-saïde"],
+    ["Champ","Field","file-de"],["Jardin","Garden","gar-deune"],["Arbre","Tree","tri"]
+  ]},
+  { id:"nature3", cat:"Nature et environnement (3/4)", items:[
+    ["Soleil","Sun","seune"],["Lune","Moon","moune"],["Étoile","Star","starre"],
+    ["Ciel","Sky","skaï"],["Nuage","Cloud","klaoude"],["Pluie","Rain","réine"]
+  ]},
+  { id:"nature4", cat:"Nature et environnement (4/4)", items:[
+    ["Neige","Snow","snôou"],["Tempête","Storm","storme"],["Brouillard","Fog","fogue"],
+    ["Tremblement de terre","Earthquake","eurthe-kouéike"],["Inondation","Flood","fleude"],["Réchauffement climatique","Global warming","glôou-beul ouor-minng"]
+  ]},
+  { id:"adj1", cat:"Adjectifs (1/2)", items:[
+    ["Beau / Belle","Beautiful","bioutifoul"],["Bon / Bonne","Good","goude"],["Grand(e)","Big / Tall","bigue / tol"],
+    ["Petit(e)","Small","smol"],["Facile","Easy","i-zi"],["Difficile","Difficult","di-fi-keulte"]
+  ]},
+  { id:"adj2", cat:"Adjectifs (2/2)", items:[
+    ["Nouveau","New","niou"],["Vieux","Old","ôoulde"],["Heureux","Happy","ha-pi"],
+    ["Fatigué(e)","Tired","taï-eurde"],["Prêt(e)","Ready","rè-di"],["Loin","Far","farre"]
+  ]},
+  { id:"fam1", cat:"La famille (1/5)", items:[
+    ["mère","mother","meu-theur"],["père","father","fa-theur"],["frère","brother","bro-theur"],["sœur","sister","siss-teur"]
+  ]},
+  { id:"fam2", cat:"La famille (2/5)", items:[
+    ["enfant","child","tchaïlde"],["ami","friend","frènde"],["mari","husband","heuz-beunde"],["femme","wife","ouaïfe"]
+  ]},
+  { id:"fam3", cat:"La famille (3/5)", items:[
+    ["Grand-père","Grandfather","gran-fa-dheur"],["Grand-mère","Grandmother","gran-meu-dheur"],["Petit-fils","Grandson","gran-seune"],
+    ["Petite-fille","Granddaughter","gran-do-teur"],["Oncle","Uncle","eun-keul"]
+  ]},
+  { id:"fam4", cat:"La famille (4/5)", items:[
+    ["Tante","Aunt","aunte"],["Cousin / Cousine","Cousin","keu-zeune"],["Neveu","Nephew","nè-fiou"],
+    ["Nièce","Niece","nisse"],["Beau-père","Stepfather","stèpe-fa-dheur"]
+  ]},
+  { id:"fam5", cat:"La famille (5/5)", items:[
+    ["Belle-mère","Stepmother","stèpe-meu-dheur"],["Demi-frère","Half-brother","hafe-bro-dheur"],["Jumeaux","Twins","touinnze"],
+    ["Fils unique","Only child","ôoune-li tchaïlde"],["Parrain / Marraine","Godfather / Godmother","godde-fa-dheur / godde-meu-dheur"]
+  ]},
+  { id:"ordinaux1", cat:"Chiffres ordinaux (1/3)", items:[
+    ["1er","First","feurste"],["2e","Second","sè-keunde"],["3e","Third","theurde"],
+    ["4e","Fourth","forthe"],["5e","Fifth","fifthe"],["6e","Sixth","sixthe"]
+  ]},
+  { id:"ordinaux2", cat:"Chiffres ordinaux (2/3)", items:[
+    ["7e","Seventh","sè-veunthe"],["8e","Eighth","éitthe"],["9e","Ninth","naïnthe"],
+    ["10e","Tenth","tènthe"],["11e","Eleventh","i-lè-veunthe"],["12e","Twelfth","touèlfthe"]
+  ]},
+  { id:"ordinaux3", cat:"Chiffres ordinaux (3/3)", items:[
+    ["20e","Twentieth","touèn-ti-euthe"],["21e","Twenty-first","touèn-ti-feurste"],["100e","Hundredth","heunn-dreudthe"]
+  ]},
+  { id:"ukus1", cat:"UK vs US (1/4)", items:[
+    ["Appartement","flat (UK) · apartment (US)","flate / e-part-meunte"],
+    ["Ascenseur","lift (UK) · elevator (US)","lifte / è-li-véi-teur"],
+    ["Métro","tube (UK) · subway (US)","tioube / seube-ouéi"],
+    ["Biscuit","biscuit (UK) · cookie (US)","bis-kite / kou-ki"],
+    ["Frites","chips (UK) · french fries (US)","tchipse / frèntche fraïze"]
+  ]},
+  { id:"ukus2", cat:"UK vs US (2/4)", items:[
+    ["Chips en sachet","crisps (UK) · chips (US)","krispse / tchipse"],
+    ["Football","football (UK) · soccer (US)","foute-bol / so-keur"],
+    ["Poubelle","rubbish bin (UK) · trash can (US)","reu-bich bine / trache kane"],
+    ["Pantalon","trousers (UK) · pants (US)","traou-zeurze / pantse"],
+    ["Pull","jumper (UK) · sweater (US)","djeume-peur / soué-teur"]
+  ]},
+  { id:"ukus3", cat:"UK vs US (3/4)", items:[
+    ["Baskets","trainers (UK) · sneakers (US)","tréi-neurze / sni-keurze"],
+    ["Automne","autumn (UK) · fall (US)","o-teum / fol"],
+    ["Vacances","holiday (UK) · vacation (US)","ho-li-déi / véi-kéi-cheune"],
+    ["Pharmacie","chemist (UK) · drugstore (US)","kè-miste / dreugue-store"],
+    ["Essence","petrol (UK) · gas (US)","pè-treule / gasse"]
+  ]},
+  { id:"ukus4", cat:"UK vs US (4/4)", items:[
+    ["Capot / coffre","bonnet-boot (UK) · hood-trunk (US)","bo-nite-boute / houde-treunke"],
+    ["Parking","car park (UK) · parking lot (US)","kar parke / par-kinng lotte"],
+    ["File d'attente","queue (UK) · line (US)","kiou / laïne"],
+    ["Courrier","post (UK) · mail (US)","pôouste / méile"],
+    ["Portable","mobile (UK) · cell phone (US)","môou-baïle / sèle fôoune"]
+  ]},
+  { id:"fauxamis1", cat:"Faux amis (1/2)", items:[
+    ["En fait (pas \"actuellement\")","Actually","ak-tchou-eu-li"],
+    ["Ordre du jour (pas \"agenda perso\")","Agenda","eu-djèn-da"],
+    ["Finalement (pas \"éventuellement\")","Eventually","i-vèn-tchou-eu-li"],
+    ["Compatissant (pas \"sympathique\")","Sympathetic","sim-peu-thè-tique"],
+    ["Raisonnable (pas \"sensible\")","Sensible","sèn-si-beule"],
+    ["Exiger (pas \"demander poliment\")","Demand","di-mande"]
+  ]},
+  { id:"fauxamis2", cat:"Faux amis (2/2)", items:[
+    ["Aider (pas \"assister à un événement\")","Assist","eu-sisste"],
+    ["Bibliothèque (pas \"librairie\")","Library","laï-breu-ri"],
+    ["Conservateurs alimentaires (pas \"préservatifs\")","Preservatives","pri-zeur-veu-tivze"],
+    ["Chef d'orchestre / contrôleur (pas \"conducteur\")","Conductor","keune-deuk-teur"],
+    ["Opportunité / risque (pas \"chance\")","Chance","tchânse"],
+    ["Courageux (pas \"gentil\")","Brave","bréive"]
+  ]},
+  { id:"idiomes1", cat:"Expressions idiomatiques (1/4)", items:[
+    ["C'est à toi de voir","It's up to you","itss eupe tou you"],
+    ["Pour faire court...","Long story short...","lonng sto-ri chorte"],
+    ["Ça me dit quelque chose","It rings a bell","itte rinnze e bèle"],
+    ["Je n'en reviens pas","I can't believe it","aïe kânnte bi-live itte"]
+  ]},
+  { id:"idiomes2", cat:"Expressions idiomatiques (2/4)", items:[
+    ["Franchement...","To be honest...","tou bi o-nèste"],
+    ["Je suis à fond dedans","I'm really into it","aïme ri-eu-li ine-tou itte"],
+    ["C'est hors de prix","It's way too expensive","itss ouéi tou ik-spèn-sive"],
+    ["On s'en fout","Who cares","hou kèrze"]
+  ]},
+  { id:"idiomes3", cat:"Expressions idiomatiques (3/4)", items:[
+    ["Il te ressemble","He's just like you","hize djeuste laïke you"],
+    ["Ça a l'air pas mal","That sounds pretty good","dhatte saoundze pri-ti goude"],
+    ["De rien, quand tu veux !","Of course! Anytime!","ofe korse èni-taïme"],
+    ["Pas de souci du tout !","No worries at all!","nôou oueu-rize atte ol"]
+  ]},
+  { id:"idiomes4", cat:"Expressions idiomatiques (4/4)", items:[
+    ["Absolument !","Absolutely! For sure!","abe-so-lioute-li for chore"],
+    ["C'est pas grave, ça va","Fair enough","fère i-neufe"],
+    ["Je ne sais pas trop, honnêtement","Not sure, to be honest","notte chore tou bi o-nèste"],
+    ["À plus !","See you! Catch you later!","si you katche you léi-teur"]
+  ]}
+];
+
+const FAMILIES = [
+  { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1a","nb1b","nb2a","nb2b","nb3a","nb3b"] },
+  { id:"couleurs", label:"Les couleurs", cardIds:["col1","col2"] },
+  { id:"jours", label:"Les jours de la semaine", cardIds:["jrs1","jrs2"] },
+  { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b","renc1c"] },
+  { id:"conversation", label:"Petite conversation", cardIds:["renc2a","renc2b"] },
+  { id:"aeroport", label:"À l'aéroport", cardIds:["aero1","aero2","aero3"] },
+  { id:"douane", label:"Douane et frontière", cardIds:["douane1","douane2"] },
+  { id:"hotel", label:"À l'hôtel", cardIds:["hotel1","hotel2","hotel3","hotel4"] },
+  { id:"transports", label:"Les transports", cardIds:["transp1","transp2","transp3","transp4"] },
+  { id:"restaurant", label:"Au restaurant", cardIds:["resto1","resto2","resto3","resto4"] },
+  { id:"urgence", label:"En cas d'urgence", cardIds:["urg1","urg2","urg3","urg4"] },
+  { id:"shopping", label:"Shopping", cardIds:["shop1","shop2","shop3","shop4"] },
+  { id:"meteo", label:"Météo et temps", cardIds:["meteo1","meteo2"] },
+  { id:"emotions", label:"Émotions et sensations", cardIds:["emo1","emo2"] },
+  { id:"travail", label:"Au travail", cardIds:["travail1","travail2","travail3","travail4","pro1","pro2","pro3"] },
+  { id:"etudes", label:"Études", cardIds:["etudes1","etudes2"] },
+  { id:"tech", label:"Technologie et médias", cardIds:["tech1","tech2","media1","media2"] },
+  { id:"numerique", label:"Réseaux sociaux et numérique", cardIds:["social1","social2","social3","survie1","survie2"] },
+  { id:"expressions", label:"Expressions courantes", cardIds:["expr1","expr2"] },
+  { id:"nourriture", label:"Nourriture", cardIds:["food1","food2","food3","food4","food5","food6","food7"] },
+  { id:"corps", label:"Corps et vêtements", cardIds:["corps1","corps2","corps3","corps4","corps5","corps6"] },
+  { id:"sports", label:"Sports et activités", cardIds:["sports1","sports2"] },
+  { id:"nature", label:"Nature et environnement", cardIds:["nature1","nature2","nature3","nature4"] },
+  { id:"adjectifs", label:"Adjectifs", cardIds:["adj1","adj2"] },
+  { id:"famille", label:"La famille", cardIds:["fam1","fam2","fam3","fam4","fam5"] },
+  { id:"ordinaux", label:"Chiffres ordinaux", cardIds:["ordinaux1","ordinaux2","ordinaux3"] },
+  { id:"ukus", label:"UK vs US", cardIds:["ukus1","ukus2","ukus3","ukus4"] },
+  { id:"fauxamis", label:"Faux amis", cardIds:["fauxamis1","fauxamis2"] },
+  { id:"idiomes", label:"Expressions idiomatiques", cardIds:["idiomes1","idiomes2","idiomes3","idiomes4"] }
+];
+
+const FAV_KEY = "carnet_anglais_favoris";
+let lastId = null;
+let ctx = { origin:"home", pool:null };
+
+function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }catch(e){ return []; } }
+function setFavs(arr){
+  localStorage.setItem(FAV_KEY, JSON.stringify(arr));
+  document.getElementById("favLabel").textContent = arr.length ? `Favoris (${arr.length})` : "Favoris";
+}
+function toggleFav(id){
+  let favs = getFavs();
+  if(favs.includes(id)) favs = favs.filter(f=>f!==id);
+  else favs.push(id);
+  setFavs(favs);
+  return favs.includes(id);
+}
+
+const views = {
+  home: document.getElementById("homeView"),
+  card: document.getElementById("cardView"),
+  themes: document.getElementById("themesView"),
+  favorites: document.getElementById("favView")
+};
+const navBtns = document.querySelectorAll(".nav-btn");
+const stackWrap = document.getElementById("stackWrap");
+const drawBtn = document.getElementById("drawBtn");
+
+function showView(name){
+  Object.values(views).forEach(v=>v.classList.remove("showing"));
+  views[name].classList.add("showing");
+  navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===name));
+}
+
+function pickRandom(pool){
+  const source = pool ? DECK.filter(c=>pool.includes(c.id)) : DECK;
+  let choices = source;
+  if(source.length > 1) choices = source.filter(c=>c.id!==lastId);
+  const card = choices[Math.floor(Math.random()*choices.length)];
+  lastId = card.id;
+  return card;
+}
+
+/* shrink a container's font-size in em-steps until its content fits without scrolling */
+function fitToContainer(el, max, min, step){
+  let size = max;
+  el.style.fontSize = size + "px";
+  let guard = 40;
+  while(el.scrollHeight > el.clientHeight + 1 && size > min && guard-- > 0){
+    size -= step;
+    el.style.fontSize = size + "px";
+  }
+}
+
+function renderCard(card){
+  const idx = DECK.findIndex(c=>c.id===card.id)+1;
+  document.getElementById("cardNum").textContent = "CARTE " + String(idx).padStart(2,"0") + "/" + DECK.length;
+  document.getElementById("cardTitle").textContent = card.cat;
+  const wrap = document.getElementById("itemsWrap");
+  wrap.innerHTML = "";
+  card.items.forEach(([fr,en,ph])=>{
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<div class="pair"><span class="fr">${fr}</span><span class="en">${en}</span></div><div class="ph">/${ph}/</div>`;
+    wrap.appendChild(div);
+  });
+
+  const isFav = getFavs().includes(card.id);
+  const starBtn = document.getElementById("starBtn");
+  starBtn.classList.toggle("active", isFav);
+  starBtn.onclick = ()=>{
+    const nowFav = toggleFav(card.id);
+    starBtn.classList.toggle("active", nowFav);
+  };
+
+  showView("card");
+  requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
+}
+
+function drawCard(){
+  ctx = { origin:"home", pool:null };
+  showView("home");
+  drawBtn.disabled = true;
+  stackWrap.classList.add("shuffle");
+  setTimeout(()=>{
+    stackWrap.classList.remove("shuffle");
+    drawBtn.disabled = false;
+    renderCard(pickRandom(null));
+  }, 500);
+}
+
+function drawWithinTheme(family){
+  ctx = { origin:"themes", pool:family.cardIds };
+  renderCard(pickRandom(family.cardIds));
+}
+
+function openFavorite(card){
+  ctx = { origin:"favorites", pool:null };
+  renderCard(card);
+}
+
+drawBtn.addEventListener("click", drawCard);
+document.getElementById("anotherBtn").addEventListener("click", ()=>{
+  if(ctx.origin === "home"){ drawCard(); }
+  else { renderCard(pickRandom(ctx.pool)); }
+});
+document.getElementById("backBtn").addEventListener("click", ()=>{
+  if(ctx.origin === "themes"){ renderThemes(); showView("themes"); }
+  else if(ctx.origin === "favorites"){ renderFavList(); showView("favorites"); }
+  else { showView("home"); }
+});
+
+function renderThemes(){
+  const grid = document.getElementById("themeGrid");
+  grid.innerHTML = "";
+  FAMILIES.forEach(family=>{
+    const cards = DECK.filter(c=>family.cardIds.includes(c.id));
+    const wordCount = cards.reduce((sum,c)=>sum+c.items.length,0);
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.innerHTML = `<div class="name">${family.label}</div><div class="count">${wordCount} mots</div>`;
+    tile.addEventListener("click", ()=> drawWithinTheme(family));
+    grid.appendChild(tile);
+  });
+  requestAnimationFrame(()=> fitToContainer(grid, 14, 10.5, 0.3));
+}
+
+function renderFavList(){
+  const favs = getFavs();
+  const list = document.getElementById("favList");
+  list.innerHTML = "";
+  if(favs.length === 0){
+    list.innerHTML = `<div class="fav-empty">Aucune carte enregistrée.<br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</div>`;
+    return;
+  }
+  favs.forEach(id=>{
+    const card = DECK.find(c=>c.id===id);
+    if(!card) return;
+    const row = document.createElement("div");
+    row.className = "fav-row";
+    row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${card.items.length} mots</span>`;
+    row.addEventListener("click", ()=> openFavorite(card));
+    list.appendChild(row);
+  });
+  requestAnimationFrame(()=> fitToContainer(list, 14, 10.5, 0.3));
+}
+
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const tab = btn.dataset.tab;
+    if(tab === "home") ctx = { origin:"home", pool:null };
+    if(tab === "themes") renderThemes();
+    if(tab === "favorites") renderFavList();
+    showView(tab);
+  });
+});
+
+setFavs(getFavs());
+window.addEventListener("resize", ()=>{
+  if(views.card.classList.contains("showing")) fitToContainer(document.getElementById("itemsWrap"), 22, 13, 0.4);
+});
+</script>
+</body>
+</html>
