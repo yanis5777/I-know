@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Carnet d'Anglais</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Carnet d'Anglais">
+<meta name="theme-color" content="#F5F2EC">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDE7D9;
+    --paper-dark:#E2DAC7;
+    --ink:#1C2541;
+    --ink-soft:#3B4368;
+    --stamp:#A32F1F;
+    --airmail:#2B4C7E;
+    --line:rgba(28,37,65,0.16);
+    --gold:#B8862E;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(28,37,65,0.035) 0, transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(163,47,31,0.035) 0, transparent 45%);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    height:100dvh;
+    display:flex;
+    justify-content:center;
+  }
+
+  .shell{
+    width:100%;
+    max-width:460px;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    padding:env(safe-area-inset-top,10px) 16px 0;
+    min-height:0;
+  }
+
+  /* ---------- HEADER ---------- */
+  .topbar{
+    flex-shrink:0;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:6px 2px 10px;
+  }
+  .topbar .k1{
+    font-size:10px;
+    letter-spacing:0.16em;
+    color:var(--ink-soft);
+  }
+  .topbar .k2{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:19px;
+    color:var(--ink);
+  }
+
+  /* ---------- MAIN CONTENT AREA ---------- */
+  .content{
+    flex:1;
+    min-height:0;
+    position:relative;
+    overflow:hidden;
+    padding-bottom:12px;
+  }
+  .view{
+    position:absolute;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    min-height:0;
+  }
+  .view.showing{ display:flex; }
+
+  /* ---------- HOME / STACK ---------- */
+  #homeView{ align-items:center; justify-content:center; gap:0; }
+  .stack-wrap{
+    position:relative;
+    width:44%;
+    max-width:190px;
+    aspect-ratio:0.82;
+    margin-bottom:6%;
+    flex-shrink:1;
+  }
+  .stub{
+    position:absolute;
+    inset:0;
+    border-radius:14px;
+    border:1.5px solid var(--ink);
+    background:var(--paper-dark);
+    box-shadow:0 10px 18px rgba(28,37,65,0.14);
+  }
+  .stub.s3{ transform:rotate(7deg) translate(4px,2px); }
+  .stub.s2{ transform:rotate(-5deg) translate(-3px,4px); }
+  .stub.s1{ display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .stub.s1 .stripes{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(-45deg,
+      var(--paper-dark) 0 10px, var(--paper-dark) 10px 10px,
+      var(--stamp) 10px 16px, var(--paper-dark) 16px 26px, var(--paper-dark) 26px 26px,
+      var(--airmail) 26px 32px, var(--paper-dark) 32px 42px);
+    -webkit-mask-image:linear-gradient(#000 0,#000 14px,transparent 14px,transparent calc(100% - 14px),#000 calc(100% - 14px));
+    mask-image:linear-gradient(#000 0,#000 14px,transparent 14px,transparent calc(100% - 14px),#000 calc(100% - 14px));
+    opacity:0.9;
+  }
+  .stub.s1 .compass{
+    position:relative; z-index:2;
+    width:34%; height:34%;
+    border-radius:50%;
+    border:1.5px solid var(--ink);
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-style:italic; font-weight:700;
+    font-size:clamp(16px,7vw,26px);
+    color:var(--ink);
+  }
+  .stack-wrap.shuffle .s1{ animation:shuffle1 .55s ease; }
+  .stack-wrap.shuffle .s2{ animation:shuffle2 .55s ease; }
+  .stack-wrap.shuffle .s3{ animation:shuffle3 .55s ease; }
+  @keyframes shuffle1{0%{transform:rotate(0) translate(0,0);}35%{transform:rotate(-10deg) translate(-14px,-10px) scale(1.02);}70%{transform:rotate(6deg) translate(10px,-6px);}100%{transform:rotate(0) translate(0,0);}}
+  @keyframes shuffle2{0%{transform:rotate(-5deg) translate(-3px,4px);}35%{transform:rotate(10deg) translate(12px,-4px);}70%{transform:rotate(-8deg) translate(-8px,2px);}100%{transform:rotate(-5deg) translate(-3px,4px);}}
+  @keyframes shuffle3{0%{transform:rotate(7deg) translate(4px,2px);}35%{transform:rotate(-9deg) translate(-10px,-2px);}70%{transform:rotate(9deg) translate(8px,4px);}100%{transform:rotate(7deg) translate(4px,2px);}}
+
+  .draw-btn{
+    width:100%;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    border-radius:10px;
+    padding:15px 18px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.05em;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .draw-btn:active{ transform:translateY(1px); }
+  .draw-btn:disabled{ opacity:0.55; }
+  .home-note{
+    margin-top:12px;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+    line-height:1.5;
+    flex-shrink:0;
+  }
+  .home-note b{ color:var(--ink); }
+  #homeView .draw-btn, #homeView .home-note{ width:88%; }
+
+  /* ---------- CARD VIEW ---------- */
+  #cardView.showing{ animation:flipin .4s cubic-bezier(.2,.7,.3,1); }
+  @keyframes flipin{0%{opacity:0;transform:rotateY(70deg) scale(.95);}100%{opacity:1;transform:rotateY(0) scale(1);}}
+  .card{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    background:var(--paper-dark);
+    border:1.5px solid var(--ink);
+    border-radius:14px;
+    padding:14px 14px 12px;
+    box-shadow:0 12px 24px rgba(28,37,65,0.16);
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute; top:7px; left:7px; right:7px; bottom:7px;
+    border:1px dashed var(--line); border-radius:9px; pointer-events:none;
+  }
+  .card-head{
+    flex-shrink:0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:8px;
+  }
+  .card-num{ font-size:10px; color:var(--ink-soft); letter-spacing:0.07em; }
+  .card-title{
+    font-family:'Fraunces', serif; font-weight:700; font-style:italic;
+    font-size:19px; margin-top:1px; color:var(--ink);
+  }
+  .star-btn{ background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft); }
+  .star-btn svg{ width:20px; height:20px; }
+  .star-btn.active{ color:var(--gold); }
+  .star-btn.active svg{ fill:var(--gold); }
+
+  .items{
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:0.4em;
+    font-size:19px;
+  }
+  .item{
+    padding:0.42em 0.1em 0.58em;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .item:last-child{ border-bottom:none; }
+  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.14em; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink); }
+  .pair .en{ font-family:'IBM Plex Sans', sans-serif; font-size:0.95em; font-weight:500; color:var(--ink-soft); }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:rgba(28,37,65,0.7); margin-top:0.32em; }
+
+  .card-actions{
+    flex-shrink:0;
+    display:flex; gap:8px; margin-top:10px;
+  }
+  .btn-ghost{
+    flex:1; background:rgba(28,37,65,0.09); border:2px solid var(--ink); color:var(--ink);
+    border-radius:9px; padding:10.5px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+  }
+  .btn-solid{
+    flex:1.3; background:var(--ink); border:1.5px solid var(--ink); color:var(--paper);
+    border-radius:9px; padding:11px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+  }
+  .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
+
+  /* ---------- THEMES VIEW ---------- */
+  #themesView .list-head, #favView .list-head{
+    flex-shrink:0; margin-bottom:8px;
+  }
+  .list-head .card-title{ font-size:17px; }
+  .grid-list{
+    flex:1; min-height:0; overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    align-content:center;
+  }
+  .tile{
+    background:var(--paper-dark);
+    border:1.5px solid var(--ink);
+    border-radius:9px;
+    padding:0.55em 0.6em;
+    display:flex; flex-direction:column; justify-content:center;
+    cursor:pointer;
+  }
+  .tile .name{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
+    line-height:1.2;
+  }
+  .tile .count{ font-size:0.72em; color:var(--ink-soft); margin-top:0.15em; }
+
+  /* ---------- FAVORITES VIEW ---------- */
+  .fav-list{
+    flex:1; min-height:0; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center; gap:6px;
+  }
+  .fav-row{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--paper-dark); border:1.5px solid var(--ink); border-radius:9px;
+    padding:0.6em 0.8em; cursor:pointer; flex-shrink:0;
+  }
+  .fav-row .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; }
+  .fav-row .count{ font-size:0.72em; color:var(--ink-soft); }
+  .fav-empty{
+    text-align:center; color:var(--ink-soft); font-size:12.5px; line-height:1.6;
+    margin:auto; padding:0 10px;
+  }
+
+  /* ---------- BOTTOM NAV ---------- */
+  .bottomnav{
+    flex-shrink:0;
+    display:flex;
+    border-top:1.5px solid var(--ink);
+    padding-bottom:env(safe-area-inset-bottom,8px);
+    background:var(--paper);
+  }
+  .nav-btn{
+    flex:1;
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    background:none; border:none; padding:9px 4px 6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:0.02em;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .nav-btn svg{ width:19px; height:19px; }
+  .nav-btn.active{ color:var(--ink); }
+  .nav-btn.active svg{ stroke-width:2.1; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="topbar">
+    <span class="k1">CARNET</span>
+    <span class="k2">d'anglais</span>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME -->
+    <div class="view showing" id="homeView">
+      <div class="stack-wrap" id="stackWrap">
+        <div class="stub s3"></div>
+        <div class="stub s2"></div>
+        <div class="stub s1">
+          <div class="stripes"></div>
+          <div class="compass">A</div>
+        </div>
+      </div>
+      <button class="draw-btn" id="drawBtn">PIOCHER UNE CARTE</button>
+      <p class="home-note">Une carte = un thème à apprendre.<br><b>28 cartes</b> · chiffres, couleurs, phrases utiles.</p>
+    </div>
+
+    <!-- CARD -->
+    <div class="view" id="cardView">
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-num" id="cardNum">CARTE 00/18</div>
+            <div class="card-title" id="cardTitle">Titre</div>
+          </div>
+          <button class="star-btn" id="starBtn">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+          </button>
+        </div>
+        <div class="items" id="itemsWrap"></div>
+        <div class="card-actions">
+          <button class="btn-ghost" id="backBtn">◂ Retour</button>
+          <button class="btn-solid" id="anotherBtn">Autre carte</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEMES -->
+    <div class="view" id="themesView">
+      <div class="list-head">
+        <div class="card-num">TOUS LES THÈMES</div>
+        <div class="card-title">Choisir un thème</div>
+      </div>
+      <div class="grid-list" id="themeGrid"></div>
+    </div>
+
+    <!-- FAVORITES -->
+    <div class="view" id="favView">
+      <div class="list-head">
+        <div class="card-num">MES FAVORIS</div>
+        <div class="card-title">Cartes enregistrées</div>
+      </div>
+      <div class="fav-list" id="favList"></div>
+    </div>
+
+  </div>
+
+  <div class="bottomnav">
+    <button class="nav-btn active" data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="12" height="16" rx="2" transform="rotate(-8 10 13)"/><rect x="8" y="3" width="12" height="16" rx="2"/></svg>
+      Cartes
+    </button>
+    <button class="nav-btn" data-tab="themes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Thèmes
+    </button>
+    <button class="nav-btn" data-tab="favorites">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+      <span id="favLabel">Favoris</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+const DECK = [
+  { id:"nb1a", cat:"Les chiffres 0 à 5", items:[
+    ["zéro","zero","zi-rôou"],["un","one","ouane"],["deux","two","tou"],
+    ["trois","three","thri"],["quatre","four","for"],["cinq","five","faïve"]
+  ]},
+  { id:"nb1b", cat:"Les chiffres 6 à 10", items:[
+    ["six","six","sixe"],["sept","seven","sèv'n"],
+    ["huit","eight","éte"],["neuf","nine","naïne"],["dix","ten","tènne"]
+  ]},
+  { id:"nb2a", cat:"Les chiffres 11 à 15", items:[
+    ["onze","eleven","i-lèv'n"],["douze","twelve","touèlve"],["treize","thirteen","theur-tine"],
+    ["quatorze","fourteen","for-tine"],["quinze","fifteen","fif-tine"]
+  ]},
+  { id:"nb2b", cat:"Les chiffres 16 à 20", items:[
+    ["seize","sixteen","six-tine"],["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],
+    ["dix-neuf","nineteen","naïne-tine"],["vingt","twenty","touènti"]
+  ]},
+  { id:"nb3a", cat:"Dizaines : 20 à 60", items:[
+    ["vingt","twenty","touènti"],["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
+    ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"]
+  ]},
+  { id:"nb3b", cat:"Dizaines et grands nombres", items:[
+    ["soixante-dix","seventy","sèv'n-ti"],["quatre-vingts","eighty","éi-ti"],
+    ["quatre-vingt-dix","ninety","naïne-ti"],["cent","hundred","heunn-dreud"],["mille","thousand","thaou-zeund"]
+  ]},
+  { id:"col1", cat:"Les couleurs (1/2)", items:[
+    ["rouge","red","rèdde"],["bleu","blue","blou"],["vert","green","grine"],
+    ["jaune","yellow","yèlôou"],["noir","black","blak"]
+  ]},
+  { id:"col2", cat:"Les couleurs (2/2)", items:[
+    ["blanc","white","ouaïte"],["orange","orange","orinje"],["violet","purple","peurpeul"],
+    ["rose","pink","pinke"],["gris","grey","gréi"]
+  ]},
+  { id:"jrs1", cat:"Les jours (1/2)", items:[
+    ["lundi","Monday","meunn-déi"],["mardi","Tuesday","tiouz-déi"],
+    ["mercredi","Wednesday","ouènz-déi"],["jeudi","Thursday","theurz-déi"]
+  ]},
+  { id:"jrs2", cat:"Les jours (2/2)", items:[
+    ["vendredi","Friday","fraï-déi"],["samedi","Saturday","sate-eur-déi"],["dimanche","Sunday","seunn-déi"]
+  ]},
+  { id:"renc1a", cat:"Se présenter (1/2)", items:[
+    ["Bonjour","Hello","hèl-lôou"],["Ton prénom ?","What's your name?","ouotss yor néime"],
+    ["Je m'appelle...","My name is...","maï néime iz"],["Ravi de te rencontrer","Nice to meet you","naïsse tou mite you"],
+    ["Tu viens d'où ?","Where are you from?","ouère ar you from"]
+  ]},
+  { id:"renc1b", cat:"Se présenter (2/2)", items:[
+    ["Je viens de France","I'm from France","aïme from frânce"],["Quel âge as-tu ?","How old are you?","haou ôould ar you"],
+    ["À plus tard","See you later","si you léi-teur"],["Au revoir","Goodbye","goud-baï"],
+    ["Prends soin de toi","Take care","téik kère"]
+  ]},
+  { id:"renc2a", cat:"Petite conversation (1/2)", items:[
+    ["Comment vas-tu ?","How are you?","haou ar you"],["Ça va bien merci","I'm fine thanks","aïme faïne thênks"],
+    ["Ton métier ?","What do you do?","ouotte dou you dou"],["Je travaille comme...","I work as a...","aïe oueurk az e"]
+  ]},
+  { id:"renc2b", cat:"Petite conversation (2/2)", items:[
+    ["Des passe-temps ?","Do you have any hobbies?","dou you hav èni ho-bize"],["J'aime...","I like...","aïe laïke"],
+    ["Ton numéro ?","Can I get your number?","kèn aïe guèt yor neum-beur"],["Restons en contact","Let's stay in touch","lètss stéi ine teutch"]
+  ]},
+  { id:"aero1", cat:"À l'aéroport (1/2)", items:[
+    ["La porte... ?","Where is gate...?","ouère iz guéite"],["Carte d'embarquement","Boarding pass","bor-dinng passe"],
+    ["Contrôle de sécurité","Security check","si-kiou-ri-ti tchèque"],["Vol retardé","My flight is delayed","maï flaïte iz di-léide"]
+  ]},
+  { id:"aero2", cat:"À l'aéroport (2/2)", items:[
+    ["Les bagages ?","Where is baggage claim?","ouère iz bag-idje kléime"],["En vacances","I'm here on vacation","aïme hire onne véi-kéi-cheune"],
+    ["Vol de correspondance","Connecting flight","ko-nèk-tinng flaïte"]
+  ]},
+  { id:"hotel", cat:"À l'hôtel", items:[
+    ["J'ai une réservation","I have a reservation","aïe hav e rèze-eur-véi-cheune"],
+    ["Chambre disponible ?","Do you have a room available?","dou you hav e roume e-véi-le-beul"],
+    ["Le check-out ?","What time is check-out?","ouotte taïme iz tchèque aoute"],
+    ["Réveil demandé","Could I have a wake-up call?","koud aïe hav e ouéike eup kol"],
+    ["Petit-déj inclus ?","Is breakfast included?","iz brèque-feust ine-klou-did"],
+    ["Mot de passe wifi","The wifi password please","the ouaï-faï passe-oueurde plize"]
+  ]},
+  { id:"transp", cat:"Les transports", items:[
+    ["Comment aller à... ?","How do I get to...?","haou dou aïe guèt tou"],
+    ["Le bon quai ?","Is this the right platform?","iz diss the raïte plate-forme"],
+    ["Un billet","Ticket for one","ti-kite for oueune"],
+    ["Aller / aller-retour","One-way / return","oueune-ouéi / ri-teurne"],
+    ["Garder la monnaie","Keep the change","kipe the tchéindje"],
+    ["Un taxi ?","Can you call me a taxi?","kèn you kol mi e tak-si"]
+  ]},
+  { id:"resto1", cat:"Au restaurant (1/2)", items:[
+    ["Table pour deux","Table for two","téi-beul for tou"],["Voir le menu","Could I see the menu?","koud aïe si the mè-niou"],
+    ["Je commande","I'd like to order","aïde laïke tou or-deur"],["L'addition","The bill please","the bile plize"]
+  ]},
+  { id:"resto2", cat:"Au restaurant (2/2)", items:[
+    ["C'est délicieux","It's delicious","itss di-li-cheusse"],["Je suis allergique à...","I'm allergic to...","aïme e-leur-djique tou"],
+    ["De l'eau ?","Can we get some water?","kèn wii guèt seum ouo-teur"]
+  ]},
+  { id:"urg", cat:"En cas d'urgence", items:[
+    ["Au secours !","Help!","hèlpe"],["Appelez la police","Call the police","kol the peu-lisse"],
+    ["Besoin d'un médecin","I need a doctor","aïe nide e doc-teur"],
+    ["L'hôpital le plus proche","Where is the nearest hospital?","ouère iz the ni-reuste hosse-pi-teul"],
+    ["Passeport perdu","I lost my passport","aïe loste maï passe-porte"],
+    ["Je ne comprends pas","I don't understand","aïe dônnte eun-deur-stande"]
+  ]},
+  { id:"shop", cat:"Shopping", items:[
+    ["Le prix ?","How much is this?","haou meutch iz diss"],
+    ["Carte acceptée ?","Do you accept card?","dou you ak-septe karde"],
+    ["Je peux essayer ?","Can I try it on?","kèn aïe traï itte onne"],
+    ["Trop cher","It's too expensive","itss tou ik-spèn-sive"],
+    ["Taille plus petite ?","Do you have a smaller size?","dou you hav e smo-leur saïze"],
+    ["Je le prends","I'll take it","aïlle téik itte"]
+  ]},
+  { id:"meteo", cat:"Météo et temps", items:[
+    ["Il fait soleil","It's sunny","itss seu-ni"],["Il pleut","It's raining","itss réi-ninng"],
+    ["Il fait froid","It's cold","itss côoulde"],["Il fait chaud","It's hot","itss hotte"],
+    ["Quelle heure est-il ?","What time is it?","ouotte taïme iz itte"],
+    ["Quel jour sommes-nous ?","What day is it today?","ouotte déi iz itte tou-déi"]
+  ]},
+  { id:"emo", cat:"Émotions et sensations", items:[
+    ["Je suis content","I'm happy","aïme ha-pi"],["Je suis fatigué","I'm tired","aïme taï-eurde"],
+    ["J'ai faim","I'm hungry","aïme heunn-gri"],["J'ai soif","I'm thirsty","aïme theurss-ti"],
+    ["Je suis inquiet","I'm worried","aïme oueu-ride"],["J'ai hâte","I'm excited","aïme ik-saï-tide"]
+  ]},
+  { id:"travail", cat:"Au travail", items:[
+    ["Une réunion","Let's have a meeting","lètss hav e mi-tinng"],
+    ["Envoie le fichier","Can you send me the file?","kèn you sènde mi the faïle"],
+    ["Je réponds bientôt","I'll get back to you","aïlle guèt bak tou you"],
+    ["Date limite","Deadline","dèd-laïne"],
+    ["Peux-tu répéter ?","Could you repeat that please?","koud you ri-pite dhat plize"]
+  ]},
+  { id:"expr", cat:"Expressions courantes", items:[
+    ["Pas de souci","No worries","nôou oueu-rize"],["Ça marche","Sounds good","saoundz goude"],
+    ["Au fait","By the way","baï the ouéi"],["En fait","Actually","ak-tchou-e-li"],
+    ["Je pense que oui","I guess so","aïe guèss sôou"],["Ça dépend","It depends","itte di-pèndze"]
+  ]},
+  { id:"fam1", cat:"La famille (1/2)", items:[
+    ["mère","mother","meu-theur"],["père","father","fa-theur"],["frère","brother","bro-theur"],["sœur","sister","siss-teur"]
+  ]},
+  { id:"fam2", cat:"La famille (2/2)", items:[
+    ["enfant","child","tchaïlde"],["ami","friend","frènde"],["mari","husband","heuz-beunde"],["femme","wife","ouaïfe"]
+  ]}
+];
+
+const FAMILIES = [
+  { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1a","nb1b","nb2a","nb2b","nb3a","nb3b"] },
+  { id:"couleurs", label:"Les couleurs", cardIds:["col1","col2"] },
+  { id:"jours", label:"Les jours de la semaine", cardIds:["jrs1","jrs2"] },
+  { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b"] },
+  { id:"conversation", label:"Petite conversation", cardIds:["renc2a","renc2b"] },
+  { id:"aeroport", label:"À l'aéroport", cardIds:["aero1","aero2"] },
+  { id:"hotel", label:"À l'hôtel", cardIds:["hotel"] },
+  { id:"transports", label:"Les transports", cardIds:["transp"] },
+  { id:"restaurant", label:"Au restaurant", cardIds:["resto1","resto2"] },
+  { id:"urgence", label:"En cas d'urgence", cardIds:["urg"] },
+  { id:"shopping", label:"Shopping", cardIds:["shop"] },
+  { id:"meteo", label:"Météo et temps", cardIds:["meteo"] },
+  { id:"emotions", label:"Émotions et sensations", cardIds:["emo"] },
+  { id:"travail", label:"Au travail", cardIds:["travail"] },
+  { id:"expressions", label:"Expressions courantes", cardIds:["expr"] },
+  { id:"famille", label:"La famille", cardIds:["fam1","fam2"] }
+];
+
+const FAV_KEY = "carnet_anglais_favoris";
+let lastId = null;
+let ctx = { origin:"home", pool:null };
+
+function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }catch(e){ return []; } }
+function setFavs(arr){
+  localStorage.setItem(FAV_KEY, JSON.stringify(arr));
+  document.getElementById("favLabel").textContent = arr.length ? `Favoris (${arr.length})` : "Favoris";
+}
+function toggleFav(id){
+  let favs = getFavs();
+  if(favs.includes(id)) favs = favs.filter(f=>f!==id);
+  else favs.push(id);
+  setFavs(favs);
+  return favs.includes(id);
+}
+
+const views = {
+  home: document.getElementById("homeView"),
+  card: document.getElementById("cardView"),
+  themes: document.getElementById("themesView"),
+  favorites: document.getElementById("favView")
+};
+const navBtns = document.querySelectorAll(".nav-btn");
+const stackWrap = document.getElementById("stackWrap");
+const drawBtn = document.getElementById("drawBtn");
+
+function showView(name){
+  Object.values(views).forEach(v=>v.classList.remove("showing"));
+  views[name].classList.add("showing");
+  navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===name));
+}
+
+function pickRandom(pool){
+  const source = pool ? DECK.filter(c=>pool.includes(c.id)) : DECK;
+  let choices = source;
+  if(source.length > 1) choices = source.filter(c=>c.id!==lastId);
+  const card = choices[Math.floor(Math.random()*choices.length)];
+  lastId = card.id;
+  return card;
+}
+
+/* shrink a container's font-size in em-steps until its content fits without scrolling */
+function fitToContainer(el, max, min, step){
+  let size = max;
+  el.style.fontSize = size + "px";
+  let guard = 40;
+  while(el.scrollHeight > el.clientHeight + 1 && size > min && guard-- > 0){
+    size -= step;
+    el.style.fontSize = size + "px";
+  }
+}
+
+function renderCard(card){
+  const idx = DECK.findIndex(c=>c.id===card.id)+1;
+  document.getElementById("cardNum").textContent = "CARTE " + String(idx).padStart(2,"0") + "/" + DECK.length;
+  document.getElementById("cardTitle").textContent = card.cat;
+  const wrap = document.getElementById("itemsWrap");
+  wrap.innerHTML = "";
+  card.items.forEach(([fr,en,ph])=>{
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<div class="pair"><span class="fr">${fr}</span><span class="en">${en}</span></div><div class="ph">/${ph}/</div>`;
+    wrap.appendChild(div);
+  });
+
+  const isFav = getFavs().includes(card.id);
+  const starBtn = document.getElementById("starBtn");
+  starBtn.classList.toggle("active", isFav);
+  starBtn.onclick = ()=>{
+    const nowFav = toggleFav(card.id);
+    starBtn.classList.toggle("active", nowFav);
+  };
+
+  showView("card");
+  requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
+}
+
+function drawCard(){
+  ctx = { origin:"home", pool:null };
+  showView("home");
+  drawBtn.disabled = true;
+  stackWrap.classList.add("shuffle");
+  setTimeout(()=>{
+    stackWrap.classList.remove("shuffle");
+    drawBtn.disabled = false;
+    renderCard(pickRandom(null));
+  }, 500);
+}
+
+function drawWithinTheme(family){
+  ctx = { origin:"themes", pool:family.cardIds };
+  renderCard(pickRandom(family.cardIds));
+}
+
+function openFavorite(card){
+  ctx = { origin:"favorites", pool:null };
+  renderCard(card);
+}
+
+drawBtn.addEventListener("click", drawCard);
+document.getElementById("anotherBtn").addEventListener("click", ()=>{
+  if(ctx.origin === "home"){ drawCard(); }
+  else { renderCard(pickRandom(ctx.pool)); }
+});
+document.getElementById("backBtn").addEventListener("click", ()=>{
+  if(ctx.origin === "themes"){ renderThemes(); showView("themes"); }
+  else if(ctx.origin === "favorites"){ renderFavList(); showView("favorites"); }
+  else { showView("home"); }
+});
+
+function renderThemes(){
+  const grid = document.getElementById("themeGrid");
+  grid.innerHTML = "";
+  FAMILIES.forEach(family=>{
+    const cards = DECK.filter(c=>family.cardIds.includes(c.id));
+    const wordCount = cards.reduce((sum,c)=>sum+c.items.length,0);
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.innerHTML = `<div class="name">${family.label}</div><div class="count">${wordCount} mots</div>`;
+    tile.addEventListener("click", ()=> drawWithinTheme(family));
+    grid.appendChild(tile);
+  });
+  requestAnimationFrame(()=> fitToContainer(grid, 14, 10.5, 0.3));
+}
+
+function renderFavList(){
+  const favs = getFavs();
+  const list = document.getElementById("favList");
+  list.innerHTML = "";
+  if(favs.length === 0){
+    list.innerHTML = `<div class="fav-empty">Aucune carte enregistrée.<br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</div>`;
+    return;
+  }
+  favs.forEach(id=>{
+    const card = DECK.find(c=>c.id===id);
+    if(!card) return;
+    const row = document.createElement("div");
+    row.className = "fav-row";
+    row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${card.items.length} mots</span>`;
+    row.addEventListener("click", ()=> openFavorite(card));
+    list.appendChild(row);
+  });
+  requestAnimationFrame(()=> fitToContainer(list, 14, 10.5, 0.3));
+}
+
+navBtns.forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    const tab = btn.dataset.tab;
+    if(tab === "home") ctx = { origin:"home", pool:null };
+    if(tab === "themes") renderThemes();
+    if(tab === "favorites") renderFavList();
+    showView(tab);
+  });
+});
+
+setFavs(getFavs());
+window.addEventListener("resize", ()=>{
+  if(views.card.classList.contains("showing")) fitToContainer(document.getElementById("itemsWrap"), 22, 13, 0.4);
+});
+</script>
+</body>
+</html>
