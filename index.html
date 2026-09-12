@@ -37,16 +37,22 @@
     background:var(--bg);
     color:var(--off-white);
     font-family:'IBM Plex Mono', monospace;
-    height:var(--vh, 100dvh);
-    display:flex;
-    justify-content:center;
   }
 
+  /* Le conteneur s'ancre directement au vrai viewport plein écran
+     (position:fixed + inset haut/bas à 0) plutôt que d'hériter une
+     hauteur en % ou en dvh. En PWA standalone sur iOS, ces unités
+     renvoient parfois la hauteur "sûre" (sans la zone home indicator)
+     au lieu de l'écran réel, ce qui laissait une marge morte en bas.
+     Un élément fixed, lui, s'étend bien jusqu'au bord réel grâce à
+     viewport-fit=cover. */
   .shell{
-    position:relative;
+    position:fixed;
+    top:0; bottom:0;
+    left:50%;
+    transform:translateX(-50%);
     width:100%;
     max-width:460px;
-    height:100%;
     display:flex;
     flex-direction:column;
     padding:env(safe-area-inset-top,10px) 16px 0;
@@ -1120,14 +1126,6 @@ navBtns.forEach(btn=>{
   });
 });
 
-/* Measure the real, visible viewport height in pixels (window.innerHeight),
-   which is far more reliable across browsers/embedded webviews (Instagram,
-   etc.) than the CSS dvh/vh units, which some of them compute incorrectly. */
-function setRealVH(){
-  const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
-  document.documentElement.style.setProperty("--vh", h + "px");
-}
-
 function syncNavHeight(){
   const navH = document.querySelector(".bottomnav").offsetHeight;
   document.documentElement.style.setProperty("--navh", navH + "px");
@@ -1135,29 +1133,18 @@ function syncNavHeight(){
 
 setFavs(getFavs());
 calibrateSharedFontSize();
-setRealVH();
 syncNavHeight();
 if(document.fonts && document.fonts.ready){
   document.fonts.ready.then(()=>{ calibrateSharedFontSize(); syncNavHeight(); });
 }
 window.addEventListener("resize", ()=>{
-  setRealVH();
   syncNavHeight();
   calibrateSharedFontSize();
   if(views.card.classList.contains("showing")){
     document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
   }
 });
-window.addEventListener("orientationchange", ()=>{ setRealVH(); syncNavHeight(); });
-if(window.visualViewport){
-  window.visualViewport.addEventListener("resize", ()=>{
-    setRealVH();
-    syncNavHeight();
-    if(views.card.classList.contains("showing")){
-      document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
-    }
-  });
-}
+window.addEventListener("orientationchange", syncNavHeight);
 </script>
 </body>
 </html>
