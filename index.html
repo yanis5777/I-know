@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Carnet d'Anglais">
-<meta name="theme-color" content="#3A3733">
+<meta name="theme-color" content="#231B17">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -24,11 +24,11 @@
     --airmail:#2B4C7E;
     --line:rgba(28,37,65,0.16);
     --gold:#B8862E;
-    --bg:#3A3733;
+    --bg:#231B17;
     --off-white:#F2F0EC;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#3A3733;touch-action:manipulation;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#231B17;touch-action:manipulation;}
   body{
     background:var(--bg);
     color:var(--off-white);
@@ -79,7 +79,7 @@
   .view{
     position:absolute;
     inset:0;
-    margin:4px 3px 16px;
+    margin:4px 3px 8px;
     display:none;
     flex-direction:column;
     min-height:0;
@@ -298,13 +298,13 @@
     flex-shrink:0;
     display:flex;
     border-top:1px solid rgba(242,240,236,0.14);
-    padding-bottom:env(safe-area-inset-bottom,8px);
+    padding-bottom:env(safe-area-inset-bottom,4px);
     background:var(--bg);
   }
   .nav-btn{
     flex:1;
     display:flex; flex-direction:column; align-items:center; gap:3px;
-    background:none; border:none; padding:9px 4px 6px;
+    background:none; border:none; padding:7px 4px 4px;
     font-family:'IBM Plex Mono', monospace;
     font-size:10px; letter-spacing:0.02em; font-weight:500;
     color:var(--off-white);
@@ -964,6 +964,35 @@ function fitToContainer(el, max, min, step){
     size -= step;
     el.style.fontSize = size + "px";
   }
+  return size;
+}
+
+let sharedFontSize = null;
+
+/* Compute one font-size that fits every card (based on the densest one),
+   so text size stays visually consistent from card to card instead of
+   jumping around depending on how many items each card has. */
+function calibrateSharedFontSize(){
+  const cardEl = views.card;
+  const wrap = document.getElementById("itemsWrap");
+  cardEl.classList.add("showing");
+  cardEl.style.visibility = "hidden";
+  let minSize = 22;
+  DECK.forEach(card=>{
+    wrap.innerHTML = "";
+    card.items.forEach(([fr,en,ph])=>{
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `<div class="pair"><span class="fr">${fr}</span><span class="en">${en}</span></div><div class="ph">/${ph}/</div>`;
+      wrap.appendChild(div);
+    });
+    const size = fitToContainer(wrap, 22, 13, 0.4);
+    if(size < minSize) minSize = size;
+  });
+  sharedFontSize = minSize;
+  cardEl.classList.remove("showing");
+  cardEl.style.visibility = "";
+  wrap.innerHTML = "";
 }
 
 function renderCard(card){
@@ -988,7 +1017,11 @@ function renderCard(card){
   };
 
   showView("card");
-  requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
+  if(sharedFontSize){
+    wrap.style.fontSize = sharedFontSize + "px";
+  } else {
+    requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
+  }
 }
 
 function drawCard(){
@@ -1068,8 +1101,15 @@ navBtns.forEach(btn=>{
 });
 
 setFavs(getFavs());
+calibrateSharedFontSize();
+if(document.fonts && document.fonts.ready){
+  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); });
+}
 window.addEventListener("resize", ()=>{
-  if(views.card.classList.contains("showing")) fitToContainer(document.getElementById("itemsWrap"), 22, 13, 0.4);
+  calibrateSharedFontSize();
+  if(views.card.classList.contains("showing")){
+    document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
+  }
 });
 </script>
 </body>
