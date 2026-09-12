@@ -24,15 +24,14 @@
     --airmail:#2B4C7E;
     --line:rgba(28,37,65,0.16);
     --gold:#B8862E;
+    --bg:#0A0A0C;
+    --off-white:#F2F0EC;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;height:100%;overflow:hidden;}
   body{
-    background:var(--paper);
-    background-image:
-      radial-gradient(circle at 20% 10%, rgba(28,37,65,0.035) 0, transparent 45%),
-      radial-gradient(circle at 85% 85%, rgba(163,47,31,0.035) 0, transparent 45%);
-    color:var(--ink);
+    background:var(--bg);
+    color:var(--off-white);
     font-family:'IBM Plex Mono', monospace;
     height:100dvh;
     display:flex;
@@ -60,14 +59,14 @@
   .topbar .k1{
     font-size:10px;
     letter-spacing:0.16em;
-    color:var(--ink-soft);
+    color:rgba(242,240,236,0.55);
   }
   .topbar .k2{
     font-family:'Fraunces', serif;
     font-weight:700;
     font-style:italic;
     font-size:19px;
-    color:var(--ink);
+    color:var(--off-white);
   }
 
   /* ---------- MAIN CONTENT AREA ---------- */
@@ -155,12 +154,12 @@
   .home-note{
     margin-top:12px;
     font-size:11px;
-    color:var(--ink-soft);
+    color:rgba(242,240,236,0.55);
     text-align:center;
     line-height:1.5;
     flex-shrink:0;
   }
-  .home-note b{ color:var(--ink); }
+  .home-note b{ color:var(--off-white); }
   #homeView .draw-btn, #homeView .home-note{ width:88%; }
 
   /* ---------- CARD VIEW ---------- */
@@ -247,13 +246,16 @@
   #themesView .list-head, #favView .list-head{
     flex-shrink:0; margin-bottom:8px;
   }
-  .list-head .card-title{ font-size:17px; }
+  .list-head .card-num{ color:rgba(242,240,236,0.55); }
+  .list-head .card-title{ font-size:17px; color:var(--off-white); }
   .grid-list{
-    flex:1; min-height:0; overflow:hidden;
+    flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:6px;
-    align-content:center;
+    align-content:start;
+    font-size:14px;
+    padding-bottom:4px;
   }
   .tile{
     background:var(--paper-dark);
@@ -271,8 +273,10 @@
 
   /* ---------- FAVORITES VIEW ---------- */
   .fav-list{
-    flex:1; min-height:0; overflow:hidden;
-    display:flex; flex-direction:column; justify-content:center; gap:6px;
+    flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    display:flex; flex-direction:column; justify-content:flex-start; gap:6px;
+    font-size:14px;
+    padding-bottom:4px;
   }
   .fav-row{
     display:flex; justify-content:space-between; align-items:center;
@@ -282,7 +286,7 @@
   .fav-row .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; }
   .fav-row .count{ font-size:0.72em; color:var(--ink-soft); }
   .fav-empty{
-    text-align:center; color:var(--ink-soft); font-size:12.5px; line-height:1.6;
+    text-align:center; color:rgba(242,240,236,0.55); font-size:12.5px; line-height:1.6;
     margin:auto; padding:0 10px;
   }
 
@@ -290,9 +294,9 @@
   .bottomnav{
     flex-shrink:0;
     display:flex;
-    border-top:1.5px solid var(--ink);
+    border-top:1px solid rgba(242,240,236,0.14);
     padding-bottom:env(safe-area-inset-bottom,8px);
-    background:var(--paper);
+    background:var(--bg);
   }
   .nav-btn{
     flex:1;
@@ -300,11 +304,11 @@
     background:none; border:none; padding:9px 4px 6px;
     font-family:'IBM Plex Mono', monospace;
     font-size:10px; letter-spacing:0.02em;
-    color:var(--ink-soft);
+    color:rgba(242,240,236,0.5);
     cursor:pointer;
   }
   .nav-btn svg{ width:19px; height:19px; }
-  .nav-btn.active{ color:var(--ink); }
+  .nav-btn.active{ color:var(--off-white); }
   .nav-btn.active svg{ stroke-width:2.1; }
 </style>
 </head>
@@ -1028,7 +1032,6 @@ function renderThemes(){
     tile.addEventListener("click", ()=> drawWithinTheme(family));
     grid.appendChild(tile);
   });
-  requestAnimationFrame(()=> fitToContainer(grid, 14, 10.5, 0.3));
 }
 
 function renderFavList(){
@@ -1048,7 +1051,6 @@ function renderFavList(){
     row.addEventListener("click", ()=> openFavorite(card));
     list.appendChild(row);
   });
-  requestAnimationFrame(()=> fitToContainer(list, 14, 10.5, 0.3));
 }
 
 navBtns.forEach(btn=>{
