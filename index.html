@@ -43,6 +43,7 @@
   }
 
   .shell{
+    position:relative;
     width:100%;
     max-width:460px;
     height:100%;
@@ -300,9 +301,8 @@
 
   /* ---------- BOTTOM NAV ---------- */
   .bottomnav{
-    position:fixed;
+    position:absolute;
     left:0; right:0; bottom:0;
-    max-width:460px; margin:0 auto;
     display:flex;
     border-top:1px solid rgba(242,240,236,0.12);
     padding-bottom:env(safe-area-inset-bottom,4px);
@@ -1112,7 +1112,8 @@ navBtns.forEach(btn=>{
    which is far more reliable across browsers/embedded webviews (Instagram,
    etc.) than the CSS dvh/vh units, which some of them compute incorrectly. */
 function setRealVH(){
-  document.documentElement.style.setProperty("--vh", window.innerHeight + "px");
+  const h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+  document.documentElement.style.setProperty("--vh", h + "px");
 }
 
 function syncNavHeight(){
@@ -1136,6 +1137,15 @@ window.addEventListener("resize", ()=>{
   }
 });
 window.addEventListener("orientationchange", ()=>{ setRealVH(); syncNavHeight(); });
+if(window.visualViewport){
+  window.visualViewport.addEventListener("resize", ()=>{
+    setRealVH();
+    syncNavHeight();
+    if(views.card.classList.contains("showing")){
+      document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
+    }
+  });
+}
 </script>
 </body>
 </html>
