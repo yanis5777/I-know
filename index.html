@@ -76,11 +76,11 @@
     min-height:0;
     position:relative;
     overflow:hidden;
-    padding-bottom:12px;
   }
   .view{
     position:absolute;
     inset:0;
+    margin:4px 3px 16px;
     display:none;
     flex-direction:column;
     min-height:0;
@@ -214,10 +214,18 @@
     flex-shrink:0;
   }
   .item:last-child{ border-bottom:none; }
-  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.14em; }
+  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.3em; }
   .pair .fr{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink); }
-  .pair .en{ font-family:'IBM Plex Sans', sans-serif; font-size:0.95em; font-weight:500; color:var(--ink-soft); }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:rgba(28,37,65,0.7); margin-top:0.32em; }
+  .pair .en{
+    display:inline-block;
+    font-family:'IBM Plex Sans', sans-serif; font-size:0.92em; font-weight:600;
+    color:var(--paper);
+    background:var(--ink);
+    padding:0.22em 0.55em;
+    border-radius:6px;
+    line-height:1.25;
+  }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:rgba(28,37,65,0.7); margin-top:0.28em; }
 
   .card-actions{
     flex-shrink:0;
@@ -322,7 +330,7 @@
         </div>
       </div>
       <button class="draw-btn" id="drawBtn">PIOCHER UNE CARTE</button>
-      <p class="home-note">Une carte = un thème à apprendre.<br><b>28 cartes</b> · chiffres, couleurs, phrases utiles.</p>
+      <p class="home-note">Une carte = un thème à apprendre.<br><b>37 cartes</b> · chiffres, couleurs, phrases utiles.</p>
     </div>
 
     <!-- CARD -->
@@ -423,15 +431,16 @@ const DECK = [
   { id:"jrs2", cat:"Les jours (2/2)", items:[
     ["vendredi","Friday","fraï-déi"],["samedi","Saturday","sate-eur-déi"],["dimanche","Sunday","seunn-déi"]
   ]},
-  { id:"renc1a", cat:"Se présenter (1/2)", items:[
+  { id:"renc1a", cat:"Se présenter (1/3)", items:[
     ["Bonjour","Hello","hèl-lôou"],["Ton prénom ?","What's your name?","ouotss yor néime"],
-    ["Je m'appelle...","My name is...","maï néime iz"],["Ravi de te rencontrer","Nice to meet you","naïsse tou mite you"],
-    ["Tu viens d'où ?","Where are you from?","ouère ar you from"]
+    ["Je m'appelle...","My name is...","maï néime iz"],["Ravi de te rencontrer","Nice to meet you","naïsse tou mite you"]
   ]},
-  { id:"renc1b", cat:"Se présenter (2/2)", items:[
-    ["Je viens de France","I'm from France","aïme from frânce"],["Quel âge as-tu ?","How old are you?","haou ôould ar you"],
-    ["À plus tard","See you later","si you léi-teur"],["Au revoir","Goodbye","goud-baï"],
-    ["Prends soin de toi","Take care","téik kère"]
+  { id:"renc1b", cat:"Se présenter (2/3)", items:[
+    ["Tu viens d'où ?","Where are you from?","ouère ar you from"],["Je viens de France","I'm from France","aïme from frânce"],
+    ["Quel âge as-tu ?","How old are you?","haou ôould ar you"],["À plus tard","See you later","si you léi-teur"]
+  ]},
+  { id:"renc1c", cat:"Se présenter (3/3)", items:[
+    ["Au revoir","Goodbye","goud-baï"],["Prends soin de toi","Take care","téik kère"]
   ]},
   { id:"renc2a", cat:"Petite conversation (1/2)", items:[
     ["Comment vas-tu ?","How are you?","haou ar you"],["Ça va bien merci","I'm fine thanks","aïme faïne thênks"],
@@ -449,19 +458,23 @@ const DECK = [
     ["Les bagages ?","Where is baggage claim?","ouère iz bag-idje kléime"],["En vacances","I'm here on vacation","aïme hire onne véi-kéi-cheune"],
     ["Vol de correspondance","Connecting flight","ko-nèk-tinng flaïte"]
   ]},
-  { id:"hotel", cat:"À l'hôtel", items:[
+  { id:"hotel1", cat:"À l'hôtel (1/2)", items:[
     ["J'ai une réservation","I have a reservation","aïe hav e rèze-eur-véi-cheune"],
     ["Chambre disponible ?","Do you have a room available?","dou you hav e roume e-véi-le-beul"],
     ["Le check-out ?","What time is check-out?","ouotte taïme iz tchèque aoute"],
-    ["Réveil demandé","Could I have a wake-up call?","koud aïe hav e ouéike eup kol"],
+    ["Réveil demandé","Could I have a wake-up call?","koud aïe hav e ouéike eup kol"]
+  ]},
+  { id:"hotel2", cat:"À l'hôtel (2/2)", items:[
     ["Petit-déj inclus ?","Is breakfast included?","iz brèque-feust ine-klou-did"],
     ["Mot de passe wifi","The wifi password please","the ouaï-faï passe-oueurde plize"]
   ]},
-  { id:"transp", cat:"Les transports", items:[
+  { id:"transp1", cat:"Les transports (1/2)", items:[
     ["Comment aller à... ?","How do I get to...?","haou dou aïe guèt tou"],
     ["Le bon quai ?","Is this the right platform?","iz diss the raïte plate-forme"],
     ["Un billet","Ticket for one","ti-kite for oueune"],
-    ["Aller / aller-retour","One-way / return","oueune-ouéi / ri-teurne"],
+    ["Aller / aller-retour","One-way / return","oueune-ouéi / ri-teurne"]
+  ]},
+  { id:"transp2", cat:"Les transports (2/2)", items:[
     ["Garder la monnaie","Keep the change","kipe the tchéindje"],
     ["Un taxi ?","Can you call me a taxi?","kèn you kol mi e tak-si"]
   ]},
@@ -473,42 +486,54 @@ const DECK = [
     ["C'est délicieux","It's delicious","itss di-li-cheusse"],["Je suis allergique à...","I'm allergic to...","aïme e-leur-djique tou"],
     ["De l'eau ?","Can we get some water?","kèn wii guèt seum ouo-teur"]
   ]},
-  { id:"urg", cat:"En cas d'urgence", items:[
+  { id:"urg1", cat:"En cas d'urgence (1/2)", items:[
     ["Au secours !","Help!","hèlpe"],["Appelez la police","Call the police","kol the peu-lisse"],
     ["Besoin d'un médecin","I need a doctor","aïe nide e doc-teur"],
-    ["L'hôpital le plus proche","Where is the nearest hospital?","ouère iz the ni-reuste hosse-pi-teul"],
+    ["L'hôpital le plus proche","Where is the nearest hospital?","ouère iz the ni-reuste hosse-pi-teul"]
+  ]},
+  { id:"urg2", cat:"En cas d'urgence (2/2)", items:[
     ["Passeport perdu","I lost my passport","aïe loste maï passe-porte"],
     ["Je ne comprends pas","I don't understand","aïe dônnte eun-deur-stande"]
   ]},
-  { id:"shop", cat:"Shopping", items:[
+  { id:"shop1", cat:"Shopping (1/2)", items:[
     ["Le prix ?","How much is this?","haou meutch iz diss"],
     ["Carte acceptée ?","Do you accept card?","dou you ak-septe karde"],
     ["Je peux essayer ?","Can I try it on?","kèn aïe traï itte onne"],
-    ["Trop cher","It's too expensive","itss tou ik-spèn-sive"],
+    ["Trop cher","It's too expensive","itss tou ik-spèn-sive"]
+  ]},
+  { id:"shop2", cat:"Shopping (2/2)", items:[
     ["Taille plus petite ?","Do you have a smaller size?","dou you hav e smo-leur saïze"],
     ["Je le prends","I'll take it","aïlle téik itte"]
   ]},
-  { id:"meteo", cat:"Météo et temps", items:[
+  { id:"meteo1", cat:"Météo et temps (1/2)", items:[
     ["Il fait soleil","It's sunny","itss seu-ni"],["Il pleut","It's raining","itss réi-ninng"],
-    ["Il fait froid","It's cold","itss côoulde"],["Il fait chaud","It's hot","itss hotte"],
+    ["Il fait froid","It's cold","itss côoulde"],["Il fait chaud","It's hot","itss hotte"]
+  ]},
+  { id:"meteo2", cat:"Météo et temps (2/2)", items:[
     ["Quelle heure est-il ?","What time is it?","ouotte taïme iz itte"],
     ["Quel jour sommes-nous ?","What day is it today?","ouotte déi iz itte tou-déi"]
   ]},
-  { id:"emo", cat:"Émotions et sensations", items:[
+  { id:"emo1", cat:"Émotions et sensations (1/2)", items:[
     ["Je suis content","I'm happy","aïme ha-pi"],["Je suis fatigué","I'm tired","aïme taï-eurde"],
-    ["J'ai faim","I'm hungry","aïme heunn-gri"],["J'ai soif","I'm thirsty","aïme theurss-ti"],
+    ["J'ai faim","I'm hungry","aïme heunn-gri"],["J'ai soif","I'm thirsty","aïme theurss-ti"]
+  ]},
+  { id:"emo2", cat:"Émotions et sensations (2/2)", items:[
     ["Je suis inquiet","I'm worried","aïme oueu-ride"],["J'ai hâte","I'm excited","aïme ik-saï-tide"]
   ]},
-  { id:"travail", cat:"Au travail", items:[
+  { id:"travail1", cat:"Au travail (1/2)", items:[
     ["Une réunion","Let's have a meeting","lètss hav e mi-tinng"],
     ["Envoie le fichier","Can you send me the file?","kèn you sènde mi the faïle"],
-    ["Je réponds bientôt","I'll get back to you","aïlle guèt bak tou you"],
+    ["Je réponds bientôt","I'll get back to you","aïlle guèt bak tou you"]
+  ]},
+  { id:"travail2", cat:"Au travail (2/2)", items:[
     ["Date limite","Deadline","dèd-laïne"],
     ["Peux-tu répéter ?","Could you repeat that please?","koud you ri-pite dhat plize"]
   ]},
-  { id:"expr", cat:"Expressions courantes", items:[
+  { id:"expr1", cat:"Expressions courantes (1/2)", items:[
     ["Pas de souci","No worries","nôou oueu-rize"],["Ça marche","Sounds good","saoundz goude"],
-    ["Au fait","By the way","baï the ouéi"],["En fait","Actually","ak-tchou-e-li"],
+    ["Au fait","By the way","baï the ouéi"],["En fait","Actually","ak-tchou-e-li"]
+  ]},
+  { id:"expr2", cat:"Expressions courantes (2/2)", items:[
     ["Je pense que oui","I guess so","aïe guèss sôou"],["Ça dépend","It depends","itte di-pèndze"]
   ]},
   { id:"fam1", cat:"La famille (1/2)", items:[
@@ -523,18 +548,18 @@ const FAMILIES = [
   { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1a","nb1b","nb2a","nb2b","nb3a","nb3b"] },
   { id:"couleurs", label:"Les couleurs", cardIds:["col1","col2"] },
   { id:"jours", label:"Les jours de la semaine", cardIds:["jrs1","jrs2"] },
-  { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b"] },
+  { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b","renc1c"] },
   { id:"conversation", label:"Petite conversation", cardIds:["renc2a","renc2b"] },
   { id:"aeroport", label:"À l'aéroport", cardIds:["aero1","aero2"] },
-  { id:"hotel", label:"À l'hôtel", cardIds:["hotel"] },
-  { id:"transports", label:"Les transports", cardIds:["transp"] },
+  { id:"hotel", label:"À l'hôtel", cardIds:["hotel1","hotel2"] },
+  { id:"transports", label:"Les transports", cardIds:["transp1","transp2"] },
   { id:"restaurant", label:"Au restaurant", cardIds:["resto1","resto2"] },
-  { id:"urgence", label:"En cas d'urgence", cardIds:["urg"] },
-  { id:"shopping", label:"Shopping", cardIds:["shop"] },
-  { id:"meteo", label:"Météo et temps", cardIds:["meteo"] },
-  { id:"emotions", label:"Émotions et sensations", cardIds:["emo"] },
-  { id:"travail", label:"Au travail", cardIds:["travail"] },
-  { id:"expressions", label:"Expressions courantes", cardIds:["expr"] },
+  { id:"urgence", label:"En cas d'urgence", cardIds:["urg1","urg2"] },
+  { id:"shopping", label:"Shopping", cardIds:["shop1","shop2"] },
+  { id:"meteo", label:"Météo et temps", cardIds:["meteo1","meteo2"] },
+  { id:"emotions", label:"Émotions et sensations", cardIds:["emo1","emo2"] },
+  { id:"travail", label:"Au travail", cardIds:["travail1","travail2"] },
+  { id:"expressions", label:"Expressions courantes", cardIds:["expr1","expr2"] },
   { id:"famille", label:"La famille", cardIds:["fam1","fam2"] }
 ];
 
