@@ -10,10 +10,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Carnet d'Anglais">
-<meta name="theme-color" content="#2A2826">
+<meta name="theme-color" content="#3A3733">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#EDE7D9;
@@ -24,11 +24,11 @@
     --airmail:#2B4C7E;
     --line:rgba(28,37,65,0.16);
     --gold:#B8862E;
-    --bg:#2A2826;
+    --bg:#3A3733;
     --off-white:#F2F0EC;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#2A2826;touch-action:manipulation;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#3A3733;touch-action:manipulation;}
   body{
     background:var(--bg);
     color:var(--off-white);
@@ -208,18 +208,14 @@
     flex-shrink:0;
   }
   .item:last-child{ border-bottom:none; }
-  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.3em; }
-  .pair .fr{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink); }
+  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.22em; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:var(--ink); }
   .pair .en{
-    display:inline-block;
-    font-family:'IBM Plex Sans', sans-serif; font-size:0.92em; font-weight:600;
-    color:var(--paper);
-    background:var(--ink);
-    padding:0.22em 0.55em;
-    border-radius:6px;
-    line-height:1.25;
+    font-family:'Inter', sans-serif; font-weight:700; font-size:1.2em;
+    color:var(--ink);
+    line-height:1.2;
   }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:rgba(28,37,65,0.7); margin-top:0.28em; }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:rgba(28,37,65,0.7); margin-top:0.22em; }
 
   .card-actions{
     flex-shrink:0;
