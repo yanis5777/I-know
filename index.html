@@ -25,6 +25,7 @@
     --line:rgba(28,37,65,0.16);
     --gold:#B8862E;
     --bg:#231B17;
+    --bg-nav:#332720;
     --off-white:#F2F0EC;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
@@ -44,7 +45,8 @@
     height:100%;
     display:flex;
     flex-direction:column;
-    padding:env(safe-area-inset-top,10px) 16px calc(48px + env(safe-area-inset-bottom,4px));
+    padding:env(safe-area-inset-top,10px) 16px 0;
+    padding-bottom:var(--navh, 60px);
     min-height:0;
   }
 
@@ -299,9 +301,9 @@
     left:0; right:0; bottom:0;
     max-width:460px; margin:0 auto;
     display:flex;
-    border-top:1px solid rgba(242,240,236,0.14);
+    border-top:1px solid rgba(242,240,236,0.12);
     padding-bottom:env(safe-area-inset-bottom,4px);
-    background:var(--bg);
+    background:var(--bg-nav);
     z-index:20;
   }
   .nav-btn{
@@ -1103,13 +1105,20 @@ navBtns.forEach(btn=>{
   });
 });
 
+function syncNavHeight(){
+  const navH = document.querySelector(".bottomnav").offsetHeight;
+  document.documentElement.style.setProperty("--navh", navH + "px");
+}
+
 setFavs(getFavs());
 calibrateSharedFontSize();
+syncNavHeight();
 if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); });
+  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); syncNavHeight(); });
 }
 window.addEventListener("resize", ()=>{
   calibrateSharedFontSize();
+  syncNavHeight();
   if(views.card.classList.contains("showing")){
     document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
   }
