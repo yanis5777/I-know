@@ -364,6 +364,12 @@
     font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
     line-height:1.2;
   }
+  .tile-available{
+    background:linear-gradient(155deg, #EFE3C4, #E6D6A8);
+    border:none;
+    box-shadow:0 3px 10px rgba(184,134,46,0.16);
+  }
+  .tile-available .name{ color:#3D2E12; }
   .tile-soon{
     cursor:default;
     opacity:0.5;
@@ -1265,7 +1271,7 @@ function renderCategories(){
   grid.innerHTML = "";
   CATEGORIES.forEach(cat=>{
     const tile = document.createElement("div");
-    tile.className = "tile" + (cat.available ? "" : " tile-soon");
+    tile.className = "tile" + (cat.available ? " tile-available" : " tile-soon");
     if(cat.available){
       tile.innerHTML = `<div class="name">${cat.label}</div>`;
       tile.addEventListener("click", ()=> openCategory(cat));
