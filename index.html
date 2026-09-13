@@ -181,11 +181,14 @@
     min-height:0;
     display:flex;
     flex-direction:column;
-    background:#F0EAE1;
-    border:1px solid #D8CFC4;
-    border-radius:14px;
+    background:rgba(240,234,225,0.72);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    backdrop-filter:blur(24px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.55);
+    border-radius:18px;
     padding:14px 14px 12px;
     position:relative;
+    box-shadow:0 10px 32px rgba(26,20,18,0.10), inset 0 1px 0 rgba(255,255,255,0.45);
   }
   .card-head{
     flex-shrink:0;
@@ -209,8 +212,8 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
-    gap:0.4em;
-    font-size:19px;
+    gap:0.35em;
+    font-size:16px;
   }
   /* Enveloppe qui permet de superposer l'indicateur de scroll par-dessus
      le bas de la liste, sans changer la mise en page de .items. */
@@ -228,12 +231,12 @@
   .scroll-hint{
     position:absolute;
     left:0; right:0; bottom:0;
-    height:40px;
+    height:46px;
     display:none;
     align-items:flex-end;
     justify-content:center;
-    padding-bottom:2px;
-    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, #F0EAE1 70%);
+    padding-bottom:3px;
+    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, rgba(240,234,225,0.85) 65%);
     pointer-events:none;
     opacity:1;
     transition:opacity .25s ease;
@@ -241,8 +244,8 @@
   .scroll-hint.showing{ display:flex; }
   .scroll-hint.hidden{ opacity:0; }
   .scroll-hint svg{
-    width:16px; height:16px;
-    color:rgba(26,20,18,0.4);
+    width:24px; height:24px;
+    color:rgba(26,20,18,0.45);
     animation:hintBounce 1.3s ease-in-out infinite;
   }
   @keyframes hintBounce{
@@ -265,33 +268,38 @@
   .items.scrollable::-webkit-scrollbar-track{ background:transparent; }
   .items.scrollable::-webkit-scrollbar-thumb{ background:rgba(44,37,35,0.32); border-radius:4px; }
   .item{
-    padding:0.42em 0.1em 0.58em;
+    padding:0.4em 0.1em 0.5em;
     border-bottom:1px solid var(--line);
     flex-shrink:0;
   }
   .item:last-child{ border-bottom:none; }
-  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.22em; }
-  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:#332B24; }
+  .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.2em; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:1.05em; color:#332B24; }
   .pair .en{
-    font-family:'Inter', sans-serif; font-weight:700; font-size:1.2em;
+    font-family:'Inter', sans-serif; font-weight:600; font-size:1.05em;
+    letter-spacing:0.015em;
     color:#1A1412;
-    line-height:1.2;
+    line-height:1.3;
   }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:#4A4038; margin-top:0.22em; }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:#4A4038; margin-top:0.22em; }
 
   .card-actions{
     flex-shrink:0;
     display:flex; gap:8px; margin-top:10px;
   }
   .btn-ghost{
-    flex:1; background:rgba(26,20,18,0.06); border:1.5px solid var(--card-border); color:var(--ink);
-    border-radius:8px; padding:8px 6px; font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    flex:1; min-height:46px;
+    background:#E4DDD0; border:1.5px solid #D0C5B8; color:#2C2523;
+    border-radius:11px; padding:12px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
   .btn-solid{
-    flex:1.3; background:var(--action-bg); border:1.5px solid var(--action-bg); color:var(--action-text);
-    border-radius:8px; padding:8.5px 6px; font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    flex:1.3; min-height:46px;
+    background:#2C2523; border:1.5px solid #2C2523; color:var(--action-text);
+    border-radius:11px; padding:12px 8px; font-family:'IBM Plex Mono', monospace;
+    font-size:11px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
   }
   .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
 
@@ -1059,46 +1067,6 @@ function pickRandom(pool){
   return card;
 }
 
-/* shrink a container's font-size in em-steps until its content fits without scrolling */
-function fitToContainer(el, max, min, step){
-  let size = max;
-  el.style.fontSize = size + "px";
-  let guard = 40;
-  while(el.scrollHeight > el.clientHeight + 1 && size > min && guard-- > 0){
-    size -= step;
-    el.style.fontSize = size + "px";
-  }
-  return size;
-}
-
-let sharedFontSize = null;
-
-/* Compute one font-size that fits every card (based on the densest one),
-   so text size stays visually consistent from card to card instead of
-   jumping around depending on how many items each card has. */
-function calibrateSharedFontSize(){
-  const cardEl = views.card;
-  const wrap = document.getElementById("itemsWrap");
-  cardEl.classList.add("showing");
-  cardEl.style.visibility = "hidden";
-  let minSize = 22;
-  DECK.forEach(card=>{
-    wrap.innerHTML = "";
-    card.items.forEach(([fr,en,ph])=>{
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `<div class="pair"><span class="fr">${fr}</span><span class="en">${en}</span></div><div class="ph">/${ph}/</div>`;
-      wrap.appendChild(div);
-    });
-    const size = fitToContainer(wrap, 22, 13, 0.4);
-    if(size < minSize) minSize = size;
-  });
-  sharedFontSize = minSize;
-  cardEl.classList.remove("showing");
-  cardEl.style.visibility = "";
-  wrap.innerHTML = "";
-}
-
 /* Masque l'indicateur de scroll une fois qu'on approche du bas de la
    liste, ou s'il n'y a en fait rien à scroller (peu de mots). */
 function updateScrollHint(){
@@ -1125,8 +1093,8 @@ function renderCard(card){
   const anotherBtn = document.getElementById("anotherBtn");
   const scrollHint = document.getElementById("scrollHint");
   const merged = !!card.merged;
-  wrap.classList.toggle("scrollable", merged);
-  scrollHint.classList.toggle("showing", merged);
+  wrap.classList.add("scrollable");
+  scrollHint.classList.add("showing");
 
   if(merged){
     document.getElementById("cardNum").textContent = card.items.length + " MOTS";
@@ -1146,15 +1114,9 @@ function renderCard(card){
   }
   document.getElementById("cardTitle").textContent = card.cat;
 
+  wrap.scrollTop = 0;
   showView("card");
-  if(merged){
-    wrap.style.fontSize = "";
-    requestAnimationFrame(updateScrollHint);
-  } else if(sharedFontSize){
-    wrap.style.fontSize = sharedFontSize + "px";
-  } else {
-    requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
-  }
+  requestAnimationFrame(updateScrollHint);
 }
 
 function drawCard(){
@@ -1241,21 +1203,11 @@ function syncNavHeight(){
 }
 
 setFavs(getFavs());
-calibrateSharedFontSize();
 syncNavHeight();
-if(document.fonts && document.fonts.ready){
-  document.fonts.ready.then(()=>{ calibrateSharedFontSize(); syncNavHeight(); });
-}
 window.addEventListener("resize", ()=>{
   syncNavHeight();
-  calibrateSharedFontSize();
-  const wrap = document.getElementById("itemsWrap");
   if(views.card.classList.contains("showing")){
-    if(wrap.classList.contains("scrollable")){
-      updateScrollHint();
-    } else {
-      wrap.style.fontSize = (sharedFontSize || 22) + "px";
-    }
+    updateScrollHint();
   }
 });
 window.addEventListener("orientationchange", syncNavHeight);
