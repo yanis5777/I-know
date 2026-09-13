@@ -1685,6 +1685,7 @@ document.getElementById("themeToggle").addEventListener("click", ()=>{
 });
 
 function drawCategoryRandom(){
+  cardHistory = []; currentCard = null;
   ctx = { origin:"categoryRandom", categoryId:currentCategory.id, pool:null };
   const stack = document.getElementById("categoryStackWrap");
   stack.classList.add("shuffle");
@@ -1699,16 +1700,19 @@ function drawCategoryRandom(){
    donc c'est équivalent — mais ça restera vrai quand d'autres
    catégories auront des données). */
 function drawGlobalRandom(){
+  cardHistory = []; currentCard = null;
   ctx = { origin:"globalRandom", categoryId:null, pool:null };
   renderCard(pickRandom(null));
 }
 
 function drawWithinTheme(family){
+  cardHistory = []; currentCard = null;
   ctx = { origin:"categoryTheme", categoryId:currentCategory.id, pool:family.cardIds };
   renderCard(pickRandom(family.cardIds));
 }
 
 function openFavorite(card){
+  cardHistory = []; currentCard = null;
   ctx = { origin:"favorites", categoryId:null, pool:null };
   renderCard(card);
 }
@@ -1782,6 +1786,7 @@ function renderThemesForCategory(cat){
 
 navBtns.forEach(btn=>{
   btn.addEventListener("click", ()=>{
+    cardHistory = []; currentCard = null;
     const tab = btn.dataset.tab;
     if(tab === "categories") renderCategories();
     if(tab === "favorites") renderFavCategories();
