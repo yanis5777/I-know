@@ -110,6 +110,13 @@
 
   /* ---------- HOME / STACK ---------- */
   #homeView{ align-items:center; justify-content:flex-start; gap:0; padding-top:4%; overflow-y:auto; }
+  .home-bg-art{
+    position:absolute; inset:0; z-index:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    opacity:0.4;
+  }
+  #homeView > *:not(.home-bg-art){ position:relative; z-index:1; }
   .stack-wrap{
     position:relative;
     width:44%;
@@ -361,9 +368,12 @@
     flex-shrink:0; margin-bottom:18px;
   }
   .back-link{
-    background:none; border:none; padding:0 0 12px;
+    display:inline-flex; align-items:center; gap:6px;
+    align-self:flex-start;
+    background:var(--paper-dark); border:1.5px solid var(--card-border); border-radius:9px;
+    padding:8px 14px; margin-bottom:14px;
     font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
-    color:var(--ink-soft); cursor:pointer; flex-shrink:0; text-align:left;
+    color:var(--ink); cursor:pointer; flex-shrink:0;
   }
   #categoryDrawBtn{ margin-bottom:2px; }
   .list-head .card-num{ color:var(--ink-soft); }
@@ -391,23 +401,28 @@
     display:flex; flex-direction:column; justify-content:center;
     cursor:pointer;
   }
+  .tile-theme{
+    position:relative;
+    border:none;
+    min-height:76px;
+    padding:0.7em 0.6em;
+    overflow:hidden;
+  }
+  .tile-theme .name{ position:relative; z-index:1; color:#20180F; }
+  .tile-theme .count{ position:relative; z-index:1; color:rgba(32,24,15,0.6); }
+  .theme-emoji{
+    position:absolute; right:-6px; bottom:-10px;
+    font-size:42px; line-height:1;
+    opacity:0.9; transform:rotate(-6deg);
+    filter:drop-shadow(0 2px 3px rgba(0,0,0,0.12));
+  }
   .tile .name{
     font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
     line-height:1.2;
   }
-  .tile-cat{ gap:8px; }
-  .cat-icon{
-    width:34px; height:34px; border-radius:9px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:17px; line-height:1;
-    margin-bottom:2px;
-  }
   .tile-available{
-    background:linear-gradient(155deg, #EFE3C4, #E6D6A8);
-    border:none;
-    box-shadow:0 3px 10px rgba(184,134,46,0.16);
+    box-shadow:0 3px 10px rgba(20,15,10,0.12);
   }
-  .tile-available .name{ color:#3D2E12; }
   .tile-soon{
     cursor:default;
     opacity:0.5;
@@ -440,9 +455,12 @@
   .fav-row .name{ font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink); }
   .fav-row .count{ font-size:0.72em; color:var(--ink-soft); }
   .fav-empty{
+    display:flex; flex-direction:column; align-items:center;
     text-align:center; color:var(--ink-soft); font-size:12.5px; line-height:1.6;
-    margin:auto; padding:0 10px;
+    margin:auto; padding:0 24px;
   }
+  .fav-empty-art{ width:120px; height:100px; margin-bottom:18px; }
+  .fav-empty b{ color:var(--ink); font-size:1.05em; }
 
   /* ---------- BOTTOM NAV ----------
      Standards suivis :
@@ -515,6 +533,62 @@
 
     <!-- HOME (explicatif) -->
     <div class="view showing" id="homeView">
+      <svg class="home-bg-art" viewBox="0 0 380 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path d="M190,90 C240,130 300,150 280,200 C260,250 160,270 120,320 C80,370 60,420 130,440 C200,460 290,440 270,490 C250,540 170,560 150,600 C135,630 190,650 230,670"
+          fill="none" stroke="var(--gold)" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 14" opacity="0.55"/>
+        <g stroke="var(--ink-soft)" stroke-width="1.6" fill="none" opacity="0.55">
+          <circle cx="190" cy="95" r="16"/>
+          <rect x="182" y="111" width="16" height="7" rx="2"/>
+          <line x1="185" y1="118" x2="195" y2="118"/>
+          <line x1="190" y1="75" x2="190" y2="69"/>
+          <line x1="175" y1="82" x2="170" y2="77"/>
+          <line x1="205" y1="82" x2="210" y2="77"/>
+          <text x="212" y="72" font-family="Georgia,serif" font-size="17" stroke="none" fill="var(--ink-soft)">?</text>
+          <text x="150" y="105" font-family="Georgia,serif" font-size="13" stroke="none" fill="var(--ink-soft)">?</text>
+          <g transform="translate(263,205) rotate(-24)">
+            <rect x="0" y="0" width="46" height="10" rx="4"/>
+            <circle cx="0" cy="5" r="4.5"/>
+          </g>
+          <line x1="270" y1="216" x2="253" y2="255" />
+          <line x1="270" y1="216" x2="279" y2="255" />
+          <line x1="270" y1="216" x2="270" y2="255" />
+          <g transform="translate(110,330)">
+            <circle cx="0" cy="0" r="23"/>
+            <ellipse cx="0" cy="0" rx="9" ry="23"/>
+            <line x1="-23" y1="0" x2="23" y2="0"/>
+            <path d="M-23,-9 Q0,-2 23,-9"/>
+            <path d="M-23,9 Q0,2 23,9"/>
+          </g>
+          <g transform="translate(255,415)">
+            <path d="M0,0 L30,9 L0,18 L-30,9 Z"/>
+            <rect x="-7" y="14" width="14" height="9"/>
+            <line x1="18" y1="9" x2="21" y2="24"/>
+            <circle cx="21" cy="26" r="2" fill="var(--ink-soft)" stroke="none"/>
+          </g>
+          <text x="70" y="410" font-family="Georgia,serif" font-size="14" stroke="none" fill="var(--ink-soft)">?</text>
+          <g transform="translate(140,530)">
+            <rect x="0" y="0" width="62" height="34" rx="5"/>
+            <line x1="9" y1="10" x2="48" y2="10" stroke-width="1.2"/>
+            <line x1="9" y1="17" x2="52" y2="17" stroke-width="1.2"/>
+            <line x1="9" y1="24" x2="40" y2="24" stroke-width="1.2"/>
+            <circle cx="31" cy="42" r="7"/>
+            <path d="M25,47 L21,58 L31,52 L41,58 L37,47"/>
+          </g>
+          <g transform="translate(248,590)">
+            <circle cx="0" cy="0" r="19"/>
+            <line x1="0" y1="-19" x2="0" y2="-15"/>
+            <line x1="0" y1="15" x2="0" y2="19"/>
+            <line x1="-19" y1="0" x2="-15" y2="0"/>
+            <line x1="15" y1="0" x2="19" y2="0"/>
+            <path d="M0,-8 L3,0 L0,8 L-3,0 Z" fill="var(--ink-soft)" stroke="none" opacity="0.7"/>
+          </g>
+          <g fill="var(--ink-soft)" stroke="none">
+            <path d="M50,250 L52,256 L58,258 L52,260 L50,266 L48,260 L42,258 L48,256 Z"/>
+            <path d="M320,320 L321.5,324 L325.5,325.5 L321.5,327 L320,331 L318.5,327 L314.5,325.5 L318.5,324 Z"/>
+            <path d="M300,570 L301.5,574 L305.5,575.5 L301.5,577 L300,581 L298.5,577 L294.5,575.5 L298.5,574 Z"/>
+          </g>
+        </g>
+      </svg>
       <div class="stack-wrap deco" id="stackWrap">
         <div class="stub s3"></div>
         <div class="stub s2"></div>
@@ -1244,18 +1318,41 @@ const FAMILIES = [
   { id:"cultureuk", label:"Café et culture britannique", cardIds:["cultureuk1"] }
 ];
 
+/* Style visuel (couleur + emoji) par thème — façon tuiles de quiz. */
+const THEME_STYLE = {
+  chiffres:{bg:"#AEC6E8", emoji:"🔢"}, couleurs:{bg:"#F4C9A8", emoji:"🎨"},
+  jours:{bg:"#BFE3A0", emoji:"📅"}, presenter:{bg:"#F4B8C8", emoji:"👋"},
+  conversation:{bg:"#A8DCE8", emoji:"💬"}, aeroport:{bg:"#D8B4E8", emoji:"✈️"},
+  douane:{bg:"#F7D488", emoji:"🛂"}, hotel:{bg:"#F4B8C8", emoji:"🏨"},
+  transports:{bg:"#AEC6E8", emoji:"🚆"}, restaurant:{bg:"#F5B971", emoji:"🍽️"},
+  urgence:{bg:"#F4A0A0", emoji:"🚨"}, shopping:{bg:"#D8B4E8", emoji:"🛍️"},
+  meteo:{bg:"#A8DCE8", emoji:"⛅"}, emotions:{bg:"#F4C9A8", emoji:"😊"},
+  travail:{bg:"#AEC6E8", emoji:"💼"}, etudes:{bg:"#F7D488", emoji:"🎓"},
+  tech:{bg:"#BFE3A0", emoji:"💻"}, numerique:{bg:"#D8B4E8", emoji:"📱"},
+  expressions:{bg:"#F4B8C8", emoji:"🗣️"}, nourriture:{bg:"#F5B971", emoji:"🍎"},
+  corps:{bg:"#A8DCE8", emoji:"👕"}, sports:{bg:"#BFE3A0", emoji:"⚽"},
+  nature:{bg:"#BFE3A0", emoji:"🌳"}, adjectifs:{bg:"#F7D488", emoji:"✨"},
+  famille:{bg:"#F4B8C8", emoji:"👨‍👩‍👧"}, ordinaux:{bg:"#F7D488", emoji:"🥇"},
+  ukus:{bg:"#AEC6E8", emoji:"🇬🇧"}, fauxamis:{bg:"#F4A0A0", emoji:"🙃"},
+  idiomes:{bg:"#D8B4E8", emoji:"💡"}, mois:{bg:"#F5B971", emoji:"🍂"},
+  heure:{bg:"#A8DCE8", emoji:"🕐"}, prepositions:{bg:"#BFE3A0", emoji:"📍"},
+  loisirs:{bg:"#F4C9A8", emoji:"🎯"}, politesse:{bg:"#F4B8C8", emoji:"🙏"},
+  logement:{bg:"#F7D488", emoji:"🔑"}, courses:{bg:"#BFE3A0", emoji:"🛒"},
+  allergies:{bg:"#A8DCE8", emoji:"🥗"}, cultureuk:{bg:"#D8B4E8", emoji:"☕"}
+};
+
 /* Catégories de la base de savoir. Seul "anglais" a des cartes pour
    l'instant ; les autres sont affichées en "bientôt disponible". */
 const CATEGORIES = [
-  { id:"anglais", label:"Anglais", available:true, icon:"🇬🇧", accent:"#2B4C7E" },
-  { id:"histoire", label:"Histoire", available:false, icon:"🏛️", accent:"#A3572F" },
-  { id:"geographie", label:"Géographie", available:false, icon:"🌍", accent:"#2F7A5C" },
-  { id:"politique", label:"Politique", available:false, icon:"🗳️", accent:"#6B4E8E" },
-  { id:"sante", label:"Santé", available:false, icon:"🩺", accent:"#A3302F" },
-  { id:"nutrition", label:"Nutrition", available:false, icon:"🥗", accent:"#5C8A3A" },
-  { id:"allemand", label:"Allemand", available:false, icon:"🇩🇪", accent:"#2B2B2B" },
-  { id:"darija", label:"Darija algérien", available:false, icon:"🇩🇿", accent:"#2F7A46" },
-  { id:"luxembourgeois", label:"Luxembourgeois", available:false, icon:"🇱🇺", accent:"#3E7CB8" }
+  { id:"anglais", label:"Anglais", available:true, icon:"🇬🇧", accent:"#2B4C7E", bg:"#AEC6E8" },
+  { id:"histoire", label:"Histoire", available:false, icon:"🏛️", accent:"#A3572F", bg:"#F4C9A8" },
+  { id:"geographie", label:"Géographie", available:false, icon:"🌍", accent:"#2F7A5C", bg:"#BFE3A0" },
+  { id:"politique", label:"Politique", available:false, icon:"🗳️", accent:"#6B4E8E", bg:"#D8B4E8" },
+  { id:"sante", label:"Santé", available:false, icon:"🩺", accent:"#A3302F", bg:"#F4A0A0" },
+  { id:"nutrition", label:"Nutrition", available:false, icon:"🥗", accent:"#5C8A3A", bg:"#C9E8A0" },
+  { id:"allemand", label:"Allemand", available:false, icon:"🇩🇪", accent:"#2B2B2B", bg:"#F7D488" },
+  { id:"darija", label:"Darija algérien", available:false, icon:"🇩🇿", accent:"#2F7A46", bg:"#A8D9B0" },
+  { id:"luxembourgeois", label:"Luxembourgeois", available:false, icon:"🇱🇺", accent:"#3E7CB8", bg:"#A8DCE8" }
 ];
 
 const FAV_KEY = "carnet_anglais_favoris";
@@ -1401,7 +1498,18 @@ function renderFavCategories(){
   grid.innerHTML = "";
   const cards = getFavs().map(resolveCardById).filter(Boolean);
   if(cards.length === 0){
-    grid.innerHTML = `<div class="fav-empty">Aucune carte enregistrée.<br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</div>`;
+    grid.innerHTML = `
+      <div class="fav-empty">
+        <svg class="fav-empty-art" viewBox="0 0 120 100" fill="none">
+          <rect x="18" y="38" width="70" height="48" rx="8" fill="var(--paper-dark)" stroke="var(--card-border)" stroke-width="2" transform="rotate(-6 53 62)"/>
+          <rect x="28" y="34" width="70" height="48" rx="8" fill="var(--paper)" stroke="var(--card-border)" stroke-width="2" transform="rotate(3 63 58)"/>
+          <rect x="24" y="30" width="70" height="48" rx="8" fill="#F0EAE1" stroke="var(--card-border)" stroke-width="2"/>
+          <line x1="34" y1="46" x2="80" y2="46" stroke="var(--card-border)" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="34" y1="58" x2="70" y2="58" stroke="var(--card-border)" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M78 10 L82.5 19 L92.5 20.5 L85 27.5 L86.5 37.5 L78 32.5 L69.5 37.5 L71 27.5 L63.5 20.5 L73.5 19 Z" fill="var(--gold)"/>
+        </svg>
+        <p><b>Retrouve ici tes fiches favorites.</b><br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</p>
+      </div>`;
     return;
   }
   const catIds = [...new Set(cards.map(categoryIdForCard))];
@@ -1410,8 +1518,9 @@ function renderFavCategories(){
     if(!cat) return;
     const count = cards.filter(c=>categoryIdForCard(c)===catId).length;
     const tile = document.createElement("div");
-    tile.className = "tile tile-cat tile-available";
-    tile.innerHTML = `<div class="cat-icon" style="background:${cat.accent}22; color:${cat.accent}">${cat.icon}</div><div class="name">${cat.label}</div><div class="count">${count} carte${count>1?"s":""}</div>`;
+    tile.className = "tile tile-theme tile-available";
+    tile.style.background = cat.bg;
+    tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div><div class="count">${count} carte${count>1?"s":""}</div>`;
     tile.addEventListener("click", ()=> openFavCategory(cat));
     grid.appendChild(tile);
   });
@@ -1537,13 +1646,13 @@ function renderCategories(){
   grid.innerHTML = "";
   CATEGORIES.forEach(cat=>{
     const tile = document.createElement("div");
-    tile.className = "tile tile-cat" + (cat.available ? " tile-available" : " tile-soon");
-    const badge = `<div class="cat-icon" style="background:${cat.accent}22; color:${cat.accent}">${cat.icon}</div>`;
+    tile.className = "tile tile-theme" + (cat.available ? " tile-available" : " tile-soon");
+    tile.style.background = cat.bg;
     if(cat.available){
-      tile.innerHTML = `${badge}<div class="name">${cat.label}</div>`;
+      tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div>`;
       tile.addEventListener("click", ()=> openCategory(cat));
     } else {
-      tile.innerHTML = `${badge}<div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
+      tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
     }
     grid.appendChild(tile);
   });
@@ -1557,9 +1666,11 @@ function renderThemesForCategory(cat){
   sorted.forEach(family=>{
     const cards = DECK.filter(c=>family.cardIds.includes(c.id));
     const wordCount = cards.reduce((sum,c)=>sum+c.items.length,0);
+    const style = THEME_STYLE[family.id] || {bg:"var(--paper-dark)", emoji:"📖"};
     const tile = document.createElement("div");
-    tile.className = "tile";
-    tile.innerHTML = `<div class="name">${family.label}</div><div class="count">${wordCount} mots</div>`;
+    tile.className = "tile tile-theme";
+    tile.style.background = style.bg;
+    tile.innerHTML = `<span class="theme-emoji">${style.emoji}</span><div class="name">${family.label}</div><div class="count">${wordCount} mots</div>`;
     tile.addEventListener("click", ()=> drawWithinTheme(family));
     grid.appendChild(tile);
   });
