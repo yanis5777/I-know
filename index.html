@@ -24,13 +24,12 @@
     --paper-dark:#EAE2D5;
     --card-border:#D8CFC4;
     --ink:#1A1412;
-    --ink-soft:#6E635B;
-    --ph:#8C7F75;
+    --ink-soft:#4F453C;
+    --ph:#6B5F55;
     --stamp:#A32F1F;
     --airmail:#2B4C7E;
     --line:#D8CFC4;
     --gold:#B8862E;
-    --bg-nav:#E8E2D5;
     --action-bg:#2C2523;
     --action-text:#F0EAE1;
   }
@@ -164,11 +163,11 @@
   .draw-btn:active{ transform:translateY(1px); }
   .draw-btn:disabled{ opacity:0.55; }
   .home-note{
-    margin-top:12px;
-    font-size:11px;
-    color:var(--ink-soft);
+    margin-top:14px;
+    font-size:13.5px;
+    color:#3A322B;
     text-align:center;
-    line-height:1.5;
+    line-height:1.55;
     flex-shrink:0;
   }
   .home-note b{ color:var(--ink); }
@@ -220,13 +219,13 @@
   }
   .item:last-child{ border-bottom:none; }
   .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.22em; }
-  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:#6E635B; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:#4F453C; }
   .pair .en{
     font-family:'Inter', sans-serif; font-weight:700; font-size:1.2em;
     color:#1A1412;
     line-height:1.2;
   }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:#8C7F75; margin-top:0.22em; }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:#6B5F55; margin-top:0.22em; }
 
   .card-actions{
     flex-shrink:0;
@@ -234,13 +233,13 @@
   }
   .btn-ghost{
     flex:1; background:rgba(26,20,18,0.06); border:1.5px solid var(--card-border); color:var(--ink);
-    border-radius:9px; padding:10.5px 8px; font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    border-radius:8px; padding:8px 6px; font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
   }
   .btn-solid{
     flex:1.3; background:var(--action-bg); border:1.5px solid var(--action-bg); color:var(--action-text);
-    border-radius:9px; padding:11px 8px; font-family:'IBM Plex Mono', monospace;
-    font-size:11.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
+    border-radius:8px; padding:8.5px 6px; font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
   }
   .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
 
@@ -313,34 +312,51 @@
      - aucune hauteur fixe : le bandeau se dimensionne par son contenu +
        padding, la safe-area iOS s'ajoute dynamiquement en plus, jamais
        à la place */
+  /* ---------- BOTTOM NAV — style "Liquid Glass" ----------
+     Trois pilules détachées, flottantes au-dessus du bord de l'écran,
+     avec effet de verre translucide (backdrop-filter) plutôt qu'un
+     bandeau plein. Le bouton actif se distingue par un fond plein
+     (au lieu d'une couleur de texte différente sur fond uniforme). */
   .bottomnav{
     position:fixed;
     left:0; right:0; bottom:0;
-    background:var(--bg-nav);
-    padding-bottom:max(12px, env(safe-area-inset-bottom,0px));
+    padding:0 16px calc(8px + env(safe-area-inset-bottom,0px));
     z-index:1000;
+    pointer-events:none;
   }
   .nav-inner{
     display:flex;
-    align-items:stretch;
+    gap:8px;
     max-width:460px;
     margin:0 auto;
+    pointer-events:auto;
   }
   .nav-btn{
     flex:1;
-    min-height:40px;
+    min-height:44px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
-    background:none; border:none; border-radius:10px;
-    padding:5px 4px;
+    background:rgba(240,234,225,0.55);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    backdrop-filter:blur(20px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.5);
+    border-radius:15px;
+    box-shadow:0 3px 12px rgba(26,20,18,0.09);
+    padding:4px 4px;
     font-family:'IBM Plex Mono', monospace;
-    font-size:10px; letter-spacing:0.02em; font-weight:500;
-    color:rgba(26,20,18,0.5);
+    font-size:9px; letter-spacing:0.02em; font-weight:500;
+    color:rgba(26,20,18,0.55);
     cursor:pointer;
-    transition:color .15s ease;
+    transition:background .18s ease, color .18s ease, box-shadow .18s ease;
   }
-  .nav-btn:active{ background:rgba(26,20,18,0.06); }
-  .nav-btn svg{ width:20px; height:20px; stroke-width:1.6; transition:stroke-width .15s ease; }
-  .nav-btn.active{ color:var(--ink); font-weight:700; }
+  .nav-btn:active{ box-shadow:0 2px 8px rgba(26,20,18,0.10); }
+  .nav-btn svg{ width:17px; height:17px; stroke-width:1.6; transition:stroke-width .15s ease; }
+  .nav-btn.active{
+    background:var(--action-bg);
+    border-color:var(--action-bg);
+    color:var(--action-text);
+    font-weight:700;
+    box-shadow:0 6px 16px rgba(26,20,18,0.22);
+  }
   .nav-btn.active svg{ stroke-width:2.2; }
 </style>
 </head>
