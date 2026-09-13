@@ -219,15 +219,20 @@
   #homeView .home-note{ width:88%; }
   .theme-toggle{
     display:flex; align-items:center; justify-content:center; gap:8px;
-    width:100%; margin-top:12px; padding:13px 16px;
-    background:var(--paper-dark); border:1.5px solid var(--card-border); border-radius:11px;
-    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600; letter-spacing:0.02em;
-    color:var(--ink); cursor:pointer;
+    width:auto; align-self:center; margin-top:14px; padding:14px 26px;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMDAgODAnPgogIDxyZWN0IHdpZHRoPSczMDAnIGhlaWdodD0nODAnIGZpbGw9JyNGMEVBRTEnLz4KICA8cGF0aCBkPSdNLTEwLDE4IEM0MCwtNSA4MCw0OCAxMzAsMTQgQzE4MCwtMTIgMjIwLDQ0IDMxMCw4JyBzdHJva2U9JyNBRUM2RTgnIHN0cm9rZS13aWR0aD0nMTEnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgb3BhY2l0eT0nMC40NScvPgogIDxwYXRoIGQ9J00tMTAsNTIgQzUwLDY4IDkwLDggMTQwLDU1IEMxOTAsODQgMjMwLDE4IDMxMCw1OCcgc3Ryb2tlPScjRjRDOUE4JyBzdHJva2Utd2lkdGg9JzExJyBmaWxsPSdub25lJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIG9wYWNpdHk9JzAuNDUnLz4KICA8cGF0aCBkPSdNLTEwLDggQzYwLDM4IDEwMCwtOCAxNjAsMzIgQzIxMCw1OCAyNTAsNCAzMTAsMzYnIHN0cm9rZT0nI0JGRTNBMCcgc3Ryb2tlLXdpZHRoPScxMCcgZmlsbD0nbm9uZScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBvcGFjaXR5PScwLjQnLz4KICA8cGF0aCBkPSdNLTEwLDY4IEM0MCwzMiA5MCw3MiAxNTAsMjYgQzIwMCwtNCAyNDAsNTggMzEwLDIwJyBzdHJva2U9JyNEOEI0RTgnIHN0cm9rZS13aWR0aD0nMTAnIGZpbGw9J25vbmUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgb3BhY2l0eT0nMC40Jy8+CiAgPHBhdGggZD0nTS0xMCwzOCBDNTUsMTQgOTUsNjAgMTQ1LDEwIEMxOTUsLTE4IDIzNSwzOCAzMTAsNjYnIHN0cm9rZT0nI0Y0QTBBMCcgc3Ryb2tlLXdpZHRoPSc5JyBmaWxsPSdub25lJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIG9wYWNpdHk9JzAuMzgnLz4KICA8cGF0aCBkPSdNLTEwLDIgQzQ1LDU0IDg1LC00IDEzNSw0OCBDMTg1LDc2IDIyNSwxNCAzMTAsNDgnIHN0cm9rZT0nI0Y3RDQ4OCcgc3Ryb2tlLXdpZHRoPSc5JyBmaWxsPSdub25lJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIG9wYWNpdHk9JzAuMzgnLz4KICA8cGF0aCBkPSdNLTEwLDYwIEM0NSwzMCA5NSw2NiAxNTUsMTggQzIwNSwtOCAyNDUsNDggMzEwLDQnIHN0cm9rZT0nI0E4RENFOCcgc3Ryb2tlLXdpZHRoPSc4JyBmaWxsPSdub25lJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIG9wYWNpdHk9JzAuMzUnLz4KICA8cGF0aCBkPSdNLTEwLDMwIEM1MCw1OCAxMDAsNCAxNTAsNDQgQzIwMCw3MiAyNDAsOCAzMTAsNDInIHN0cm9rZT0nI0Y1Qjk3MScgc3Ryb2tlLXdpZHRoPSc4JyBmaWxsPSdub25lJyBzdHJva2UtbGluZWNhcD0ncm91bmQnIG9wYWNpdHk9JzAuMzUnLz4KPC9zdmc+Cg==");
+    background-size:cover; background-position:center;
+    border:none; border-radius:999px;
+    box-shadow:0 5px 16px rgba(26,20,18,0.18);
+    font-family:'IBM Plex Mono', monospace; font-size:14.5px; font-weight:700; letter-spacing:0.02em;
+    color:#2A2118; cursor:pointer;
+    position:relative;
+    text-shadow:0 1px 2px rgba(255,255,255,0.5);
   }
-  .theme-toggle svg{ width:16px; height:16px; flex-shrink:0; }
-  .theme-toggle .chev{ width:14px; height:14px; transition:transform .2s ease; color:var(--ink-soft); }
-  .theme-toggle.open{ background:var(--action-bg); border-color:var(--action-bg); color:var(--action-text); }
-  .theme-toggle.open .chev{ transform:rotate(180deg); color:var(--action-text); }
+  .theme-toggle svg{ width:16px; height:16px; flex-shrink:0; filter:drop-shadow(0 1px 1px rgba(255,255,255,0.5)); }
+  .theme-toggle .chev{ width:14px; height:14px; transition:transform .2s ease; color:#2A2118; }
+  .theme-toggle.open{ box-shadow:inset 0 2px 6px rgba(26,20,18,0.18); }
+  .theme-toggle.open .chev{ transform:rotate(180deg); }
   #themeGrid{ margin-top:12px; }
   #themeGrid[hidden]{ display:none; }
 
@@ -392,6 +397,20 @@
   .list-head .card-title{ font-size:17px; color:var(--ink); }
   #categoriesView, #favView{ justify-content:center; }
   #categoryGrid, #favCategoryGrid{ flex:none; overflow-y:visible; width:100%; }
+  .category-lead{
+    font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:500;
+    color:var(--ink); line-height:1.5; text-align:center;
+    margin:0 0 16px; flex-shrink:0;
+  }
+  #categoriesView .draw-btn{ margin-top:22px; }
+  .category-sub{ margin:8px 0 0; font-size:12.5px; color:var(--ink); font-weight:500; }
+  #globalDrawBtn{
+    width:auto; align-self:center;
+    padding:11px 22px; font-size:11.5px;
+    background:linear-gradient(155deg, #EFE3C4, #E6D6A8);
+    color:#3D2E12;
+    box-shadow:0 4px 14px rgba(184,134,46,0.22);
+  }
   .category-center{
     flex:1; min-height:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -668,7 +687,10 @@
 
     <!-- CATEGORIES -->
     <div class="view" id="categoriesView">
+      <p class="category-lead">Choisis une catégorie pour piocher dans ses thèmes, ou pioche dans tout, tout en bas.</p>
       <div class="grid-list" id="categoryGrid"></div>
+      <button class="draw-btn" id="globalDrawBtn">PIOCHER UNE CARTE AU HASARD</button>
+      <p class="category-lead category-sub">Toutes catégories et tous thèmes confondus.</p>
     </div>
 
     <!-- CATEGORY DETAIL -->
@@ -686,7 +708,7 @@
             <div class="compass" id="categoryStackIcon">🇬🇧</div>
           </div>
         </div>
-        <p class="home-note category-hint">Touche la pile pour piocher une carte au hasard</p>
+        <p class="home-note category-hint">Touche la pile pour piocher une carte</p>
       </div>
       <button class="theme-toggle" id="themeToggle">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -1665,6 +1687,15 @@ function drawCategoryRandom(){
   }, 400);
 }
 
+/* Pioche dans absolument tout le contenu existant, toutes catégories et
+   tous thèmes confondus (pour l'instant, seul "anglais" a des cartes,
+   donc c'est équivalent — mais ça restera vrai quand d'autres
+   catégories auront des données). */
+function drawGlobalRandom(){
+  ctx = { origin:"globalRandom", categoryId:null, pool:null };
+  renderCard(pickRandom(null));
+}
+
 function drawWithinTheme(family){
   ctx = { origin:"categoryTheme", categoryId:currentCategory.id, pool:family.cardIds };
   renderCard(pickRandom(family.cardIds));
@@ -1690,6 +1721,8 @@ document.getElementById("cardExitBtn").addEventListener("click", ()=>{
   if(ctx.origin === "categoryRandom" || ctx.origin === "categoryTheme"){
     const cat = CATEGORIES.find(c=>c.id===ctx.categoryId) || currentCategory;
     openCategory(cat);
+  } else if(ctx.origin === "globalRandom"){
+    renderCategories(); showView("categories");
   } else if(ctx.origin === "favorites"){
     if(favCtx.familyId){
       const cards = getFavs().map(resolveCardById).filter(Boolean).filter(c=>familyIdForCard(c)===favCtx.familyId);
@@ -1702,6 +1735,7 @@ document.getElementById("cardExitBtn").addEventListener("click", ()=>{
     showView("home");
   }
 });
+document.getElementById("globalDrawBtn").addEventListener("click", drawGlobalRandom);
 
 function renderCategories(){
   const grid = document.getElementById("categoryGrid");
