@@ -1,0 +1,12 @@
+{
+  "name": "Carnet d'Anglais",
+  "short_name": "Carnet d'Anglais",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#231B17",
+  "theme_color": "#231B17",
+  "icons": [
+    { "src": "icon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
