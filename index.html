@@ -96,6 +96,12 @@
     min-height:0;
   }
   .view.showing{ display:flex; }
+  /* Marges propres à la carte : plus d'air en haut (sous le titre) et en
+     bas (avant les pilules de nav), et un peu plus étroite sur les côtés
+     pour ne pas toucher les bords — évite l'effet "étouffé". */
+  #cardView{
+    margin:16px 14px 50px;
+  }
 
   /* ---------- HOME / STACK ---------- */
   #homeView{ align-items:center; justify-content:center; gap:0; }
@@ -508,29 +514,21 @@
 
 <script>
 const DECK = [
-  { id:"nb1a", cat:"Les chiffres 0 à 5", items:[
+  { id:"nb1", cat:"Les chiffres 0 à 9", items:[
     ["zéro","zero","zi-rôou"],["un","one","ouane"],["deux","two","tou"],
-    ["trois","three","thri"],["quatre","four","for"],["cinq","five","faïve"]
+    ["trois","three","thri"],["quatre","four","for"],["cinq","five","faïve"],
+    ["six","six","sixe"],["sept","seven","sèv'n"],["huit","eight","éte"],["neuf","nine","naïne"]
   ]},
-  { id:"nb1b", cat:"Les chiffres 6 à 10", items:[
-    ["six","six","sixe"],["sept","seven","sèv'n"],
-    ["huit","eight","éte"],["neuf","nine","naïne"],["dix","ten","tènne"]
+  { id:"nb2", cat:"Les chiffres 10 à 19", items:[
+    ["dix","ten","tènne"],["onze","eleven","i-lèv'n"],["douze","twelve","touèlve"],["treize","thirteen","theur-tine"],
+    ["quatorze","fourteen","for-tine"],["quinze","fifteen","fif-tine"],["seize","sixteen","six-tine"],
+    ["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],["dix-neuf","nineteen","naïne-tine"]
   ]},
-  { id:"nb2a", cat:"Les chiffres 11 à 15", items:[
-    ["onze","eleven","i-lèv'n"],["douze","twelve","touèlve"],["treize","thirteen","theur-tine"],
-    ["quatorze","fourteen","for-tine"],["quinze","fifteen","fif-tine"]
-  ]},
-  { id:"nb2b", cat:"Les chiffres 16 à 20", items:[
-    ["seize","sixteen","six-tine"],["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],
-    ["dix-neuf","nineteen","naïne-tine"],["vingt","twenty","touènti"]
-  ]},
-  { id:"nb3a", cat:"Dizaines : 30 à 60", items:[
-    ["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
-    ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"]
-  ]},
-  { id:"nb3b", cat:"Dizaines et grands nombres", items:[
-    ["soixante-dix","seventy","sèv'n-ti"],["quatre-vingts","eighty","éi-ti"],
-    ["quatre-vingt-dix","ninety","naïne-ti"],["cent","hundred","heunn-dreud"],["mille","thousand","thaou-zeund"]
+  { id:"nb3", cat:"Dizaines et grands nombres", items:[
+    ["vingt","twenty","touènti"],["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
+    ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"],["soixante-dix","seventy","sèv'n-ti"],
+    ["quatre-vingts","eighty","éi-ti"],["quatre-vingt-dix","ninety","naïne-ti"],["cent","hundred","heunn-dreud"],
+    ["mille","thousand","thaou-zeund"]
   ]},
   { id:"col1", cat:"Les couleurs (1/2)", items:[
     ["rouge","red","rèdde"],["bleu","blue","blou"],["vert","green","grine"],
@@ -990,7 +988,7 @@ const DECK = [
 ];
 
 const FAMILIES = [
-  { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1a","nb1b","nb2a","nb2b","nb3a","nb3b"] },
+  { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1","nb2","nb3"] },
   { id:"couleurs", label:"Les couleurs", cardIds:["col1","col2"] },
   { id:"jours", label:"Les jours de la semaine", cardIds:["jrs1","jrs2"] },
   { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b","renc1c"] },
@@ -1146,7 +1144,7 @@ function resolveCardById(id){
 
 function drawWithinTheme(family){
   ctx = { origin:"themes", pool:family.cardIds };
-  renderCard(buildThemeCard(family));
+  renderCard(pickRandom(family.cardIds));
 }
 
 function openFavorite(card){
