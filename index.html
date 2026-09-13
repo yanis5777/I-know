@@ -395,7 +395,7 @@
   }
   .list-head .card-num{ color:var(--ink-soft); }
   .list-head .card-title{ font-size:17px; color:var(--ink); }
-  #categoriesView, #favView{ justify-content:center; }
+  #categoriesView, #favView{ justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; }
   #categoryGrid, #favCategoryGrid{ flex:none; overflow-y:visible; width:100%; }
   .category-lead{
     font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:500;
@@ -430,7 +430,7 @@
     flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:6px;
+    gap:12px;
     align-content:start;
     font-size:14px;
     padding-bottom:4px;
