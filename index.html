@@ -32,32 +32,29 @@
     --off-white:#F2F0EC;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#231B17;touch-action:manipulation;}
+  html,body{margin:0;padding:0;background:#231B17;}
   body{
     background:var(--bg);
     color:var(--off-white);
     font-family:'IBM Plex Mono', monospace;
+    min-height:100dvh;
   }
 
-  /* Le conteneur s'ancre directement au vrai viewport plein écran
-     (position:fixed + inset haut/bas à 0) plutôt que d'hériter une
-     hauteur en % ou en dvh. En PWA standalone sur iOS, ces unités
-     renvoient parfois la hauteur "sûre" (sans la zone home indicator)
-     au lieu de l'écran réel, ce qui laissait une marge morte en bas.
-     Un élément fixed, lui, s'étend bien jusqu'au bord réel grâce à
-     viewport-fit=cover. */
+  /* Conteneur en flux normal, centré par margin:auto (pas de transform :
+     un transform sur un ancêtre casse le position:fixed de ses enfants,
+     c'était une partie du problème avec la nav plus tôt). Pas de hauteur
+     forcée ni d'overflow:hidden au niveau de la page : on laisse le
+     document respirer normalement, exactement comme dans l'app de
+     référence qui fonctionne. */
   .shell{
-    position:fixed;
-    top:0; bottom:0;
-    left:50%;
-    transform:translateX(-50%);
     width:100%;
     max-width:460px;
+    margin:0 auto;
+    min-height:100dvh;
     display:flex;
     flex-direction:column;
     padding:env(safe-area-inset-top,10px) 16px 0;
     padding-bottom:var(--navh, 70px);
-    min-height:0;
   }
 
   /* ---------- HEADER ---------- */
@@ -319,7 +316,7 @@
     left:0; right:0; bottom:0;
     background:var(--bg-nav);
     border-top:1px solid rgba(242,240,236,0.10);
-    padding-bottom:env(safe-area-inset-bottom,0px);
+    padding-bottom:max(4px, env(safe-area-inset-bottom,0px));
     z-index:1000;
   }
   .nav-inner{
