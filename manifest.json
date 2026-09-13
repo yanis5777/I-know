@@ -1,6 +1,6 @@
 {
-  "name": "Carnet d'Anglais",
-  "short_name": "Carnet d'Anglais",
+  "name": "I Know",
+  "short_name": "I Know",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#E8E2D5",
