@@ -212,6 +212,57 @@
     gap:0.4em;
     font-size:19px;
   }
+  /* Enveloppe qui permet de superposer l'indicateur de scroll par-dessus
+     le bas de la liste, sans changer la mise en page de .items. */
+  .items-outer{
+    flex:1;
+    min-height:0;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .items-outer .items{ flex:1; }
+  /* Dégradé + flèche qui indique qu'il y a du contenu à découvrir plus
+     bas. Masqué automatiquement quand on est arrivé en bas de la liste,
+     ou quand la carte tient déjà entièrement (pas besoin de scroller). */
+  .scroll-hint{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:40px;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    padding-bottom:2px;
+    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, #F0EAE1 70%);
+    pointer-events:none;
+    opacity:1;
+    transition:opacity .25s ease;
+  }
+  .scroll-hint.showing{ display:flex; }
+  .scroll-hint.hidden{ opacity:0; }
+  .scroll-hint svg{
+    width:16px; height:16px;
+    color:rgba(26,20,18,0.4);
+    animation:hintBounce 1.3s ease-in-out infinite;
+  }
+  @keyframes hintBounce{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(4px); }
+  }
+  /* Vue "thème complet" : tous les mots d'une catégorie dans une seule
+     carte, avec un vrai scroll interne (barre visible) au lieu du
+     rétrécissement automatique du texte — pour réviser une thématique
+     entière (famille, chiffres, couleurs...) sans revenir aux thèmes. */
+  .items.scrollable{
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    justify-content:flex-start;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(26,20,18,0.28) transparent;
+  }
+  .items.scrollable::-webkit-scrollbar{ width:6px; }
+  .items.scrollable::-webkit-scrollbar-track{ background:transparent; }
+  .items.scrollable::-webkit-scrollbar-thumb{ background:rgba(26,20,18,0.28); border-radius:4px; }
   .item{
     padding:0.42em 0.1em 0.58em;
     border-bottom:1px solid var(--line);
@@ -219,13 +270,13 @@
   }
   .item:last-child{ border-bottom:none; }
   .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.22em; }
-  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:#4F453C; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:0.95em; color:#3E362F; }
   .pair .en{
     font-family:'Inter', sans-serif; font-weight:700; font-size:1.2em;
     color:#1A1412;
     line-height:1.2;
   }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:#6B5F55; margin-top:0.22em; }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.7em; color:#594E45; margin-top:0.22em; }
 
   .card-actions{
     flex-shrink:0;
@@ -397,7 +448,12 @@
             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
           </button>
         </div>
-        <div class="items" id="itemsWrap"></div>
+        <div class="items-outer">
+          <div class="items" id="itemsWrap"></div>
+          <div class="scroll-hint" id="scrollHint">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
         <div class="card-actions">
           <button class="btn-ghost" id="backBtn">◂ Retour</button>
           <button class="btn-solid" id="anotherBtn">Autre carte</button>
@@ -462,8 +518,8 @@ const DECK = [
     ["seize","sixteen","six-tine"],["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],
     ["dix-neuf","nineteen","naïne-tine"],["vingt","twenty","touènti"]
   ]},
-  { id:"nb3a", cat:"Dizaines : 20 à 60", items:[
-    ["vingt","twenty","touènti"],["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
+  { id:"nb3a", cat:"Dizaines : 30 à 60", items:[
+    ["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
     ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"]
   ]},
   { id:"nb3b", cat:"Dizaines et grands nombres", items:[
@@ -1042,10 +1098,19 @@ function calibrateSharedFontSize(){
   wrap.innerHTML = "";
 }
 
+/* Masque l'indicateur de scroll une fois qu'on approche du bas de la
+   liste, ou s'il n'y a en fait rien à scroller (peu de mots). */
+function updateScrollHint(){
+  const wrap = document.getElementById("itemsWrap");
+  const hint = document.getElementById("scrollHint");
+  if(!hint.classList.contains("showing")) return;
+  const canScroll = wrap.scrollHeight > wrap.clientHeight + 2;
+  const atBottom = wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight - 4;
+  hint.classList.toggle("hidden", !canScroll || atBottom);
+}
+document.getElementById("itemsWrap").addEventListener("scroll", updateScrollHint);
+
 function renderCard(card){
-  const idx = DECK.findIndex(c=>c.id===card.id)+1;
-  document.getElementById("cardNum").textContent = "CARTE " + String(idx).padStart(2,"0") + "/" + DECK.length;
-  document.getElementById("cardTitle").textContent = card.cat;
   const wrap = document.getElementById("itemsWrap");
   wrap.innerHTML = "";
   card.items.forEach(([fr,en,ph])=>{
@@ -1055,16 +1120,36 @@ function renderCard(card){
     wrap.appendChild(div);
   });
 
-  const isFav = getFavs().includes(card.id);
   const starBtn = document.getElementById("starBtn");
-  starBtn.classList.toggle("active", isFav);
-  starBtn.onclick = ()=>{
-    const nowFav = toggleFav(card.id);
-    starBtn.classList.toggle("active", nowFav);
-  };
+  const anotherBtn = document.getElementById("anotherBtn");
+  const scrollHint = document.getElementById("scrollHint");
+  const merged = !!card.merged;
+  wrap.classList.toggle("scrollable", merged);
+  scrollHint.classList.toggle("showing", merged);
+
+  if(merged){
+    document.getElementById("cardNum").textContent = card.items.length + " MOTS";
+    starBtn.style.display = "none";
+    anotherBtn.style.display = "none";
+  } else {
+    const idx = DECK.findIndex(c=>c.id===card.id)+1;
+    document.getElementById("cardNum").textContent = "CARTE " + String(idx).padStart(2,"0") + "/" + DECK.length;
+    starBtn.style.display = "";
+    anotherBtn.style.display = "";
+    const isFav = getFavs().includes(card.id);
+    starBtn.classList.toggle("active", isFav);
+    starBtn.onclick = ()=>{
+      const nowFav = toggleFav(card.id);
+      starBtn.classList.toggle("active", nowFav);
+    };
+  }
+  document.getElementById("cardTitle").textContent = card.cat;
 
   showView("card");
-  if(sharedFontSize){
+  if(merged){
+    wrap.style.fontSize = "";
+    requestAnimationFrame(updateScrollHint);
+  } else if(sharedFontSize){
     wrap.style.fontSize = sharedFontSize + "px";
   } else {
     requestAnimationFrame(()=> fitToContainer(wrap, 22, 13, 0.4) );
@@ -1085,7 +1170,9 @@ function drawCard(){
 
 function drawWithinTheme(family){
   ctx = { origin:"themes", pool:family.cardIds };
-  renderCard(pickRandom(family.cardIds));
+  const cards = DECK.filter(c=>family.cardIds.includes(c.id));
+  const items = cards.flatMap(c=>c.items);
+  renderCard({ id:"theme-"+family.id, cat:family.label, items, merged:true });
 }
 
 function openFavorite(card){
@@ -1161,8 +1248,13 @@ if(document.fonts && document.fonts.ready){
 window.addEventListener("resize", ()=>{
   syncNavHeight();
   calibrateSharedFontSize();
+  const wrap = document.getElementById("itemsWrap");
   if(views.card.classList.contains("showing")){
-    document.getElementById("itemsWrap").style.fontSize = (sharedFontSize || 22) + "px";
+    if(wrap.classList.contains("scrollable")){
+      updateScrollHint();
+    } else {
+      wrap.style.fontSize = (sharedFontSize || 22) + "px";
+    }
   }
 });
 window.addEventListener("orientationchange", syncNavHeight);
