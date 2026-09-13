@@ -242,13 +242,15 @@
   }
   .card-head{
     flex-shrink:0;
-    display:flex; justify-content:space-between; align-items:flex-start;
-    margin-bottom:8px;
+    display:flex; justify-content:space-between; align-items:center;
   }
   .card-num{ font-size:10px; color:var(--ink-soft); letter-spacing:0.07em; }
+  .card-title-wrap{ flex-shrink:0; text-align:center; margin:6px 0 12px; }
   .card-title{
+    display:inline-block;
     font-family:'Fraunces', serif; font-weight:700; font-style:italic;
-    font-size:19px; margin-top:1px; color:var(--ink);
+    font-size:16.5px;
+    color:#2C4A63;
   }
   .star-btn{ background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft); }
   .star-btn svg{ width:20px; height:20px; }
@@ -354,8 +356,14 @@
   .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
 
   /* ---------- CATEGORIES / CATEGORY VIEW ---------- */
-  #categoriesView .list-head, #categoryView .list-head, #favView .list-head{
+  #categoriesView .list-head, #categoryView .list-head, #favView .list-head,
+  #favThemesView .list-head, #favCardsView .list-head{
     flex-shrink:0; margin-bottom:18px;
+  }
+  .back-link{
+    background:none; border:none; padding:0 0 12px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
+    color:var(--ink-soft); cursor:pointer; flex-shrink:0; text-align:left;
   }
   #categoryDrawBtn{ margin-bottom:2px; }
   .list-head .card-num{ color:var(--ink-soft); }
@@ -386,6 +394,13 @@
   .tile .name{
     font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
     line-height:1.2;
+  }
+  .tile-cat{ gap:8px; }
+  .cat-icon{
+    width:34px; height:34px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; line-height:1;
+    margin-bottom:2px;
   }
   .tile-available{
     background:linear-gradient(155deg, #EFE3C4, #E6D6A8);
@@ -522,13 +537,13 @@
     <div class="view" id="cardView">
       <div class="card">
         <div class="card-head">
-          <div>
-            <div class="card-num" id="cardNum">CARTE 00/18</div>
-            <div class="card-title" id="cardTitle">Titre</div>
-          </div>
+          <div class="card-num" id="cardNum">CARTE 00/18</div>
           <button class="star-btn" id="starBtn">
             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
           </button>
+        </div>
+        <div class="card-title-wrap">
+          <span class="card-title" id="cardTitle">Titre</span>
         </div>
         <div class="items-outer">
           <div class="items" id="itemsWrap"></div>
@@ -568,12 +583,33 @@
     </div>
 
     <!-- FAVORITES -->
+    <!-- FAVORITES: catégories -->
     <div class="view" id="favView">
       <div class="list-head">
         <div class="card-num">MES FAVORIS</div>
-        <div class="card-title">Cartes enregistrées</div>
+        <div class="card-title">Choisir une catégorie</div>
       </div>
-      <div class="fav-list" id="favList"></div>
+      <div class="grid-list" id="favCategoryGrid"></div>
+    </div>
+
+    <!-- FAVORITES: thèmes d'une catégorie -->
+    <div class="view" id="favThemesView">
+      <button class="back-link" id="favThemesBack">◂ Catégories</button>
+      <div class="list-head">
+        <div class="card-num" id="favThemesEyebrow">FAVORIS</div>
+        <div class="card-title" id="favThemesTitle">Anglais</div>
+      </div>
+      <div class="grid-list" id="favThemeGrid"></div>
+    </div>
+
+    <!-- FAVORITES: cartes d'un thème -->
+    <div class="view" id="favCardsView">
+      <button class="back-link" id="favCardsBack">◂ Thèmes</button>
+      <div class="list-head">
+        <div class="card-num" id="favCardsEyebrow">THÈME</div>
+        <div class="card-title" id="favCardsTitle">Famille</div>
+      </div>
+      <div class="fav-list" id="favCardList"></div>
     </div>
 
   </div>
@@ -1107,15 +1143,15 @@ const FAMILIES = [
 /* Catégories de la base de savoir. Seul "anglais" a des cartes pour
    l'instant ; les autres sont affichées en "bientôt disponible". */
 const CATEGORIES = [
-  { id:"anglais", label:"Anglais", available:true },
-  { id:"histoire", label:"Histoire", available:false },
-  { id:"geographie", label:"Géographie", available:false },
-  { id:"politique", label:"Politique", available:false },
-  { id:"sante", label:"Santé", available:false },
-  { id:"nutrition", label:"Nutrition", available:false },
-  { id:"allemand", label:"Allemand", available:false },
-  { id:"darija", label:"Darija algérien", available:false },
-  { id:"luxembourgeois", label:"Luxembourgeois", available:false }
+  { id:"anglais", label:"Anglais", available:true, icon:"🇬🇧", accent:"#2B4C7E" },
+  { id:"histoire", label:"Histoire", available:false, icon:"🏛️", accent:"#A3572F" },
+  { id:"geographie", label:"Géographie", available:false, icon:"🌍", accent:"#2F7A5C" },
+  { id:"politique", label:"Politique", available:false, icon:"🗳️", accent:"#6B4E8E" },
+  { id:"sante", label:"Santé", available:false, icon:"🩺", accent:"#A3302F" },
+  { id:"nutrition", label:"Nutrition", available:false, icon:"🥗", accent:"#5C8A3A" },
+  { id:"allemand", label:"Allemand", available:false, icon:"🇩🇪", accent:"#2B2B2B" },
+  { id:"darija", label:"Darija algérien", available:false, icon:"🇩🇿", accent:"#2F7A46" },
+  { id:"luxembourgeois", label:"Luxembourgeois", available:false, icon:"🇱🇺", accent:"#3E7CB8" }
 ];
 
 const FAV_KEY = "carnet_anglais_favoris";
@@ -1141,7 +1177,9 @@ const views = {
   card: document.getElementById("cardView"),
   categories: document.getElementById("categoriesView"),
   category: document.getElementById("categoryView"),
-  favorites: document.getElementById("favView")
+  favorites: document.getElementById("favView"),
+  favThemes: document.getElementById("favThemesView"),
+  favCards: document.getElementById("favCardsView")
 };
 const navBtns = document.querySelectorAll(".nav-btn");
 const stackWrap = document.getElementById("stackWrap");
@@ -1151,6 +1189,7 @@ function showView(name){
   views[name].classList.add("showing");
   let activeTab = name;
   if(name === "category") activeTab = "categories";
+  if(name === "favThemes" || name === "favCards") activeTab = "favorites";
   if(name === "card") activeTab = ctx.origin === "favorites" ? "favorites" : "categories";
   navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===activeTab));
 }
@@ -1240,6 +1279,96 @@ function findFamilyLabel(cardId){
   const fam = FAMILIES.find(f=>f.cardIds.includes(cardId));
   return fam ? fam.label : null;
 }
+/* Identifiant du thème (famille) d'une carte favorite, qu'elle soit une
+   carte normale ou un thème complet enregistré en favori. */
+function familyIdForCard(card){
+  if(card.merged) return card.id.slice(6);
+  const fam = FAMILIES.find(f=>f.cardIds.includes(card.id));
+  return fam ? fam.id : "autres";
+}
+/* Pour l'instant tout appartient à "anglais" — écrit de façon générique
+   pour accueillir les futures catégories sans tout retoucher. */
+function categoryIdForCard(card){ return "anglais"; }
+
+let favCtx = { categoryId:null, familyId:null };
+
+function renderFavCategories(){
+  const grid = document.getElementById("favCategoryGrid");
+  grid.innerHTML = "";
+  const cards = getFavs().map(resolveCardById).filter(Boolean);
+  if(cards.length === 0){
+    grid.innerHTML = `<div class="fav-empty">Aucune carte enregistrée.<br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</div>`;
+    return;
+  }
+  const catIds = [...new Set(cards.map(categoryIdForCard))];
+  catIds.forEach(catId=>{
+    const cat = CATEGORIES.find(c=>c.id===catId);
+    if(!cat) return;
+    const count = cards.filter(c=>categoryIdForCard(c)===catId).length;
+    const tile = document.createElement("div");
+    tile.className = "tile tile-cat tile-available";
+    tile.innerHTML = `<div class="cat-icon" style="background:${cat.accent}22; color:${cat.accent}">${cat.icon}</div><div class="name">${cat.label}</div><div class="count">${count} carte${count>1?"s":""}</div>`;
+    tile.addEventListener("click", ()=> openFavCategory(cat));
+    grid.appendChild(tile);
+  });
+}
+
+function openFavCategory(cat){
+  favCtx = { categoryId:cat.id, familyId:null };
+  document.getElementById("favThemesTitle").textContent = cat.label;
+  renderFavThemes(cat.id);
+  showView("favThemes");
+}
+
+function renderFavThemes(catId){
+  const grid = document.getElementById("favThemeGrid");
+  grid.innerHTML = "";
+  const cards = getFavs().map(resolveCardById).filter(Boolean).filter(c=>categoryIdForCard(c)===catId);
+  const byFamily = {};
+  cards.forEach(card=>{
+    const famId = familyIdForCard(card);
+    const fam = FAMILIES.find(f=>f.id===famId);
+    const label = fam ? fam.label : card.cat;
+    if(!byFamily[famId]) byFamily[famId] = { label, cards:[] };
+    byFamily[famId].cards.push(card);
+  });
+  Object.keys(byFamily).forEach(famId=>{
+    const group = byFamily[famId];
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.innerHTML = `<div class="name">${group.label}</div><div class="count">${group.cards.length} carte${group.cards.length>1?"s":""}</div>`;
+    tile.addEventListener("click", ()=> openFavTheme(famId, group.label, group.cards));
+    grid.appendChild(tile);
+  });
+}
+
+function openFavTheme(famId, label, cards){
+  favCtx.familyId = famId;
+  document.getElementById("favCardsTitle").textContent = label;
+  renderFavCards(cards);
+  showView("favCards");
+}
+
+function renderFavCards(cards){
+  const list = document.getElementById("favCardList");
+  list.innerHTML = "";
+  cards.forEach(card=>{
+    const row = document.createElement("div");
+    row.className = "fav-row";
+    row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${card.items.length} mots</span>`;
+    row.addEventListener("click", ()=> openFavorite(card));
+    list.appendChild(row);
+  });
+}
+
+document.getElementById("favThemesBack").addEventListener("click", ()=>{
+  renderFavCategories(); showView("favorites");
+});
+document.getElementById("favCardsBack").addEventListener("click", ()=>{
+  const cat = CATEGORIES.find(c=>c.id===favCtx.categoryId);
+  if(cat) openFavCategory(cat);
+  else { renderFavCategories(); showView("favorites"); }
+});
 
 function openCategory(cat){
   currentCategory = cat;
@@ -1287,7 +1416,13 @@ document.getElementById("backBtn").addEventListener("click", ()=>{
     const cat = CATEGORIES.find(c=>c.id===ctx.categoryId) || currentCategory;
     openCategory(cat);
   } else if(ctx.origin === "favorites"){
-    renderFavList(); showView("favorites");
+    if(favCtx.familyId){
+      const cards = getFavs().map(resolveCardById).filter(Boolean).filter(c=>familyIdForCard(c)===favCtx.familyId);
+      renderFavCards(cards);
+      showView("favCards");
+    } else {
+      renderFavCategories(); showView("favorites");
+    }
   } else {
     showView("home");
   }
@@ -1298,12 +1433,13 @@ function renderCategories(){
   grid.innerHTML = "";
   CATEGORIES.forEach(cat=>{
     const tile = document.createElement("div");
-    tile.className = "tile" + (cat.available ? " tile-available" : " tile-soon");
+    tile.className = "tile tile-cat" + (cat.available ? " tile-available" : " tile-soon");
+    const badge = `<div class="cat-icon" style="background:${cat.accent}22; color:${cat.accent}">${cat.icon}</div>`;
     if(cat.available){
-      tile.innerHTML = `<div class="name">${cat.label}</div>`;
+      tile.innerHTML = `${badge}<div class="name">${cat.label}</div>`;
       tile.addEventListener("click", ()=> openCategory(cat));
     } else {
-      tile.innerHTML = `<div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
+      tile.innerHTML = `${badge}<div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
     }
     grid.appendChild(tile);
   });
@@ -1324,46 +1460,12 @@ function renderThemesForCategory(cat){
   });
 }
 
-function renderFavList(){
-  const favs = getFavs();
-  const list = document.getElementById("favList");
-  list.innerHTML = "";
-  if(favs.length === 0){
-    list.innerHTML = `<div class="fav-empty">Aucune carte enregistrée.<br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</div>`;
-    return;
-  }
-  /* Regroupe par catégorie (pour l'instant, tout est en Anglais — les
-     futures catégories rejoindront ce regroupement naturellement). */
-  const groups = {};
-  favs.forEach(id=>{
-    const card = resolveCardById(id);
-    if(!card) return;
-    const catLabel = "Anglais";
-    if(!groups[catLabel]) groups[catLabel] = [];
-    groups[catLabel].push(card);
-  });
-  Object.keys(groups).forEach(catLabel=>{
-    const header = document.createElement("div");
-    header.className = "fav-group-label";
-    header.textContent = catLabel.toUpperCase();
-    list.appendChild(header);
-    groups[catLabel].forEach(card=>{
-      const themeLabel = card.merged ? card.cat : findFamilyLabel(card.id);
-      const sub = themeLabel && themeLabel !== card.cat ? `${themeLabel} · ${card.items.length} mots` : `${card.items.length} mots`;
-      const row = document.createElement("div");
-      row.className = "fav-row";
-      row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${sub}</span>`;
-      row.addEventListener("click", ()=> openFavorite(card));
-      list.appendChild(row);
-    });
-  });
-}
 
 navBtns.forEach(btn=>{
   btn.addEventListener("click", ()=>{
     const tab = btn.dataset.tab;
     if(tab === "categories") renderCategories();
-    if(tab === "favorites") renderFavList();
+    if(tab === "favorites") renderFavCategories();
     showView(tab);
   });
 });
