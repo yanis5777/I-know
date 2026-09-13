@@ -181,14 +181,11 @@
     min-height:0;
     display:flex;
     flex-direction:column;
-    background:rgba(240,234,225,0.72);
-    -webkit-backdrop-filter:blur(24px) saturate(160%);
-    backdrop-filter:blur(24px) saturate(160%);
-    border:1px solid rgba(255,255,255,0.55);
-    border-radius:18px;
+    background:#F0EAE1;
+    border:1px solid #D8CFC4;
+    border-radius:14px;
     padding:14px 14px 12px;
     position:relative;
-    box-shadow:0 10px 32px rgba(26,20,18,0.10), inset 0 1px 0 rgba(255,255,255,0.45);
   }
   .card-head{
     flex-shrink:0;
@@ -231,12 +228,12 @@
   .scroll-hint{
     position:absolute;
     left:0; right:0; bottom:0;
-    height:46px;
+    height:40px;
     display:none;
     align-items:flex-end;
     justify-content:center;
-    padding-bottom:3px;
-    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, rgba(240,234,225,0.85) 65%);
+    padding-bottom:2px;
+    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, #F0EAE1 70%);
     pointer-events:none;
     opacity:1;
     transition:opacity .25s ease;
@@ -244,8 +241,8 @@
   .scroll-hint.showing{ display:flex; }
   .scroll-hint.hidden{ opacity:0; }
   .scroll-hint svg{
-    width:24px; height:24px;
-    color:rgba(26,20,18,0.45);
+    width:16px; height:16px;
+    color:rgba(26,20,18,0.4);
     animation:hintBounce 1.3s ease-in-out infinite;
   }
   @keyframes hintBounce{
@@ -1098,20 +1095,19 @@ function renderCard(card){
 
   if(merged){
     document.getElementById("cardNum").textContent = card.items.length + " MOTS";
-    starBtn.style.display = "none";
     anotherBtn.style.display = "none";
   } else {
     const idx = DECK.findIndex(c=>c.id===card.id)+1;
     document.getElementById("cardNum").textContent = "CARTE " + String(idx).padStart(2,"0") + "/" + DECK.length;
-    starBtn.style.display = "";
     anotherBtn.style.display = "";
-    const isFav = getFavs().includes(card.id);
-    starBtn.classList.toggle("active", isFav);
-    starBtn.onclick = ()=>{
-      const nowFav = toggleFav(card.id);
-      starBtn.classList.toggle("active", nowFav);
-    };
   }
+  starBtn.style.display = "";
+  const isFav = getFavs().includes(card.id);
+  starBtn.classList.toggle("active", isFav);
+  starBtn.onclick = ()=>{
+    const nowFav = toggleFav(card.id);
+    starBtn.classList.toggle("active", nowFav);
+  };
   document.getElementById("cardTitle").textContent = card.cat;
 
   wrap.scrollTop = 0;
@@ -1131,11 +1127,26 @@ function drawCard(){
   }, 500);
 }
 
-function drawWithinTheme(family){
-  ctx = { origin:"themes", pool:family.cardIds };
+function buildThemeCard(family){
   const cards = DECK.filter(c=>family.cardIds.includes(c.id));
   const items = cards.flatMap(c=>c.items);
-  renderCard({ id:"theme-"+family.id, cat:family.label, items, merged:true });
+  return { id:"theme-"+family.id, cat:family.label, items, merged:true };
+}
+
+/* Retrouve une carte à partir de son id, qu'il s'agisse d'une carte
+   normale du paquet ou d'un thème complet enregistré en favori
+   (id préfixé "theme-"). */
+function resolveCardById(id){
+  if(id.indexOf("theme-") === 0){
+    const family = FAMILIES.find(f=>"theme-"+f.id === id);
+    return family ? buildThemeCard(family) : null;
+  }
+  return DECK.find(c=>c.id===id) || null;
+}
+
+function drawWithinTheme(family){
+  ctx = { origin:"themes", pool:family.cardIds };
+  renderCard(buildThemeCard(family));
 }
 
 function openFavorite(card){
@@ -1177,7 +1188,7 @@ function renderFavList(){
     return;
   }
   favs.forEach(id=>{
-    const card = DECK.find(c=>c.id===id);
+    const card = resolveCardById(id);
     if(!card) return;
     const row = document.createElement("div");
     row.className = "fav-row";
