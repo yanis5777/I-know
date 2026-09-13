@@ -129,6 +129,23 @@
   .stub.s3{ transform:rotate(7deg) translate(4px,2px); }
   .stub.s2{ transform:rotate(-5deg) translate(-3px,4px); }
   .stub.s1{ display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  /* Respiration continue et discrète de la pile sur l'accueil, pour lui
+     donner un peu de vie sans être distrayante. */
+  .stack-wrap.deco .s1{ animation:floatS1 4.6s ease-in-out infinite; }
+  .stack-wrap.deco .s2{ animation:floatS2 5.4s ease-in-out infinite .3s; }
+  .stack-wrap.deco .s3{ animation:floatS3 5s ease-in-out infinite .6s; }
+  @keyframes floatS1{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-3px) rotate(0.5deg); }
+  }
+  @keyframes floatS2{
+    0%,100%{ transform:rotate(-5deg) translate(-3px,4px); }
+    50%{ transform:rotate(-6deg) translate(-3px,1px); }
+  }
+  @keyframes floatS3{
+    0%,100%{ transform:rotate(7deg) translate(4px,2px); }
+    50%{ transform:rotate(6deg) translate(4px,-1px); }
+  }
   .stub.s1 .stripes{
     position:absolute; inset:0;
     background:repeating-linear-gradient(-45deg,
@@ -205,6 +222,12 @@
   /* ---------- CARD VIEW ---------- */
   #cardView.showing{ animation:flipin .4s cubic-bezier(.2,.7,.3,1); }
   @keyframes flipin{0%{opacity:0;transform:rotateY(70deg) scale(.95);}100%{opacity:1;transform:rotateY(0) scale(1);}}
+  .card.dealt{ animation:dealCard .38s cubic-bezier(.2,.7,.3,1); }
+  @keyframes dealCard{
+    0%{ opacity:0.4; transform:scale(0.94) rotate(-2deg); }
+    60%{ opacity:1; transform:scale(1.015) rotate(0.5deg); }
+    100%{ transform:scale(1) rotate(0); }
+  }
   .card{
     flex:1;
     min-height:0;
@@ -1154,6 +1177,10 @@ function updateScrollHint(){
 document.getElementById("itemsWrap").addEventListener("scroll", updateScrollHint);
 
 function renderCard(card){
+  const cardEl = document.querySelector("#cardView .card");
+  cardEl.classList.remove("dealt");
+  void cardEl.offsetWidth; // force le navigateur à relancer l'animation
+  cardEl.classList.add("dealt");
   const wrap = document.getElementById("itemsWrap");
   wrap.innerHTML = "";
   card.items.forEach(([fr,en,ph])=>{
