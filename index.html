@@ -212,6 +212,12 @@
   .theme-toggle .chev{ width:14px; height:14px; transition:transform .2s ease; color:#3D2E12; }
   .theme-toggle.open{ box-shadow:inset 0 2px 6px rgba(184,134,46,0.28); }
   .theme-toggle.open .chev{ transform:rotate(180deg); }
+  #themeToggle{
+    background:transparent; color:#1A1A1A;
+    border:1.5px solid #1A1A1A; box-shadow:none;
+  }
+  #themeToggle .chev{ color:#1A1A1A; }
+  #themeToggle.open{ box-shadow:none; background:rgba(26,26,26,0.06); }
   #themeGrid{ margin-top:12px; }
   #themeGrid[hidden]{ display:none; }
 
@@ -406,7 +412,33 @@
     color:var(--ink); line-height:1.5; text-align:center;
     margin:0 0 16px; flex-shrink:0;
   }
-  #categoriesView #globalDrawBtn{ margin-top:22px; }
+  #categoriesView #globalDrawBtn{ margin:34px 0 14px; }
+  #globalDrawBtn{
+    background:#1A1A1A; color:#F7F4EB;
+    border-radius:999px; box-shadow:none;
+    padding:6px 13px;
+  }
+  #globalDrawBtn .chev{ color:#F7F4EB; }
+  .dice-3d-wrap{
+    display:inline-flex; width:27px; height:27px; flex-shrink:0;
+    perspective:60px;
+  }
+  #globalDiceIcon{
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transform-origin:50% 55%;
+    overflow:visible;
+  }
+  .dice-3d-wrap.rolling #globalDiceIcon{
+    animation:diceRoll3d .68s cubic-bezier(.32,.9,.4,1.15);
+  }
+  @keyframes diceRoll3d{
+    0%{   transform:rotateX(0deg) rotateY(0deg) scale(1); }
+    30%{  transform:rotateX(180deg) rotateY(120deg) scale(1.22); }
+    60%{  transform:rotateX(380deg) rotateY(260deg) scale(0.92); }
+    85%{  transform:rotateX(460deg) rotateY(330deg) scale(1.08); }
+    100%{ transform:rotateX(480deg) rotateY(360deg) scale(1); }
+  }
   .category-sub{ margin:8px 0 0; font-size:12.5px; color:var(--ink); font-weight:500; }
   .category-center{
     flex:1; min-height:0;
@@ -418,7 +450,15 @@
   .category-draw{ display:flex; flex-direction:column; align-items:center; gap:12px; }
   .category-draw[hidden]{ display:none; }
   .stack-wrap.small{ width:34%; max-width:130px; margin-bottom:0; }
-  #categoryView .stack-wrap.small{ width:40%; max-width:155px; }
+  #categoryView .stack-wrap.small{ width:52%; max-width:210px; }
+  #categoryStackWrap{
+    animation:invitePulse 2.2s ease-in-out infinite;
+    cursor:pointer;
+  }
+  @keyframes invitePulse{
+    0%,60%,100%{ transform:scale(1); }
+    30%{ transform:scale(1.045); }
+  }
   .category-hint{
     margin-top:2px; width:78%; max-width:250px;
     font-family:'Fraunces', serif; font-style:italic; font-weight:600;
@@ -609,13 +649,31 @@
 
     <!-- CATEGORIES -->
     <div class="view showing" id="categoriesView">
-      <p class="category-lead">Choisis une catégorie pour piocher dans ses thèmes, ou pioche dans tout, tout en bas.</p>
+      <p class="category-lead">Choisis une catégorie</p>
       <div class="grid-list" id="categoryGrid"></div>
       <button class="theme-toggle" id="globalDrawBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="8" cy="16" r="1.4" fill="currentColor" stroke="none"/><circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
-        <span>PIOCHER UNE CARTE AU HASARD</span>
+        <span class="dice-3d-wrap" id="globalDiceWrap">
+          <svg id="globalDiceIcon" viewBox="0 0 24 24">
+            <!-- face du haut -->
+            <polygon points="12,2.2 20.5,7 12,11.8 3.5,7" fill="#F7F4EB" fill-opacity="0.95" stroke="#1A1A1A" stroke-width="0.5" stroke-opacity="0.35"/>
+            <!-- face de droite (ombrée) -->
+            <polygon points="12,11.8 20.5,7 20.5,15.8 12,21.2" fill="#F7F4EB" fill-opacity="0.55" stroke="#1A1A1A" stroke-width="0.5" stroke-opacity="0.35"/>
+            <!-- face de gauche/avant -->
+            <polygon points="12,11.8 3.5,7 3.5,15.8 12,21.2" fill="#F7F4EB" fill-opacity="0.78" stroke="#1A1A1A" stroke-width="0.5" stroke-opacity="0.35"/>
+            <!-- pips face du haut (2) -->
+            <circle cx="9.4" cy="6.3" r="0.85" fill="#1A1A1A"/>
+            <circle cx="14.6" cy="7.7" r="0.85" fill="#1A1A1A"/>
+            <!-- pips face de droite (1, centrée) -->
+            <circle cx="16.2" cy="11.4" r="0.9" fill="#1A1A1A"/>
+            <!-- pips face de gauche (3, diagonale) -->
+            <circle cx="6.1" cy="9.6" r="0.85" fill="#1A1A1A"/>
+            <circle cx="7.75" cy="13.5" r="0.85" fill="#1A1A1A"/>
+            <circle cx="9.4" cy="17.4" r="0.85" fill="#1A1A1A"/>
+          </svg>
+        </span>
+        <span>PIOCHER AU HASARD</span>
       </button>
-      <p class="category-lead category-sub">Toutes catégories et tous thèmes confondus.</p>
+      <p class="category-lead category-sub">Toutes catégories confondues.</p>
     </div>
 
     <!-- CATEGORY DETAIL -->
@@ -626,7 +684,7 @@
       </div>
       <div class="category-center" id="categoryCenter">
         <div class="category-draw" id="categoryDraw">
-          <div class="stack-wrap small" id="categoryStackWrap">
+          <div class="stack-wrap small deco" id="categoryStackWrap">
             <div class="stub s3"></div>
             <div class="stub s2"></div>
             <div class="stub s1">
@@ -2098,9 +2156,16 @@ function drawCategoryRandom(){
 /* Pioche dans absolument tout le contenu existant de toutes les
    catégories disponibles, tous thèmes confondus. */
 function drawGlobalRandom(){
-  cardHistory = []; currentCard = null;
-  ctx = { origin:"globalRandom", categoryId:null, pool:null };
-  renderCard(pickRandom(null, combinedAvailableDeck()));
+  const diceWrap = document.getElementById("globalDiceWrap");
+  diceWrap.classList.remove("rolling");
+  void diceWrap.offsetWidth; // relance l'animation même si on clique plusieurs fois vite
+  diceWrap.classList.add("rolling");
+  setTimeout(()=>{
+    diceWrap.classList.remove("rolling");
+    cardHistory = []; currentCard = null;
+    ctx = { origin:"globalRandom", categoryId:null, pool:null };
+    renderCard(pickRandom(null, combinedAvailableDeck()));
+  }, 600);
 }
 
 function drawWithinTheme(family){
