@@ -377,15 +377,15 @@
   .fact-block:last-child{ border-bottom:none; }
   .fact-date{
     font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:0.92em;
-    letter-spacing:0.03em; color:#8A5A2F; margin-bottom:0.25em;
+    letter-spacing:0.03em; color:#6B3A12; margin-bottom:0.25em;
   }
   .fact-title{
     font-family:'Fraunces', serif; font-weight:600; font-size:1.08em;
     color:#1A1412; line-height:1.28; margin-bottom:0.3em;
   }
   .fact-summary{
-    font-family:'IBM Plex Sans', sans-serif; font-size:0.86em;
-    color:#4A4038; line-height:1.45;
+    font-family:'IBM Plex Sans', sans-serif; font-size:1em; font-weight:500;
+    color:#1A1412; line-height:1.5;
   }
 
   .card-actions{
@@ -1805,20 +1805,13 @@ const DARIJA_THEME_STYLE = {
 };
 const DECK_HISTOIRE = [
   { id:"hist-revolution-empire", cat:"La Révolution et l'Empire", type:"facts", rows:[{date:"1789", title:"Révolution française", summary:"Chute de la monarchie absolue et adoption de la Déclaration des droits de l'homme et du citoyen (liberté, égalité, droits naturels)."},{date:"1792", title:"Proclamation de la 1re République", summary:"La monarchie est abolie : la France devient une République pour la première fois."},{date:"1804", title:"Napoléon empereur", summary:"Napoléon Bonaparte devient empereur des Français, ce qui met fin à la 1re République."}] },
-  { id:"hist-republiques-lois", cat:"Les Républiques et leurs lois (1848-1882)", type:"facts", rows:[{date:"1848", title:"2e République et abolition de l'esclavage", summary:"Naissance de la 2e République ; l'esclavage est aboli dans les colonies françaises, sous l'impulsion de Victor Schœlcher."},{date:"1870", title:"Début de la 3e République", summary:"La 3e République commence — elle restera la plus longue république française, jusqu'en 1940."},{date:"1881-1882", title:"Lois de Jules Ferry", summary:"L'école primaire devient gratuite, laïque et l'instruction obligatoire pour tous les enfants."}] },
+  { id:"hist-republiques-lois", cat:"Les Républiques et leurs lois (1848-1882)", type:"facts", rows:[{date:"1848", title:"2e République et abolition de l'esclavage", summary:"Naissance de la 2e République ; l'esclavage est aboli dans les colonies françaises, sous l'impulsion de Victor Schœlcher."},{date:"1870", title:"Début de la 3e République", summary:"La 3e République commence ; elle restera la plus longue république française, jusqu'en 1940."},{date:"1881-1882", title:"Lois de Jules Ferry", summary:"L'école primaire devient gratuite, laïque et l'instruction obligatoire pour tous les enfants."}] },
   { id:"hist-laicite", cat:"La laïcité en France", type:"facts", rows:[{date:"1905", title:"Loi de séparation des Églises et de l'État", summary:"Cette loi fonde la laïcité à la française : l'État ne reconnaît ni ne finance aucun culte."},{date:"2004", title:"Interdiction des signes religieux ostensibles à l'école", summary:"Au nom de la laïcité, cette loi encadre le port de signes religieux visibles dans les écoles publiques."}] },
   { id:"hist-guerres-mondiales", cat:"Les guerres mondiales", type:"facts", rows:[{date:"1914-1918", title:"Première Guerre mondiale", summary:"Conflit mondial majeur qui mobilise la France pendant plus de quatre ans."},{date:"1940-1944", title:"Seconde Guerre mondiale, Occupation et Résistance", summary:"La France est occupée par l'Allemagne nazie ; des mouvements de résistance se forment pour la libérer."}] },
   { id:"hist-conquetes-sociales", cat:"Conquêtes sociales et libertés", type:"facts", rows:[{date:"1944", title:"Droit de vote des femmes", summary:"Les femmes obtiennent enfin le droit de vote en France."},{date:"1975", title:"Loi Veil (IVG)", summary:"Simone Veil fait adopter la loi autorisant l'interruption volontaire de grossesse (IVG)."},{date:"1981", title:"Abolition de la peine de mort", summary:"Sous la présidence de François Mitterrand, portée par Robert Badinter, la peine de mort est abolie en France."}] },
-  { id:"hist-republique-apres-guerre", cat:"La République d'après-guerre", type:"facts", rows:[{date:"1946", title:"Début de la 4e République", summary:"La 4e République est instaurée après la Libération."},{date:"1958", title:"Début de la 5e République", summary:"Sous l'impulsion du général de Gaulle — c'est le régime encore en vigueur aujourd'hui."},{date:"1962", title:"Élection du Président au suffrage universel direct", summary:"Depuis cette date, ce sont directement les citoyens qui élisent le président de la République."}] },
-  { id:"hist-ue", cat:"La construction européenne (l'UE)", type:"facts", rows:[{date:"1957", title:"Traité de Rome", summary:"Signature du traité créant la CEE (Communauté économique européenne), l'ancêtre de l'Union européenne."},{date:"1992", title:"Traité de Maastricht", summary:"Ce traité donne naissance à l'Union européenne."},{date:"2002", title:"Passage à l'euro", summary:"Les pièces et billets en francs sont remplacés par l'euro."}] },
-  { id:"hist-republiques-recap", cat:"Les Républiques françaises", type:"facts", rows:[{date:"1792-1804", title:"1re République", summary:"Proclamée après la chute de la monarchie, elle se termine quand Napoléon devient empereur."},{date:"1848-1852", title:"2e République", summary:"Courte République marquée par l'abolition de l'esclavage."},{date:"1870-1940", title:"3e République", summary:"La plus longue des cinq Républiques françaises."},{date:"1946-1958", title:"4e République", summary:"République de l'après-guerre, jusqu'à l'arrivée du général de Gaulle."},{date:"Depuis 1958", title:"5e République", summary:"Le régime politique actuel de la France."}] },
-  { id:"hist-infos", cat:"Informations clés sur la France", type:"facts", rows:[{date:"🇫🇷", title:"Fête nationale : 14 juillet", summary:"Commémore la prise de la Bastille (1789) et la Fête de la Fédération (1790)."},{date:"⚜️", title:"Devise de la France", summary:"Liberté, Égalité, Fraternité."},{date:"🎵", title:"Hymne national", summary:"La Marseillaise."},{date:"🏛️", title:"Régime politique actuel", summary:"5e République."}] },
+  { id:"hist-republique-apres-guerre", cat:"La République d'après-guerre", type:"facts", rows:[{date:"1946", title:"Début de la 4e République", summary:"La 4e République est instaurée après la Libération."},{date:"1958", title:"Début de la 5e République", summary:"Sous l'impulsion du général de Gaulle, c'est le régime encore en vigueur aujourd'hui."},{date:"1962", title:"Élection du Président au suffrage universel direct", summary:"Depuis cette date, ce sont directement les citoyens qui élisent le président de la République."}] },
   { id:"hist-recap", cat:"Les 10 dates à retenir", type:"facts", rows:[{date:"1789", title:"Révolution française", summary:"Point de départ : chute de la monarchie absolue."},{date:"1792", title:"1re République", summary:"La France devient une République pour la première fois."},{date:"1882", title:"École obligatoire, laïque et gratuite", summary:"Lois de Jules Ferry."},{date:"1905", title:"Laïcité", summary:"Séparation des Églises et de l'État."},{date:"1944", title:"Droit de vote des femmes", summary:"Elles votent pour la première fois en 1945."},{date:"1957", title:"Traité de Rome", summary:"Naissance de la CEE, ancêtre de l'UE."},{date:"1958", title:"5e République", summary:"Le régime encore en vigueur aujourd'hui."},{date:"1975", title:"Loi IVG (Simone Veil)", summary:"Légalisation de l'interruption volontaire de grossesse."},{date:"1981", title:"Abolition de la peine de mort", summary:"Portée par Robert Badinter."},{date:"2002", title:"Passage à l'euro", summary:"Le franc est remplacé par l'euro."}] },
-  { id:"hist-pres-1re", cat:"Sous la 1re République : pas de président", type:"facts", rows:[{date:"1792-1795", title:"La Convention nationale", summary:"Un régime d'assemblée : le pouvoir est collectif, il n'y a pas de président unique."},{date:"1795-1799", title:"Le Directoire", summary:"Le pouvoir exécutif est confié à 5 \"Directeurs\" siégeant ensemble, toujours pas de président."},{date:"1799-1804", title:"Le Consulat", summary:"Napoléon Bonaparte devient Premier Consul, avant de se proclamer empereur en 1804."}] },
-  { id:"hist-pres-2e", cat:"Le président de la 2e République", type:"facts", rows:[{date:"1848-1852", title:"Louis-Napoléon Bonaparte", summary:"Premier président élu de l'histoire de France ; il se proclame empereur (Napoléon III) en 1852, ce qui met fin à la République."}] },
-  { id:"hist-pres-3e", cat:"Les présidents de la 3e République", type:"facts", rows:[{date:"1871-1873", title:"Adolphe Thiers", summary:"Ancien orléaniste, devient chef de l'exécutif après la chute du Second Empire."},{date:"1873-1879", title:"Patrice de Mac Mahon", summary:"Ancien maréchal ; sa présidence est marquée par la crise politique du 16 mai 1877."},{date:"1879-1887", title:"Jules Grévy", summary:"Considéré comme le premier président pleinement républicain, sans ambitions monarchiques."},{date:"1887-1894", title:"Sadi Carnot", summary:"Assassiné en 1894 par un anarchiste, à Lyon."},{date:"1894-1895", title:"Jean Casimir-Perier", summary:"Démissionne après seulement six mois de mandat."},{date:"1895-1899", title:"Félix Faure", summary:"Meurt subitement en fonction, en 1899."},{date:"1899-1906", title:"Émile Loubet", summary:"Président pendant l'affaire Dreyfus."},{date:"1906-1913", title:"Armand Fallières", summary:"Président pendant la Belle Époque."},{date:"1913-1920", title:"Raymond Poincaré", summary:"Président pendant la Première Guerre mondiale."},{date:"1920", title:"Paul Deschanel", summary:"Le plus court mandat de l'histoire : quelques mois seulement, en 1920."},{date:"1920-1924", title:"Alexandre Millerand", summary:"Ancien socialiste devenu président plutôt classé à droite."},{date:"1924-1931", title:"Gaston Doumergue", summary:"Sera rappelé au pouvoir comme chef du gouvernement en 1934, lors d'une crise politique."},{date:"1931-1932", title:"Paul Doumer", summary:"Assassiné en 1932, à peine un an après son élection."},{date:"1932-1940", title:"Albert Lebrun", summary:"Dernier président de la 3e République, jusqu'à l'armistice de 1940."}] },
-  { id:"hist-pres-4e", cat:"Les présidents de la 4e République", type:"facts", rows:[{date:"1947-1954", title:"Vincent Auriol", summary:"Premier président élu de la 4e République, ancien ministre socialiste."},{date:"1954-1959", title:"René Coty", summary:"Dernier président de la 4e République ; il fait appel au général de Gaulle en 1958."}] },
-  { id:"hist-pres-5e", cat:"Les présidents de la 5e République", type:"facts", rows:[{date:"1959-1969", title:"Charles de Gaulle", summary:"Fondateur de la 5e République en 1958, il en devient le premier président."},{date:"1969-1974", title:"Georges Pompidou", summary:"Meurt en cours de mandat, en 1974."},{date:"1974-1981", title:"Valéry Giscard d'Estaing", summary:"Abaisse la majorité à 18 ans ; la loi Veil sur l'IVG est votée sous son mandat."},{date:"1981-1995", title:"François Mitterrand", summary:"Premier président socialiste de la 5e République ; effectue deux mandats (14 ans)."},{date:"1995-2007", title:"Jacques Chirac", summary:"Fait passer le mandat présidentiel de 7 à 5 ans (le quinquennat) en 2000."},{date:"2007-2012", title:"Nicolas Sarkozy", summary:"Premier président élu directement pour un quinquennat."},{date:"2012-2017", title:"François Hollande", summary:"Légalise le mariage pour tous en 2013."},{date:"Depuis 2017", title:"Emmanuel Macron", summary:"Plus jeune président élu de la République (39 ans, en 2017) ; réélu en 2022."}] },
+  { id:"hist-ue-traites", cat:"L'UE : les grands traités", type:"facts", rows:[{date:"1957", title:"Traité de Rome", summary:"Signé par 6 pays fondateurs, il crée la CEE (Communauté économique européenne), ancêtre de l'UE."},{date:"1992", title:"Traité de Maastricht", summary:"Il transforme la CEE en Union européenne et pose les bases de la monnaie unique."},{date:"2007", title:"Traité de Lisbonne", summary:"Réforme les institutions européennes ; il entre en vigueur en 2009."},{date:"2002", title:"Passage à l'euro", summary:"Les pièces et billets en francs (et autres monnaies nationales) sont remplacés par l'euro."}] },
 ];
 
 const FAMILIES_HISTOIRE = [
@@ -1828,15 +1821,8 @@ const FAMILIES_HISTOIRE = [
   { id:"hist-guerres-mondiales", label:"Les guerres mondiales", cardIds:["hist-guerres-mondiales"] },
   { id:"hist-conquetes-sociales", label:"Conquêtes sociales et libertés", cardIds:["hist-conquetes-sociales"] },
   { id:"hist-republique-apres-guerre", label:"La République d'après-guerre", cardIds:["hist-republique-apres-guerre"] },
-  { id:"hist-ue", label:"La construction européenne (l'UE)", cardIds:["hist-ue"] },
-  { id:"hist-republiques-recap", label:"Les Républiques françaises", cardIds:["hist-republiques-recap"] },
-  { id:"hist-infos", label:"Informations clés sur la France", cardIds:["hist-infos"] },
   { id:"hist-recap", label:"Les 10 dates à retenir", cardIds:["hist-recap"] },
-  { id:"hist-pres-1re", label:"Sous la 1re République : pas de président", cardIds:["hist-pres-1re"] },
-  { id:"hist-pres-2e", label:"Le président de la 2e République", cardIds:["hist-pres-2e"] },
-  { id:"hist-pres-3e", label:"Les présidents de la 3e République", cardIds:["hist-pres-3e"] },
-  { id:"hist-pres-4e", label:"Les présidents de la 4e République", cardIds:["hist-pres-4e"] },
-  { id:"hist-pres-5e", label:"Les présidents de la 5e République", cardIds:["hist-pres-5e"] },
+  { id:"hist-ue-traites", label:"L'UE : les grands traités", cardIds:["hist-ue-traites"] },
 ];
 
 const HISTOIRE_THEME_STYLE = {
@@ -1846,22 +1832,74 @@ const HISTOIRE_THEME_STYLE = {
   "hist-guerres-mondiales":{bg:"#BFE3A0", emoji:"🎖️"},
   "hist-conquetes-sociales":{bg:"#D8B4E8", emoji:"✊"},
   "hist-republique-apres-guerre":{bg:"#F5B971", emoji:"🗳️"},
-  "hist-ue":{bg:"#A8DCE8", emoji:"🇪🇺"},
-  "hist-republiques-recap":{bg:"#C9E8A0", emoji:"📖"},
-  "hist-infos":{bg:"#F7D488", emoji:"🇫🇷"},
   "hist-recap":{bg:"#F4B8C8", emoji:"🔟"},
-  "hist-pres-1re":{bg:"#F4A0A0", emoji:"⚖️"},
-  "hist-pres-2e":{bg:"#AEC6E8", emoji:"🎩"},
-  "hist-pres-3e":{bg:"#F4C9A8", emoji:"🏛️"},
-  "hist-pres-4e":{bg:"#BFE3A0", emoji:"🕊️"},
-  "hist-pres-5e":{bg:"#D8B4E8", emoji:"🎖️"},
+  "hist-ue-traites":{bg:"#A8DCE8", emoji:"📝"},
+};
+
+const DECK_POLITIQUE = [
+  { id:"pol-republiques-recap", cat:"Les Républiques françaises", type:"facts", rows:[{date:"1792-1804", title:"1re République", summary:"Proclamée après la chute de la monarchie, elle se termine quand Napoléon devient empereur."},{date:"1848-1852", title:"2e République", summary:"Courte République marquée par l'abolition de l'esclavage."},{date:"1870-1940", title:"3e République", summary:"La plus longue des cinq Républiques françaises."},{date:"1946-1958", title:"4e République", summary:"République de l'après-guerre, jusqu'à l'arrivée du général de Gaulle."},{date:"Depuis 1958", title:"5e République", summary:"Le régime politique actuel de la France."}] },
+  { id:"pol-infos", cat:"Informations clés sur la France", type:"facts", rows:[{date:"🇫🇷", title:"Fête nationale : 14 juillet", summary:"Commémore la prise de la Bastille (1789) et la Fête de la Fédération (1790)."},{date:"⚜️", title:"Devise de la France", summary:"Liberté, Égalité, Fraternité."},{date:"🎵", title:"Hymne national", summary:"La Marseillaise."},{date:"🏛️", title:"Régime politique actuel", summary:"5e République."}] },
+  { id:"pol-pres-1re", cat:"Sous la 1re République : pas de président", type:"facts", rows:[{date:"1792-1795", title:"La Convention nationale", summary:"Un régime d'assemblée : le pouvoir est collectif, il n'y a pas de président unique."},{date:"1795-1799", title:"Le Directoire", summary:"Le pouvoir exécutif est confié à 5 \"Directeurs\" siégeant ensemble, toujours pas de président."},{date:"1799-1804", title:"Le Consulat", summary:"Napoléon Bonaparte devient Premier Consul, avant de se proclamer empereur en 1804."}] },
+  { id:"pol-pres-2e", cat:"Le président de la 2e République", type:"facts", rows:[{date:"1848-1852", title:"Louis-Napoléon Bonaparte", summary:"Premier président élu de l'histoire de France ; il se proclame empereur (Napoléon III) en 1852, ce qui met fin à la République."}] },
+  { id:"pol-pres-3e", cat:"Les présidents de la 3e République", type:"facts", rows:[{date:"1871-1873", title:"Adolphe Thiers", summary:"Ancien orléaniste, devient chef de l'exécutif après la chute du Second Empire."},{date:"1873-1879", title:"Patrice de Mac Mahon", summary:"Ancien maréchal ; sa présidence est marquée par la crise politique du 16 mai 1877."},{date:"1879-1887", title:"Jules Grévy", summary:"Considéré comme le premier président pleinement républicain, sans ambitions monarchiques."},{date:"1887-1894", title:"Sadi Carnot", summary:"Assassiné en 1894 par un anarchiste, à Lyon."},{date:"1894-1895", title:"Jean Casimir-Perier", summary:"Démissionne après seulement six mois de mandat."},{date:"1895-1899", title:"Félix Faure", summary:"Meurt subitement en fonction, en 1899."},{date:"1899-1906", title:"Émile Loubet", summary:"Président pendant l'affaire Dreyfus."},{date:"1906-1913", title:"Armand Fallières", summary:"Président pendant la Belle Époque."},{date:"1913-1920", title:"Raymond Poincaré", summary:"Président pendant la Première Guerre mondiale."},{date:"1920", title:"Paul Deschanel", summary:"Le plus court mandat de l'histoire : quelques mois seulement, en 1920."},{date:"1920-1924", title:"Alexandre Millerand", summary:"Ancien socialiste devenu président plutôt classé à droite."},{date:"1924-1931", title:"Gaston Doumergue", summary:"Sera rappelé au pouvoir comme chef du gouvernement en 1934, lors d'une crise politique."},{date:"1931-1932", title:"Paul Doumer", summary:"Assassiné en 1932, à peine un an après son élection."},{date:"1932-1940", title:"Albert Lebrun", summary:"Dernier président de la 3e République, jusqu'à l'armistice de 1940."}] },
+  { id:"pol-pres-4e", cat:"Les présidents de la 4e République", type:"facts", rows:[{date:"1947-1954", title:"Vincent Auriol", summary:"Premier président élu de la 4e République, ancien ministre socialiste."},{date:"1954-1959", title:"René Coty", summary:"Dernier président de la 4e République ; il fait appel au général de Gaulle en 1958."}] },
+  { id:"pol-pres-5e", cat:"Les présidents de la 5e République", type:"facts", rows:[{date:"1959-1969", title:"Charles de Gaulle", summary:"Fondateur de la 5e République en 1958, il en devient le premier président."},{date:"1969-1974", title:"Georges Pompidou", summary:"Meurt en cours de mandat, en 1974."},{date:"1974-1981", title:"Valéry Giscard d'Estaing", summary:"Abaisse la majorité à 18 ans ; la loi Veil sur l'IVG est votée sous son mandat."},{date:"1981-1995", title:"François Mitterrand", summary:"Premier président socialiste de la 5e République ; effectue deux mandats (14 ans)."},{date:"1995-2007", title:"Jacques Chirac", summary:"Fait passer le mandat présidentiel de 7 à 5 ans (le quinquennat) en 2000."},{date:"2007-2012", title:"Nicolas Sarkozy", summary:"Premier président élu directement pour un quinquennat."},{date:"2012-2017", title:"François Hollande", summary:"Légalise le mariage pour tous en 2013."},{date:"Depuis 2017", title:"Emmanuel Macron", summary:"Plus jeune président élu de la République (39 ans, en 2017) ; réélu en 2022."}] },
+  { id:"pol-ue-institutions", cat:"Les institutions européennes", type:"facts", rows:[{date:"Exécutif", title:"La Commission européenne", summary:"Elle propose les lois européennes et veille à leur application ; un commissaire par pays membre."},{date:"Législatif", title:"Le Parlement européen", summary:"720 députés européens, élus directement par les citoyens de l'UE tous les 5 ans."},{date:"Législatif", title:"Le Conseil de l'UE", summary:"Réunit les ministres des 27 pays ; il adopte les lois avec le Parlement."},{date:"Judiciaire", title:"La Cour de justice de l'UE", summary:"Basée au Luxembourg, elle veille à ce que le droit européen soit appliqué de la même façon dans tous les pays."}] }
+];
+
+const FAMILIES_POLITIQUE = [
+  { id:"pol-republiques-recap", label:"Les Républiques françaises", cardIds:["pol-republiques-recap"] },
+  { id:"pol-infos", label:"Informations clés sur la France", cardIds:["pol-infos"] },
+  { id:"pol-pres-1re", label:"Sous la 1re République : pas de président", cardIds:["pol-pres-1re"] },
+  { id:"pol-pres-2e", label:"Le président de la 2e République", cardIds:["pol-pres-2e"] },
+  { id:"pol-pres-3e", label:"Les présidents de la 3e République", cardIds:["pol-pres-3e"] },
+  { id:"pol-pres-4e", label:"Les présidents de la 4e République", cardIds:["pol-pres-4e"] },
+  { id:"pol-pres-5e", label:"Les présidents de la 5e République", cardIds:["pol-pres-5e"] },
+  { id:"pol-ue-institutions", label:"Les institutions européennes", cardIds:["pol-ue-institutions"] }
+];
+
+const POLITIQUE_THEME_STYLE = {
+  "pol-republiques-recap":{bg:"#C9E8A0", emoji:"📖"},
+  "pol-infos":{bg:"#F7D488", emoji:"🇫🇷"},
+  "pol-pres-1re":{bg:"#F4A0A0", emoji:"⚖️"},
+  "pol-pres-2e":{bg:"#AEC6E8", emoji:"🎩"},
+  "pol-pres-3e":{bg:"#F4C9A8", emoji:"🏛️"},
+  "pol-pres-4e":{bg:"#BFE3A0", emoji:"🕊️"},
+  "pol-pres-5e":{bg:"#D8B4E8", emoji:"🎖️"},
+  "pol-ue-institutions":{bg:"#F4B8C8", emoji:"🏢"}
+};
+
+const DECK_GEOGRAPHIE = [
+  { id:"geo-ue-pays", cat:"L'UE : de 6 à 27 pays", type:"facts", rows:[{date:"1957", title:"6 pays fondateurs", summary:"France, Allemagne, Italie, Belgique, Pays-Bas, Luxembourg."},{date:"1973", title:"Premier élargissement", summary:"Danemark, Irlande, Royaume-Uni rejoignent la CEE (9 pays)."},{date:"1981-1986", title:"Élargissement au Sud", summary:"Grèce (1981), puis Espagne et Portugal (1986)."},{date:"1995", title:"Autriche, Finlande, Suède", summary:"L'UE passe à 15 pays."},{date:"2004", title:"Le grand élargissement à l'Est", summary:"10 pays rejoignent l'UE d'un coup (Pologne, Hongrie, Rép. tchèque, pays baltes...), portant l'UE à 25."},{date:"2007", title:"Bulgarie et Roumanie", summary:"L'UE passe à 27 pays."},{date:"2013", title:"Croatie", summary:"Dernier pays entré à ce jour ; l'UE atteint 28 membres."},{date:"2020", title:"Brexit", summary:"Le Royaume-Uni quitte l'UE, qui redescend à 27 pays, son nombre actuel."}] },
+  { id:"geo-schengen", cat:"L'espace Schengen", type:"facts", rows:[{date:"1985", title:"Les accords de Schengen", summary:"Signés par 5 pays (France, Allemagne, Belgique, Pays-Bas, Luxembourg) dans le village de Schengen, au Luxembourg."},{date:"1995", title:"Entrée en vigueur", summary:"Les contrôles aux frontières intérieures entre pays signataires sont supprimés."},{date:"Aujourd'hui", title:"Qui en fait partie ?", summary:"La quasi-totalité des pays de l'UE, plus 4 pays non-membres : Norvège, Islande, Suisse et Liechtenstein."},{date:"Exception", title:"Schengen ≠ Union européenne", summary:"L'Irlande a un opt-out historique ; Chypre n'y est pas encore pleinement intégrée : être dans l'UE ne veut donc pas toujours dire être dans Schengen."}] },
+  { id:"geo-zone-euro", cat:"La zone euro", type:"facts", rows:[{date:"1999", title:"Naissance de l'euro", summary:"L'euro est créé comme monnaie comptable ; les pièces et billets arrivent en 2002."},{date:"Aujourd'hui", title:"21 pays sur 27", summary:"Tous les pays de l'UE n'ont pas adopté l'euro : certains ont leur propre monnaie (Pologne, Hongrie, Suède...) par choix ou parce qu'ils ne remplissent pas encore les critères."},{date:"Bon à savoir", title:"Euro ≠ Union européenne", summary:"Quelques micro-États hors UE utilisent aussi l'euro par accord (Monaco, Saint-Marin, Vatican, Andorre)."}] },
+  { id:"geo-merveilles-antique", cat:"Les 7 Merveilles du monde antique", type:"facts", rows:[{date:"🇪🇬", title:"La Grande Pyramide de Gizeh (Égypte)", summary:"Seule merveille antique encore debout aujourd'hui."},{date:"🇮🇶", title:"Les Jardins suspendus de Babylone (Irak)", summary:"Édifice légendaire attribué à Nabuchodonosor II."},{date:"🇬🇷", title:"La Statue de Zeus à Olympie (Grèce)", summary:"Sculpture monumentale d'or et d'ivoire réalisée par Phidias."},{date:"🇹🇷", title:"Le Temple d'Artémis à Éphèse (Turquie)", summary:"Sanctuaire géant dédié à la déesse de la chasse."},{date:"🇹🇷", title:"Le Mausolée d'Halicarnasse (Turquie)", summary:"Tombeau monumental qui a donné le mot « mausolée »."},{date:"🇬🇷", title:"Le Colosse de Rhodes (Grèce)", summary:"Gigantesque statue en bronze gardant l'entrée du port."},{date:"🇪🇬", title:"Le Phare d'Alexandrie (Égypte)", summary:"Tour guidant les navires, symbole de la puissance hellénistique."}] },
+  { id:"geo-merveilles-moderne", cat:"Les 7 Merveilles du monde moderne", type:"facts", rows:[{date:"🇨🇳", title:"La Grande Muraille de Chine (Chine)", summary:"Fortification militaire géante construite pour protéger l'empire."},{date:"🇮🇳", title:"Le Taj Mahal (Inde)", summary:"Mausolée en marbre blanc édifié par l'empereur Shah Jahan par amour."},{date:"🇵🇪", title:"Le Machu Picchu (Pérou)", summary:"Cité inca spectaculaire nichée dans les montagnes des Andes."},{date:"🇲🇽", title:"Chichén Itzá (Mexique)", summary:"Cité maya célèbre pour sa grande pyramide (El Castillo)."},{date:"🇮🇹", title:"Le Colisée de Rome (Italie)", summary:"Grand amphithéâtre romain accueillant les combats de gladiateurs."},{date:"🇧🇷", title:"Le Christ Rédempteur (Brésil)", summary:"Statue emblématique surplombant la baie de Rio de Janeiro."},{date:"🇯🇴", title:"Pétra (Jordanie)", summary:"Cité antique nabatéenne taillée à même les falaises de roche rose."}], note:"Désignées en 2007 suite à un vote mondial de la New7Wonders Foundation." }
+];
+
+const FAMILIES_GEOGRAPHIE = [
+  { id:"geo-ue-pays", label:"L'UE : de 6 à 27 pays", cardIds:["geo-ue-pays"] },
+  { id:"geo-schengen", label:"L'espace Schengen", cardIds:["geo-schengen"] },
+  { id:"geo-zone-euro", label:"La zone euro", cardIds:["geo-zone-euro"] },
+  { id:"geo-merveilles-antique", label:"Les 7 Merveilles du monde antique", cardIds:["geo-merveilles-antique"] },
+  { id:"geo-merveilles-moderne", label:"Les 7 Merveilles du monde moderne", cardIds:["geo-merveilles-moderne"] }
+];
+
+const GEOGRAPHIE_THEME_STYLE = {
+  "geo-ue-pays":{bg:"#BFE3A0", emoji:"🗺️"},
+  "geo-schengen":{bg:"#D8B4E8", emoji:"🛂"},
+  "geo-zone-euro":{bg:"#F5B971", emoji:"💶"},
+  "geo-merveilles-antique":{bg:"#F4C9A8", emoji:"📜"},
+  "geo-merveilles-moderne":{bg:"#A8DCE8", emoji:"🌐"}
 };
 
 const CATEGORY_DATA = {
   anglais: { deck: DECK, families: FAMILIES, theme_style: THEME_STYLE },
   luxembourgeois: { deck: DECK_LUX, families: FAMILIES_LUX, theme_style: LUX_THEME_STYLE },
   darija: { deck: DECK_DARIJA, families: FAMILIES_DARIJA, theme_style: DARIJA_THEME_STYLE },
-  histoire: { deck: DECK_HISTOIRE, families: FAMILIES_HISTOIRE, theme_style: HISTOIRE_THEME_STYLE }
+  histoire: { deck: DECK_HISTOIRE, families: FAMILIES_HISTOIRE, theme_style: HISTOIRE_THEME_STYLE },
+  politique: { deck: DECK_POLITIQUE, families: FAMILIES_POLITIQUE, theme_style: POLITIQUE_THEME_STYLE },
+  geographie: { deck: DECK_GEOGRAPHIE, families: FAMILIES_GEOGRAPHIE, theme_style: GEOGRAPHIE_THEME_STYLE }
 };
 function combinedAvailableDeck(){
   return CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id])
@@ -1880,11 +1918,11 @@ const CATEGORIES = [
   { id:"allemand", label:"Allemand", available:false, icon:"🇩🇪", accent:"#2B2B2B", bg:"#F7D488" },
   { id:"anglais", label:"Anglais", available:true, icon:"🇬🇧", accent:"#2B4C7E", bg:"#AEC6E8" },
   { id:"darija", label:"Darija algérien", available:true, icon:"🇩🇿", accent:"#2F7A46", bg:"#A8D9B0" },
-  { id:"geographie", label:"Géographie", available:false, icon:"🌍", accent:"#2F7A5C", bg:"#BFE3A0" },
+  { id:"geographie", label:"Géographie", available:true, icon:"🌍", accent:"#2F7A5C", bg:"#BFE3A0", unit:"repères" },
   { id:"histoire", label:"Histoire", available:true, icon:"🏛️", accent:"#A3572F", bg:"#F4C9A8", unit:"repères" },
   { id:"luxembourgeois", label:"Luxembourgeois", available:true, icon:"🇱🇺", accent:"#3E7CB8", bg:"#A8DCE8" },
   { id:"nutrition", label:"Nutrition", available:false, icon:"🥗", accent:"#5C8A3A", bg:"#C9E8A0" },
-  { id:"politique", label:"Politique", available:false, icon:"🗳️", accent:"#6B4E8E", bg:"#D8B4E8" },
+  { id:"politique", label:"Politique", available:true, icon:"🗳️", accent:"#6B4E8E", bg:"#D8B4E8", unit:"repères" },
   { id:"sante", label:"Santé", available:false, icon:"🩺", accent:"#A3302F", bg:"#F4A0A0" }
 ];
 
