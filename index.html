@@ -247,6 +247,10 @@
     display:flex; justify-content:space-between; align-items:center;
   }
   .card-num{ font-size:10px; color:var(--ink-soft); letter-spacing:0.07em; }
+  #cardNum{
+    flex:1; text-align:center; font-size:13px; font-weight:700;
+    color:var(--ink); letter-spacing:0.04em;
+  }
   .card-exit-btn{
     width:36px; height:36px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
@@ -791,11 +795,9 @@ const DECK = [
     ["blanc","white","ouaïte"],["orange","orange","orinje"],["violet","purple","peurpeul"],
     ["rose","pink","pinke"],["gris","grey","gréi"]
   ]},
-  { id:"jrs1", cat:"Les jours (1/2)", items:[
+  { id:"jrs", cat:"Les jours de la semaine", items:[
     ["lundi","Monday","meunn-déi"],["mardi","Tuesday","tiouz-déi"],
-    ["mercredi","Wednesday","ouènz-déi"],["jeudi","Thursday","theurz-déi"]
-  ]},
-  { id:"jrs2", cat:"Les jours (2/2)", items:[
+    ["mercredi","Wednesday","ouènz-déi"],["jeudi","Thursday","theurz-déi"],
     ["vendredi","Friday","fraï-déi"],["samedi","Saturday","sate-eur-déi"],["dimanche","Sunday","seunn-déi"]
   ]},
   { id:"renc1a", cat:"Se présenter (1/3)", items:[
@@ -1524,7 +1526,7 @@ const DECK = [
 const FAMILIES = [
   { id:"chiffres", label:"Chiffres et nombres", cardIds:["nb1","nb2","nb3"] },
   { id:"couleurs", label:"Les couleurs", cardIds:["col1","col2"] },
-  { id:"jours", label:"Les jours de la semaine", cardIds:["jrs1","jrs2"] },
+  { id:"jours", label:"Les jours de la semaine", cardIds:["jrs"] },
   { id:"presenter", label:"Se présenter", cardIds:["renc1a","renc1b","renc1c"] },
   { id:"conversation", label:"Petite conversation", cardIds:["renc2a","renc2b"] },
   { id:"aeroport", label:"À l'aéroport", cardIds:["aero1","aero2","aero3"] },
@@ -2081,14 +2083,11 @@ function renderCard(card, fromHistory){
   prevBtn.disabled = cardHistory.length === 0;
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
-  const catTag = catForCard ? catForCard.icon + " " + catForCard.label + " · " : "";
+  const catLabel = catForCard ? catForCard.icon + " " + catForCard.label : "";
+  document.getElementById("cardNum").textContent = catLabel;
   if(merged){
-    document.getElementById("cardNum").textContent = catTag + count + " MOTS";
     anotherBtn.style.display = "none";
   } else {
-    const catDeck = CATEGORY_DATA[categoryIdForCard(card)].deck;
-    const idx = catDeck.findIndex(c=>c.id===card.id)+1;
-    document.getElementById("cardNum").textContent = catTag + "CARTE " + String(idx).padStart(2,"0") + "/" + catDeck.length;
     anotherBtn.style.display = "";
   }
   starBtn.style.display = "";
