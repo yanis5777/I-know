@@ -123,11 +123,11 @@
     border-radius:14px;
     border:1px solid var(--card-border);
     background:var(--paper-dark);
-    box-shadow:0 6px 14px rgba(26,20,18,0.08);
+    box-shadow:0 10px 24px rgba(26,20,18,0.16), 0 2px 4px rgba(26,20,18,0.08);
   }
-  .stub.s3{ transform:rotate(7deg) translate(4px,2px); }
-  .stub.s2{ transform:rotate(-5deg) translate(-3px,4px); }
-  .stub.s1{ display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .stub.s3{ transform:rotate(11deg) translate(7px,5px); box-shadow:0 6px 14px rgba(26,20,18,0.14); }
+  .stub.s2{ transform:rotate(-9deg) translate(-6px,7px); box-shadow:0 8px 18px rgba(26,20,18,0.15); }
+  .stub.s1{ display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 14px 30px rgba(26,20,18,0.22), 0 3px 6px rgba(26,20,18,0.12); }
   /* Respiration continue et discrète de la pile sur l'accueil, pour lui
      donner un peu de vie sans être distrayante. */
   .stack-wrap.deco .s1{ animation:floatS1 4.6s ease-in-out infinite; }
@@ -497,7 +497,7 @@
   .category-draw{ display:flex; flex-direction:column; align-items:center; gap:12px; }
   .category-draw[hidden]{ display:none; }
   .stack-wrap.small{ width:34%; max-width:130px; margin-bottom:0; }
-  #categoryView .stack-wrap.small{ width:52%; max-width:210px; }
+  #categoryView .stack-wrap.small{ width:96%; max-width:380px; }
   #categoryStackWrap{
     animation:invitePulse 2.2s ease-in-out infinite;
     cursor:pointer;
@@ -753,7 +753,7 @@
               <div class="compass" id="categoryStackIcon">🇬🇧</div>
             </div>
           </div>
-          <p class="home-note category-hint">Touche la pile pour piocher une carte</p>
+          <p class="home-note category-hint">Pioche une carte</p>
         </div>
         <button class="theme-toggle" id="themeToggle">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -2082,6 +2082,7 @@ function renderCard(card, fromHistory){
   cardEl.classList.add("dealt");
   const wrap = document.getElementById("itemsWrap");
   wrap.innerHTML = "";
+  wrap.onclick = null;
   if(card.type === "conjugation"){
     const table = document.createElement("table");
     table.className = "verb-table";
@@ -2157,20 +2158,28 @@ function renderCard(card, fromHistory){
             <div class="fact-title">${r.title}</div>
             <ul class="fact-points">${pointsHtml}</ul>
           </div>`;
-        div.addEventListener("click", ()=>{
-          div.classList.add("flipping");
-          setTimeout(()=>{
-            const faces = div.querySelectorAll(".fact-flip-face");
-            faces.forEach(f=>f.hidden = !f.hidden);
-          }, 130);
-          setTimeout(()=>div.classList.remove("flipping"), 260);
-        });
       } else {
         div.className = "fact-block";
         div.innerHTML = `<div class="fact-date">${r.date}</div><div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
       }
       wrap.appendChild(div);
     });
+    if(card.rows.some(r=>r.points && !r.noFlip)){
+      wrap.onclick = ()=>{
+        const blocks = wrap.querySelectorAll(".flip-fact");
+        blocks.forEach(block=>{
+          block.classList.add("flipping");
+          setTimeout(()=>block.classList.remove("flipping"), 260);
+        });
+        setTimeout(()=>{
+          blocks.forEach(block=>{
+            block.querySelectorAll(".fact-flip-face").forEach(f=>f.hidden = !f.hidden);
+          });
+        }, 130);
+      };
+    } else {
+      wrap.onclick = null;
+    }
   } else {
     if(card.note){
       const note = document.createElement("div");
@@ -2198,8 +2207,7 @@ function renderCard(card, fromHistory){
   prevBtn.disabled = cardHistory.length === 0;
   flipHint.hidden = !(card.type === "facts" && card.rows.some(r=>r.points && !r.noFlip));
   flipHint.onclick = ()=>{
-    const target = wrap.querySelector(".flip-fact");
-    if(target) target.click();
+    if(wrap.onclick) wrap.onclick();
   };
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
@@ -2226,7 +2234,8 @@ function renderCard(card, fromHistory){
     const nowFav = toggleFav(card.id);
     starBtn.classList.toggle("active", nowFav);
   };
-  document.getElementById("cardTitle").textContent = card.cat;
+  document.getElementById("cardTitle").textContent =
+    (ctx.origin === "categoryTheme" && ctx.familyLabel && card.type === "facts") ? ctx.familyLabel : card.cat;
 
   wrap.scrollTop = 0;
   showView("card");
@@ -2422,7 +2431,7 @@ function drawGlobalRandom(){
 
 function drawWithinTheme(family){
   cardHistory = []; currentCard = null;
-  ctx = { origin:"categoryTheme", categoryId:currentCategory.id, pool:family.cardIds };
+  ctx = { origin:"categoryTheme", categoryId:currentCategory.id, pool:family.cardIds, familyLabel:family.label };
   renderCard(pickRandom(family.cardIds, CATEGORY_DATA[currentCategory.id].deck));
 }
 
