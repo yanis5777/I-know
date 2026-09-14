@@ -248,12 +248,12 @@
   }
   .card-num{ font-size:10px; color:var(--ink-soft); letter-spacing:0.07em; }
   .card-exit-btn{
-    width:28px; height:28px; flex-shrink:0;
+    width:36px; height:36px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    background:rgba(26,20,18,0.06); border:none; border-radius:50%;
+    background:rgba(26,20,18,0.08); border:none; border-radius:50%;
     color:var(--ink); cursor:pointer;
   }
-  .card-exit-btn svg{ width:16px; height:16px; }
+  .card-exit-btn svg{ width:19px; height:19px; }
   .card-title-wrap{ flex-shrink:0; text-align:center; margin:6px 0 12px; }
   .card-title{
     display:inline-block;
@@ -368,6 +368,25 @@
     line-height:1.3;
   }
   .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:#4A4038; margin-top:0.22em; }
+
+  .fact-block{
+    padding:0.6em 0.1em 0.85em;
+    border-bottom:1.5px solid rgba(26,20,18,0.16);
+    flex-shrink:0;
+  }
+  .fact-block:last-child{ border-bottom:none; }
+  .fact-date{
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:0.92em;
+    letter-spacing:0.03em; color:#8A5A2F; margin-bottom:0.25em;
+  }
+  .fact-title{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.08em;
+    color:#1A1412; line-height:1.28; margin-bottom:0.3em;
+  }
+  .fact-summary{
+    font-family:'IBM Plex Sans', sans-serif; font-size:0.86em;
+    color:#4A4038; line-height:1.45;
+  }
 
   .card-actions{
     flex-shrink:0;
@@ -623,12 +642,12 @@
     <div class="view" id="cardView">
       <div class="card">
         <div class="card-head">
-          <button class="card-exit-btn" id="cardExitBtn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="card-num" id="cardNum">CARTE 00/18</div>
           <button class="star-btn" id="starBtn">
             <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" fill="none"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
+          </button>
+          <div class="card-num" id="cardNum">CARTE 00/18</div>
+          <button class="card-exit-btn" id="cardExitBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
           </button>
         </div>
         <div class="card-title-wrap">
@@ -1784,10 +1803,65 @@ const DARIJA_THEME_STYLE = {
   "darija-expressions":{bg:"#F4A0A0", emoji:"🗨️"},
   "darija-nettoyage-commerce":{bg:"#F7D488", emoji:"🧼"}
 };
+const DECK_HISTOIRE = [
+  { id:"hist-revolution-empire", cat:"La Révolution et l'Empire", type:"facts", rows:[{date:"1789", title:"Révolution française", summary:"Chute de la monarchie absolue et adoption de la Déclaration des droits de l'homme et du citoyen (liberté, égalité, droits naturels)."},{date:"1792", title:"Proclamation de la 1re République", summary:"La monarchie est abolie : la France devient une République pour la première fois."},{date:"1804", title:"Napoléon empereur", summary:"Napoléon Bonaparte devient empereur des Français, ce qui met fin à la 1re République."}] },
+  { id:"hist-republiques-lois", cat:"Les Républiques et leurs lois (1848-1882)", type:"facts", rows:[{date:"1848", title:"2e République et abolition de l'esclavage", summary:"Naissance de la 2e République ; l'esclavage est aboli dans les colonies françaises, sous l'impulsion de Victor Schœlcher."},{date:"1870", title:"Début de la 3e République", summary:"La 3e République commence — elle restera la plus longue république française, jusqu'en 1940."},{date:"1881-1882", title:"Lois de Jules Ferry", summary:"L'école primaire devient gratuite, laïque et l'instruction obligatoire pour tous les enfants."}] },
+  { id:"hist-laicite", cat:"La laïcité en France", type:"facts", rows:[{date:"1905", title:"Loi de séparation des Églises et de l'État", summary:"Cette loi fonde la laïcité à la française : l'État ne reconnaît ni ne finance aucun culte."},{date:"2004", title:"Interdiction des signes religieux ostensibles à l'école", summary:"Au nom de la laïcité, cette loi encadre le port de signes religieux visibles dans les écoles publiques."}] },
+  { id:"hist-guerres-mondiales", cat:"Les guerres mondiales", type:"facts", rows:[{date:"1914-1918", title:"Première Guerre mondiale", summary:"Conflit mondial majeur qui mobilise la France pendant plus de quatre ans."},{date:"1940-1944", title:"Seconde Guerre mondiale, Occupation et Résistance", summary:"La France est occupée par l'Allemagne nazie ; des mouvements de résistance se forment pour la libérer."}] },
+  { id:"hist-conquetes-sociales", cat:"Conquêtes sociales et libertés", type:"facts", rows:[{date:"1944", title:"Droit de vote des femmes", summary:"Les femmes obtiennent enfin le droit de vote en France."},{date:"1975", title:"Loi Veil (IVG)", summary:"Simone Veil fait adopter la loi autorisant l'interruption volontaire de grossesse (IVG)."},{date:"1981", title:"Abolition de la peine de mort", summary:"Sous la présidence de François Mitterrand, portée par Robert Badinter, la peine de mort est abolie en France."}] },
+  { id:"hist-republique-apres-guerre", cat:"La République d'après-guerre", type:"facts", rows:[{date:"1946", title:"Début de la 4e République", summary:"La 4e République est instaurée après la Libération."},{date:"1958", title:"Début de la 5e République", summary:"Sous l'impulsion du général de Gaulle — c'est le régime encore en vigueur aujourd'hui."},{date:"1962", title:"Élection du Président au suffrage universel direct", summary:"Depuis cette date, ce sont directement les citoyens qui élisent le président de la République."}] },
+  { id:"hist-ue", cat:"La construction européenne (l'UE)", type:"facts", rows:[{date:"1957", title:"Traité de Rome", summary:"Signature du traité créant la CEE (Communauté économique européenne), l'ancêtre de l'Union européenne."},{date:"1992", title:"Traité de Maastricht", summary:"Ce traité donne naissance à l'Union européenne."},{date:"2002", title:"Passage à l'euro", summary:"Les pièces et billets en francs sont remplacés par l'euro."}] },
+  { id:"hist-republiques-recap", cat:"Les Républiques françaises", type:"facts", rows:[{date:"1792-1804", title:"1re République", summary:"Proclamée après la chute de la monarchie, elle se termine quand Napoléon devient empereur."},{date:"1848-1852", title:"2e République", summary:"Courte République marquée par l'abolition de l'esclavage."},{date:"1870-1940", title:"3e République", summary:"La plus longue des cinq Républiques françaises."},{date:"1946-1958", title:"4e République", summary:"République de l'après-guerre, jusqu'à l'arrivée du général de Gaulle."},{date:"Depuis 1958", title:"5e République", summary:"Le régime politique actuel de la France."}] },
+  { id:"hist-infos", cat:"Informations clés sur la France", type:"facts", rows:[{date:"🇫🇷", title:"Fête nationale : 14 juillet", summary:"Commémore la prise de la Bastille (1789) et la Fête de la Fédération (1790)."},{date:"⚜️", title:"Devise de la France", summary:"Liberté, Égalité, Fraternité."},{date:"🎵", title:"Hymne national", summary:"La Marseillaise."},{date:"🏛️", title:"Régime politique actuel", summary:"5e République."}] },
+  { id:"hist-recap", cat:"Les 10 dates à retenir", type:"facts", rows:[{date:"1789", title:"Révolution française", summary:"Point de départ : chute de la monarchie absolue."},{date:"1792", title:"1re République", summary:"La France devient une République pour la première fois."},{date:"1882", title:"École obligatoire, laïque et gratuite", summary:"Lois de Jules Ferry."},{date:"1905", title:"Laïcité", summary:"Séparation des Églises et de l'État."},{date:"1944", title:"Droit de vote des femmes", summary:"Elles votent pour la première fois en 1945."},{date:"1957", title:"Traité de Rome", summary:"Naissance de la CEE, ancêtre de l'UE."},{date:"1958", title:"5e République", summary:"Le régime encore en vigueur aujourd'hui."},{date:"1975", title:"Loi IVG (Simone Veil)", summary:"Légalisation de l'interruption volontaire de grossesse."},{date:"1981", title:"Abolition de la peine de mort", summary:"Portée par Robert Badinter."},{date:"2002", title:"Passage à l'euro", summary:"Le franc est remplacé par l'euro."}] },
+  { id:"hist-pres-1re", cat:"Sous la 1re République : pas de président", type:"facts", rows:[{date:"1792-1795", title:"La Convention nationale", summary:"Un régime d'assemblée : le pouvoir est collectif, il n'y a pas de président unique."},{date:"1795-1799", title:"Le Directoire", summary:"Le pouvoir exécutif est confié à 5 \"Directeurs\" siégeant ensemble, toujours pas de président."},{date:"1799-1804", title:"Le Consulat", summary:"Napoléon Bonaparte devient Premier Consul, avant de se proclamer empereur en 1804."}] },
+  { id:"hist-pres-2e", cat:"Le président de la 2e République", type:"facts", rows:[{date:"1848-1852", title:"Louis-Napoléon Bonaparte", summary:"Premier président élu de l'histoire de France ; il se proclame empereur (Napoléon III) en 1852, ce qui met fin à la République."}] },
+  { id:"hist-pres-3e", cat:"Les présidents de la 3e République", type:"facts", rows:[{date:"1871-1873", title:"Adolphe Thiers", summary:"Ancien orléaniste, devient chef de l'exécutif après la chute du Second Empire."},{date:"1873-1879", title:"Patrice de Mac Mahon", summary:"Ancien maréchal ; sa présidence est marquée par la crise politique du 16 mai 1877."},{date:"1879-1887", title:"Jules Grévy", summary:"Considéré comme le premier président pleinement républicain, sans ambitions monarchiques."},{date:"1887-1894", title:"Sadi Carnot", summary:"Assassiné en 1894 par un anarchiste, à Lyon."},{date:"1894-1895", title:"Jean Casimir-Perier", summary:"Démissionne après seulement six mois de mandat."},{date:"1895-1899", title:"Félix Faure", summary:"Meurt subitement en fonction, en 1899."},{date:"1899-1906", title:"Émile Loubet", summary:"Président pendant l'affaire Dreyfus."},{date:"1906-1913", title:"Armand Fallières", summary:"Président pendant la Belle Époque."},{date:"1913-1920", title:"Raymond Poincaré", summary:"Président pendant la Première Guerre mondiale."},{date:"1920", title:"Paul Deschanel", summary:"Le plus court mandat de l'histoire : quelques mois seulement, en 1920."},{date:"1920-1924", title:"Alexandre Millerand", summary:"Ancien socialiste devenu président plutôt classé à droite."},{date:"1924-1931", title:"Gaston Doumergue", summary:"Sera rappelé au pouvoir comme chef du gouvernement en 1934, lors d'une crise politique."},{date:"1931-1932", title:"Paul Doumer", summary:"Assassiné en 1932, à peine un an après son élection."},{date:"1932-1940", title:"Albert Lebrun", summary:"Dernier président de la 3e République, jusqu'à l'armistice de 1940."}] },
+  { id:"hist-pres-4e", cat:"Les présidents de la 4e République", type:"facts", rows:[{date:"1947-1954", title:"Vincent Auriol", summary:"Premier président élu de la 4e République, ancien ministre socialiste."},{date:"1954-1959", title:"René Coty", summary:"Dernier président de la 4e République ; il fait appel au général de Gaulle en 1958."}] },
+  { id:"hist-pres-5e", cat:"Les présidents de la 5e République", type:"facts", rows:[{date:"1959-1969", title:"Charles de Gaulle", summary:"Fondateur de la 5e République en 1958, il en devient le premier président."},{date:"1969-1974", title:"Georges Pompidou", summary:"Meurt en cours de mandat, en 1974."},{date:"1974-1981", title:"Valéry Giscard d'Estaing", summary:"Abaisse la majorité à 18 ans ; la loi Veil sur l'IVG est votée sous son mandat."},{date:"1981-1995", title:"François Mitterrand", summary:"Premier président socialiste de la 5e République ; effectue deux mandats (14 ans)."},{date:"1995-2007", title:"Jacques Chirac", summary:"Fait passer le mandat présidentiel de 7 à 5 ans (le quinquennat) en 2000."},{date:"2007-2012", title:"Nicolas Sarkozy", summary:"Premier président élu directement pour un quinquennat."},{date:"2012-2017", title:"François Hollande", summary:"Légalise le mariage pour tous en 2013."},{date:"Depuis 2017", title:"Emmanuel Macron", summary:"Plus jeune président élu de la République (39 ans, en 2017) ; réélu en 2022."}] },
+];
+
+const FAMILIES_HISTOIRE = [
+  { id:"hist-revolution-empire", label:"La Révolution et l'Empire", cardIds:["hist-revolution-empire"] },
+  { id:"hist-republiques-lois", label:"Les Républiques et leurs lois (1848-1882)", cardIds:["hist-republiques-lois"] },
+  { id:"hist-laicite", label:"La laïcité en France", cardIds:["hist-laicite"] },
+  { id:"hist-guerres-mondiales", label:"Les guerres mondiales", cardIds:["hist-guerres-mondiales"] },
+  { id:"hist-conquetes-sociales", label:"Conquêtes sociales et libertés", cardIds:["hist-conquetes-sociales"] },
+  { id:"hist-republique-apres-guerre", label:"La République d'après-guerre", cardIds:["hist-republique-apres-guerre"] },
+  { id:"hist-ue", label:"La construction européenne (l'UE)", cardIds:["hist-ue"] },
+  { id:"hist-republiques-recap", label:"Les Républiques françaises", cardIds:["hist-republiques-recap"] },
+  { id:"hist-infos", label:"Informations clés sur la France", cardIds:["hist-infos"] },
+  { id:"hist-recap", label:"Les 10 dates à retenir", cardIds:["hist-recap"] },
+  { id:"hist-pres-1re", label:"Sous la 1re République : pas de président", cardIds:["hist-pres-1re"] },
+  { id:"hist-pres-2e", label:"Le président de la 2e République", cardIds:["hist-pres-2e"] },
+  { id:"hist-pres-3e", label:"Les présidents de la 3e République", cardIds:["hist-pres-3e"] },
+  { id:"hist-pres-4e", label:"Les présidents de la 4e République", cardIds:["hist-pres-4e"] },
+  { id:"hist-pres-5e", label:"Les présidents de la 5e République", cardIds:["hist-pres-5e"] },
+];
+
+const HISTOIRE_THEME_STYLE = {
+  "hist-revolution-empire":{bg:"#F4A0A0", emoji:"⚜️"},
+  "hist-republiques-lois":{bg:"#AEC6E8", emoji:"🏛️"},
+  "hist-laicite":{bg:"#F4C9A8", emoji:"📜"},
+  "hist-guerres-mondiales":{bg:"#BFE3A0", emoji:"🎖️"},
+  "hist-conquetes-sociales":{bg:"#D8B4E8", emoji:"✊"},
+  "hist-republique-apres-guerre":{bg:"#F5B971", emoji:"🗳️"},
+  "hist-ue":{bg:"#A8DCE8", emoji:"🇪🇺"},
+  "hist-republiques-recap":{bg:"#C9E8A0", emoji:"📖"},
+  "hist-infos":{bg:"#F7D488", emoji:"🇫🇷"},
+  "hist-recap":{bg:"#F4B8C8", emoji:"🔟"},
+  "hist-pres-1re":{bg:"#F4A0A0", emoji:"⚖️"},
+  "hist-pres-2e":{bg:"#AEC6E8", emoji:"🎩"},
+  "hist-pres-3e":{bg:"#F4C9A8", emoji:"🏛️"},
+  "hist-pres-4e":{bg:"#BFE3A0", emoji:"🕊️"},
+  "hist-pres-5e":{bg:"#D8B4E8", emoji:"🎖️"},
+};
+
 const CATEGORY_DATA = {
   anglais: { deck: DECK, families: FAMILIES, theme_style: THEME_STYLE },
   luxembourgeois: { deck: DECK_LUX, families: FAMILIES_LUX, theme_style: LUX_THEME_STYLE },
-  darija: { deck: DECK_DARIJA, families: FAMILIES_DARIJA, theme_style: DARIJA_THEME_STYLE }
+  darija: { deck: DECK_DARIJA, families: FAMILIES_DARIJA, theme_style: DARIJA_THEME_STYLE },
+  histoire: { deck: DECK_HISTOIRE, families: FAMILIES_HISTOIRE, theme_style: HISTOIRE_THEME_STYLE }
 };
 function combinedAvailableDeck(){
   return CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id])
@@ -1807,7 +1881,7 @@ const CATEGORIES = [
   { id:"anglais", label:"Anglais", available:true, icon:"🇬🇧", accent:"#2B4C7E", bg:"#AEC6E8" },
   { id:"darija", label:"Darija algérien", available:true, icon:"🇩🇿", accent:"#2F7A46", bg:"#A8D9B0" },
   { id:"geographie", label:"Géographie", available:false, icon:"🌍", accent:"#2F7A5C", bg:"#BFE3A0" },
-  { id:"histoire", label:"Histoire", available:false, icon:"🏛️", accent:"#A3572F", bg:"#F4C9A8" },
+  { id:"histoire", label:"Histoire", available:true, icon:"🏛️", accent:"#A3572F", bg:"#F4C9A8", unit:"repères" },
   { id:"luxembourgeois", label:"Luxembourgeois", available:true, icon:"🇱🇺", accent:"#3E7CB8", bg:"#A8DCE8" },
   { id:"nutrition", label:"Nutrition", available:false, icon:"🥗", accent:"#5C8A3A", bg:"#C9E8A0" },
   { id:"politique", label:"Politique", available:false, icon:"🗳️", accent:"#6B4E8E", bg:"#D8B4E8" },
@@ -1942,6 +2016,13 @@ function renderCard(card, fromHistory){
       note.textContent = card.note;
       wrap.appendChild(note);
     }
+  } else if(card.type === "facts"){
+    card.rows.forEach(r=>{
+      const div = document.createElement("div");
+      div.className = "fact-block";
+      div.innerHTML = `<div class="fact-date">${r.date}</div><div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
+      wrap.appendChild(div);
+    });
   } else {
     card.items.forEach(([fr,en,ph])=>{
       const div = document.createElement("div");
@@ -2098,7 +2179,9 @@ function renderFavCards(cards){
   cards.forEach(card=>{
     const row = document.createElement("div");
     row.className = "fav-row";
-    row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${card.items.length} mots</span>`;
+    const cat = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
+    const n = card.items ? card.items.length : card.rows.length;
+    row.innerHTML = `<span class="name">${card.cat}</span><span class="count">${n} ${(cat && cat.unit) || "mots"}</span>`;
     row.addEventListener("click", ()=> openFavorite(card));
     list.appendChild(row);
   });
@@ -2113,7 +2196,7 @@ document.getElementById("favCardsBack").addEventListener("click", ()=>{
   else { renderFavCategories(); showView("favorites"); }
 });
 
-function openCategory(cat){
+function openCategory(cat, opts){
   currentCategory = cat;
   document.getElementById("categoryEyebrow").textContent = "CATÉGORIE";
   document.getElementById("categoryTitle").textContent = cat.label;
@@ -2121,11 +2204,14 @@ function openCategory(cat){
   renderThemesForCategory(cat);
   const toggle = document.getElementById("themeToggle");
   const grid = document.getElementById("themeGrid");
-  toggle.classList.remove("open");
-  toggle.querySelector("span").textContent = "DÉCOUVRIR LES THÈMES";
-  grid.hidden = true;
-  document.getElementById("categoryDraw").hidden = false;
-  document.getElementById("categoryCenter").classList.remove("compact");
+  const draw = document.getElementById("categoryDraw");
+  const center = document.getElementById("categoryCenter");
+  const expand = !!(opts && opts.expandThemes);
+  toggle.classList.toggle("open", expand);
+  toggle.querySelector("span").textContent = expand ? "MASQUER LES THÈMES" : "DÉCOUVRIR LES THÈMES";
+  grid.hidden = !expand;
+  draw.hidden = expand;
+  center.classList.toggle("compact", expand);
   showView("category");
 }
 
@@ -2195,7 +2281,7 @@ document.getElementById("cardExitBtn").addEventListener("click", ()=>{
   currentCard = null;
   if(ctx.origin === "categoryRandom" || ctx.origin === "categoryTheme"){
     const cat = CATEGORIES.find(c=>c.id===ctx.categoryId) || currentCategory;
-    openCategory(cat);
+    openCategory(cat, { expandThemes: ctx.origin === "categoryTheme" });
   } else if(ctx.origin === "globalRandom"){
     renderCategories(); showView("categories");
   } else if(ctx.origin === "favorites"){
@@ -2242,7 +2328,7 @@ function renderThemesForCategory(cat){
     const tile = document.createElement("div");
     tile.className = "tile tile-theme";
     tile.style.background = style.bg;
-    tile.innerHTML = `<span class="theme-emoji">${style.emoji}</span><div class="name">${family.label}</div><div class="count">${wordCount} mots</div>`;
+    tile.innerHTML = `<span class="theme-emoji">${style.emoji}</span><div class="name">${family.label}</div><div class="count">${wordCount} ${cat.unit || "mots"}</div>`;
     tile.addEventListener("click", ()=> drawWithinTheme(family));
     grid.appendChild(tile);
   });
