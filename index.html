@@ -392,6 +392,29 @@
     color:#1A1412; line-height:1.5;
   }
 
+  .flip-fact{ perspective:800px; cursor:pointer; }
+  .flip-fact.flipping{ animation:factFlip .26s ease; }
+  @keyframes factFlip{
+    0%{ transform:rotateY(0deg); }
+    50%{ transform:rotateY(90deg); }
+    100%{ transform:rotateY(0deg); }
+  }
+  .flip-hint{
+    flex-shrink:0; align-self:flex-end; margin-top:8px;
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; cursor:pointer;
+    background:#1A1412; border-radius:999px;
+    color:#fff;
+  }
+  .flip-hint[hidden]{ display:none; }
+  .flip-hint svg{ width:18px; height:18px; }
+  .fact-question{ font-style:italic; color:#4A4038; }
+  .fact-points{ margin:0.3em 0 0.7em; padding-left:1.2em; }
+  .fact-points li{
+    font-family:'IBM Plex Sans', sans-serif; font-size:1em; font-weight:500;
+    color:#1A1412; line-height:1.55; margin-bottom:0.35em;
+  }
+
   .card-actions{
     flex-shrink:0;
     display:flex; gap:8px; margin-top:10px;
@@ -662,6 +685,9 @@
           <div class="scroll-hint" id="scrollHint">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
           </div>
+        </div>
+        <div class="flip-hint" id="flipHint" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 16"/><path d="M20 5v6h-6"/></svg>
         </div>
         <div class="card-actions">
           <button class="btn-ghost" id="prevBtn">◂ Précédent</button>
@@ -1846,7 +1872,17 @@ const DECK_POLITIQUE = [
   { id:"pol-pres-3e", cat:"Les présidents de la 3e République", type:"facts", rows:[{date:"1871-1873", title:"Adolphe Thiers", summary:"Ancien orléaniste, devient chef de l'exécutif après la chute du Second Empire."},{date:"1873-1879", title:"Patrice de Mac Mahon", summary:"Ancien maréchal ; sa présidence est marquée par la crise politique du 16 mai 1877."},{date:"1879-1887", title:"Jules Grévy", summary:"Considéré comme le premier président pleinement républicain, sans ambitions monarchiques."},{date:"1887-1894", title:"Sadi Carnot", summary:"Assassiné en 1894 par un anarchiste, à Lyon."},{date:"1894-1895", title:"Jean Casimir-Perier", summary:"Démissionne après seulement six mois de mandat."},{date:"1895-1899", title:"Félix Faure", summary:"Meurt subitement en fonction, en 1899."},{date:"1899-1906", title:"Émile Loubet", summary:"Président pendant l'affaire Dreyfus."},{date:"1906-1913", title:"Armand Fallières", summary:"Président pendant la Belle Époque."},{date:"1913-1920", title:"Raymond Poincaré", summary:"Président pendant la Première Guerre mondiale."},{date:"1920", title:"Paul Deschanel", summary:"Le plus court mandat de l'histoire : quelques mois seulement, en 1920."},{date:"1920-1924", title:"Alexandre Millerand", summary:"Ancien socialiste devenu président plutôt classé à droite."},{date:"1924-1931", title:"Gaston Doumergue", summary:"Sera rappelé au pouvoir comme chef du gouvernement en 1934, lors d'une crise politique."},{date:"1931-1932", title:"Paul Doumer", summary:"Assassiné en 1932, à peine un an après son élection."},{date:"1932-1940", title:"Albert Lebrun", summary:"Dernier président de la 3e République, jusqu'à l'armistice de 1940."}] },
   { id:"pol-pres-4e", cat:"Les présidents de la 4e République", type:"facts", rows:[{date:"1947-1954", title:"Vincent Auriol", summary:"Premier président élu de la 4e République, ancien ministre socialiste."},{date:"1954-1959", title:"René Coty", summary:"Dernier président de la 4e République ; il fait appel au général de Gaulle en 1958."}] },
   { id:"pol-pres-5e", cat:"Les présidents de la 5e République", type:"facts", rows:[{date:"1959-1969", title:"Charles de Gaulle", summary:"Fondateur de la 5e République en 1958, il en devient le premier président."},{date:"1969-1974", title:"Georges Pompidou", summary:"Meurt en cours de mandat, en 1974."},{date:"1974-1981", title:"Valéry Giscard d'Estaing", summary:"Abaisse la majorité à 18 ans ; la loi Veil sur l'IVG est votée sous son mandat."},{date:"1981-1995", title:"François Mitterrand", summary:"Premier président socialiste de la 5e République ; effectue deux mandats (14 ans)."},{date:"1995-2007", title:"Jacques Chirac", summary:"Fait passer le mandat présidentiel de 7 à 5 ans (le quinquennat) en 2000."},{date:"2007-2012", title:"Nicolas Sarkozy", summary:"Premier président élu directement pour un quinquennat."},{date:"2012-2017", title:"François Hollande", summary:"Légalise le mariage pour tous en 2013."},{date:"Depuis 2017", title:"Emmanuel Macron", summary:"Plus jeune président élu de la République (39 ans, en 2017) ; réélu en 2022."}] },
-  { id:"pol-ue-institutions", cat:"Les institutions européennes", type:"facts", rows:[{date:"Exécutif", title:"La Commission européenne", summary:"Elle propose les lois européennes et veille à leur application ; un commissaire par pays membre."},{date:"Législatif", title:"Le Parlement européen", summary:"720 députés européens, élus directement par les citoyens de l'UE tous les 5 ans."},{date:"Législatif", title:"Le Conseil de l'UE", summary:"Réunit les ministres des 27 pays ; il adopte les lois avec le Parlement."},{date:"Judiciaire", title:"La Cour de justice de l'UE", summary:"Basée au Luxembourg, elle veille à ce que le droit européen soit appliqué de la même façon dans tous les pays."}] }
+  { id:"pol-ue-institutions", cat:"Les institutions européennes", type:"facts", rows:[{date:"Exécutif", title:"La Commission européenne", summary:"Elle propose les lois européennes et veille à leur application ; un commissaire par pays membre."},{date:"Législatif", title:"Le Parlement européen", summary:"720 députés européens, élus directement par les citoyens de l'UE tous les 5 ans."},{date:"Législatif", title:"Le Conseil de l'UE", summary:"Réunit les ministres des 27 pays ; il adopte les lois avec le Parlement."},{date:"Judiciaire", title:"La Cour de justice de l'UE", summary:"Basée au Luxembourg, elle veille à ce que le droit européen soit appliqué de la même façon dans tous les pays."}] },
+  { id:"pol-roi-clovis", cat:"Clovis Ier (466-511)", type:"facts", rows:[{date:"👑", title:"Clovis Ier (466-511)", intro:"Roi des Francs saliens, Clovis mène une série de conquêtes militaires qui lui permettent d'unifier progressivement les royaumes francs sous son autorité. Vers 496, sous l'influence de son épouse Clotilde, il se convertit au christianisme et se fait baptiser à Reims, un choix religieux rare chez les rois germaniques de l'époque. Cette conversion rapproche durablement les Francs de la papauté et de la population gallo-romaine déjà chrétienne, posant les fondations du futur royaume de France.", points:["Premier roi des Francs.","Unifie les tribus franques.","Se fait baptiser chrétien, ce qui fonde le royaume."]}] },
+  { id:"pol-roi-charlemagne", cat:"Charlemagne (742-814)", type:"facts", rows:[{date:"👑", title:"Charlemagne (742-814)", intro:"Roi des Francs à partir de 768, Charlemagne étend considérablement le royaume par de nombreuses campagnes militaires, jusqu'à être couronné Empereur d'Occident par le pape Léon III en l'an 800. Son règne est marqué par une intense activité administrative : il réorganise l'empire en comtés, impose une monnaie unique et lance la Renaissance carolingienne, avec la création d'écoles dans les monastères. Son empire ne survivra pas longtemps à sa mort, mais son modèle politique influencera l'Europe médiévale pendant des siècles.", points:["Roi des Francs, devient Empereur d'Occident en 800.","Lance la Renaissance carolingienne.","Favorise le développement des écoles."]}] },
+  { id:"pol-roi-hugues-capet", cat:"Hugues Capet (941-996)", type:"facts", rows:[{date:"👑", title:"Hugues Capet (941-996)", intro:"Élu roi des Francs en 987 par les grands seigneurs du royaume, Hugues Capet met fin à la dynastie carolingienne et fonde la dynastie des Capétiens. Son royaume est en réalité modeste, limité à un territoire autour de Paris et d'Orléans, la plupart des grands féodaux étant bien plus puissants que lui. Sa décision de faire couronner son fils Robert de son vivant permet de transformer la couronne élective en couronne héréditaire, un principe qui structurera la monarchie française pendant huit siècles.", points:["Fondateur de la dynastie des Capétiens.","Rend la couronne héréditaire."]}] },
+  { id:"pol-roi-philippe2", cat:"Philippe II Auguste (1165-1223)", type:"facts", rows:[{date:"👑", title:"Philippe II Auguste (1165-1223)", intro:"Philippe II Auguste consacre une grande partie de son règne à affaiblir la puissance des rois d'Angleterre, alors maîtres d'un vaste empire continental. Il leur reprend la Normandie et plusieurs autres provinces françaises. Sa victoire décisive à la bataille de Bouvines en 1214, contre une coalition anglo-germanique, renforce durablement le prestige et l'autorité de la couronne. C'est également sous son règne que Paris se dote de remparts et de rues pavées, devenant une véritable capitale politique.", points:["Remporte la victoire de Bouvines (1214).","Reprend des terres à la couronne anglaise.","Fait de Paris la véritable capitale du royaume."]}] },
+  { id:"pol-roi-louis9", cat:"Saint Louis / Louis IX (1214-1270)", type:"facts", rows:[{date:"👑", title:"Saint Louis / Louis IX (1214-1270)", intro:"Profondément pieux, Louis IX incarne l'idéal du roi chrétien médiéval, au point d'être canonisé après sa mort. Il réforme en profondeur la justice royale, en instaurant la possibilité de faire appel des décisions des seigneurs directement devant le roi, et crée une monnaie royale unique, le gros tournois, pour renforcer l'autorité économique de la couronne. Il participe aussi à deux croisades, la seconde lui coûtant la vie devant Tunis. Son règne est souvent considéré comme un apogée de la monarchie médiévale française.", points:["Roi pieux et réformateur.","Crée le gros tournois, une monnaie unique.","Développe la justice royale."]}] },
+  { id:"pol-roi-philippe4", cat:"Philippe IV le Bel (1268-1314)", type:"facts", rows:[{date:"👑", title:"Philippe IV le Bel (1268-1314)", intro:"Philippe IV le Bel renforce considérablement l'autorité royale face aux pouvoirs traditionnels, notamment celui de l'Église. Son conflit avec le pape Boniface VIII, qu'il fait humilier, illustre sa volonté d'affranchir la couronne de la tutelle pontificale. En 1302, il convoque pour la première fois les États généraux, une assemblée représentant le clergé, la noblesse et le peuple, afin d'obtenir un soutien politique élargi. Il ordonne également la dissolution brutale de l'ordre des Templiers entre 1307 et 1312, dont il convoite les richesses.", points:["Entre en conflit avec la papauté.","Crée les États généraux.","Dissout l'ordre des Templiers."]}] },
+  { id:"pol-roi-francois1", cat:"François Ier (1494-1547)", type:"facts", rows:[{date:"👑", title:"François Ier (1494-1547)", intro:"François Ier incarne l'arrivée de la Renaissance italienne en France. Grand mécène, il attire à sa cour des artistes comme Léonard de Vinci, qui passera ses dernières années au Clos Lucé, et fait construire ou transformer plusieurs châteaux emblématiques comme Chambord ou Fontainebleau. Sur le plan administratif, il signe en 1539 l'ordonnance de Villers-Cotterêts, qui impose le français comme langue des actes officiels à la place du latin. Son règne est aussi marqué par une rivalité constante avec l'empereur Charles Quint.", points:["Roi de la Renaissance française.","Mécène de Léonard de Vinci.","Signe l'ordonnance de Villers-Cotterêts : le français devient langue officielle."]}] },
+  { id:"pol-roi-henri4", cat:"Henri IV (1553-1610)", type:"facts", rows:[{date:"👑", title:"Henri IV (1553-1610)", intro:"Après des décennies de guerres de Religion entre catholiques et protestants, Henri IV, lui-même ancien chef protestant converti au catholicisme, parvient à ramener la paix civile dans le royaume. En 1598, il signe l'édit de Nantes, qui accorde aux protestants une liberté de culte limitée mais réelle, une mesure de tolérance religieuse rare pour l'époque. Son règne relance également l'économie du royaume, avec le soutien de son ministre Sully, et lui vaut une image durable de roi proche du peuple.", points:["Met fin aux guerres de Religion.","Signe l'édit de Nantes (1598).","Amorce une période de pacification et de prospérité."]}] },
+  { id:"pol-roi-louis14", cat:"Louis XIV (1638-1715)", type:"facts", rows:[{date:"👑", title:"Louis XIV (1638-1715)", intro:"Louis XIV règne personnellement pendant plus de 72 ans, le règne le plus long de l'histoire de France. Après la Fronde, il s'installe à Versailles, dont il fait un palais somptueux destiné à impressionner l'Europe entière et à tenir la noblesse sous étroite surveillance. Son règne incarne l'apogée de la monarchie absolue de droit divin, résumée par la formule qu'on lui attribue : « L'État, c'est moi ». Il multiplie aussi les guerres pour agrandir le royaume, ce qui finit par épuiser les finances publiques.", points:["Surnommé le « Roi-Soleil ».","Symbole de la monarchie absolue.","Fait construire le château de Versailles.","Fait rayonner la culture française dans toute l'Europe."]}] },
+  { id:"pol-roi-louis16", cat:"Louis XVI (1754-1793)", type:"facts", rows:[{date:"👑", title:"Louis XVI (1754-1793)", intro:"Louis XVI monte sur le trône en 1774 dans un royaume déjà fragilisé par une dette publique considérable. Malgré plusieurs tentatives de réforme financière, il ne parvient pas à résoudre la crise budgétaire ni à répondre aux attentes croissantes de la population. La convocation des États généraux en 1789 déclenche la Révolution française, qui met rapidement fin à la monarchie absolue. Arrêté après une tentative de fuite, il est jugé, condamné et guillotiné en 1793, devenant le seul roi de France exécuté.", points:["Dernier roi de l'Ancien Régime.","Règne marqué par la Révolution française.","Guillotiné en 1793."]}] }
 ];
 
 const FAMILIES_POLITIQUE = [
@@ -1857,7 +1893,8 @@ const FAMILIES_POLITIQUE = [
   { id:"pol-pres-3e", label:"Les présidents de la 3e République", cardIds:["pol-pres-3e"] },
   { id:"pol-pres-4e", label:"Les présidents de la 4e République", cardIds:["pol-pres-4e"] },
   { id:"pol-pres-5e", label:"Les présidents de la 5e République", cardIds:["pol-pres-5e"] },
-  { id:"pol-ue-institutions", label:"Les institutions européennes", cardIds:["pol-ue-institutions"] }
+  { id:"pol-ue-institutions", label:"Les institutions européennes", cardIds:["pol-ue-institutions"] },
+  { id:"pol-rois-france", label:"Les rois de France", cardIds:["pol-roi-clovis","pol-roi-charlemagne","pol-roi-hugues-capet","pol-roi-philippe2","pol-roi-louis9","pol-roi-philippe4","pol-roi-francois1","pol-roi-henri4","pol-roi-louis14","pol-roi-louis16"] }
 ];
 
 const POLITIQUE_THEME_STYLE = {
@@ -1868,7 +1905,8 @@ const POLITIQUE_THEME_STYLE = {
   "pol-pres-3e":{bg:"#F4C9A8", emoji:"🏛️"},
   "pol-pres-4e":{bg:"#BFE3A0", emoji:"🕊️"},
   "pol-pres-5e":{bg:"#D8B4E8", emoji:"🎖️"},
-  "pol-ue-institutions":{bg:"#F4B8C8", emoji:"🏢"}
+  "pol-ue-institutions":{bg:"#F4B8C8", emoji:"🏢"},
+  "pol-rois-france":{bg:"#F5B971", emoji:"👑"}
 };
 
 const DECK_GEOGRAPHIE = [
@@ -2059,8 +2097,32 @@ function renderCard(card, fromHistory){
   } else if(card.type === "facts"){
     card.rows.forEach(r=>{
       const div = document.createElement("div");
-      div.className = "fact-block";
-      div.innerHTML = `<div class="fact-date">${r.date}</div><div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
+      if(r.points){
+        div.className = "fact-block flip-fact";
+        const pointsHtml = r.points.map(p=>`<li>${p}</li>`).join("");
+        div.innerHTML = `
+          <div class="fact-flip-face front">
+            <div class="fact-date">${r.date}</div>
+            <div class="fact-title">${r.title}</div>
+            <div class="fact-summary">${r.intro || r.question || ""}</div>
+          </div>
+          <div class="fact-flip-face back" hidden>
+            <div class="fact-date">${r.date}</div>
+            <div class="fact-title">${r.title}</div>
+            <ul class="fact-points">${pointsHtml}</ul>
+          </div>`;
+        div.addEventListener("click", ()=>{
+          div.classList.add("flipping");
+          setTimeout(()=>{
+            const faces = div.querySelectorAll(".fact-flip-face");
+            faces.forEach(f=>f.hidden = !f.hidden);
+          }, 130);
+          setTimeout(()=>div.classList.remove("flipping"), 260);
+        });
+      } else {
+        div.className = "fact-block";
+        div.innerHTML = `<div class="fact-date">${r.date}</div><div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
+      }
       wrap.appendChild(div);
     });
   } else {
@@ -2076,11 +2138,17 @@ function renderCard(card, fromHistory){
   const anotherBtn = document.getElementById("anotherBtn");
   const prevBtn = document.getElementById("prevBtn");
   const scrollHint = document.getElementById("scrollHint");
+  const flipHint = document.getElementById("flipHint");
   const merged = !!card.merged;
   const count = card.items ? card.items.length : card.rows.length;
   wrap.classList.add("scrollable");
   scrollHint.classList.add("showing");
   prevBtn.disabled = cardHistory.length === 0;
+  flipHint.hidden = !(card.type === "facts" && card.rows.some(r=>r.points));
+  flipHint.onclick = ()=>{
+    const target = wrap.querySelector(".flip-fact");
+    if(target) target.click();
+  };
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
   const catLabel = catForCard ? catForCard.icon + " " + catForCard.label : "";
