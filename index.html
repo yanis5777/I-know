@@ -355,8 +355,9 @@
     margin-top:18px; padding:14px 16px;
     background:var(--paper-dark); border-radius:10px;
     font-family:'IBM Plex Sans', sans-serif; font-size:13px;
-    color:var(--ink); line-height:1.65;
+    color:var(--ink); line-height:1.65; white-space:pre-line;
   }
+  .verb-note:first-child{ margin-top:0; margin-bottom:18px; }
   .item{
     padding:0.55em 0.1em 0.7em;
     border-bottom:1.5px solid rgba(26,20,18,0.16);
@@ -689,7 +690,7 @@
         <div class="flip-hint" id="flipHint" hidden>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 16"/><path d="M20 5v6h-6"/></svg>
         </div>
-        <div class="card-actions">
+        <div class="card-actions" id="cardActions">
           <button class="btn-ghost" id="prevBtn">◂ Précédent</button>
           <button class="btn-solid" id="anotherBtn">Autre carte</button>
         </div>
@@ -797,17 +798,17 @@
 
 <script>
 const DECK = [
-  { id:"nb1", cat:"Les chiffres 0 à 9", items:[
+  { id:"nb1", cat:"Les chiffres 0 à 9 (1/3)", items:[
     ["zéro","zero","zi-rôou"],["un","one","ouane"],["deux","two","tou"],
     ["trois","three","thri"],["quatre","four","for"],["cinq","five","faïve"],
     ["six","six","sixe"],["sept","seven","sèv'n"],["huit","eight","éte"],["neuf","nine","naïne"]
   ]},
-  { id:"nb2", cat:"Les chiffres 10 à 19", items:[
+  { id:"nb2", cat:"Les chiffres 10 à 19 (2/3)", items:[
     ["dix","ten","tènne"],["onze","eleven","i-lèv'n"],["douze","twelve","touèlve"],["treize","thirteen","theur-tine"],
     ["quatorze","fourteen","for-tine"],["quinze","fifteen","fif-tine"],["seize","sixteen","six-tine"],
     ["dix-sept","seventeen","sèv'n-tine"],["dix-huit","eighteen","éi-tine"],["dix-neuf","nineteen","naïne-tine"]
   ]},
-  { id:"nb3", cat:"Dizaines et grands nombres", items:[
+  { id:"nb3", cat:"Dizaines et grands nombres (3/3)", items:[
     ["vingt","twenty","touènti"],["trente","thirty","theur-ti"],["quarante","forty","for-ti"],
     ["cinquante","fifty","fif-ti"],["soixante","sixty","six-ti"],["soixante-dix","seventy","sèv'n-ti"],
     ["quatre-vingts","eighty","éi-ti"],["quatre-vingt-dix","ninety","naïne-ti"],["cent","hundred","heunn-dreud"],
@@ -1367,7 +1368,7 @@ const DECK = [
     {s:"He / She", pr:"is", ps:"was", pc:"was being", fu:"will be"},
     {s:"We", pr:"are", ps:"were", pc:"were being", fu:"will be"},
     {s:"They", pr:"are", ps:"were", pc:"were being", fu:"will be"}
-  ], note:"TO BE sert aussi d'auxiliaire pour le présent continu (I am eating). Il décrit un état permanent (I am French) ou temporaire (I am tired) — contrairement au français, jamais 'j'ai' pour l'âge : 'I am 25' (pas 'I have 25')."},
+  ], note:"TO BE sert aussi d'auxiliaire pour le présent continu (I am eating). Il décrit un état permanent (I am French) ou temporaire (I am tired).\n\nContrairement au français, on ne dit jamais 'j'ai' pour l'âge : 'I am 25' (pas 'I have 25')."},
   { id:"verb-have", cat:"To Have — Avoir", type:"conjugation", rows:[
     {s:"I", pr:"have", ps:"had", pc:"was having", fu:"will have"},
     {s:"You", pr:"have", ps:"had", pc:"were having", fu:"will have"},
@@ -1394,7 +1395,7 @@ const DECK = [
     {full:"He is", short:"He's"}, {full:"She is", short:"She's"},
     {full:"It is", short:"It's"}, {full:"That is", short:"That's"},
     {full:"I have", short:"I've"}, {full:"You have", short:"You've"}
-  ], note:"Les contractions sont OBLIGATOIRES dans la langue naturelle. 'I am' sonne formel ou robotique — 'I'm' est la norme, à l'écrit comme à l'oral."},
+  ], note:"Les contractions sont OBLIGATOIRES dans la langue naturelle.\n\n'I am' sonne formel ou robotique : 'I'm' est la norme, à l'écrit comme à l'oral."},
   { id:"contractions2", cat:"Contractions — Be / Have (2/3)", type:"contractions", rows:[
     {full:"We are", short:"We're"}, {full:"They are", short:"They're"},
     {full:"He has", short:"He's"}, {full:"She has", short:"She's"},
@@ -1427,7 +1428,7 @@ const DECK = [
     {s:"He / She", pr:"eats", ps:"ate", pc:"was eating", fu:"will eat"},
     {s:"We", pr:"eat", ps:"ate", pc:"were eating", fu:"will eat"},
     {s:"They", pr:"eat", ps:"ate", pc:"were eating", fu:"will eat"}
-  ], note:"Attention à la prononciation du passé : 'ate' se dit [eyt] en anglais américain et [et] en anglais britannique — les deux sont corrects, mais tu entendras les deux selon l'interlocuteur."},
+  ], note:"Attention à la prononciation du passé : 'ate' se dit [eyt] en anglais américain et [et] en anglais britannique.\n\nLes deux sont corrects, mais tu entendras l'un ou l'autre selon l'interlocuteur."},
   { id:"verb2-drink", cat:"To Drink — Boire", type:"conjugation", rows:[
     {s:"I", pr:"drink", ps:"drank", pc:"was drinking", fu:"will drink"},
     {s:"You", pr:"drink", ps:"drank", pc:"were drinking", fu:"will drink"},
@@ -1448,7 +1449,7 @@ const DECK = [
     {s:"He / She", pr:"understands", ps:"understood", pc:"was understanding", fu:"will understand"},
     {s:"We", pr:"understand", ps:"understood", pc:"were understanding", fu:"will understand"},
     {s:"They", pr:"understand", ps:"understood", pc:"were understanding", fu:"will understand"}
-  ], note:"UNDERSTAND décrit un état (comprendre), pas vraiment une action en train de se faire — on l'utilise donc très rarement au continu ('was understanding' sonne bizarre). Préfère simplement 'I understand' ou 'I understood'."},
+  ], note:"UNDERSTAND décrit un état (comprendre), pas vraiment une action en train de se faire.\n\nOn l'utilise donc très rarement au continu ('was understanding' sonne bizarre) : préfère simplement 'I understand' ou 'I understood'."},
   { id:"verb2-leave", cat:"To Leave — Partir / Quitter", type:"conjugation", rows:[
     {s:"I", pr:"leave", ps:"left", pc:"was leaving", fu:"will leave"},
     {s:"You", pr:"leave", ps:"left", pc:"were leaving", fu:"will leave"},
@@ -1504,7 +1505,7 @@ const DECK = [
     {inf:"think", past:"thought", part:"thought"},
     {inf:"take", past:"took", part:"taken"},
     {inf:"see", past:"saw", part:"seen"}
-  ], note:"Rappel : sujet + PAST SIMPLE pour raconter (I went). Pour les questions/négations : DID + verbe de base — 'Did you go?' / 'I didn't go' (jamais 'Did you went')."},
+  ], note:"Rappel : sujet + PAST SIMPLE pour raconter (I went).\n\nPour les questions et les négations : DID + verbe de base. 'Did you go?' / 'I didn't go' (jamais 'Did you went')."},
   { id:"irregular2", cat:"Passé irrégulier (2/4)", type:"irregular", rows:[
     {inf:"give", past:"gave", part:"given"},
     {inf:"find", past:"found", part:"found"},
@@ -1546,7 +1547,7 @@ const DECK = [
     {inf:"forget", past:"forgot", part:"forgotten"},
     {inf:"wear", past:"wore", part:"worn"},
     {inf:"wake", past:"woke", part:"woken"}
-  ], note:"Le participe passé (3e colonne) s'utilise avec HAVE pour le Present Perfect (I have eaten, She has gone) — jamais seul pour raconter une action passée simple. Pour ça, c'est la 2e colonne (Past Simple) qu'il faut : 'I ate', pas 'I have ate'."}
+  ], note:"Le participe passé (3e colonne) s'utilise avec HAVE pour le Present Perfect (I have eaten, She has gone).\n\nIl ne s'utilise jamais seul pour raconter une action passée simple : pour ça, c'est la 2e colonne (Past Simple) qu'il faut, 'I ate' et non 'I have ate'."}
 ];
 
 const FAMILIES = [
@@ -1627,39 +1628,39 @@ const THEME_STYLE = {
    linguistiques). Les explications de grammaire sont réécrites avec mes
    propres mots, jamais copiées du livre. Phonétique approximative. */
 const DECK_LUX = [
-  { id:"lux-nb1", cat:"Les chiffres 0 à 9", items:[
+  { id:"lux-nb1", cat:"Les chiffres 0 à 9 (1/3)", items:[
     ["Zéro","null","noul"],["Un","eent","éinte"],["Deux","zwee","tsvéé"],
     ["Trois","dräi","draï"],["Quatre","véier","féier"],["Cinq","fënnef","feuneuf"],
-    ["Six","sechs","zèkss"],["Sept","siwen","sive'n"],["Huit","aacht","aakht"],["Neuf","néng","néngue"]
+    ["Six","sechs","zèkss"],["Sept","siwen","sive'n"],["Huit","aacht","aacht"],["Neuf","néng","néngue"]
   ]},
-  { id:"lux-nb2", cat:"Les chiffres 10 à 19", items:[
+  { id:"lux-nb2", cat:"Les chiffres 10 à 19 (2/3)", items:[
     ["Dix","zéng","tséngue"],["Onze","elef","éleuf"],["Douze","zwielef","tsvileuf"],
     ["Treize","dräizéng","draï-tséngue"],["Quatorze","véierzéng","féier-tséngue"],
-    ["Quinze","fofzéng","fofe-tséngue"],["Seize","siechzéng","ziekh-tséngue"],
-    ["Dix-sept","siwenzéng","sive'n-tséngue"],["Dix-huit","uechtzéng","ouèkht-tséngue"],
+    ["Quinze","fofzéng","fofe-tséngue"],["Seize","siechzéng","ziech-tséngue"],
+    ["Dix-sept","siwenzéng","sive'n-tséngue"],["Dix-huit","uechtzéng","ouècht-tséngue"],
     ["Dix-neuf","nonzéng","nonn-tséngue"]
   ]},
-  { id:"lux-nb3", cat:"Dizaines et grands nombres", items:[
-    ["Vingt","zwanzeg","tsvantseukh"],["Trente","drësseg","dreusseukh"],
-    ["Quarante","véierzeg","féiertseukh"],["Cinquante","fofzeg","fofetseukh"],
-    ["Soixante","sechzeg","zèkhtseukh"],["Cent","honnert","honn'rt"],
+  { id:"lux-nb3", cat:"Dizaines et grands nombres (3/3)", items:[
+    ["Vingt","zwanzeg","tsvantseuch"],["Trente","drësseg","dreusseuch"],
+    ["Quarante","véierzeg","féiertseuch"],["Cinquante","fofzeg","fofetseuch"],
+    ["Soixante","sechzeg","zèchtseuch"],["Cent","honnert","honn'rt"],
     ["Mille","dausend","daozeunt"],["Un million","eng millioun","eng milyoun"]
   ]},
   { id:"lux-greet1", cat:"Se saluer", items:[
     ["Bonjour (24h/24)","Moien","moïeune"],["Bonjour (le matin)","Gudde Moien","goude moïeune"],
-    ["Bonjour (midi)","Gudde Mëtteg","goude meuteukh"],["Bonsoir","Gudden Owend","goude'n oveunt"],
-    ["Bonne nuit","Gutt Nuecht","gout nouekht"],["Salut (informel)","Salut","salout"],
+    ["Bonjour (midi)","Gudde Mëtteg","goude meuteuch"],["Bonsoir","Gudden Owend","goude'n oveunt"],
+    ["Bonne nuit","Gutt Nuecht","gout nouecht"],["Salut (informel)","Salut","salout"],
     ["Enchanté","Enchantéiert","enchanntéyeurt"]
   ]},
   { id:"lux-greet2", cat:"Se dire au revoir / Comment ça va", items:[
     ["Au revoir","Äddi","édi"],["À bientôt","Bis geschwënn","biss gueshveune"],
     ["À plus","Bis dann","biss dann"],["Comment ça va ?","Wéi geet et ?","vaï guétt èt"],
-    ["Bien, merci","Gutt, merci","gout mèrsi"],["Ça va (courant)","'t geet","teu guétt"],
+    ["Bien, merci","Gutt, merci","gout mèrsi"],["Ça va (courant)","'t geet","tguett"],
     ["Oui","Jo","yo"],["Non","Neen","néine"]
   ]},
   { id:"lux-politesse1", cat:"Formules de politesse", items:[
-    ["S'il vous plaît","Wann ech gëlift","vann èkh gulift"],["Merci beaucoup","Merci Villmools","mèrsi filmoles"],
-    ["Pardon, excusez-moi","Entschëllegt","enntcheulukht"],["C'est gentil","Et ass léif","èt ass laïf"],
+    ["S'il vous plaît","Wann ech gëlift","vann èch gulift"],["Merci beaucoup","Merci Villmools","mèrsi filmoles"],
+    ["Pardon, excusez-moi","Entschëllegt","enntcheulucht"],["C'est gentil","Et ass léif","èt ass laïf"],
     ["Je suis désolé","Et deet mir leed","èt déét mir lét"],["De rien","'t ass gär geschitt","teu ass guère gueshitt"]
   ]},
   { id:"lux-couleurs1", cat:"Les couleurs", items:[
@@ -1672,18 +1673,18 @@ const DECK_LUX = [
     ["Avril","Abrëll","abreull"],["Mai","Mee","mé"],["Juin","Juni","youni"]
   ]},
   { id:"lux-mois2", cat:"Les mois (2/2)", items:[
-    ["Juillet","Juli","youli"],["Août","August","aoust"],["Septembre","September","septèmbeur"],
-    ["Octobre","Oktober","oktobeur"],["Novembre","November","novèmbeur"],["Décembre","Dezember","détsèmbeur"]
+    ["Juillet","Juli","youli"],["Août","August","aogoust"],["Septembre","September","septèmba"],
+    ["Octobre","Oktober","oktoba"],["Novembre","November","novèmba"],["Décembre","Dezember","détsèmba"]
   ]},
   { id:"lux-jours1", cat:"Jours et saisons", items:[
-    ["Lundi","Méindeg","maïndeukh"],["Mardi","Dënschdeg","duenshdeukh"],["Mercredi","Mëttwoch","meutvokh"],
-    ["Jeudi","Donneschdeg","donneushdeukh"],["Vendredi","Freideg","fraïdeukh"],["Samedi","Samschdeg","zamshdeukh"],
-    ["Dimanche","Sonndeg","sonndeukh"],["Hiver","Wanter","vanteur"],["Printemps","Fréijoer","fraïyoer"],
+    ["Lundi","Méindeg","maïndeuch"],["Mardi","Dënschdeg","duenshdeuch"],["Mercredi","Mëttwoch","meutvoch"],
+    ["Jeudi","Donneschdeg","donneushdeuch"],["Vendredi","Freideg","fraïdeuch"],["Samedi","Samschdeg","zamshdeuch"],
+    ["Dimanche","Sonndeg","sonndeuch"],["Hiver","Wanter","vanteur"],["Printemps","Fréijoer","fraïyoer"],
     ["Été","Summer","zoumeur"],["Automne","Hierscht","hiersht"]
   ]},
   { id:"lux-heure1", cat:"L'heure et le temps", items:[
     ["Quelle heure est-il ?","Wivill Auer ass et ?","vivill aor ass èt"],["Il est une heure","Et ass eng Auer","èt ass eng aor"],
-    ["C'est midi","Et ass Mëtteg","èt ass meuteukh"],["C'est minuit","Et ass Hallefnuecht","èt ass halleuf-nouekht"],
+    ["C'est midi","Et ass Mëtteg","èt ass meuteuch"],["C'est minuit","Et ass Hallefnuecht","èt ass halleuf-nouecht"],
     ["Aujourd'hui","haut","haot"],["Hier","gëschter","gueshteur"],["Demain","muer","mouer"]
   ]},
   { id:"lux-genre1", cat:"Le genre des noms (den...) 1/2", items:[
@@ -1691,19 +1692,19 @@ const DECK_LUX = [
     ["Le boeuf","den Ochs","de'n oksse"],["Le pommier","den Äppelbam","de'n éppeulbam"],["L'oeuf","den Ëe","de'n eue"],
     ["L'ouvre-boîte","den Öffner","de'n eufneur"],["Le fourneau","den Uewen","de'n ouéveun"],
     ["La table","den Dësch","de'n deush"],["Le tiroir","den Tirang","de'n tirangue"],
-    ["Le sucre","den Zocker","de'n tsokeur"],["Le chien","den Hond","de'n honnt"]
-  ], note:"Ces noms utilisent tous l'article DEN, quel que soit leur genre réel en français — c'est ce qu'on appelle la 'règle de l'Eiffel' : DEN apparaît devant les mots commençant par une voyelle ou par D/T/Z/H/N. Devant les autres consonnes, on utilise DE (voir la carte suivante)."},
+    ["Le sucre","den Zocker","de'n tsoka"],["Le chien","den Hond","de'n honnt"]
+  ], note:"Ces noms utilisent tous l'article DEN, quel que soit leur genre réel en français. C'est ce qu'on appelle la 'règle de l'Eiffel'.\n\nDEN apparaît devant les mots commençant par une voyelle ou par D/T/Z/H/N. Devant les autres consonnes, on utilise DE (voir la carte suivante)."},
   { id:"lux-genre2", cat:"Le genre des noms (de...) 2/2", items:[
     ["Le poirier","de Birebam","deu bireubam"],["Le coiffeur","de Coiffeur","deu koaffeur"],
     ["Le forain","de Fouermann","deu fouermann"],["Le kilo","de Kilo","deu kilo"],
     ["L'homme","de Mann","deu mann"],["Le père","de Papp","deu papp"],
-    ["Le fromage blanc","de Quark","deu kwark"],["Le dimanche","de Sonndeg","deu sonndeukh"],
+    ["Le fromage blanc","de Quark","deu kwark"],["Le dimanche","de Sonndeg","deu sonndeuch"],
     ["L'association","de Veräin","deu véraïn"],["Le vin","de Wäin","deu vaïn"]
-  ], note:"DE apparaît devant les mots qui commencent par une consonne autre que D/T/Z/H/N (ici B, C, F, K, M, P, Q, S, V, W). C'est un phénomène purement phonétique, pas une histoire de genre grammatical — 'de Mann' (l'homme) et 'de Papp' (le père) sont bien masculins, mais suivent la même règle sonore que les autres."},
+  ], note:"DE apparaît devant les mots qui commencent par une consonne autre que D/T/Z/H/N (ici B, C, F, K, M, P, Q, S, V, W).\n\nC'est un phénomène purement phonétique, pas une histoire de genre grammatical. 'de Mann' (l'homme) et 'de Papp' (le père) sont bien masculins, mais suivent la même règle sonore que les autres."},
   { id:"lux-deplacer1", cat:"Se déplacer : aller, venir", items:[
     ["Aller à pied","goen","goueun"],["Se déplacer motorisé","fueren","foueureun"],
     ["Aller à cheval","reiden","raïdeun"],["Prendre l'avion","fléien","fléieun"]
-  ], note:"Le luxembourgeois distingue le moyen de transport dès le verbe : GOEN pour marcher, FUEREN pour un véhicule à moteur, REIDEN à cheval, FLÉIEN en avion — là où le français utilise souvent juste 'aller' + le moyen."}
+  ], note:"Le luxembourgeois distingue le moyen de transport dès le verbe : GOEN pour marcher, FUEREN pour un véhicule à moteur, REIDEN à cheval, FLÉIEN en avion.\n\nLà où le français utilise souvent juste 'aller' + le moyen."}
 ];
 
 const FAMILIES_LUX = [
@@ -1737,9 +1738,9 @@ const LUX_THEME_STYLE = {
    alphabet latin ("chat arabic") : 3=ع, 7=ح, 9=ق, 5/kh=خ, 2=lettre
    "a" dédoublée. Phonétique approximative pour lecteurs francophones. */
 const DECK_DARIJA = [
-  { id:"darija-nb1", cat:"Les chiffres 0 à 10", items:[["Zéro","Sifr","Sifr"],["Un","Wahed","Wahed"],["Deux","Zouj","Zouj"],["Trois","Tlata","Tlata"],["Quatre","Arb3a","Arbaa"],["Cinq","Khamsa","Khamsa"],["Six","Setta","Setta"],["Sept","Seb3a","Sebaa"],["Huit","Tmenya","Tmenya"],["Neuf","Tes3a","Tesaa"],["Dix","3achra","aachra"]] },
-  { id:"darija-nb2", cat:"Les chiffres 11 à 19", items:[["Onze","Hdach","Hdach"],["Douze","Tnach","Tnach"],["Treize","Tletach","Tletach"],["Quatorze","Arba3tach","Arbaatach"],["Quinze","Khmestach","Khmestach"],["Seize","Sttach","Sttach"],["Dix-sept","Saba3tach","Sabaatach"],["Dix-huit","Tmentach","Tmentach"],["Dix-neuf","Tsa3tach","Tsaatach"]] },
-  { id:"darija-nb3", cat:"Dizaines et grands nombres", items:[["Vingt","3achrin","aachrin"],["Trente","Tlatin","Tlatin"],["Quarante","Rab3in","Rabain"],["Cinquante","Khamsin","Khamsin"],["Soixante","Settin","Settin"],["Soixante-dix","Seb3in","Sebain"],["Quatre-vingts","Tmanin","Tmanin"],["Quatre-vingt-dix","Tes3in","Tesain"],["Cent","Miya","Miya"],["Mille","Alf","Alf"]] },
+  { id:"darija-nb1", cat:"Les chiffres 0 à 10 (1/3)", items:[["Zéro","Sifr","Sifr"],["Un","Wahed","Wahed"],["Deux","Zouj","Zouj"],["Trois","Tlata","Tlata"],["Quatre","Arb3a","Arbaa"],["Cinq","Khamsa","Khamsa"],["Six","Setta","Setta"],["Sept","Seb3a","Sebaa"],["Huit","Tmenya","Tmenya"],["Neuf","Tes3a","Tesaa"],["Dix","3achra","aachra"]] },
+  { id:"darija-nb2", cat:"Les chiffres 11 à 19 (2/3)", items:[["Onze","Hdach","Hdach"],["Douze","Tnach","Tnach"],["Treize","Tletach","Tletach"],["Quatorze","Arba3tach","Arbaatach"],["Quinze","Khmestach","Khmestach"],["Seize","Sttach","Sttach"],["Dix-sept","Saba3tach","Sabaatach"],["Dix-huit","Tmentach","Tmentach"],["Dix-neuf","Tsa3tach","Tsaatach"]] },
+  { id:"darija-nb3", cat:"Dizaines et grands nombres (3/3)", items:[["Vingt","3achrin","aachrin"],["Trente","Tlatin","Tlatin"],["Quarante","Rab3in","Rabain"],["Cinquante","Khamsin","Khamsin"],["Soixante","Settin","Settin"],["Soixante-dix","Seb3in","Sebain"],["Quatre-vingts","Tmanin","Tmanin"],["Quatre-vingt-dix","Tes3in","Tesain"],["Cent","Miya","Miya"],["Mille","Alf","Alf"]] },
   { id:"darija-presentation1", cat:"Se présenter", items:[["Comment tu t'appelles ?","Wach ismak ?","Wach ismak ?"],["Je m'appelle Yanis","Ana ismi Yanis","Ana ismi Yanis"],["Je viens de...","Ana min...","Ana min..."],["J'habite à / en...","Neskon fi...","Neskon fi..."],["J'habite en France","Neskon fi franssa","Neskon fi franssa"],["Je suis d'Algérie","Ana men ljazayer","Ana men ljazayer"]], note:"Ana min... et Ana men... sont deux variantes entendues pour dire 'je viens de / je suis de' selon les régions." },
   { id:"darija-presentation2", cat:"Questions de présentation", items:[["Qui es-tu ?","Chkoun nta ? Nti ?","Chkoun nta ? Nti ?"],["Tu as quel âge ?","Ch7al fi 3omrak ?","Chhal fi aomrak ?"],["J'ai 30 ans","3andi tlatin sna","aandi tlatin sna"],["Tu habites où ?","Win teskon ?","Win teskon ?"],["Et toi ?","W nta ? W nti ?","W nta ? W nti ?"],["Enchanté(e)","Matcharfin","Matcharfin"]], note:"'Omri' (mon âge) s'utilise aussi comme mot doux/mignon, un peu comme 'mon amour' en français." },
   { id:"darija-pronoms", cat:"Les pronoms personnels", items:[["Je","Ana","Ana"],["Tu (homme)","Nta","Nta"],["Tu (femme)","Nti","Nti"],["Il","Howa","Howa"],["Elle","Hia","Hia"],["Nous","Hna","Hna"],["Vous","Ntouma","Ntouma"],["Ils / Elles","Houma","Houma"]], note:"Exemples : Ana nahdar (je parle), Howa ysama3 (il écoute), Nta takhdam (tu travailles)." },
@@ -1754,7 +1755,7 @@ const DECK_DARIJA = [
   { id:"darija-imperatifs3", cat:"Demandes et ordres (3)", items:[["Montre-moi","Werili","Werili"],["Dis-moi","Qoli","Qoli"],["Pardonne-moi","Sma7li","Smahli"],["Appelle-moi","3ayatli","aayatli"],["Explique-moi","Fahhemni","Fahhemni"]] },
   { id:"darija-negation-etre", cat:"Négation : je ne suis pas...", items:[["Je ne suis pas","Ma rani-ch","Ma rani-ch"],["Tu n'es pas (homme)","Ma rak-ch","Ma rak-ch"],["Tu n'es pas (femme)","Ma raki-ch","Ma raki-ch"],["Il n'est pas","Ma rahou-ch","Ma rahou-ch"],["Elle n'est pas","Ma rahi-ch","Ma rahi-ch"],["Nous ne sommes pas","Ma rana-ch","Ma rana-ch"],["Vous n'êtes pas","Ma rakoum-ch","Ma rakoum-ch"],["Ils / Elles ne sont pas","Ma rahoum-ch","Ma rahoum-ch"]], note:"La négation en darija encadre le verbe avec 'ma...ch' : ici elle s'ajoute à rani/rak/raki/rahou/rahi/rana/rakoum/rahoum (je suis/tu es/il est...)." },
   { id:"darija-negation-avoir", cat:"Négation : je n'ai pas...", items:[["Je n'ai pas","Ma 3andi-ch","Ma aandi-ch"],["Tu n'as pas (homme)","Ma 3andek-ch","Ma aandek-ch"],["Il n'a pas","Ma 3andouch","Ma aandouch"],["Elle n'a pas","Ma 3andhach","Ma aandhach"],["Nous n'avons pas","Ma 3andnech","Ma aandnech"],["Vous n'avez pas","Ma 3andkomch","Ma aandkomch"],["Ils / Elles n'ont pas","Ma 3andhomch","Ma aandhomch"]] },
-  { id:"darija-possessifs", cat:"Les possessifs (à moi, à toi...)", items:[["Mon / Ma (à moi)","Ta3i","Taai"],["Ton / Ta (à toi)","Ta3ek","Taaek"],["Son / Sa (à lui)","Ta3o","Taao"],["Son / Sa (à elle)","Ta3ha","Taaha"],["Notre","Ta3na","Taana"],["Votre","Ta3koum","Taakoum"],["Leur","Ta3houm","Taahoum"]], note:"On entend aussi la variante 'Taw3i, Taw3ek, Taw3o...' selon les locuteurs — les deux formes sont correctes et désignent la même idée de possession ('à moi', 'à toi'...)." },
+  { id:"darija-possessifs", cat:"Les possessifs (à moi, à toi...)", items:[["Mon / Ma (à moi)","Ta3i","Taai"],["Ton / Ta (à toi)","Ta3ek","Taaek"],["Son / Sa (à lui)","Ta3o","Taao"],["Son / Sa (à elle)","Ta3ha","Taaha"],["Notre","Ta3na","Taana"],["Votre","Ta3koum","Taakoum"],["Leur","Ta3houm","Taahoum"]], note:"On entend aussi la variante 'Taw3i, Taw3ek, Taw3o...' selon les locuteurs.\n\nLes deux formes sont correctes et désignent la même idée de possession ('à moi', 'à toi'...)." },
   { id:"darija-comparatifs", cat:"Les comparatifs", items:[["Plus que moi","Kthar menni","Kthar menni"],["Plus que toi","Kthar mennek","Kthar mennek"],["Plus que lui","Kthar mennou","Kthar mennou"],["Plus qu'elle","Kthar menha","Kthar menha"],["Plus que nous","Kthar menna","Kthar menna"],["Plus que vous","Kthar menkoum","Kthar menkoum"],["Plus qu'eux","Kthar menhom","Kthar menhom"],["Plus qu'elles","Kthar menhom","Kthar menhom"]] },
   { id:"darija-opposes", cat:"Adjectifs opposés", items:[["Long","Twil","Twil"],["Court","Qsir","Qsir"],["Lourd","Thqil","Thqil"],["Léger","Khfif","Khfif"],["Facile","Sahel","Sahel"],["Difficile","Wa3er","Waaer"],["Loin","B3id","Baid"],["Près","Qrib","Qrib"]] },
   { id:"darija-personnalite", cat:"Adjectifs de personnalité", items:[["Gentil","3aqel","aaqel"],["Intelligent","Fahem","Fahem"],["Courageux","Chater","Chater"],["Modeste","Metwadha3","Metwadhaa"],["Beau","Chbeb","Chbeb"],["Belle","Chabba","Chabba"],["Méchant","Qbi7","Qbih"],["Stupide","7abbes","habbes"],["Fainéant","Fenyane","Fenyane"],["Arrogant","Met7abbar","Methabbar"],["Menteur","Keddab","Keddab"],["Moche","Mechi chbeb","Mechi chbeb"]] },
@@ -1772,10 +1773,10 @@ const DECK_DARIJA = [
   { id:"darija-sens", cat:"Verbes des sens et de la pensée", items:[["Je parle","Nahder","Nahder"],["J'écoute","Nesma3","Nesmaa"],["Je vois","Nchouf","Nchouf"],["Je réfléchis","Nkhamem","Nkhamem"],["Je mange","Nakoul","Nakoul"],["Je goûte","Ndhouq","Ndhouq"],["Je touche","Nmess","Nmess"]] },
   { id:"darija-amour", cat:"Expressions affectives", items:[["Je t'aime","Nta3bek","Ntaabek"],["Je te pardonne","Nsam7ek","Nsamhek"],["Je te déteste","Nekrahek","Nekrahek"],["Je pense à toi","Nkhamem fik","Nkhamem fik"],["Tu me manques","Twahachtek","Twahachtek"],["Tu me plais","Ta3djebni","Taadjebni"]] },
   { id:"darija-prepositions", cat:"Prépositions de lieu", items:[["Sous","Ta7t","Taht"],["Sur","3la / fouq","ala / fouq"],["Dans","Fi","Fi"],["À côté de","Qeddam","Qeddam"],["Derrière","Mor","Mor"],["Entre","Bin","Bin"],["Entre","Edkhol","Edkhol"],["Sors","Ekhrodj","Ekhrodj"],["Reviens","Welli","Welli"],["Reste","Riyeh","Riyeh"]] },
-  { id:"darija-vouloir", cat:"Vouloir / ne pas vouloir", items:[["Je veux manger","Rani 7eb nakoul","Rani heb nakoul"],["Je veux dormir","Rani 7eb nergod","Rani heb nergod"],["Je veux l'acheter","Rani 7eb nachrih","Rani heb nachrih"],["Je ne veux pas y aller","Ma ranich 7eb nrou7","Ma ranich heb nrouh"],["Je ne veux pas rester ici","Ma ranich 7eb nriya7 hna","Ma ranich heb nriyah hna"],["Je ne veux pas faire ça","Ma ranich 7eb ndir hakdha","Ma ranich heb ndir hakdha"]], note:"'Rani 7eb' se prononce 'rani heb' (m) ou 'rabbi heb' (f: rabbi 7ebba selon les locuteurs) — la forme change légèrement au féminin." },
+  { id:"darija-vouloir", cat:"Vouloir / ne pas vouloir", items:[["Je veux manger","Rani 7eb nakoul","Rani heb nakoul"],["Je veux dormir","Rani 7eb nergod","Rani heb nergod"],["Je veux l'acheter","Rani 7eb nachrih","Rani heb nachrih"],["Je ne veux pas y aller","Ma ranich 7eb nrou7","Ma ranich heb nrouh"],["Je ne veux pas rester ici","Ma ranich 7eb nriya7 hna","Ma ranich heb nriyah hna"],["Je ne veux pas faire ça","Ma ranich 7eb ndir hakdha","Ma ranich heb ndir hakdha"]], note:"'Rani 7eb' se prononce 'rani heb' (m) ou 'rabbi heb' (f : rabbi 7ebba selon les locuteurs).\n\nLa forme change légèrement au féminin." },
   { id:"darija-questions-pratiques", cat:"Questions pratiques", items:[["T'es où ?","Win rak ?","Win rak ?"],["Je suis au travail","Rani f lkhedma","Rani f lkhedma"],["Je suis dehors","Rani barra","Rani barra"],["C'est quoi ça ?","Wech hadha ?","Wech hadha ?"],["Combien ?","Ch7al ?","Chhal ?"],["C'est tout ce que j'ai","Hadha wech 3andi","Hadha wech aandi"],["Je n'ai rien d'autre","Ma3andich 7adja wa7dokhra","Maaandich hadja wahdokhra"],["C'est tout","Hadha mahou","Hadha mahou"]] },
   { id:"darija-expressions", cat:"Expressions courantes", items:[["Lâche l'affaire","Akhtik","Akhtik"],["Ça suffit","Bezzaf","Bezzaf"],["Arrête un peu","7abbes chwiya","habbes chwiya"],["Je m'en fous","Ma yehmnich","Ma yehmnich"],["Ça m'est égal","Ma keench ma dekhelni","Ma keench ma dekhelni"],["T'as raison","3andek l'7eq","aandek l'heq"],["T'as tort","Rak ghalet","Rak ghalet"]] },
-  { id:"darija-proverbe", cat:"Une expression imagée", items:[["Quand les poules auront des dents","Ki ynawer el mel7","Ki ynawer el melh"]], note:"Équivalent algérien de notre 'quand les poules auront des dents' — littéralement 'quand le sel fleurira', pour dire jamais." },
+  { id:"darija-proverbe", cat:"Une expression imagée", items:[["Quand les poules auront des dents","Ki ynawer el mel7","Ki ynawer el melh"]], note:"Équivalent algérien de notre 'quand les poules auront des dents'.\n\nLittéralement : 'quand le sel fleurira', pour dire jamais." },
   { id:"darija-nettoyage", cat:"Verbes du ménage", items:[["Je lave","Noghsel","Noghsel"],["Je rince","Nchellel","Nchellel"],["Je nettoie","Naqqi","Naqqi"],["Je frotte","N7ok","Nhok"],["Je sèche","Nechef","Nechef"]] },
   { id:"darija-commerce", cat:"Verbes du commerce", items:[["Je vends","Nbi3","Nbia"],["J'achète","Nechri","Nechri"],["Je loue","Nekri","Nekri"],["Je paie","Nkhalles","Nkhalles"]] },
   { id:"darija-quotidien", cat:"Petites phrases du quotidien", items:[["Quoi de neuf ?","Kech jdid ?","Kech jdid ?"],["Comme d'habitude","Kima l3ada","Kima laada"],["Apparemment","3la 7seb echofa","ala hseb echofa"],["Apparemment (2)","Tbenli","Tbenli"]] },
@@ -2126,6 +2127,12 @@ function renderCard(card, fromHistory){
       wrap.appendChild(div);
     });
   } else {
+    if(card.note){
+      const note = document.createElement("div");
+      note.className = "verb-note";
+      note.textContent = card.note;
+      wrap.appendChild(note);
+    }
     card.items.forEach(([fr,en,ph])=>{
       const div = document.createElement("div");
       div.className = "item";
@@ -2153,11 +2160,20 @@ function renderCard(card, fromHistory){
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
   const catLabel = catForCard ? catForCard.icon + " " + catForCard.label : "";
   document.getElementById("cardNum").textContent = catLabel;
-  if(merged){
+  let poolSize = null;
+  if(ctx.pool){
+    poolSize = ctx.pool.length;
+  } else if(ctx.categoryId && CATEGORY_DATA[ctx.categoryId]){
+    poolSize = CATEGORY_DATA[ctx.categoryId].deck.length;
+  }
+  const singleCard = poolSize === 1;
+  if(merged || singleCard){
     anotherBtn.style.display = "none";
   } else {
     anotherBtn.style.display = "";
   }
+  prevBtn.style.display = singleCard ? "none" : "";
+  document.getElementById("cardActions").style.display = singleCard ? "none" : "";
   starBtn.style.display = "";
   const isFav = getFavs().includes(card.id);
   starBtn.classList.toggle("active", isFav);
@@ -2381,7 +2397,7 @@ document.getElementById("prevBtn").addEventListener("click", ()=>{
   const prev = cardHistory.pop();
   renderCard(prev, true);
 });
-document.getElementById("cardExitBtn").addEventListener("click", ()=>{
+function exitCardView(){
   cardHistory = [];
   currentCard = null;
   if(ctx.origin === "categoryRandom" || ctx.origin === "categoryTheme"){
@@ -2400,7 +2416,32 @@ document.getElementById("cardExitBtn").addEventListener("click", ()=>{
   } else {
     renderCategories(); showView("categories");
   }
-});
+}
+document.getElementById("cardExitBtn").addEventListener("click", exitCardView);
+
+/* Glisser de gauche à droite sur la carte pour revenir en arrière,
+   comme le geste natif "retour" d'iPhone. On ignore les glissements
+   trop verticaux (ce sont des scrolls) et ceux qui démarrent trop
+   loin du bord gauche (pour ne pas gêner le scroll normal). */
+(function(){
+  const cardEl = document.querySelector("#cardView .card");
+  let startX = 0, startY = 0, tracking = false;
+  cardEl.addEventListener("touchstart", (e)=>{
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    tracking = startX < 40;
+  }, {passive:true});
+  cardEl.addEventListener("touchend", (e)=>{
+    if(!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    if(dx > 70 && Math.abs(dy) < 60){
+      exitCardView();
+    }
+  }, {passive:true});
+})();
 document.getElementById("globalDrawBtn").addEventListener("click", drawGlobalRandom);
 
 function renderCategories(){
