@@ -390,7 +390,7 @@
   }
   .fact-summary{
     font-family:'IBM Plex Sans', sans-serif; font-size:1em; font-weight:500;
-    color:#1A1412; line-height:1.7; margin-bottom:0.9em;
+    color:#1A1412; line-height:1.7; margin-bottom:0.9em; white-space:pre-line;
   }
 
   .flip-fact{ perspective:800px; cursor:pointer; }
@@ -1949,19 +1949,22 @@ const GEOGRAPHIE_THEME_STYLE = {
 const DECK_NUTRITION = [
   { id:"nutr-oxalates", cat:"Les oxalates", type:"facts", rows:[{title:"Les oxalates", noFlip:true, intro:"Les oxalates sont des composés naturels présents dans certains végétaux, notamment les amandes, les betteraves, les patates douces, les épinards, le cacao et la rhubarbe. Consommés en excès, ils peuvent former des cristaux dans l'organisme, provoquer une irritation digestive et, dans certains cas, augmenter le risque de calculs rénaux. Le risque augmente surtout en cas de consommation répétée et concentrée, comme des smoothies verts quotidiens, de grosses quantités d'amandes ou du jus de betterave fréquent.", points:["Aliments riches : amandes, betteraves, patates douces, épinards, cacao, rhubarbe.","Effets possibles : micro-cristaux, irritation digestive, calculs rénaux.","À surveiller : consommation quotidienne et concentrée (smoothies verts, jus de betterave)."]}] },
   { id:"nutr-phytique", cat:"L'acide phytique (anti-nutriment)", type:"facts", rows:[{title:"L'acide phytique", noFlip:true, intro:"L'acide phytique est un anti-nutriment présent dans l'enveloppe des amandes, noix, graines et céréales complètes. Il se lie à certains minéraux essentiels comme le zinc, le fer, le magnésium et le calcium, réduisant leur absorption par l'organisme, et peut occasionner une digestion plus lourde ou des ballonnements chez certaines personnes. Le trempage, la fermentation ou la germination permettent de réduire significativement sa teneur.", points:["Présent dans : amandes, noix, graines, céréales complètes.","Effet principal : réduit l'absorption du zinc, du fer, du magnésium et du calcium.","Solutions : trempage (8 à 12h), fermentation, germination."]}] },
-  { id:"nutr-acrylamide", cat:"L'acrylamide", type:"facts", rows:[{title:"L'acrylamide", noFlip:true, intro:"L'acrylamide est une substance qui se forme lors de la cuisson à haute température (plus de 120°C) d'aliments riches en amidon, comme les frites, les chips, le pain très grillé ou le café torréfié. Elle est surveillée car potentiellement cancérogène et neurotoxique à forte dose. La règle est simple : plus un aliment est brun foncé, grillé ou croustillant, plus sa teneur en acrylamide est susceptible d'être élevée. Une patate douce cuite à la vapeur en contient très peu, contre beaucoup plus en friture.", points:["Aliments concernés : frites, chips, pain très grillé, biscuits industriels, café torréfié.","Règle d'or : plus c'est doré, grillé ou croustillant, plus l'acrylamide est élevé.","Exemple patate douce : vapeur (très faible) → cuisson douce (faible) → four doré (modéré) → friture (élevé)."]}] }
+  { id:"nutr-acrylamide", cat:"L'acrylamide", type:"facts", rows:[{title:"L'acrylamide", noFlip:true, intro:"L'acrylamide est une substance qui se forme lors de la cuisson à haute température (plus de 120°C) d'aliments riches en amidon, comme les frites, les chips, le pain très grillé ou le café torréfié. Elle est surveillée car potentiellement cancérogène et neurotoxique à forte dose. La règle est simple : plus un aliment est brun foncé, grillé ou croustillant, plus sa teneur en acrylamide est susceptible d'être élevée. Une patate douce cuite à la vapeur en contient très peu, contre beaucoup plus en friture.", points:["Aliments concernés : frites, chips, pain très grillé, biscuits industriels, café torréfié.","Règle d'or : plus c'est doré, grillé ou croustillant, plus l'acrylamide est élevé.","Exemple patate douce : vapeur (très faible) → cuisson douce (faible) → four doré (modéré) → friture (élevé)."]}] },
+  { id:"nutr-creatine", cat:"La créatine", type:"facts", rows:[{date:"⚙️", title:"La créatine", intro:"La créatine est stockée dans les muscles sous forme de phosphocréatine, qu'elle utilise pour recycler rapidement l'ATP, la principale source d'énergie lors d'efforts courts et intenses (musculation, sprint, HIIT). Elle attire aussi l'eau dans les cellules musculaires, ce qui favorise un environnement propice à la croissance musculaire, et aide à neutraliser l'acidité produite par l'effort intense pour retarder la fatigue.\n\nAu-delà du sport, plusieurs études suggèrent un soutien cognitif (mémoire, vigilance), en particulier en cas de fatigue ou de restriction calorique, ainsi qu'un potentiel effet neuroprotecteur encore à l'étude.", points:["Fonctions énergétiques : recycle l'ATP pour des efforts courts et intenses, améliorant la force et la puissance.","Avantages musculaires : augmente le volume et la croissance musculaire, favorise la récupération et soutient une composition corporelle maigre.","Avantages cognitifs et pour la santé : soutient les fonctions cognitives, en particulier en cas de fatigue, et offre un potentiel neuroprotecteur."]}] }
 ];
 
 const FAMILIES_NUTRITION = [
   { id:"nutr-oxalates", label:"Les oxalates", cardIds:["nutr-oxalates"] },
   { id:"nutr-phytique", label:"L'acide phytique (anti-nutriment)", cardIds:["nutr-phytique"] },
-  { id:"nutr-acrylamide", label:"L'acrylamide", cardIds:["nutr-acrylamide"] }
+  { id:"nutr-acrylamide", label:"L'acrylamide", cardIds:["nutr-acrylamide"] },
+  { id:"nutr-creatine", label:"La créatine", cardIds:["nutr-creatine"] }
 ];
 
 const NUTRITION_THEME_STYLE = {
   "nutr-oxalates":{bg:"#C9E8A0", emoji:"🫘"},
   "nutr-phytique":{bg:"#F5B971", emoji:"🌰"},
-  "nutr-acrylamide":{bg:"#F4A0A0", emoji:"🍟"}
+  "nutr-acrylamide":{bg:"#F4A0A0", emoji:"🍟"},
+  "nutr-creatine":{bg:"#A8DCE8", emoji:"⚙️"}
 };
 
 const CATEGORY_DATA = {
@@ -2147,20 +2150,22 @@ function renderCard(card, fromHistory){
       } else if(r.points){
         div.className = "fact-block flip-fact";
         const pointsHtml = r.points.map(p=>`<li>${p}</li>`).join("");
+        const dateHtml = r.date ? `<div class="fact-date">${r.date}</div>` : "";
         div.innerHTML = `
           <div class="fact-flip-face front">
-            <div class="fact-date">${r.date}</div>
+            ${dateHtml}
             <div class="fact-title">${r.title}</div>
             <div class="fact-summary">${r.intro || r.question || ""}</div>
           </div>
           <div class="fact-flip-face back" hidden>
-            <div class="fact-date">${r.date}</div>
+            ${dateHtml}
             <div class="fact-title">${r.title}</div>
             <ul class="fact-points">${pointsHtml}</ul>
           </div>`;
       } else {
         div.className = "fact-block";
-        div.innerHTML = `<div class="fact-date">${r.date}</div><div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
+        const dateHtml = r.date ? `<div class="fact-date">${r.date}</div>` : "";
+        div.innerHTML = `${dateHtml}<div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
       }
       wrap.appendChild(div);
     });
