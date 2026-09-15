@@ -254,9 +254,16 @@
   .card-exit-btn{
     width:36px; height:36px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    background:rgba(26,20,18,0.08); border:none; border-radius:50%;
+    background:rgba(240,234,225,0.55);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    backdrop-filter:blur(20px) saturate(160%);
+    border:1px solid rgba(255,255,255,0.5);
+    border-radius:50%;
+    box-shadow:0 3px 10px rgba(26,20,18,0.10);
     color:var(--ink); cursor:pointer;
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
   }
+  .card-exit-btn:active{ transform:scale(0.88); }
   .card-exit-btn svg{ width:19px; height:19px; }
   .card-title-wrap{ flex-shrink:0; text-align:center; margin:6px 0 12px; }
   .card-title{
@@ -265,7 +272,11 @@
     font-size:16.5px;
     color:#2C4A63;
   }
-  .star-btn{ background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft); }
+  .star-btn{
+    background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft);
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
+  }
+  .star-btn:active{ transform:scale(0.8); }
   .star-btn svg{ width:20px; height:20px; }
   .star-btn.active{ color:var(--gold); }
   .star-btn.active svg{ fill:var(--gold); }
@@ -406,7 +417,9 @@
     width:34px; height:34px; cursor:pointer;
     background:#1A1412; border-radius:999px;
     color:#fff;
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
   }
+  .flip-hint:active{ transform:scale(0.85); }
   .flip-hint[hidden]{ display:none; }
   .flip-hint svg{ width:18px; height:18px; }
   .fact-question{ font-style:italic; color:#4A4038; }
@@ -535,6 +548,7 @@
     padding:0.55em 0.6em;
     display:flex; flex-direction:column; justify-content:center;
     cursor:pointer;
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
   }
   .tile-theme{
     position:relative;
@@ -562,6 +576,7 @@
     cursor:default;
     opacity:0.5;
   }
+  .tile-available:active{ transform:scale(0.95); }
   .fav-group-label{
     font-size:10.5px; letter-spacing:0.1em; color:var(--ink-soft);
     margin:14px 2px 6px; flex-shrink:0;
@@ -1942,7 +1957,7 @@ const DECK_POLITIQUE = [
   { id:"pol-pres-3e", cat:"Les présidents de la 3e République", type:"facts", rows:[{date:"1871-1873", title:"Adolphe Thiers", summary:"Ancien orléaniste, devient chef de l'exécutif après la chute du Second Empire."},{date:"1873-1879", title:"Patrice de Mac Mahon", summary:"Ancien maréchal ; sa présidence est marquée par la crise politique du 16 mai 1877."},{date:"1879-1887", title:"Jules Grévy", summary:"Considéré comme le premier président pleinement républicain, sans ambitions monarchiques."},{date:"1887-1894", title:"Sadi Carnot", summary:"Assassiné en 1894 par un anarchiste, à Lyon."},{date:"1894-1895", title:"Jean Casimir-Perier", summary:"Démissionne après seulement six mois de mandat."},{date:"1895-1899", title:"Félix Faure", summary:"Meurt subitement en fonction, en 1899."},{date:"1899-1906", title:"Émile Loubet", summary:"Président pendant l'affaire Dreyfus."},{date:"1906-1913", title:"Armand Fallières", summary:"Président pendant la Belle Époque."},{date:"1913-1920", title:"Raymond Poincaré", summary:"Président pendant la Première Guerre mondiale."},{date:"1920", title:"Paul Deschanel", summary:"Le plus court mandat de l'histoire : quelques mois seulement, en 1920."},{date:"1920-1924", title:"Alexandre Millerand", summary:"Ancien socialiste devenu président plutôt classé à droite."},{date:"1924-1931", title:"Gaston Doumergue", summary:"Sera rappelé au pouvoir comme chef du gouvernement lors de la crise du 6 février 1934, déclenchée par des émeutes d'extrême droite à Paris."},{date:"1931-1932", title:"Paul Doumer", summary:"Assassiné en 1932, à peine un an après son élection."},{date:"1932-1940", title:"Albert Lebrun", summary:"Dernier président de la 3e République, jusqu'à l'armistice de 1940."}] },
   { id:"pol-pres-4e", cat:"Les présidents de la 4e République", type:"facts", rows:[{date:"1947-1954", title:"Vincent Auriol", summary:"Premier président élu de la 4e République, ancien ministre socialiste."},{date:"1954-1959", title:"René Coty", summary:"Dernier président de la 4e République ; il fait appel au général de Gaulle en 1958."}] },
   { id:"pol-pres-5e", cat:"Les présidents de la 5e République", type:"facts", rows:[{date:"1959-1969", title:"Charles de Gaulle", summary:"Fondateur de la 5e République en 1958, il en devient le premier président."},{date:"1969-1974", title:"Georges Pompidou", summary:"Meurt en cours de mandat, en 1974."},{date:"1974-1981", title:"Valéry Giscard d'Estaing", summary:"Abaisse la majorité à 18 ans ; la loi Veil sur l'IVG est votée sous son mandat."},{date:"1981-1995", title:"François Mitterrand", summary:"Premier président socialiste de la 5e République ; effectue deux mandats (14 ans)."},{date:"1995-2007", title:"Jacques Chirac", summary:"Fait passer le mandat présidentiel de 7 à 5 ans (le quinquennat) en 2000."},{date:"2007-2012", title:"Nicolas Sarkozy", summary:"Premier président élu directement pour un quinquennat."},{date:"2012-2017", title:"François Hollande", summary:"Légalise le mariage pour tous en 2013."},{date:"Depuis 2017", title:"Emmanuel Macron", summary:"Plus jeune président élu de la République (39 ans, en 2017) ; réélu en 2022."}] },
-  { id:"pol-ue-institutions", cat:"Les institutions européennes", type:"facts", rows:[{date:"Exécutif", title:"La Commission européenne", summary:"Elle propose les lois européennes et veille à leur application ; un commissaire par pays membre."},{date:"Législatif", title:"Le Parlement européen", summary:"720 députés européens, élus directement par les citoyens de l'UE tous les 5 ans."},{date:"Législatif", title:"Le Conseil de l'UE", summary:"Réunit les ministres des 27 pays ; il adopte les lois avec le Parlement."},{date:"Judiciaire", title:"La Cour de justice de l'UE", summary:"Basée au Luxembourg, elle veille à ce que le droit européen soit appliqué de la même façon dans tous les pays."}] },
+  { id:"pol-ue-institutions", cat:"Les institutions européennes", type:"facts", rows:[{date:"Exécutif", title:"La Commission européenne", summary:"Elle propose les lois européennes et veille à leur application ; un commissaire par pays membre. Présidée depuis 2019 par Ursula von der Leyen (mandat actuel : 2024-2029)."},{date:"Législatif", title:"Le Parlement européen", summary:"720 députés européens, élus directement par les citoyens de l'UE tous les 5 ans."},{date:"Législatif", title:"Le Conseil de l'UE", summary:"Réunit les ministres des 27 pays ; il adopte les lois avec le Parlement."},{date:"Judiciaire", title:"La Cour de justice de l'UE", summary:"Basée au Luxembourg, elle veille à ce que le droit européen soit appliqué de la même façon dans tous les pays."}] },
   { id:"pol-roi-clovis", cat:"Clovis Ier (466-511)", type:"facts", rows:[{date:"👑", title:"Clovis Ier (466-511)", intro:"Roi des Francs saliens, Clovis mène une série de conquêtes militaires qui lui permettent d'unifier progressivement les royaumes francs sous son autorité. Vers 496, sous l'influence de son épouse Clotilde, il se convertit au christianisme et se fait baptiser à Reims, un choix religieux rare chez les rois germaniques de l'époque. Cette conversion rapproche durablement les Francs de la papauté et de la population gallo-romaine déjà chrétienne, posant les fondations du futur royaume de France.", points:["Premier roi des Francs.","Unifie les tribus franques.","Se fait baptiser chrétien, ce qui fonde le royaume."]}] },
   { id:"pol-roi-charlemagne", cat:"Charlemagne (742-814)", type:"facts", rows:[{date:"👑", title:"Charlemagne (742-814)", intro:"Roi des Francs à partir de 768, Charlemagne étend considérablement le royaume par de nombreuses campagnes militaires, jusqu'à être couronné Empereur d'Occident par le pape Léon III en l'an 800. Son règne est marqué par une intense activité administrative : il réorganise l'empire en comtés, impose une monnaie unique et lance la Renaissance carolingienne, avec la création d'écoles dans les monastères. Son empire ne survivra pas longtemps à sa mort, mais son modèle politique influencera l'Europe médiévale pendant des siècles.", points:["Roi des Francs, devient Empereur d'Occident en 800.","Lance la Renaissance carolingienne.","Favorise le développement des écoles."]}] },
   { id:"pol-roi-hugues-capet", cat:"Hugues Capet (941-996)", type:"facts", rows:[{date:"👑", title:"Hugues Capet (941-996)", intro:"Élu roi des Francs en 987 par les grands seigneurs du royaume, Hugues Capet met fin à la dynastie carolingienne et fonde la dynastie des Capétiens. Son royaume est en réalité modeste, limité à un territoire autour de Paris et d'Orléans, la plupart des grands féodaux étant bien plus puissants que lui. Sa décision de faire couronner son fils Robert de son vivant permet de transformer la couronne élective en couronne héréditaire, un principe qui structurera la monarchie française pendant huit siècles.", points:["Fondateur de la dynastie des Capétiens.","Rend la couronne héréditaire."]}] },
