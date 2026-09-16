@@ -224,11 +224,11 @@
   /* ---------- CARD VIEW ---------- */
   #cardView.showing{ animation:flipin .4s cubic-bezier(.2,.7,.3,1); }
   @keyframes flipin{0%{opacity:0;transform:rotateY(70deg) scale(.95);}100%{opacity:1;transform:rotateY(0) scale(1);}}
-  .card.dealt{ animation:dealCard .38s cubic-bezier(.2,.7,.3,1); }
+  .card.dealt{ animation:dealCard .42s cubic-bezier(.2,.85,.3,1); }
   @keyframes dealCard{
-    0%{ opacity:0.4; transform:scale(0.94) rotate(-2deg); }
-    60%{ opacity:1; transform:scale(1.015) rotate(0.5deg); }
-    100%{ transform:scale(1) rotate(0); }
+    0%{ opacity:0; transform:translateY(38px) scale(0.88) rotate(-6deg); }
+    55%{ opacity:1; transform:translateY(-4px) scale(1.03) rotate(2deg); }
+    100%{ opacity:1; transform:translateY(0) scale(1) rotate(0); }
   }
   .card{
     flex:1;
@@ -1886,7 +1886,12 @@ const DECK_HISTOIRE = [
   { id:"hist-1994rwanda", cat:"Génocide des Tutsi au Rwanda", type:"facts", rows:[{date:"1994", title:"Génocide des Tutsi au Rwanda", intro:"Entre avril et juillet 1994, environ 800 000 à 1 million de personnes, majoritairement tutsi, sont assassinées au Rwanda en l'espace de quelques semaines, dans l'un des génocides les plus rapides et les plus meurtriers de l'histoire. Le déclencheur est l'assassinat du président hutu Juvénal Habyarimana, dont l'avion est abattu le 6 avril 1994 ; l'origine exacte de cet attentat reste débattue.\n\nLes massacres sont organisés par le gouvernement intérimaire mis en place dans les heures suivant l'attentat, dirigé par Théodore Sindikubwabo, et par des cercles extrémistes hutu proches du pouvoir. Ils sont exécutés sur le terrain par l'armée rwandaise (les FAR) et la milice Interahamwe, avec l'appui d'une partie de la population incitée à la haine par la radio RTLM. La communauté internationale, dont la mission de l'ONU sur place (la MINUAR) est réduite au pire moment, est largement critiquée pour son inaction pendant les massacres.", points:["Déclencheur : assassinat du président Habyarimana, avion abattu le 6 avril 1994.","Qui a organisé : le gouvernement intérimaire (Théodore Sindikubwabo) et les cercles extrémistes hutu au pouvoir.","Qui a exécuté : l'armée rwandaise (les FAR) et la milice Interahamwe, avec l'appel à la haine de la radio RTLM.","Bilan : environ 800 000 à 1 million de morts, majoritairement tutsi, en une centaine de jours."]}] },
   { id:"hist-2001", cat:"Les attentats du 11 septembre", type:"facts", rows:[{date:"2001", title:"Les attentats du 11 septembre", intro:"Le 11 septembre 2001, dix-neuf membres du groupe terroriste Al-Qaïda, dirigé par Oussama Ben Laden, détournent quatre avions de ligne aux États-Unis, en percutant deux contre les tours du World Trade Center à New York et un contre le Pentagone, près de Washington. Le quatrième avion s'écrase en Pennsylvanie après la révolte de passagers. Ces attaques font près de 3 000 morts.\n\nElles constituent les attentats les plus meurtriers jamais commis sur le sol américain et déclenchent la « guerre contre le terrorisme » menée par le président américain George W. Bush, avec notamment les interventions militaires en Afghanistan (2001) puis en Irak (2003). Ben Laden sera finalement retrouvé et tué par les forces spéciales américaines au Pakistan, en 2011.", points:["Bilan : près de 3 000 morts, l'attaque terroriste la plus meurtrière sur le sol américain.","Responsable : le groupe terroriste Al-Qaïda, dirigé par Oussama Ben Laden.","Conséquence : la « guerre contre le terrorisme » du président George W. Bush, en Afghanistan puis en Irak.","Épilogue : Ben Laden est tué par les forces spéciales américaines en 2011, au Pakistan."]}] },
   { id:"hist-2022ukraine", cat:"Invasion de l'Ukraine", type:"facts", rows:[{date:"2022", title:"Invasion à grande échelle de l'Ukraine", intro:"Le 24 février 2022, sur ordre du président russe Vladimir Poutine, la Russie lance une invasion à grande échelle de l'Ukraine, dirigée par le président Volodymyr Zelensky, après avoir déjà annexé la Crimée en 2014 et soutenu des séparatistes dans l'est du pays depuis cette date. Cette offensive constitue le plus grand conflit armé en Europe depuis la Seconde Guerre mondiale.\n\nElle provoque une large condamnation internationale ainsi que des sanctions économiques massives contre la Russie, tandis que l'Ukraine reçoit un soutien militaire et financier occidental important. Le conflit, toujours en cours à ce jour, a causé des centaines de milliers de victimes et des millions de déplacés.", points:["Dirigeants : Vladimir Poutine (président russe), qui ordonne l'invasion, face à Volodymyr Zelensky (président ukrainien).","Date : 24 février 2022, invasion à grande échelle par la Russie.","Contexte : fait suite à l'annexion de la Crimée par la Russie en 2014.","Situation : conflit toujours en cours, plus grand affrontement armé en Europe depuis 1945."]}] },
-  { id:"hist-belgique", cat:"La Belgique : indépendance et fédéralisme", type:"facts", rows:[{date:"1830", title:"Indépendance de la Belgique", intro:"En 1830, la Belgique se soulève contre la domination du royaume des Pays-Bas et proclame son indépendance, reconnue internationalement l'année suivante. Le nouveau pays adopte une monarchie constitutionnelle, avec Léopold Ier comme premier roi des Belges.", points:["Contexte : soulèvement contre la domination néerlandaise.","Résultat : indépendance proclamée en 1830, reconnue en 1831.","Régime adopté : une monarchie constitutionnelle."]},{date:"1993", title:"La Belgique devient un État fédéral", intro:"En 1993, une réforme constitutionnelle majeure transforme la Belgique en État fédéral, structuré autour de communautés (flamande, française, germanophone) et de régions (Flandre, Wallonie, Bruxelles), afin d'apaiser les tensions linguistiques et régionales du pays.", points:["Réforme : la Constitution belge est révisée pour instaurer le fédéralisme.","Structure : des communautés linguistiques et des régions, avec leurs propres compétences.","Objectif : apaiser les tensions entre communautés flamande et francophone."]}] }
+  { id:"hist-belgique", cat:"La Belgique : indépendance et fédéralisme", type:"facts", rows:[{date:"1830", title:"Indépendance de la Belgique", intro:"En 1830, la Belgique se soulève contre la domination du royaume des Pays-Bas et proclame son indépendance, reconnue internationalement l'année suivante. Le nouveau pays adopte une monarchie constitutionnelle, avec Léopold Ier comme premier roi des Belges.", points:["Contexte : soulèvement contre la domination néerlandaise.","Résultat : indépendance proclamée en 1830, reconnue en 1831.","Régime adopté : une monarchie constitutionnelle."]},{date:"1993", title:"La Belgique devient un État fédéral", intro:"En 1993, une réforme constitutionnelle majeure transforme la Belgique en État fédéral, structuré autour de communautés (flamande, française, germanophone) et de régions (Flandre, Wallonie, Bruxelles), afin d'apaiser les tensions linguistiques et régionales du pays.", points:["Réforme : la Constitution belge est révisée pour instaurer le fédéralisme.","Structure : des communautés linguistiques et des régions, avec leurs propres compétences.","Objectif : apaiser les tensions entre communautés flamande et francophone."]}] },
+  { id:"hist-m753", cat:"Fondation légendaire de Rome", type:"facts", rows:[{date:"-753", title:"Fondation légendaire de Rome", intro:"Selon la tradition, Rome est fondée en 753 avant notre ère par Romulus, après une querelle avec son frère jumeau Remus, tous deux élevés par une louve d'après la légende. Si cette date et ce récit relèvent largement du mythe fondateur, ils témoignent de l'importance que les Romains eux-mêmes accordaient à leurs origines.\n\nDe simple cité sur les rives du Tibre, Rome deviendra progressivement le centre d'un immense empire méditerranéen, d'abord sous forme de royauté, puis de République, puis d'Empire.", points:["Fondateur légendaire : Romulus, après une querelle avec son frère jumeau Remus.","Statut de la date : une tradition légendaire, pas un fait historique daté avec certitude.","Évolution : de simple cité à centre d'un immense empire méditerranéen."]}] },
+  { id:"hist-m27", cat:"Début de l'Empire romain", type:"facts", rows:[{date:"-27", title:"Début de l'Empire romain", intro:"En 27 avant notre ère, le Sénat romain accorde à Octave le titre d'Auguste, marquant symboliquement le passage de la République romaine à l'Empire. Octave, petit-neveu et héritier de Jules César, avait déjà éliminé ses rivaux, dont Marc Antoine, pour s'imposer comme seul maître de Rome.\n\nSous couvert de restaurer les institutions républicaines, il concentre progressivement tous les pouvoirs entre ses mains, posant les bases d'un régime impérial qui durera plusieurs siècles.", points:["Personnage clé : Octave, petit-neveu de Jules César, devient Auguste.","Changement de régime : passage de la République romaine à l'Empire romain.","Méthode : concentration progressive des pouvoirs, sous couvert de tradition républicaine."]}] },
+  { id:"hist-800", cat:"Charlemagne devient empereur", type:"facts", rows:[{date:"800", title:"Charlemagne devient empereur", intro:"Le 25 décembre 800, le pape Léon III couronne Charlemagne, roi des Francs, empereur d'Occident à Rome. Ce sacre relance symboliquement l'idée d'un empire romain en Occident, près de trois siècles et demi après sa chute en 476.\n\nCet événement s'inscrit dans une alliance entre la papauté et le pouvoir franc, mais il tend aussi les relations avec l'Empire byzantin, qui considère détenir seul la légitimité impériale héritée de Rome.", points:["Qui couronne qui : le pape Léon III couronne Charlemagne, à Rome, le 25 décembre 800.","Portée symbolique : relance l'idée d'un empire romain en Occident.","Tension diplomatique : l'Empire byzantin conteste cette légitimité impériale."]}] },
+  { id:"hist-croisades", cat:"Les croisades", type:"facts", rows:[{date:"1096-1291", title:"Les croisades", intro:"Entre 1096 et 1291, l'Europe chrétienne lance plusieurs expéditions militaires vers le Proche-Orient, appelées croisades, officiellement pour reprendre ou protéger les lieux saints, à commencer par Jérusalem. La première croisade, lancée à l'appel du pape Urbain II en 1095, aboutit à la prise de Jérusalem en 1099 et à la création d'États latins d'Orient.\n\nAu total, huit croisades majeures se succèdent, avec des résultats de plus en plus mitigés pour les Européens. Le mouvement s'achève en 1291 avec la chute d'Acre, dernier grand bastion chrétien en Terre sainte, qui repasse sous contrôle musulman.", points:["Déclencheur : appel du pape Urbain II en 1095, pour la 1re croisade.","Objectif officiel : reprendre ou défendre les lieux saints, notamment Jérusalem.","Fin : chute d'Acre en 1291, dernier bastion chrétien en Terre sainte."]}] },
+  { id:"hist-peste", cat:"La peste noire", type:"facts", rows:[{date:"1347-1352", title:"La peste noire", intro:"Entre 1347 et 1352, la peste noire ravage l'Europe après avoir été introduite depuis l'Asie via les routes commerciales, notamment par des navires génois accostant en Sicile. Cette épidémie de peste bubonique tue entre un tiers et la moitié de la population européenne, soit plusieurs dizaines de millions de morts.\n\nCette catastrophe démographique bouleverse profondément la société européenne : elle provoque une pénurie de main-d'œuvre qui renforce le pouvoir de négociation des paysans et des ouvriers, et contribue à affaiblir durablement le système féodal.", points:["Origine : introduite depuis l'Asie via les routes commerciales, vers la Sicile.","Bilan : entre un tiers et la moitié de la population européenne décimée.","Conséquence sociale : pénurie de main-d'œuvre, qui affaiblit durablement le système féodal."]}] }
 ];
 
 const FAMILIES_HISTOIRE = [
@@ -1916,7 +1921,12 @@ const FAMILIES_HISTOIRE = [
   { id:"hist-1994rwanda", label:"Génocide des Tutsi au Rwanda", cardIds:["hist-1994rwanda"] },
   { id:"hist-2001", label:"Les attentats du 11 septembre", cardIds:["hist-2001"] },
   { id:"hist-2022ukraine", label:"Invasion de l'Ukraine", cardIds:["hist-2022ukraine"] },
-  { id:"hist-belgique", label:"La Belgique : indépendance et fédéralisme", cardIds:["hist-belgique"] }
+  { id:"hist-belgique", label:"La Belgique : indépendance et fédéralisme", cardIds:["hist-belgique"] },
+  { id:"hist-m753", label:"Fondation légendaire de Rome", cardIds:["hist-m753"] },
+  { id:"hist-m27", label:"Début de l'Empire romain", cardIds:["hist-m27"] },
+  { id:"hist-800", label:"Charlemagne devient empereur", cardIds:["hist-800"] },
+  { id:"hist-croisades", label:"Les croisades", cardIds:["hist-croisades"] },
+  { id:"hist-peste", label:"La peste noire", cardIds:["hist-peste"] }
 ];
 
 const HISTOIRE_THEME_STYLE = {
@@ -1946,7 +1956,12 @@ const HISTOIRE_THEME_STYLE = {
   "hist-1994rwanda":{bg:"#F5B971", emoji:"🕯️"},
   "hist-2001":{bg:"#A8DCE8", emoji:"🏙️"},
   "hist-2022ukraine":{bg:"#C9E8A0", emoji:"🇺🇦"},
-  "hist-belgique":{bg:"#F7D488", emoji:"🇧🇪"}
+  "hist-belgique":{bg:"#F7D488", emoji:"🇧🇪"},
+  "hist-m753":{bg:"#F4A0A0", emoji:"🐺"},
+  "hist-m27":{bg:"#AEC6E8", emoji:"🏛️"},
+  "hist-800":{bg:"#BFE3A0", emoji:"👑"},
+  "hist-croisades":{bg:"#D8B4E8", emoji:"⚔️"},
+  "hist-peste":{bg:"#A8DCE8", emoji:"☠️"}
 };
 
 const DECK_POLITIQUE = [
@@ -1968,7 +1983,8 @@ const DECK_POLITIQUE = [
   { id:"pol-roi-henri4", cat:"Henri IV (1553-1610)", type:"facts", rows:[{date:"👑", title:"Henri IV (1553-1610)", intro:"Après des décennies de guerres de Religion entre catholiques et protestants, Henri IV, lui-même ancien chef protestant converti au catholicisme, parvient à ramener la paix civile dans le royaume. En 1598, il signe l'édit de Nantes, qui accorde aux protestants une liberté de culte limitée mais réelle, une mesure de tolérance religieuse rare pour l'époque. Son règne relance également l'économie du royaume, avec le soutien de son ministre Sully, et lui vaut une image durable de roi proche du peuple.", points:["Met fin aux guerres de Religion.","Signe l'édit de Nantes (1598).","Amorce une période de pacification et de prospérité."]}] },
   { id:"pol-roi-louis14", cat:"Louis XIV (1638-1715)", type:"facts", rows:[{date:"👑", title:"Louis XIV (1638-1715)", intro:"Louis XIV règne personnellement pendant plus de 72 ans, le règne le plus long de l'histoire de France. Après la Fronde, il s'installe à Versailles, dont il fait un palais somptueux destiné à impressionner l'Europe entière et à tenir la noblesse sous étroite surveillance. Son règne incarne l'apogée de la monarchie absolue de droit divin, résumée par la formule qu'on lui attribue : « L'État, c'est moi ». Il multiplie aussi les guerres pour agrandir le royaume, ce qui finit par épuiser les finances publiques.", points:["Surnommé le « Roi-Soleil ».","Symbole de la monarchie absolue.","Fait construire le château de Versailles.","Fait rayonner la culture française dans toute l'Europe."]}] },
   { id:"pol-roi-louis16", cat:"Louis XVI (1754-1793)", type:"facts", rows:[{date:"👑", title:"Louis XVI (1754-1793)", intro:"Louis XVI monte sur le trône en 1774 dans un royaume déjà fragilisé par une dette publique considérable. Malgré plusieurs tentatives de réforme financière, il ne parvient pas à résoudre la crise budgétaire ni à répondre aux attentes croissantes de la population. La convocation des États généraux en 1789 déclenche la Révolution française, qui met rapidement fin à la monarchie absolue. Arrêté après une tentative de fuite, il est jugé, condamné et guillotiné en 1793, devenant le seul roi de France exécuté.", points:["Dernier roi de l'Ancien Régime.","Règne marqué par la Révolution française.","Guillotiné en 1793."]}] },
-  { id:"pol-onu", cat:"Création de l'ONU", type:"facts", rows:[{date:"1945", title:"Création de l'ONU", intro:"Créée le 24 octobre 1945, au sortir de la Seconde Guerre mondiale, l'Organisation des Nations unies remplace la Société des Nations, jugée incapable d'avoir empêché le conflit. Son objectif principal est de maintenir la paix et la sécurité internationales, en offrant un cadre de dialogue et de coopération entre les États membres.\n\nSon Conseil de sécurité, doté de cinq membres permanents disposant d'un droit de veto (États-Unis, Russie, Chine, Royaume-Uni, France), reste aujourd'hui l'organe le plus déterminant de l'organisation.", points:["Date de création : 24 octobre 1945, après la Seconde Guerre mondiale.","Objectif : maintenir la paix et la sécurité internationales.","Organe clé : le Conseil de sécurité, avec 5 membres permanents disposant d'un droit de veto."]}] }
+  { id:"pol-onu", cat:"Création de l'ONU", type:"facts", rows:[{date:"1945", title:"Création de l'ONU", intro:"Créée le 24 octobre 1945, au sortir de la Seconde Guerre mondiale, l'Organisation des Nations unies remplace la Société des Nations, jugée incapable d'avoir empêché le conflit. Son objectif principal est de maintenir la paix et la sécurité internationales, en offrant un cadre de dialogue et de coopération entre les États membres.\n\nSon Conseil de sécurité, doté de cinq membres permanents disposant d'un droit de veto (États-Unis, Russie, Chine, Royaume-Uni, France), reste aujourd'hui l'organe le plus déterminant de l'organisation.", points:["Date de création : 24 octobre 1945, après la Seconde Guerre mondiale.","Objectif : maintenir la paix et la sécurité internationales.","Organe clé : le Conseil de sécurité, avec 5 membres permanents disposant d'un droit de veto."]}] },
+  { id:"pol-magnacarta", cat:"La Magna Carta", type:"facts", rows:[{date:"1215", title:"La Magna Carta", intro:"En 1215, le roi d'Angleterre Jean sans Terre, affaibli par des défaites militaires et une forte opposition des barons, est contraint de signer la Magna Carta (« Grande Charte »). Ce texte limite pour la première fois certains pouvoirs royaux, notamment en matière fiscale et judiciaire.\n\nBien que peu appliquée dans l'immédiat, la Magna Carta deviendra au fil des siècles un symbole fondateur de l'État de droit et des libertés individuelles, influençant durablement la pensée politique anglo-saxonne.", points:["Signataire contraint : le roi d'Angleterre Jean sans Terre, en 1215.","Contenu : limite certains pouvoirs royaux, notamment fiscaux et judiciaires.","Postérité : devenue un symbole fondateur de l'État de droit."]}] }
 ];
 
 const FAMILIES_POLITIQUE = [
@@ -1981,7 +1997,8 @@ const FAMILIES_POLITIQUE = [
   { id:"pol-pres-5e", label:"Les présidents de la 5e République", cardIds:["pol-pres-5e"] },
   { id:"pol-ue-institutions", label:"Les institutions européennes", cardIds:["pol-ue-institutions"] },
   { id:"pol-rois-france", label:"Les rois de France", cardIds:["pol-roi-clovis","pol-roi-charlemagne","pol-roi-hugues-capet","pol-roi-philippe2","pol-roi-louis9","pol-roi-philippe4","pol-roi-francois1","pol-roi-henri4","pol-roi-louis14","pol-roi-louis16"] },
-  { id:"pol-onu", label:"Création de l'ONU", cardIds:["pol-onu"] }
+  { id:"pol-onu", label:"Création de l'ONU", cardIds:["pol-onu"] },
+  { id:"pol-magnacarta", label:"La Magna Carta", cardIds:["pol-magnacarta"] }
 ];
 
 const POLITIQUE_THEME_STYLE = {
@@ -1994,7 +2011,8 @@ const POLITIQUE_THEME_STYLE = {
   "pol-pres-5e":{bg:"#D8B4E8", emoji:"🎖️"},
   "pol-ue-institutions":{bg:"#F4B8C8", emoji:"🏢"},
   "pol-rois-france":{bg:"#F5B971", emoji:"👑"},
-  "pol-onu":{bg:"#A8DCE8", emoji:"🇺🇳"}
+  "pol-onu":{bg:"#A8DCE8", emoji:"🇺🇳"},
+  "pol-magnacarta":{bg:"#F5B971", emoji:"📜"}
 };
 
 const DECK_GEOGRAPHIE = [
@@ -2043,15 +2061,18 @@ const NUTRITION_THEME_STYLE = {
 };
 
 const DECK_RELIGION = [
-  { id:"rel-622", cat:"L'Hégire", type:"facts", rows:[{date:"622", title:"L'Hégire", intro:"L'Hégire désigne le départ du prophète Mahomet et de ses compagnons de La Mecque vers Médine, en 622, pour échapper aux persécutions. Cet événement fondateur marque le début du calendrier musulman et la naissance de la première communauté politique et religieuse de l'islam, à Médine.\n\nIl constitue un tournant majeur : l'islam passe d'un mouvement religieux minoritaire à une communauté organisée, qui posera les bases de l'expansion islamique des décennies suivantes.", points:["Événement : départ de Mahomet de La Mecque vers Médine, en 622.","Portée religieuse : point de départ du calendrier musulman (an 1 de l'Hégire).","Portée politique : naissance de la première communauté musulmane organisée, à Médine."]}] }
+  { id:"rel-622", cat:"L'Hégire", type:"facts", rows:[{date:"622", title:"L'Hégire", intro:"L'Hégire désigne le départ du prophète Mahomet et de ses compagnons de La Mecque vers Médine, en 622, pour échapper aux persécutions. Cet événement fondateur marque le début du calendrier musulman et la naissance de la première communauté politique et religieuse de l'islam, à Médine.\n\nIl constitue un tournant majeur : l'islam passe d'un mouvement religieux minoritaire à une communauté organisée, qui posera les bases de l'expansion islamique des décennies suivantes.", points:["Événement : départ de Mahomet de La Mecque vers Médine, en 622.","Portée religieuse : point de départ du calendrier musulman (an 1 de l'Hégire).","Portée politique : naissance de la première communauté musulmane organisée, à Médine."]}] },
+  { id:"rel-313", cat:"Édit de Milan", type:"facts", rows:[{date:"313", title:"Édit de Milan", intro:"En 313, l'empereur romain Constantin, avec son coempereur Licinius, proclame l'édit de Milan, qui accorde la liberté de culte aux chrétiens dans l'ensemble de l'Empire romain. Ce texte met fin à des décennies de persécutions officielles contre les chrétiens.\n\nConstantin lui-même se convertira plus tard au christianisme, qui deviendra progressivement religion dominante puis religion d'État de l'Empire, avec l'édit de Thessalonique en 380.", points:["Auteurs : les empereurs Constantin et Licinius.","Contenu : liberté de culte accordée aux chrétiens dans l'Empire romain.","Conséquence à long terme : le christianisme deviendra religion d'État en 380 (édit de Thessalonique)."]}] }
 ];
 
 const FAMILIES_RELIGION = [
-  { id:"rel-622", label:"L'Hégire", cardIds:["rel-622"] }
+  { id:"rel-622", label:"L'Hégire", cardIds:["rel-622"] },
+  { id:"rel-313", label:"Édit de Milan", cardIds:["rel-313"] }
 ];
 
 const RELIGION_THEME_STYLE = {
-  "rel-622":{bg:"#AEC6E8", emoji:"🌙"}
+  "rel-622":{bg:"#AEC6E8", emoji:"🌙"},
+  "rel-313":{bg:"#F4C9A8", emoji:"⛪"}
 };
 
 const CATEGORY_DATA = {
@@ -2170,8 +2191,9 @@ function renderCard(card, fromHistory){
   currentCard = card;
   const cardEl = document.querySelector("#cardView .card");
   cardEl.classList.remove("dealt");
-  void cardEl.offsetWidth; // force le navigateur à relancer l'animation
-  cardEl.classList.add("dealt");
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{ cardEl.classList.add("dealt"); });
+  });
   const wrap = document.getElementById("itemsWrap");
   wrap.innerHTML = "";
   wrap.onclick = null;
