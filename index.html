@@ -565,6 +565,14 @@
     opacity:0.9; transform:rotate(-6deg);
     filter:drop-shadow(0 2px 3px rgba(0,0,0,0.12));
   }
+  .flag-icon{
+    -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90"><path d="M10,0 C30,-5 45,4 60,0 C75,-4 90,5 110,0 C117,10 113,20 120,30 C114,40 118,50 120,60 C113,70 117,80 110,90 C90,95 75,86 60,90 C45,94 30,85 10,90 C3,80 7,70 0,60 C6,50 2,40 0,30 C7,20 3,10 10,0 Z"/></svg>');
+    mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90"><path d="M10,0 C30,-5 45,4 60,0 C75,-4 90,5 110,0 C117,10 113,20 120,30 C114,40 118,50 120,60 C113,70 117,80 110,90 C90,95 75,86 60,90 C45,94 30,85 10,90 C3,80 7,70 0,60 C6,50 2,40 0,30 C7,20 3,10 10,0 Z"/></svg>');
+    -webkit-mask-size:100% 100%;
+    mask-size:100% 100%;
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
+  }
   .tile .name{
     font-family:'Fraunces', serif; font-weight:600; font-size:1em; color:var(--ink);
     line-height:1.2;
@@ -2085,6 +2093,20 @@ const CATEGORY_DATA = {
   nutrition: { deck: DECK_NUTRITION, families: FAMILIES_NUTRITION, theme_style: NUTRITION_THEME_STYLE },
   religion: { deck: DECK_RELIGION, families: FAMILIES_RELIGION, theme_style: RELIGION_THEME_STYLE }
 };
+/* Windows (Segoe UI Emoji) n'a pas les emoji drapeaux de pays, et une
+   image externe (CDN) peut échouer à charger selon le contexte : on
+   dessine donc les drapeaux en SVG intégré, sans aucune requête réseau. */
+const FLAG_SVGS = {
+  allemand: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="3" height="2" fill="#111"/><rect y="0.667" width="3" height="0.667" fill="#D00"/><rect y="1.333" width="3" height="0.667" fill="#FFCE00"/></svg>',
+  anglais: '<svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="7"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="4"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="11"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="6.5"/></svg>',
+  darija: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1.5" height="2" fill="#006233"/><rect x="1.5" width="1.5" height="2" fill="#fff"/><circle cx="1.5" cy="1" r="0.45" fill="#D21034"/><circle cx="1.62" cy="1" r="0.37" fill="#fff"/><path d="M1.5,0.68 1.58,0.9 1.82,0.9 1.63,1.04 1.7,1.28 1.5,1.14 1.3,1.28 1.37,1.04 1.18,0.9 1.42,0.9 Z" fill="#D21034"/></svg>',
+  luxembourgeois: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="3" height="2" fill="#ED2939"/><rect y="0.667" width="3" height="0.667" fill="#fff"/><rect y="1.333" width="3" height="0.667" fill="#00A1DE"/></svg>',
+};
+function iconHtml(cat){
+  const svg = cat && FLAG_SVGS[cat.id];
+  if(svg) return `<span class="flag-icon" style="display:inline-block;width:1.15em;height:0.86em;vertical-align:-0.12em;border-radius:2px;overflow:hidden;line-height:0;">${svg.replace('<svg ', '<svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice" ')}</span>`;
+  return cat ? cat.icon : "";
+}
 function combinedAvailableDeck(){
   return CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id])
     .flatMap(c=>CATEGORY_DATA[c.id].deck);
@@ -2327,8 +2349,8 @@ function renderCard(card, fromHistory){
   };
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
-  const catLabel = catForCard ? catForCard.icon + " " + catForCard.label : "";
-  document.getElementById("cardNum").textContent = catLabel;
+  const catLabel = catForCard ? iconHtml(catForCard) + " " + catForCard.label : "";
+  document.getElementById("cardNum").innerHTML = catLabel;
   let poolSize = null;
   if(ctx.pool){
     poolSize = ctx.pool.length;
@@ -2422,7 +2444,7 @@ function renderFavCategories(){
     const tile = document.createElement("div");
     tile.className = "tile tile-theme tile-available";
     tile.style.background = cat.bg;
-    tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div><div class="count">${count} carte${count>1?"s":""}</div>`;
+    tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div><div class="count">${count} carte${count>1?"s":""}</div>`;
     tile.addEventListener("click", ()=> openFavCategory(cat));
     grid.appendChild(tile);
   });
@@ -2491,7 +2513,7 @@ function openCategory(cat, opts){
   currentCategory = cat;
   document.getElementById("categoryEyebrow").textContent = "CATÉGORIE";
   document.getElementById("categoryTitle").textContent = cat.label;
-  document.getElementById("categoryStackIcon").textContent = cat.icon;
+  document.getElementById("categoryStackIcon").innerHTML = iconHtml(cat);
   renderThemesForCategory(cat);
   const toggle = document.getElementById("themeToggle");
   const grid = document.getElementById("themeGrid");
@@ -2635,10 +2657,10 @@ function renderCategories(){
     tile.className = "tile tile-theme" + (cat.available ? " tile-available" : " tile-soon");
     tile.style.background = cat.bg;
     if(cat.available){
-      tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div>`;
+      tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div>`;
       tile.addEventListener("click", ()=> openCategory(cat));
     } else {
-      tile.innerHTML = `<span class="theme-emoji">${cat.icon}</span><div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
+      tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
     }
     grid.appendChild(tile);
   });
