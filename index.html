@@ -1,7 +1,20 @@
+<!--
+  ============================================================
+  I Know — Application web (PWA)
+  © 2026 Yanis — Tous droits réservés.
+  Ce code source, son design, sa structure et son contenu
+  sont la propriété exclusive de Yanis. Toute reproduction,
+  distribution ou réutilisation, totale ou partielle, sans
+  autorisation écrite préalable est interdite.
+  Repo : github.com/yanis5777/I-know
+  ============================================================
+-->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="author" content="Yanis">
+<meta name="copyright" content="© 2026 Yanis. Tous droits réservés.">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -174,9 +187,11 @@
 
   .draw-btn{
     width:100%;
-    background:var(--action-bg);
+    background:linear-gradient(155deg, rgba(64,54,49,0.72), rgba(18,14,12,0.82));
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
     color:var(--action-text);
-    border:none;
+    border:1px solid rgba(255,255,255,0.16);
     border-radius:10px;
     padding:15px 18px;
     font-family:'IBM Plex Mono', monospace;
@@ -185,8 +200,10 @@
     letter-spacing:0.05em;
     cursor:pointer;
     flex-shrink:0;
+    box-shadow:0 6px 18px rgba(26,20,18,0.26), inset 0 1px 1px rgba(255,255,255,0.22), inset 0 -1px 1.5px rgba(0,0,0,0.22);
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1), box-shadow .15s ease;
   }
-  .draw-btn:active{ transform:translateY(1px); }
+  .draw-btn:active{ transform:translateY(1px); box-shadow:0 3px 10px rgba(26,20,18,0.22), inset 0 1px 1px rgba(255,255,255,0.18), inset 0 -1px 1.5px rgba(0,0,0,0.22); }
   .draw-btn:disabled{ opacity:0.55; }
   .home-note{
     margin-top:14px;
@@ -201,23 +218,28 @@
   .theme-toggle{
     display:flex; align-items:center; justify-content:center; gap:8px;
     width:auto; align-self:center; margin-top:0; padding:11px 22px;
-    background:linear-gradient(155deg, #EFE3C4, #E6D6A8);
-    border:none; border-radius:999px;
-    box-shadow:0 4px 14px rgba(184,134,46,0.22);
+    background:linear-gradient(155deg, rgba(239,227,196,0.55), rgba(230,214,168,0.65));
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.55); border-radius:999px;
+    box-shadow:0 4px 14px rgba(184,134,46,0.18), inset 0 1px 1px rgba(255,255,255,0.5);
     font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:700; letter-spacing:0.02em;
     color:#3D2E12; cursor:pointer;
     position:relative;
+    transition:box-shadow .2s ease, transform .15s ease;
   }
+  .theme-toggle:active{ transform:translateY(1px); }
   .theme-toggle svg{ width:16px; height:16px; flex-shrink:0; }
   .theme-toggle .chev{ width:14px; height:14px; transition:transform .2s ease; color:#3D2E12; }
-  .theme-toggle.open{ box-shadow:inset 0 2px 6px rgba(184,134,46,0.28); }
+  .theme-toggle.open{ box-shadow:inset 0 2px 6px rgba(184,134,46,0.22), inset 0 1px 1px rgba(255,255,255,0.4); }
   .theme-toggle.open .chev{ transform:rotate(180deg); }
   #themeToggle{
-    background:transparent; color:#1A1A1A;
-    border:1.5px solid #1A1A1A; box-shadow:none;
+    background:rgba(26,26,26,0.10); color:#1A1A1A;
+    border:1.5px solid rgba(26,26,26,0.4);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.3);
   }
   #themeToggle .chev{ color:#1A1A1A; }
-  #themeToggle.open{ box-shadow:none; background:rgba(26,26,26,0.06); }
+  #themeToggle.open{ box-shadow:inset 0 2px 6px rgba(26,26,26,0.15); background:rgba(26,26,26,0.16); }
   #themeGrid{ margin-top:12px; }
   #themeGrid[hidden]{ display:none; }
 
@@ -254,12 +276,12 @@
   .card-exit-btn{
     width:36px; height:36px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    background:rgba(240,234,225,0.55);
-    -webkit-backdrop-filter:blur(20px) saturate(160%);
-    backdrop-filter:blur(20px) saturate(160%);
-    border:1px solid rgba(255,255,255,0.5);
+    background:rgba(240,234,225,0.45);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.55);
     border-radius:50%;
-    box-shadow:0 3px 10px rgba(26,20,18,0.10);
+    box-shadow:0 3px 10px rgba(26,20,18,0.10), inset 0 1px 1px rgba(255,255,255,0.5);
     color:var(--ink); cursor:pointer;
     transition:transform .15s cubic-bezier(.32,1.5,.5,1);
   }
@@ -415,7 +437,12 @@
     flex-shrink:0; align-self:flex-end; margin-top:8px;
     display:inline-flex; align-items:center; justify-content:center;
     width:34px; height:34px; cursor:pointer;
-    background:#1A1412; border-radius:999px;
+    background:linear-gradient(155deg, rgba(58,50,46,0.75), rgba(14,10,9,0.85));
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:999px;
+    box-shadow:0 4px 12px rgba(26,20,18,0.22), inset 0 1px 1px rgba(255,255,255,0.2);
     color:#fff;
     transition:transform .15s cubic-bezier(.32,1.5,.5,1);
   }
@@ -435,18 +462,26 @@
   }
   .btn-ghost{
     flex:1; min-height:46px;
-    background:#E4DDD0; border:1.5px solid #D0C5B8; color:#2C2523;
+    background:rgba(228,221,208,0.55);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    backdrop-filter:blur(20px) saturate(160%);
+    border:1.5px solid rgba(255,255,255,0.5); color:#2C2523;
     border-radius:11px; padding:12px 8px; font-family:'IBM Plex Mono', monospace;
     font-size:11px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
+    box-shadow:0 3px 10px rgba(26,20,18,0.08), inset 0 1px 1px rgba(255,255,255,0.5);
   }
   .btn-ghost:disabled{ opacity:0.4; cursor:default; }
   .btn-solid{
     flex:1.3; min-height:46px;
-    background:#2C2523; border:1.5px solid #2C2523; color:var(--action-text);
+    background:linear-gradient(155deg, rgba(64,54,49,0.72), rgba(18,14,12,0.82));
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.16); color:var(--action-text);
     border-radius:11px; padding:12px 8px; font-family:'IBM Plex Mono', monospace;
     font-size:11px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(26,20,18,0.24), inset 0 1px 1px rgba(255,255,255,0.22), inset 0 -1px 1.5px rgba(0,0,0,0.22);
   }
   .btn-ghost:active,.btn-solid:active{ transform:translateY(1px); }
 
@@ -458,11 +493,17 @@
   .back-link{
     display:inline-flex; align-items:center; gap:6px;
     align-self:flex-start;
-    background:var(--paper-dark); border:1.5px solid var(--card-border); border-radius:9px;
+    background:rgba(234,226,213,0.55);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    backdrop-filter:blur(20px) saturate(160%);
+    border:1.5px solid rgba(255,255,255,0.5); border-radius:9px;
     padding:8px 14px; margin-bottom:14px;
     font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
     color:var(--ink); cursor:pointer; flex-shrink:0;
+    box-shadow:0 3px 10px rgba(26,20,18,0.08), inset 0 1px 1px rgba(255,255,255,0.5);
+    transition:transform .15s ease;
   }
+  .back-link:active{ transform:translateY(1px); }
   .list-head .card-num{ color:var(--ink-soft); }
   .list-head .card-title{ font-size:17px; color:var(--ink); }
   #categoriesView, #favView{ justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; }
@@ -474,8 +515,13 @@
   }
   #categoriesView #globalDrawBtn{ margin:34px 0 14px; }
   #globalDrawBtn{
-    background:#1A1A1A; color:#F7F4EB;
-    border-radius:999px; box-shadow:none;
+    background:linear-gradient(155deg, rgba(58,58,58,0.75), rgba(10,10,10,0.85));
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.18);
+    color:#F7F4EB;
+    border-radius:999px;
+    box-shadow:0 4px 14px rgba(26,20,18,0.22), inset 0 1px 1px rgba(255,255,255,0.2);
     padding:6px 13px;
   }
   #globalDrawBtn .chev{ color:#F7F4EB; }
@@ -653,6 +699,7 @@
     position:absolute; top:0; left:0; height:100%;
     border-radius:15px;
     background:linear-gradient(155deg, color-mix(in srgb, var(--action-bg) 100%, white 18%), var(--action-bg));
+    border:1px solid rgba(255,255,255,0.16);
     box-shadow:0 6px 16px rgba(26,20,18,0.22), inset 0 1px 1px rgba(255,255,255,0.45);
     transition:transform .48s cubic-bezier(.32,1.5,.5,1), width .48s cubic-bezier(.32,1.5,.5,1);
     z-index:0;
@@ -662,12 +709,12 @@
     flex:1;
     min-height:44px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
-    background:rgba(240,234,225,0.55);
-    -webkit-backdrop-filter:blur(20px) saturate(160%);
-    backdrop-filter:blur(20px) saturate(160%);
+    background:rgba(240,234,225,0.5);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    backdrop-filter:blur(20px) saturate(180%);
     border:1px solid rgba(255,255,255,0.5);
     border-radius:15px;
-    box-shadow:0 3px 12px rgba(26,20,18,0.09);
+    box-shadow:0 3px 12px rgba(26,20,18,0.09), inset 0 1px 1px rgba(255,255,255,0.45);
     padding:4px 4px;
     font-family:'IBM Plex Mono', monospace;
     font-size:9px; letter-spacing:0.02em; font-weight:500;
@@ -2715,6 +2762,9 @@ window.addEventListener("resize", ()=>{
   }
 });
 window.addEventListener("orientationchange", syncNavHeight);
+
+/* © 2026 Yanis — I Know. Tous droits réservés. */
+console.log("%cI Know %c— © 2026 Yanis. Tous droits réservés.", "font-weight:700;color:#2C2523;font-size:13px;", "color:#6B5F55;font-size:12px;");
 </script>
 </body>
 </html>
