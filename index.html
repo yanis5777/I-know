@@ -52,6 +52,12 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
   html,body{margin:0;padding:0;background:#E8E2D5;}
+  html{
+    scrollbar-width:thin; scrollbar-color:rgba(26,20,18,0.25) transparent;
+  }
+  html::-webkit-scrollbar{ width:6px; }
+  html::-webkit-scrollbar-track{ background:transparent; }
+  html::-webkit-scrollbar-thumb{ background:rgba(26,20,18,0.25); border-radius:4px; }
   body{
     background:var(--bg);
     color:var(--ink);
@@ -511,7 +517,13 @@
   .back-link:active{ transform:translateY(1px); }
   .list-head .card-num{ color:var(--ink-soft); }
   .list-head .card-title{ font-size:17px; color:var(--ink); }
-  #categoriesView, #favView{ justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  #categoriesView, #favView{
+    justify-content:center; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin; scrollbar-color:rgba(26,20,18,0.25) transparent;
+  }
+  #categoriesView::-webkit-scrollbar, #favView::-webkit-scrollbar{ width:6px; }
+  #categoriesView::-webkit-scrollbar-track, #favView::-webkit-scrollbar-track{ background:transparent; }
+  #categoriesView::-webkit-scrollbar-thumb, #favView::-webkit-scrollbar-thumb{ background:rgba(26,20,18,0.25); border-radius:4px; }
   #categoryGrid, #favCategoryGrid{ flex:none; overflow-y:visible; width:100%; }
   .category-lead{
     font-family:'IBM Plex Sans', sans-serif; font-size:14px; font-weight:500;
@@ -2450,6 +2462,7 @@ const CATEGORIES = [
 
 const FAV_KEY = "carnet_anglais_favoris";
 let lastId = null;
+let lastCatId = null;
 let currentCategory = null;
 let ctx = { origin:"favorites", categoryId:null, pool:null };
 
@@ -2504,6 +2517,20 @@ function pickRandom(pool, deck){
   const card = choices[Math.floor(Math.random()*choices.length)];
   lastId = card.id;
   return card;
+}
+
+/* Tirage "au hasard" cross-catégories : on tire d'abord une catégorie
+   au hasard (chaque catégorie a la même chance), puis une carte au
+   hasard DANS cette catégorie — plutôt que de piocher directement
+   dans le tas complet de toutes les cartes, ce qui écraserait tout
+   au profit des catégories les plus fournies (ex. Anglais). */
+function pickRandomGlobal(){
+  const cats = CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id]);
+  let catChoices = cats;
+  if(cats.length > 1) catChoices = cats.filter(c=>c.id!==lastCatId);
+  const cat = catChoices[Math.floor(Math.random()*catChoices.length)];
+  lastCatId = cat.id;
+  return pickRandom(null, CATEGORY_DATA[cat.id].deck);
 }
 
 /* Masque l'indicateur de scroll une fois qu'on approche du bas de la
@@ -2879,7 +2906,7 @@ function drawGlobalRandom(){
     diceWrap.classList.remove("rolling");
     cardHistory = []; currentCard = null;
     ctx = { origin:"globalRandom", categoryId:null, pool:null };
-    renderCard(pickRandom(null, combinedAvailableDeck()));
+    renderCard(pickRandomGlobal());
   }, 600);
 }
 
@@ -2897,8 +2924,8 @@ function openFavorite(card){
 
 document.getElementById("categoryStackWrap").addEventListener("click", drawCategoryRandom);
 document.getElementById("anotherBtn").addEventListener("click", ()=>{
-  const deck = ctx.origin === "globalRandom" ? combinedAvailableDeck() : CATEGORY_DATA[ctx.categoryId].deck;
-  renderCard(pickRandom(ctx.pool, deck));
+  if(ctx.origin === "globalRandom"){ renderCard(pickRandomGlobal()); return; }
+  renderCard(pickRandom(ctx.pool, CATEGORY_DATA[ctx.categoryId].deck));
 });
 document.getElementById("prevBtn").addEventListener("click", ()=>{
   if(cardHistory.length === 0) return;
