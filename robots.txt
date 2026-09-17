@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yanis5777.github.io/I-know/sitemap.xml
