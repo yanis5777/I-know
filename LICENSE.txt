@@ -1,0 +1,23 @@
+Copyright © 2026 Yanis Bensaadi. Tous droits réservés.
+Auteur domicilié en France.
+
+Cette œuvre (code source, design, structure, contenu textuel et
+visuel) constitue une création originale protégée par le droit
+d'auteur français dès sa création, conformément aux articles
+L111-1 et suivants du Code de la propriété intellectuelle.
+
+Aucune partie de ce dépôt ne peut être reproduite, distribuée,
+modifiée, sous-licenciée ou exploitée commercialement, sous
+quelque forme ou par quelque moyen que ce soit, sans
+l'autorisation écrite préalable et expresse de l'auteur.
+
+Toute consultation du code source (via le navigateur, "Voir la
+page source", ou tout autre moyen) est tolérée à des fins de
+consultation personnelle uniquement et ne constitue en aucun cas
+une autorisation de réutilisation.
+
+Pour toute demande d'autorisation, de licence ou de partenariat,
+contacter l'auteur directement.
+
+Projet : I Know
+Dépôt : github.com/yanis5777/I-know
