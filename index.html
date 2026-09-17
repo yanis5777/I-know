@@ -1801,6 +1801,279 @@ const LUX_THEME_STYLE = {
   "lux-deplacer":{bg:"#F7D488", emoji:"🚶"}
 };
 
+/* ---------- ITALIEN ----------
+   Vocabulaire et phrases tirés des guides PDF fournis par Yanis
+   ("Guide Italiano" mémo + "Guide Italiano Companion" dialogues).
+   Première vague : essentiels, chiffres, se présenter, restaurant,
+   hôtel, directions, urgences, expressions idiomatiques + 2 cartes
+   de conjugaison (essere / avere). D'autres vagues pourront suivre
+   (verbes supplémentaires, shopping, transports, famille...). */
+const DECK_ITALIEN = [
+  { id:"it-nb1", cat:"Les chiffres 0 à 9 (1/3)", items:[
+    ["zéro","zero","dzé-ro"],["un","uno","ou-no"],["deux","due","dou-é"],
+    ["trois","tre","tré"],["quatre","quattro","couat-tro"],["cinq","cinque","tchin-koué"],
+    ["six","sei","sè-i"],["sept","sette","sèt-té"],["huit","otto","ot-to"],["neuf","nove","no-vé"]
+  ]},
+  { id:"it-nb2", cat:"Les chiffres 10 à 19 (2/3)", items:[
+    ["dix","dieci","dié-tchi"],["onze","undici","oun-di-tchi"],["douze","dodici","do-di-tchi"],
+    ["treize","tredici","tré-di-tchi"],["quatorze","quattordici","couat-tor-di-tchi"],
+    ["quinze","quindici","couin-di-tchi"],["seize","sedici","sé-di-tchi"],
+    ["dix-sept","diciassette","di-tcha-sèt-té"],["dix-huit","diciotto","di-tchot-to"],["dix-neuf","diciannove","di-tcha-no-vé"]
+  ]},
+  { id:"it-nb3", cat:"Dizaines et grands nombres (3/3)", items:[
+    ["vingt","venti","vèn-ti"],["trente","trenta","trèn-ta"],["quarante","quaranta","coua-ran-ta"],
+    ["cinquante","cinquanta","tchin-couan-ta"],["soixante","sessanta","sè-san-ta"],
+    ["soixante-dix","settanta","sèt-tan-ta"],["quatre-vingts","ottanta","ot-tan-ta"],
+    ["quatre-vingt-dix","novanta","no-van-ta"],["cent","cento","tchèn-to"],["mille","mille","mil-lé"]
+  ]},
+  { id:"it-nb4", cat:"Nombres composés 21-100 (4/4)", items:[
+    ["vingt-un","ventuno","vèn-tou-no"],["vingt-huit","ventotto","vèn-tot-to"],
+    ["trente-un","trentuno","trèn-tou-no"],["trente-huit","trentotto","trèn-tot-to"],
+    ["quarante-huit","quarantotto","coua-ran-tot-to"],["cinquante-un","cinquantuno","tchin-couan-tou-no"],
+    ["soixante-huit","sessantotto","sè-san-tot-to"],["quatre-vingt-un","ottantuno","ot-tan-tou-no"],
+    ["cent un","centouno","tchèn-to-ou-no"],["deux cents","duecento","dou-é-tchèn-to"],
+    ["deux mille","duemila","dou-é-mi-la"]
+  ], note:"La règle : dizaine + unité collés en un seul mot, et la voyelle finale de la dizaine tombe devant UNO et OTTO. Ventuno (pas ventiuno), ventotto (pas ventiotto). Au-delà de cent, CENTO ne prend pas d'article : centouno, non 'il centouno'."},
+  { id:"it-indispensables", cat:"Les indispensables", items:[
+    ["Oui","Sì","si"],["Non","No","no"],["S'il vous plaît","Per favore","pèr fa-vo-ré"],
+    ["Merci","Grazie","grat-tsi-é"],["De rien / Je vous en prie","Prego","prè-go"],
+    ["Bonjour (matin)","Buongiorno","bouon-djor-no"],["Bonsoir","Buonasera","bouo-na-sé-ra"],
+    ["Salut (informel)","Ciao","tchaou"],["Pardon / Excusez-moi","Scusi","skou-zi"],
+    ["Au revoir","Arrivederci","ar-ri-vé-dèr-tchi"],["Je ne comprends pas","Non capisco","non ka-pis-ko"],
+    ["Parlez-vous français ?","Parla francese?","par-la fran-tché-zé"]
+  ]},
+  { id:"it-presenter", cat:"Se présenter", items:[
+    ["Comment tu t'appelles ?","Come ti chiami?","co-mé ti kya-mi"],
+    ["Je m'appelle...","Mi chiamo...","mi kya-mo"],
+    ["Tu viens d'où ?","Di dove sei?","di do-vé sè-i"],
+    ["Je suis français(e)","Sono francese","so-no fran-tché-zé"],
+    ["J'habite à...","Abito a...","a-bi-to a"],
+    ["Tu fais quoi dans la vie ?","Cosa fai nella vita?","co-za fa-i nèl-la vi-ta"],
+    ["Depuis combien de temps tu es ici ?","Da quanto tempo sei qui?","da couan-to tèm-po sè-i coui"],
+    ["Enchanté","Piacere","pya-tché-ré"],
+    ["Comment tu vas ?","Come stai?","co-mé staï"],
+    ["Je vais bien, merci !","Sto bene, grazie!","sto bé-né grat-tsi-é"]
+  ]},
+  { id:"it-directions", cat:"Se déplacer & s'orienter", items:[
+    ["Où est... ?","Dov'è...?","do-vè"],["À droite","A destra","a dès-tra"],
+    ["À gauche","A sinistra","a si-nis-tra"],["Tout droit","Sempre dritto","sèm-pré drit-to"],
+    ["C'est loin ?","È lontano?","è lon-ta-no"],["C'est près ?","È vicino?","è vi-tchi-no"],
+    ["Tournez à droite","Giri a destra","dji-ri a dès-tra"],["Tournez à gauche","Giri a sinistra","dji-ri a si-nis-tra"],
+    ["La gare","La stazione","la sta-tsio-né"],["Le centre-ville","Il centro","il tchèn-tro"]
+  ]},
+  { id:"it-resto", cat:"Au bar & au restaurant", items:[
+    ["Je voudrais un café","Vorrei un caffè","vor-rè-i oun kaf-fè"],
+    ["L'addition, s'il vous plaît","Il conto, per favore","il con-to pèr fa-vo-ré"],
+    ["Qu'est-ce que vous me conseillez ?","Cosa mi consiglia?","co-za mi con-si-lya"],
+    ["Je suis allergique à...","Sono allergico/a a...","so-no al-lèr-dji-co a"],
+    ["Une table pour deux","Un tavolo per due","oun ta-vo-lo pèr dou-é"],
+    ["Le service est-il inclus ?","Il servizio è incluso?","il sèr-vi-tsio è in-clou-zo"],
+    ["Sans gluten, s'il vous plaît","Senza glutine, per favore","sèn-tsa glou-ti-né"],
+    ["C'est délicieux !","È buonissimo!","è bouo-nis-si-mo"],
+    ["On paie séparément","Paghiamo separatamente","pa-gya-mo sé-pa-ra-ta-mèn-té"]
+  ], note:"'Al banco' (au comptoir) coûte souvent moitié moins cher que 'al tavolo' (en salle) — surtout pour un simple café. Et cappuccino jamais après 11h pour un vrai Italien !"},
+  { id:"it-hotel", cat:"À l'hôtel", items:[
+    ["J'ai une réservation","Ho una prenotazione","o ou-na pré-no-ta-tsio-né"],
+    ["La clim ne marche pas","L'aria condizionata non funziona","la-ria con-di-tsio-na-ta non foun-tsio-na"],
+    ["À quelle heure est le petit-déjeuner ?","A che ora è la colazione?","a ké o-ra è la co-la-tsio-né"],
+    ["Pouvez-vous me réveiller à 8h ?","Può svegliarmi alle 8?","pouo své-lyar-mi al-lé ot-to"],
+    ["Le wifi ne fonctionne pas","Il wifi non funziona","il oui-fi non foun-tsio-na"],
+    ["J'ai perdu ma clé","Ho perso la chiave","o pèr-so la kya-vé"],
+    ["À quelle heure est le check-out ?","A che ora è il check-out?","a ké o-ra è il tchèk-aout"],
+    ["Puis-je avoir une facture détaillée ?","Posso avere una fattura dettagliata?","pos-so a-vé-ré ou-na fat-tou-ra dèt-ta-lya-ta"]
+  ]},
+  { id:"it-urgences", cat:"Urgences & santé", items:[
+    ["Au secours !","Aiuto!","a-you-to"],["J'ai besoin d'un médecin","Ho bisogno di un medico","o bi-zo-nyo di oun mé-di-co"],
+    ["Où est la pharmacie ?","Dov'è la farmacia?","do-vè la far-ma-tchi-a"],
+    ["Je suis allergique à la pénicilline","Sono allergico alla penicillina","so-no al-lèr-dji-co al-la pé-ni-tchil-li-na"],
+    ["On m'a volé mon portefeuille","Mi hanno rubato il portafoglio","mi an-no rou-ba-to il por-ta-fo-lyo"],
+    ["J'ai mal à la gorge","Ho mal di gola","o mal di go-la"],
+    ["Je ne me sens pas bien","Non mi sento bene","non mi sèn-to bé-né"]
+  ], note:"En Italie, le 118 est le numéro d'urgence médicale dédié (le 112 européen fonctionne aussi partout)."},
+  { id:"it-idiomes", cat:"Expressions idiomatiques", items:[
+    ["C'est à toi de voir","Fai come vuoi","fa-i co-mé vouoï"],
+    ["Pas de problème","Non c'è problema","non tché pro-blè-ma"],
+    ["Je n'en reviens pas !","Non ci posso credere!","non tchi pos-so cré-dé-ré"],
+    ["Franchement...","A dire il vero...","a di-ré il vé-ro"],
+    ["Je suis à fond dedans","Ci vado matto!","tchi va-do mat-to"],
+    ["C'est hors de prix","Costa un occhio della testa!","cos-ta oun ok-kio dèl-la tès-ta"],
+    ["On s'en fout","Chi se ne frega","ki sé né fré-ga"],
+    ["Allez ! / Courage !","Dai!","da-i"],
+    ["Si seulement !","Magari!","ma-ga-ri"],
+    ["Bonne idée !","Ottima idea!","ot-ti-ma i-dé-a"]
+  ], note:"'Dai!' est LE mot universel italien : encouragement, impatience, incrédulité, accord — tout dépend du ton !"},
+  { id:"it-verb-essere", cat:"Essere — Être", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"sono", ps:"sono stato/a", pc:"ero", fu:"sarò"},
+    {s:"Tu", pr:"sei", ps:"sei stato/a", pc:"eri", fu:"sarai"},
+    {s:"Lui/Lei", pr:"è", ps:"è stato/a", pc:"era", fu:"sarà"},
+    {s:"Noi", pr:"siamo", ps:"siamo stati/e", pc:"eravamo", fu:"saremo"},
+    {s:"Voi", pr:"siete", ps:"siete stati/e", pc:"eravate", fu:"sarete"},
+    {s:"Loro", pr:"sono", ps:"sono stati/e", pc:"erano", fu:"saranno"}
+  ], note:"ESSERE forme son propre passé composé avec lui-même comme auxiliaire (sono stato/a), et le participe s'accorde en genre et en nombre avec le sujet — contrairement au français avec 'être'."},
+  { id:"it-verb-avere", cat:"Avere — Avoir", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"ho", ps:"ho avuto", pc:"avevo", fu:"avrò"},
+    {s:"Tu", pr:"hai", ps:"hai avuto", pc:"avevi", fu:"avrai"},
+    {s:"Lui/Lei", pr:"ha", ps:"ha avuto", pc:"aveva", fu:"avrà"},
+    {s:"Noi", pr:"abbiamo", ps:"abbiamo avuto", pc:"avevamo", fu:"avremo"},
+    {s:"Voi", pr:"avete", ps:"avete avuto", pc:"avevate", fu:"avrete"},
+    {s:"Loro", pr:"hanno", ps:"hanno avuto", pc:"avevano", fu:"avranno"}
+  ], note:"AVERE sert d'auxiliaire pour la plupart des verbes italiens au passé composé (ho mangiato, ho visto...). Comme en français, on l'utilise aussi pour l'âge : 'Ho 25 anni' = 'J'ai 25 ans'."},
+  { id:"it-verb-andare", cat:"Andare — Aller", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"vado", ps:"sono andato/a", pc:"andavo", fu:"andrò"},
+    {s:"Tu", pr:"vai", ps:"sei andato/a", pc:"andavi", fu:"andrai"},
+    {s:"Lui/Lei", pr:"va", ps:"è andato/a", pc:"andava", fu:"andrà"},
+    {s:"Noi", pr:"andiamo", ps:"siamo andati/e", pc:"andavamo", fu:"andremo"},
+    {s:"Voi", pr:"andate", ps:"siete andati/e", pc:"andavate", fu:"andrete"},
+    {s:"Loro", pr:"vanno", ps:"sono andati/e", pc:"andavano", fu:"andranno"}
+  ], note:"ANDARE est un verbe de mouvement : il prend ESSERE comme auxiliaire au passé composé, pas AVERE. C'est pour ça qu'on dit 'sono andato' (littéralement 'je suis allé') et non 'ho andato'."},
+  { id:"it-verb-fare", cat:"Fare — Faire", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"faccio", ps:"ho fatto", pc:"facevo", fu:"farò"},
+    {s:"Tu", pr:"fai", ps:"hai fatto", pc:"facevi", fu:"farai"},
+    {s:"Lui/Lei", pr:"fa", ps:"ha fatto", pc:"faceva", fu:"farà"},
+    {s:"Noi", pr:"facciamo", ps:"abbiamo fatto", pc:"facevamo", fu:"faremo"},
+    {s:"Voi", pr:"fate", ps:"avete fatto", pc:"facevate", fu:"farete"},
+    {s:"Loro", pr:"fanno", ps:"hanno fatto", pc:"facevano", fu:"faranno"}
+  ], note:"FARE est irrégulier au présent (faccio, non 'faro') mais très régulier ailleurs. Il sert dans énormément d'expressions : fare una domanda (poser une question), fare shopping, fare sport."},
+  { id:"it-verb-potere", cat:"Potere — Pouvoir", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"posso", ps:"ho potuto", pc:"potevo", fu:"potrò"},
+    {s:"Tu", pr:"puoi", ps:"hai potuto", pc:"potevi", fu:"potrai"},
+    {s:"Lui/Lei", pr:"può", ps:"ha potuto", pc:"poteva", fu:"potrà"},
+    {s:"Noi", pr:"possiamo", ps:"abbiamo potuto", pc:"potevamo", fu:"potremo"},
+    {s:"Voi", pr:"potete", ps:"avete potuto", pc:"potevate", fu:"potrete"},
+    {s:"Loro", pr:"possono", ps:"hanno potuto", pc:"potevano", fu:"potranno"}
+  ], note:"Au conditionnel, POTERE devient 'potrei' (je pourrais) — bien plus poli que 'posso' pour demander un service : 'Potrei avere un caffè?' plutôt que 'Posso avere...'"},
+  { id:"it-verb-volere", cat:"Volere — Vouloir", type:"conjugation",
+    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
+    {s:"Io", pr:"voglio", ps:"ho voluto", pc:"volevo", fu:"vorrò"},
+    {s:"Tu", pr:"vuoi", ps:"hai voluto", pc:"volevi", fu:"vorrai"},
+    {s:"Lui/Lei", pr:"vuole", ps:"ha voluto", pc:"voleva", fu:"vorrà"},
+    {s:"Noi", pr:"vogliamo", ps:"abbiamo voluto", pc:"volevamo", fu:"vorremo"},
+    {s:"Voi", pr:"volete", ps:"avete voluto", pc:"volevate", fu:"vorrete"},
+    {s:"Loro", pr:"vogliono", ps:"hanno voluto", pc:"volevano", fu:"vorranno"}
+  ], note:"'Voglio' (je veux) sonne brutal en italien. Au conditionnel, 'vorrei' (je voudrais) est LA forme polie à utiliser partout — au restaurant, au magasin, à l'hôtel."},
+  { id:"it-couleurs", cat:"Les couleurs", items:[
+    ["Rouge","Rosso","ros-so"],["Bleu","Blu","blou"],["Vert","Verde","vèr-dé"],
+    ["Jaune","Giallo","dja-lo"],["Blanc","Bianco","bi-an-co"],["Noir","Nero","né-ro"],
+    ["Gris","Grigio","gri-djo"],["Orange","Arancione","a-ran-tcho-né"],
+    ["Rose","Rosa","ro-za"],["Violet","Viola","vio-la"]
+  ], note:"'Azzurro' désigne spécifiquement le bleu ciel — c'est aussi le nom donné à l'équipe nationale italienne, à cause de la couleur de son maillot."},
+  { id:"it-mois1", cat:"Les mois (1/2)", items:[
+    ["Janvier","Gennaio","dje-na-yo"],["Février","Febbraio","feb-brai-o"],["Mars","Marzo","mar-tso"],
+    ["Avril","Aprile","a-pri-lé"],["Mai","Maggio","madj-djo"],["Juin","Giugno","djou-nyo"]
+  ]},
+  { id:"it-mois2", cat:"Les mois (2/2)", items:[
+    ["Juillet","Luglio","lou-lyo"],["Août","Agosto","a-gos-to"],["Septembre","Settembre","set-tèm-bré"],
+    ["Octobre","Ottobre","ot-to-bré"],["Novembre","Novembre","no-vèm-bré"],["Décembre","Dicembre","di-tchèm-bré"]
+  ]},
+  { id:"it-saisons", cat:"Les saisons", items:[
+    ["Printemps","La primavera","la pri-ma-vé-ra"],["Été","L'estate","lès-ta-té"],
+    ["Automne","L'autunno","laou-toun-no"],["Hiver","L'inverno","lin-vèr-no"],
+    ["En été","In estate","in ès-ta-té"],["En hiver","In inverno","in in-vèr-no"],
+    ["Ce mois-ci","Questo mese","couès-to mé-zé"],["Le mois prochain","Il mese prossimo","il mé-zé pros-si-mo"]
+  ]},
+  { id:"it-famille", cat:"Famille & sentiments", items:[
+    ["Homme","Uomo","ouo-mo"],["Femme","Donna","don-na"],["Famille","Famiglia","fa-mi-lya"],
+    ["Père","Padre","pa-dré"],["Mère","Madre","ma-dré"],["Frère","Fratello","fra-tèl-lo"],
+    ["Sœur","Sorella","so-rèl-la"],["Fils / Fille","Figlio / Figlia","fi-lyo / fi-lya"],
+    ["Grand-père / Grand-mère","Nonno / Nonna","non-no / non-na"],["Mari","Marito","ma-ri-to"],
+    ["J'ai deux frères","Ho due fratelli","o dou-é fra-tèl-li"],
+    ["Je suis célibataire","Sono single","so-no sin-glé"]
+  ]},
+  { id:"it-shopping", cat:"Shopping & argent", items:[
+    ["Combien ça coûte ?","Quanto costa?","couan-to cos-ta"],
+    ["Puis-je payer par carte ?","Posso pagare con carta?","pos-so pa-ga-ré con car-ta"],
+    ["En espèces","In contanti","in con-tan-ti"],["C'est un cadeau","È un regalo","è oun ré-ga-lo"],
+    ["Réduction / Solde","Sconto","scon-to"],
+    ["Où sont les cabines d'essayage ?","Dove sono i camerini?","do-vé so-no i ka-mé-ri-ni"],
+    ["Trop cher","Troppo caro","trop-po ca-ro"],["Je voudrais essayer","Vorrei provare","vor-rè-i pro-va-ré"],
+    ["C'est la dernière pièce ?","È l'ultimo pezzo disponibile?","è oul-ti-mo pèt-tso dis-po-ni-bi-lé"],
+    ["Je regarde juste, merci","Sto solo guardando, grazie","sto so-lo gouar-dan-do grat-tsi-é"]
+  ]},
+  { id:"it-transports", cat:"Transports", items:[
+    ["L'avion","L'aereo","la-é-ré-o"],["Le train","Il treno","il tré-no"],["Le bus","Il bus","il bous"],
+    ["Le métro","La metropolitana","la mé-tro-po-li-ta-na"],["Le taxi","Il taxi","il tak-si"],
+    ["L'aéroport","L'aeroporto","la-é-ro-por-to"],["Le billet","Il biglietto","il bi-lyèt-to"],
+    ["Aller simple","Solo andata","so-lo an-da-ta"],["Aller-retour","Andata e ritorno","an-da-ta é ri-tor-no"]
+  ]},
+  { id:"it-meteo", cat:"Météo", items:[
+    ["Quel temps fait-il ?","Che tempo fa?","ké tèm-po fa"],["Il fait beau","Fa bel tempo","fa bèl tèm-po"],
+    ["Il fait chaud","Fa caldo","fa cal-do"],["Il fait froid","Fa freddo","fa frèd-do"],
+    ["Il pleut","Piove","pio-vé"],["Il neige","Nevica","né-vi-ca"],
+    ["Il y a du vent","C'è vento","tché vèn-to"],["Il y a du soleil","C'è il sole","tché il so-lé"],
+    ["Il y a du brouillard","C'è nebbia","tché nèb-bya"],["Quelle chaleur !","Che caldo!","ké cal-do"]
+  ]},
+  { id:"it-numerique", cat:"Survie numérique", items:[
+    ["Chargeur","Caricabatterie","ca-ri-ca-bat-té-ri-é"],["Prise électrique","Presa","pré-za"],
+    ["Télécharger","Scaricare","ska-ri-ca-ré"],["Batterie faible","Batteria scarica","bat-té-ri-a ska-ri-ca"],
+    ["Pas de réseau","Niente segnale","nyèn-té sé-nya-lé"],["Wifi disponible ?","C'è il wifi?","tché il oui-fi"],
+    ["Mot de passe","Password","pas-ouord"],
+    ["Mon téléphone est mort","Il mio telefono è scarico","il mio té-lé-fo-no è ska-ri-co"],
+    ["Vous avez une prise ?","Ha una presa disponibile?","a ou-na pré-za dis-po-ni-bi-lé"]
+  ]},
+  { id:"it-faux-amis", cat:"Faux amis (Falsi Amici)", items:[
+    ["Camera","Chambre (pas caméra !)","caméra = telecamera"],
+    ["Burro","Beurre (pas âne !)","âne = asino"],
+    ["Caldo","Chaud (pas froid !)","froid = freddo"],
+    ["Libreria","Librairie (pas bibliothèque !)","bibliothèque = biblioteca"],
+    ["Pavimento","Sol / Plancher (pas plafond !)","plafond = soffitto"],
+    ["Argomento","Sujet / Thème (pas dispute !)","dispute = lite"],
+    ["Bravo","Bien / Doué (pas courageux !)","courageux = coraggioso"],
+    ["Confetto","Dragée (pas confettis !)","confettis = coriandoli"],
+    ["Morbido","Doux / Moelleux (pas morbide !)","morbide = macabro"],
+    ["Annoiato","Ennuyé (pas annoyé !)","agacé = infastidito"]
+  ], note:"Ces mots ressemblent au français mais ont un sens totalement différent en italien — un piège classique pour les francophones."},
+  { id:"it-phrases-pratiques", cat:"Phrases pratiques", items:[
+    ["Je pense que...","Penso che...","pèn-so ké"],
+    ["Il faut...","Bisogna...","bi-zo-nya"],
+    ["Il y a... (singulier / pluriel)","C'è... / Ci sono...","tché / tchi so-no"],
+    ["Comme tu veux","Come vuoi","co-mé vouoï"],
+    ["Ça ne fait rien","Non importa","non im-por-ta"],
+    ["Bonne chance !","In bocca al lupo!","in bok-ka al lou-po"],
+    ["Réponse à 'in bocca al lupo'","Crepi!","cré-pi"],
+    ["Je suis désolé(e)","Mi dispiace","mi dis-pya-tché"],
+    ["Un instant, s'il vous plaît","Un momento, prego","oun mo-mèn-to prè-go"],
+    ["À tout à l'heure !","A dopo!","a do-po"]
+  ], note:"'In bocca al lupo' (littéralement 'dans la gueule du loup') = 'bonne chance !' — la réponse traditionnelle est 'Crepi!' ('qu'il [le loup] meure !'), jamais 'grazie'."}
+];
+
+const FAMILIES_ITALIEN = [
+  { id:"it-chiffres", label:"Chiffres et nombres", cardIds:["it-nb1","it-nb2","it-nb3","it-nb4"] },
+  { id:"it-base", label:"Les indispensables", cardIds:["it-indispensables"] },
+  { id:"it-presenter-f", label:"Se présenter", cardIds:["it-presenter"] },
+  { id:"it-directions-f", label:"Se déplacer & s'orienter", cardIds:["it-directions"] },
+  { id:"it-resto-f", label:"Bar & restaurant", cardIds:["it-resto"] },
+  { id:"it-hotel-f", label:"À l'hôtel", cardIds:["it-hotel"] },
+  { id:"it-urgences-f", label:"Urgences & santé", cardIds:["it-urgences"] },
+  { id:"it-idiomes-f", label:"Expressions idiomatiques", cardIds:["it-idiomes"] },
+  { id:"it-verbes", label:"Verbes essentiels", cardIds:["it-verb-essere","it-verb-avere","it-verb-andare","it-verb-fare","it-verb-potere","it-verb-volere"] },
+  { id:"it-couleurs-f", label:"Les couleurs", cardIds:["it-couleurs"] },
+  { id:"it-mois-f", label:"Mois & saisons", cardIds:["it-mois1","it-mois2","it-saisons"] },
+  { id:"it-famille-f", label:"Famille & sentiments", cardIds:["it-famille"] },
+  { id:"it-shopping-f", label:"Shopping & argent", cardIds:["it-shopping"] },
+  { id:"it-transports-f", label:"Transports", cardIds:["it-transports"] },
+  { id:"it-meteo-f", label:"Météo", cardIds:["it-meteo"] },
+  { id:"it-numerique-f", label:"Survie numérique", cardIds:["it-numerique"] },
+  { id:"it-faux-amis-f", label:"Faux amis", cardIds:["it-faux-amis"] },
+  { id:"it-phrases-f", label:"Phrases pratiques", cardIds:["it-phrases-pratiques"] }
+];
+
+const ITALIEN_THEME_STYLE = {
+  "it-chiffres":{bg:"#AEC6E8", emoji:"🔢"}, "it-base":{bg:"#F4C9A8", emoji:"🙏"},
+  "it-presenter-f":{bg:"#F4B8C8", emoji:"👋"}, "it-directions-f":{bg:"#A8DCE8", emoji:"🧭"},
+  "it-resto-f":{bg:"#F5B971", emoji:"☕"}, "it-hotel-f":{bg:"#D8B4E8", emoji:"🛎️"},
+  "it-urgences-f":{bg:"#F4A0A0", emoji:"🚑"}, "it-idiomes-f":{bg:"#BFE3A0", emoji:"🎯"},
+  "it-verbes":{bg:"#E89B7D", emoji:"📖"}, "it-couleurs-f":{bg:"#D8B4E8", emoji:"🎨"},
+  "it-mois-f":{bg:"#F5B971", emoji:"🍂"}, "it-famille-f":{bg:"#F4B8C8", emoji:"👨‍👩‍👧"},
+  "it-shopping-f":{bg:"#F7D488", emoji:"🛍️"}, "it-transports-f":{bg:"#AEC6E8", emoji:"🚆"},
+  "it-meteo-f":{bg:"#A8DCE8", emoji:"⛅"}, "it-numerique-f":{bg:"#C9E8A0", emoji:"📱"},
+  "it-faux-amis-f":{bg:"#F4A0A0", emoji:"⚠️"}, "it-phrases-f":{bg:"#A8DCE8", emoji:"💬"}
+};
+
 /* Fait le lien entre une catégorie et ses données (deck + thèmes + style
    des tuiles de thème). Permet d'ajouter une nouvelle catégorie sans
    toucher à toute la logique de navigation. */
@@ -2125,6 +2398,7 @@ const RELIGION_THEME_STYLE = {
 const CATEGORY_DATA = {
   anglais: { deck: DECK, families: FAMILIES, theme_style: THEME_STYLE },
   luxembourgeois: { deck: DECK_LUX, families: FAMILIES_LUX, theme_style: LUX_THEME_STYLE },
+  italien: { deck: DECK_ITALIEN, families: FAMILIES_ITALIEN, theme_style: ITALIEN_THEME_STYLE },
   darija: { deck: DECK_DARIJA, families: FAMILIES_DARIJA, theme_style: DARIJA_THEME_STYLE },
   histoire: { deck: DECK_HISTOIRE, families: FAMILIES_HISTOIRE, theme_style: HISTOIRE_THEME_STYLE },
   politique: { deck: DECK_POLITIQUE, families: FAMILIES_POLITIQUE, theme_style: POLITIQUE_THEME_STYLE },
@@ -2140,6 +2414,7 @@ const FLAG_SVGS = {
   anglais: '<svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="40" fill="#00247d"/><path d="M0,0 60,40 M60,0 0,40" stroke="#fff" stroke-width="7"/><path d="M0,0 60,40 M60,0 0,40" stroke="#cf142b" stroke-width="4"/><path d="M30,0 30,40 M0,20 60,20" stroke="#fff" stroke-width="11"/><path d="M30,0 30,40 M0,20 60,20" stroke="#cf142b" stroke-width="6.5"/></svg>',
   darija: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1.5" height="2" fill="#006233"/><rect x="1.5" width="1.5" height="2" fill="#fff"/><circle cx="1.5" cy="1" r="0.45" fill="#D21034"/><circle cx="1.62" cy="1" r="0.37" fill="#fff"/><path d="M1.5,0.68 1.58,0.9 1.82,0.9 1.63,1.04 1.7,1.28 1.5,1.14 1.3,1.28 1.37,1.04 1.18,0.9 1.42,0.9 Z" fill="#D21034"/></svg>',
   luxembourgeois: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="3" height="2" fill="#ED2939"/><rect y="0.667" width="3" height="0.667" fill="#fff"/><rect y="1.333" width="3" height="0.667" fill="#00A1DE"/></svg>',
+  italien: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#CE2B37"/></svg>',
 };
 function iconHtml(cat){
   const svg = cat && FLAG_SVGS[cat.id];
@@ -2165,6 +2440,7 @@ const CATEGORIES = [
   { id:"darija", label:"Darija algérien", available:true, icon:"🇩🇿", accent:"#2F7A46", bg:"#A8D9B0" },
   { id:"geographie", label:"Géographie", available:true, icon:"🌍", accent:"#2F7A5C", bg:"#BFE3A0", unit:"repères" },
   { id:"histoire", label:"Histoire", available:true, icon:"🏛️", accent:"#A3572F", bg:"#F4C9A8", unit:"repères" },
+  { id:"italien", label:"Italien", available:true, icon:"🇮🇹", accent:"#7A2F1F", bg:"#E89B7D" },
   { id:"luxembourgeois", label:"Luxembourgeois", available:true, icon:"🇱🇺", accent:"#3E7CB8", bg:"#A8DCE8" },
   { id:"nutrition", label:"Nutrition", available:true, icon:"🥗", accent:"#5C8A3A", bg:"#C9E8A0", unit:"repères" },
   { id:"politique", label:"Politique", available:true, icon:"🗳️", accent:"#6B4E8E", bg:"#D8B4E8", unit:"repères" },
@@ -2261,7 +2537,8 @@ function renderCard(card, fromHistory){
   if(card.type === "conjugation"){
     const table = document.createElement("table");
     table.className = "verb-table";
-    table.innerHTML = `<thead><tr><th></th><th>Présent</th><th>Passé simple</th><th>Passé continu</th><th>Futur</th></tr></thead>`;
+    const h = card.headers || ["Présent","Passé simple","Passé continu","Futur"];
+    table.innerHTML = `<thead><tr><th></th><th>${h[0]}</th><th>${h[1]}</th><th>${h[2]}</th><th>${h[3]}</th></tr></thead>`;
     const tbody = document.createElement("tbody");
     card.rows.forEach(r=>{
       const tr = document.createElement("tr");
