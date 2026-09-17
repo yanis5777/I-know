@@ -762,7 +762,7 @@
     border:1px solid rgba(255,255,255,0.4);
     border-radius:999px;
     box-shadow:0 20px 40px -10px rgba(0,0,0,0.22), inset 0 1px 1px rgba(255,255,255,0.6);
-    padding:6px;
+    padding:4px;
   }
   /* Pilule flottante derrière l'onglet actif — repris du retour de
      Yanis (référence Gemini) : fond blanc semi-opaque, bordure haute
@@ -784,22 +784,22 @@
   }
   .nav-btn{
     flex:1;
-    min-height:46px;
+    min-height:38px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
     background:transparent;
     border:none;
     border-radius:999px;
     box-shadow:none;
-    padding:4px 4px;
+    padding:3px 4px;
     font-family:'IBM Plex Mono', monospace;
-    font-size:9px; letter-spacing:0.02em; font-weight:600;
+    font-size:8.5px; letter-spacing:0.02em; font-weight:600;
     color:rgba(26,20,18,0.62);
     cursor:pointer;
     position:relative; z-index:1;
     transition:color .25s ease;
   }
   .nav-btn:active svg{ transform:scale(0.88); }
-  .nav-btn svg{ width:18px; height:18px; stroke-width:1.7; transition:stroke-width .15s ease, transform .15s ease; }
+  .nav-btn svg{ width:15px; height:15px; stroke-width:1.7; transition:stroke-width .15s ease, transform .15s ease; }
   .nav-btn.active{
     color:var(--ink);
     font-weight:700;
