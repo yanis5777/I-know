@@ -1,7 +1,7 @@
 /* I Know : service worker (hors ligne).
    - pages : réseau d'abord (les mises à jour arrivent tout de suite), cache en secours
    - le reste (polices, icônes, manifest) : cache d'abord, rafraîchi en arrière-plan */
-const CACHE = "iknow-v2";
+const CACHE = "iknow-v3";
 const SHELL = ["./", "index.html", "manifest.json", "icon-32.png", "apple-touch-icon.png", "og-image.jpg"];
 
 self.addEventListener("install", e=>{
@@ -25,8 +25,8 @@ self.addEventListener("fetch", e=>{
   if(req.mode === "navigate"){
     e.respondWith(
       fetch(req)
-        .then(r=>{ const cp = r.clone(); caches.open(CACHE).then(c=>c.put("index.html", cp)); return r; })
-        .catch(()=>caches.match("index.html").then(r=>r || caches.match("./")))
+        .then(r=>{ const cp = r.clone(); const isLanding = url.pathname.endsWith("presentation.html"); caches.open(CACHE).then(c=>c.put(isLanding ? req : "index.html", cp)); return r; })
+        .catch(()=>caches.match(req).then(r=>r || caches.match("index.html")).then(r=>r || caches.match("./")))
     );
     return;
   }
