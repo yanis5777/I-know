@@ -39,7 +39,9 @@
 <meta name="twitter:description" content="Anglais, allemand, darija, luxembourgeois, italien, histoire, géographie, politique, nutrition, religion : à réviser en cartes, hors ligne.">
 <meta name="twitter:image" content="https://yanis5777.github.io/I-know/og-image.jpg">
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="logo-32.png">
+<link rel="shortcut icon" href="logo-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="logo-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -144,6 +146,8 @@
     min-height:0;
   }
   .view.showing{ display:flex; }
+  /* Les écrans qui défilent passent sous la barre flottante : le dernier bloc reste atteignable */
+  .view.scroll-view{ inset:0 0 calc(-1 * var(--navh, 70px)) 0; margin-bottom:0; padding-bottom:calc(var(--navh, 70px) + 26px); }
   /* Marges propres à la carte : plus d'air en haut (sous le titre) et en
      bas (avant les pilules de nav), et un peu plus étroite sur les côtés
      pour ne pas toucher les bords — évite l'effet "étouffé". */
@@ -725,14 +729,14 @@
   .bottomnav{
     position:fixed;
     left:0; right:0; bottom:0;
-    padding:0 16px calc(10px + env(safe-area-inset-bottom,0px));
+    padding:0 16px calc(6px + env(safe-area-inset-bottom,0px));
     z-index:1000;
     pointer-events:none;
   }
   .nav-inner{
     display:flex;
     gap:0;
-    max-width:460px;
+    width:min(100%, 318px);
     margin:0 auto;
     pointer-events:auto;
     position:relative;
@@ -741,8 +745,8 @@
     backdrop-filter:blur(30px) saturate(210%);
     border:1px solid rgba(255,255,255,0.4);
     border-radius:999px;
-    box-shadow:0 20px 40px -10px rgba(0,0,0,0.22), inset 0 1px 1px rgba(255,255,255,0.6);
-    padding:4px;
+    box-shadow:0 12px 26px -10px rgba(0,0,0,0.22), inset 0 1px 1px rgba(255,255,255,0.6);
+    padding:2px;
   }
   /* Pilule flottante derrière l'onglet actif — repris du retour de
      Yanis (référence Gemini) : fond blanc semi-opaque, bordure haute
@@ -763,7 +767,7 @@
     will-change:transform;
   }
   .nav-btn{
-    flex:1;
+    flex:1 1 0; min-width:0;
     min-height:38px;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
     background:transparent;
@@ -832,9 +836,10 @@
   .bar > i{ display:block; height:100%; border-radius:99px; background:var(--gold); transition:width .5s cubic-bezier(.2,.8,.3,1); }
 
   /* ---------- AUJOURD'HUI ---------- */
-  #todayView{ gap:12px; padding-bottom:6px; }
+  #todayView{ gap:12px; }
   .today-head{ flex-shrink:0; margin-bottom:2px; }
   .stat-row{ display:grid; grid-template-columns:1fr 1.25fr; gap:10px; flex-shrink:0; }
+  @media (max-width:350px){ .stat-row{ grid-template-columns:1fr; } .nav-btn{ font-size:7.5px; letter-spacing:0; } }
   .streak-box{ display:flex; flex-direction:column; gap:2px; }
   .streak-num{ font-family:'Fraunces', serif; font-weight:700; font-size:30px; color:var(--ink); line-height:1; display:flex; align-items:center; gap:6px; }
   .streak-num .fl{ font-size:24px; }
@@ -1022,7 +1027,7 @@
   .res-lines b{ color:var(--ink); }
 
   /* ---------- PROFIL ---------- */
-  #profileView{ gap:12px; padding-bottom:6px; }
+  #profileView{ gap:12px; }
   .lvl-big{ display:flex; align-items:center; gap:12px; }
   .lvl-badge{ width:52px; height:52px; border-radius:50%; background:var(--gold); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
   .lvl-big .t{ font-family:'Fraunces', serif; font-style:italic; font-weight:700; font-size:21px; color:var(--ink); }
@@ -1057,7 +1062,7 @@
   .premium-card span{ font-size:11.5px; opacity:0.78; line-height:1.5; display:block; margin-top:3px; }
 
   /* ---------- PREMIUM ---------- */
-  #paywallView{ gap:12px; padding-bottom:6px; }
+  #paywallView{ gap:12px; }
   .pw-table{ border:1px solid var(--card-border); border-radius:14px; overflow:hidden; background:var(--paper); flex-shrink:0; }
   .pw-row{ display:grid; grid-template-columns:1fr 76px 88px; align-items:center; border-top:1px solid var(--card-border); font-size:12.5px; color:var(--ink); }
   .pw-row:first-child{ border-top:none; }
@@ -1116,7 +1121,7 @@
   }
   #toast.show{ opacity:1; transform:translate(-50%,0); }
   .scroll-view > *{ flex-shrink:0; }
-  .scroll-view{ padding-bottom:20px; }
+  .view.scroll-view{ padding-bottom:calc(var(--navh, 70px) + 26px); }
   .nav-btn{ font-size:8px; }
 </style>
 </head>
