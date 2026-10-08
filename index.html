@@ -1064,6 +1064,13 @@
     padding:max(env(safe-area-inset-top,0px),44px) 24px calc(24px + env(safe-area-inset-bottom,0px));
   }
   #onboarding.showing{ display:flex; }
+  .int-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; max-height:42vh; overflow:auto; }
+  .int-tile{ position:relative; display:flex; align-items:center; gap:8px; padding:14px 12px; border-radius:16px; border:2px solid transparent; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px; color:var(--ink); text-align:left; opacity:.55; }
+  .int-tile.on{ opacity:1; border-color:var(--ink); }
+  .int-tile i{ position:absolute; top:6px; right:9px; font-style:normal; font-size:12px; }
+  .int-link{ margin-top:8px; background:var(--paper); border:1px solid var(--card-border,#D8CFC4); border-radius:999px; padding:6px 12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink); cursor:pointer; }
+  .tile-edit{ background:var(--paper)!important; border:1.5px dashed var(--ink-soft,#6b6058); }
+  .primary-btn:disabled{ opacity:.5; }
   .ob-skip{ align-self:flex-end; background:none; border:none; cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); padding:6px; }
   .ob-body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:360px; gap:14px; }
   .ob-emoji{ font-size:64px; line-height:1; }
@@ -2631,6 +2638,23 @@ const CHECKOUT_URLS = { month:"", year:"" };
 const FREE_CATEGORIES = ["anglais"];
 const FREE_THEMES = ["papier"];
 const FREE_QUIZ_PER_DAY = 1;
+const FREE_NEW_CARDS_PER_DAY = 1;
+/* Gratuit : 1 nouvelle carte par jour. Revoir une carte déjà vue, les
+   révisions et les favoris restent libres. Premium : illimité. */
+function newCardsToday(){ const n=S.newDay; return (n && n.d===todayStr()) ? n.ids : []; }
+function cardAllowed(card, origin){
+  if(isPremium()) return true;
+  if(origin==="review" || origin==="favorites") return true;
+  if(S.cards[card.id]) return true;
+  const ids = newCardsToday();
+  return ids.includes(card.id) || ids.length < FREE_NEW_CARDS_PER_DAY;
+}
+function noteNewCard(card){
+  if(isPremium() || S.cards[card.id]) return;
+  const t=todayStr(); if(!S.newDay || S.newDay.d!==t) S.newDay={d:t,ids:[]};
+  if(!S.newDay.ids.includes(card.id)){ S.newDay.ids.push(card.id); saveState(); }
+}
+let paywallReason = "";
 function isPremium(){ return !PAYWALL_ACTIVE || !!S.premium; }
 function isLockedCat(id){ return !isPremium() && !FREE_CATEGORIES.includes(id); }
 function isLockedTheme(id){ return !isPremium() && !FREE_THEMES.includes(id); }
@@ -2643,7 +2667,7 @@ function quizAllowed(){
 function defaultState(){
   return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
            onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
-           dailyDone:"", quizDay:null,
+           dailyDone:"", quizDay:null, interests:[],
            qstat:{}, qcat:{}, qmaster:{}, incollable:{} };
 }
 let S = defaultState();
@@ -2662,6 +2686,13 @@ for(const catId in CATEGORY_DATA){
 }
 function catById(id){ return CATEGORIES.find(c=>c.id===id); }
 function availableCats(){ return CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id]); }
+/* Centres d'intérêt : l'appli ne tourne que sur les catégories choisies
+   (liste vide = toutes, pour les anciens utilisateurs). */
+function activeCats(){
+  const all = availableCats();
+  const sel = (S.interests||[]).filter(id=>all.some(c=>c.id===id));
+  return sel.length ? all.filter(c=>sel.includes(c.id)) : all;
+}
 
 /* ---- dates ---- */
 function ymd(d){ const z=n=>String(n).padStart(2,"0"); return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate()); }
@@ -2779,6 +2810,7 @@ function dueIds(){
   return cardRecords()
     .filter(id=>S.cards[id].seen>0 || S.cards[id].ko>0)
     .filter(id=>S.cards[id].due <= t)
+    .filter(id=>{ const e=CARD_INDEX[id]; return !e || activeCats().some(c=>c.id===categoryIdForCard(e.card)); })
     .sort((a,b)=> S.cards[a].due.localeCompare(S.cards[b].due));
 }
 function cardWeight(c){
@@ -2790,7 +2822,7 @@ function cardWeight(c){
 
 /* ---- carte du jour : une carte par jour, rotation sur toutes les catégories ---- */
 function dailyCard(){
-  const cats = availableCats().map(c=>c.id);
+  const cats = activeCats().map(c=>c.id);
   const n = dayNumber(todayStr());
   const deck = CATEGORY_DATA[cats[n % cats.length]].deck;
   return deck[Math.floor(n / cats.length) % deck.length];
@@ -2880,7 +2912,8 @@ function pickRandom(pool, deck){
    au hasard (chaque catégorie a la même chance), puis une carte
    pondérée DANS cette catégorie. */
 function pickRandomGlobal(){
-  const cats = availableCats().filter(c=>!isLockedCat(c.id));
+  let cats = activeCats().filter(c=>!isLockedCat(c.id));
+  if(!cats.length) cats = availableCats().filter(c=>!isLockedCat(c.id));
   let catChoices = cats;
   if(cats.length > 1) catChoices = cats.filter(c=>c.id!==lastCatId);
   const cat = catChoices[Math.floor(Math.random()*catChoices.length)];
@@ -2971,6 +3004,14 @@ function applyCardUI(){
 }
 
 function renderCard(card, fromHistory){
+  if(!fromHistory){
+    if(!cardAllowed(card, ctx.origin)){
+      paywallReason = "limit";
+      if(currentCard){ cardHistory = []; currentCard = null; }
+      renderPaywall(); showView("paywall"); return;
+    }
+    noteNewCard(card);
+  }
   if(!fromHistory && currentCard){
     cardHistory.push(currentCard);
   }
@@ -3414,7 +3455,8 @@ document.getElementById("globalDrawBtn").addEventListener("click", drawGlobalRan
 function renderCategories(){
   const grid = document.getElementById("categoryGrid");
   grid.innerHTML = "";
-  CATEGORIES.forEach(cat=>{
+  const act = activeCats().map(c=>c.id);
+  CATEGORIES.filter(c=>c.available && act.includes(c.id)).forEach(cat=>{
     const tile = document.createElement("div");
     tile.className = "tile tile-theme" + (cat.available ? " tile-available" : " tile-soon");
     tile.style.background = cat.bg;
@@ -3427,6 +3469,11 @@ function renderCategories(){
     }
     grid.appendChild(tile);
   });
+  const more = document.createElement("div");
+  more.className = "tile tile-theme tile-available tile-edit";
+  more.innerHTML = '<span class="theme-emoji">🎯</span><div class="name">Choisir mes thèmes</div>';
+  more.addEventListener("click", ()=>openInterests(false));
+  grid.appendChild(more);
 }
 
 function renderThemesForCategory(cat){
@@ -3496,6 +3543,7 @@ function renderToday(){
     <div class="today-head">
       <div class="eyebrow">${esc(dateTxt)}</div>
       <h1 class="h-title">Aujourd'hui</h1>
+      <button class="int-link" onclick="openInterests(false)">🎯 Mes thèmes · ${activeCats().length === availableCats().length && !(S.interests||[]).length ? "tous" : activeCats().length}</button>
     </div>
     <div class="stat-row">
       <div class="panel streak-box">
@@ -3596,7 +3644,7 @@ function quizPoolFor(catIds, onlyKnown){
   return out;
 }
 function quizKnownCount(sel){
-  const open = availableCats().map(c=>c.id).filter(id=>!isLockedCat(id));
+  const open = activeCats().map(c=>c.id).filter(id=>!isLockedCat(id));
   return quizPoolFor(sel === "mix" ? open : [sel], true).length;
 }
 
@@ -3604,7 +3652,7 @@ function renderQuizSetup(){
   const box = $("quizChips");
   box.innerHTML = "";
   const opts = [{ id:"mix", label:"Tout", icon:"🎲" }].concat(
-    availableCats().map(c=>({ id:c.id, label:c.label, icon:iconHtml(c) }))
+    activeCats().map(c=>({ id:c.id, label:c.label, icon:iconHtml(c) }))
   );
   if(quizSel !== "mix" && quizKnownCount(quizSel) === 0 && quizKnownCount("mix") > 0) quizSel = "mix";
   opts.forEach(o=>{
@@ -3676,7 +3724,7 @@ function makeQuestion(item, catPool, allPool){
 }
 function startQuiz(){
   if(!quizAllowed()){ openPaywall(); return; }
-  const open = availableCats().map(c=>c.id).filter(id=>!isLockedCat(id));
+  const open = activeCats().map(c=>c.id).filter(id=>!isLockedCat(id));
   const known = quizPoolFor(quizSel === "mix" ? open : [quizSel], true);
   if(!known.length){ toast("Marque d'abord des cartes « Je savais »"); return; }
   const all = quizPoolFor(availableCats().map(c=>c.id), false);
@@ -3863,7 +3911,7 @@ function renderProfile(){
     return `<div><i class="${x.on?"on":""}" style="height:${Math.max(4, x.s/maxS*100)}%"></i><span>${letter}</span></div>`;
   }).join("");
 
-  const catRows = availableCats().map(c=>{
+  const catRows = activeCats().map(c=>{
     const deck = CATEGORY_DATA[c.id].deck;
     const s = deck.filter(card=>S.cards[card.id] && S.cards[card.id].seen>0).length;
     return `<div class="r"><span>${iconHtml(c)}</span><div><div>${esc(c.label)}${S.incollable[c.id] ? " 🏆" : ""}</div><div class="bar" style="margin-top:4px"><i style="width:${s/deck.length*100}%"></i></div></div><small>${s}/${deck.length}</small></div>`;
@@ -3900,6 +3948,11 @@ function renderProfile(){
       <div class="badges">${badges}</div>
     </div>
     <div class="panel">
+      <h3 class="sec-title">Mes thèmes</h3>
+      <p class="sub" style="margin:0 0 10px">${activeCats().map(c=>esc(c.label)).join(", ")}</p>
+      <button class="chip" onclick="openInterests(false)">🎯 Modifier</button>
+    </div>
+    <div class="panel">
       <h3 class="sec-title">Objectif quotidien</h3>
       <div class="chips" id="goalChips"></div>
     </div>
@@ -3934,7 +3987,7 @@ function renderProfile(){
   if(PAYWALL_ACTIVE && S.premium){
     pb.innerHTML = `<b>I Know Premium ✓</b><span>Merci ! Toutes les catégories, quiz et thèmes sont débloqués.</span>`;
   } else {
-    pb.innerHTML = `<b>I Know Premium${PAYWALL_ACTIVE?"":" · bientôt"}</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · toutes les catégories, quiz illimités, tous les thèmes.</span>`;
+    pb.innerHTML = `<b>I Know Premium${PAYWALL_ACTIVE?"":" · bientôt"}</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, quiz illimités, tous les thèmes.</span>`;
   }
   pb.onclick = openPaywall;
   $("resetBtn").onclick = ()=>{
@@ -3947,7 +4000,7 @@ function renderProfile(){
 /* ---------- PREMIUM ---------- */
 const PRICE_TXT = { month:"1,99 €", year:"10 €", yearPerMonth:"0,83 €" };
 let plan = "year";
-function openPaywall(){ renderPaywall(); showView("paywall"); }
+function openPaywall(){ paywallReason=""; renderPaywall(); showView("paywall"); }
 function renderPaywall(){
   const el = $("paywallView");
   const row = (label,a,b)=>`<div class="pw-row"><div>${label}</div><div>${a}</div><div>${b}</div></div>`;
@@ -3955,10 +4008,11 @@ function renderPaywall(){
   const canBuy = PAYWALL_ACTIVE && CHECKOUT_URLS[plan];
   el.innerHTML = `
     <button class="back-link" id="pwBack">◂ Retour</button>
-    <div><div class="eyebrow">I Know Premium</div><h1 class="h-title">Ce que tu débloques</h1></div>
+    <div><div class="eyebrow">I Know Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":"Ce que tu débloques"}</h1></div>
+    ${paywallReason==="limit"?`<p class="sub" style="margin:0">Gratuit : 1 nouvelle carte par jour. Reviens demain, ou passe Premium pour un nombre de cartes illimité.</p>`:""}
     <div class="pw-table">
       <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM</div></div>
-      ${row("Carte du jour",Y,Y)}
+      ${row("Nouvelles cartes",`<small>1/jour</small>`,"Illimité")}
       ${row("Révision espacée",Y,Y)}
       ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
       ${row("Catégories",`<small>Anglais</small>`,"Toutes")}
@@ -3977,7 +4031,7 @@ function renderPaywall(){
     </div>
     <button class="primary-btn" id="pwCta" ${canBuy?"":"disabled"}>${PAYWALL_ACTIVE ? "PASSER PREMIUM" : "BIENTÔT DISPONIBLE"}</button>
     <p class="sub" style="text-align:center;margin:0">${PAYWALL_ACTIVE ? "" : "Le paiement n'est pas encore ouvert : tout reste gratuit pour l'instant."}</p>`;
-  $("pwBack").onclick = ()=>{ renderProfile(); showView("profile"); };
+  $("pwBack").onclick = ()=>{ const lim = paywallReason==="limit"; paywallReason=""; if(lim){ renderToday(); showView("today"); } else { renderProfile(); showView("profile"); } };
   el.querySelectorAll(".plan").forEach(b=> b.onclick = ()=>{ plan = b.dataset.plan; renderPaywall(); });
   $("pwCta").onclick = ()=>{ if(canBuy) window.location.href = CHECKOUT_URLS[plan]; };
 }
@@ -3990,7 +4044,45 @@ const OB_STEPS = [
 ];
 let obIndex = 0;
 function startOnboarding(){ obIndex = 0; $("onboarding").classList.add("showing"); renderOnboarding(); }
-function endOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); }
+function endOnboarding(){ openInterests(true); }
+function finishOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); }
+let intDraft = [];
+function openInterests(first){
+  intDraft = (S.interests||[]).slice();
+  if(!intDraft.length && !first) intDraft = availableCats().map(c=>c.id);
+  const el = $("onboarding");
+  el.classList.add("showing");
+  const draw = ()=>{
+    el.innerHTML = `
+      ${first ? "<span></span>" : '<button class="ob-skip" id="intCancel">Annuler</button>'}
+      <div class="ob-body" style="width:100%;max-width:420px">
+        <div class="ob-emoji">🎯</div>
+        <h2 class="ob-h">Qu'est-ce que tu veux apprendre ?</h2>
+        <p class="ob-p">Choisis tes thèmes. L'appli (carte du jour, quiz, révisions) ne tournera que sur eux. Tu pourras changer à tout moment.</p>
+        <div class="int-grid" id="intGrid"></div>
+      </div>
+      <div class="ob-foot"><button class="primary-btn" id="intOk" ${intDraft.length?"":"disabled"}>${first?"COMMENCER":"ENREGISTRER"}</button></div>`;
+    const g = $("intGrid");
+    availableCats().forEach(c=>{
+      const on = intDraft.includes(c.id);
+      const b = document.createElement("button");
+      b.className = "int-tile" + (on?" on":"");
+      b.style.background = c.bg;
+      b.innerHTML = `<span>${iconHtml(c)}</span>${esc(c.label)}${on?'<i>✓</i>':""}`;
+      b.onclick = ()=>{ intDraft = on ? intDraft.filter(x=>x!==c.id) : intDraft.concat(c.id); draw(); };
+      g.appendChild(b);
+    });
+    $("intOk").onclick = ()=>{
+      if(!intDraft.length) return;
+      S.interests = intDraft.slice(); saveState();
+      quizSel = "mix";
+      if(first) finishOnboarding(); else el.classList.remove("showing");
+      renderCategories(); renderToday(); renderProfile();
+    };
+    if(!first) $("intCancel").onclick = ()=>el.classList.remove("showing");
+  };
+  draw();
+}
 function renderOnboarding(){
   const s = OB_STEPS[obIndex], last = obIndex === OB_STEPS.length-1;
   const el = $("onboarding");
