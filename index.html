@@ -923,6 +923,7 @@
 
   /* ---------- QUIZ ---------- */
   #quizSetupView, #resultView{ gap:12px; }
+  #quizSetupView .sub{ margin:0; }
   .chips{ display:flex; flex-wrap:wrap; gap:8px; }
   .chip{
     cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
@@ -960,6 +961,7 @@
   .quiz-tag{ font-size:10px; letter-spacing:0.14em; color:var(--ink-soft); text-transform:uppercase; }
   .quiz-q{ font-family:'Fraunces', serif; font-weight:600; font-size:23px; line-height:1.25; color:var(--ink); word-break:break-word; }
   .quiz-q.long{ font-size:18px; }
+  .quiz-q.xl{ font-family:'IBM Plex Sans', sans-serif; font-weight:500; font-size:15.5px; line-height:1.55; }
   .quiz-ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:13px; color:var(--ink-soft); min-height:18px; }
   .quiz-opts{ display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
   .opt{
@@ -974,6 +976,20 @@
   .opt.dim{ opacity:0.55; }
   :root[data-theme="nuit"] .opt.good{ background:#1F3A28; color:#BFE3C9; }
   :root[data-theme="nuit"] .opt.bad{ background:#432019; color:#F0B3A6; }
+  .quiz-fb{ flex-shrink:0; border-radius:12px; padding:11px 14px; font-family:'IBM Plex Sans', sans-serif; font-size:13.5px; line-height:1.5; animation:fbPop .28s cubic-bezier(.2,.9,.3,1.2); }
+  .quiz-fb[hidden]{ display:none; }
+  .quiz-fb b{ display:block; font-family:'Fraunces', serif; font-size:17px; margin-bottom:2px; }
+  .quiz-fb.good{ background:#DCEBDD; border:1px solid #2F6B45; color:#1D4A2E; }
+  .quiz-fb.bad{ background:#F3D9D4; border:1px solid var(--stamp); color:#7A2418; }
+  .quiz-fb .gold{ margin-top:7px; padding:7px 10px; border-radius:9px; background:#F6E3B0; color:#5E4208; font-weight:700; }
+  :root[data-theme="nuit"] .quiz-fb.good{ background:#1F3A28; color:#BFE3C9; }
+  :root[data-theme="nuit"] .quiz-fb.bad{ background:#432019; color:#F0B3A6; }
+  :root[data-theme="nuit"] .quiz-fb .gold{ background:#4A3A12; color:#F3D88A; }
+  @keyframes fbPop{ 0%{ opacity:0; transform:translateY(8px) scale(0.97); } 100%{ opacity:1; transform:none; } }
+  .quiz-card.flash-good{ animation:flashGood .5s ease; }
+  .quiz-card.flash-bad{ animation:flashBad .4s ease; }
+  @keyframes flashGood{ 0%{ box-shadow:0 0 0 0 rgba(47,107,69,0.55); } 100%{ box-shadow:0 0 0 14px rgba(47,107,69,0); } }
+  @keyframes flashBad{ 0%,100%{ transform:none; } 25%{ transform:translateX(-5px); } 75%{ transform:translateX(5px); } }
   .res-emoji{ font-size:54px; text-align:center; margin-top:10px; }
   .res-title{ font-family:'Fraunces', serif; font-style:italic; font-weight:700; font-size:26px; text-align:center; color:var(--ink); margin:0; }
   .res-lines{ text-align:center; font-family:'IBM Plex Sans', sans-serif; font-size:14px; color:var(--ink-soft); line-height:1.7; }
@@ -1209,8 +1225,9 @@
     <div class="view scroll-view" id="quizSetupView">
       <button class="back-link" id="quizSetupBack">◂ Aujourd'hui</button>
       <div><div class="eyebrow">QUIZ</div><h1 class="h-title">Teste-toi</h1></div>
-      <p class="sub">10 questions à choix multiple, tirées des mots de l'app. Une erreur remet le mot dans ta révision.</p>
-      <div class="eyebrow">Langue</div>
+      <p class="sub">Les questions viennent de tout ce que tu as marqué « Je savais », dans toutes les catégories. Une erreur remet la carte dans ta révision.</p>
+      <p class="sub" id="quizInfo"></p>
+      <div class="eyebrow">Catégorie</div>
       <div class="chips" id="quizChips"></div>
       <button class="primary-btn" id="quizStartBtn">LANCER LE QUIZ</button>
     </div>
@@ -1228,6 +1245,7 @@
         <div class="quiz-ph" id="quizPh"></div>
       </div>
       <div class="quiz-opts" id="quizOpts"></div>
+      <div class="quiz-fb" id="quizFb" hidden></div>
       <button class="primary-btn" id="quizNext" hidden>SUIVANT ▸</button>
     </div>
 
@@ -2625,7 +2643,8 @@ function quizAllowed(){
 function defaultState(){
   return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
            onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
-           dailyDone:"", quizDay:null };
+           dailyDone:"", quizDay:null,
+           qstat:{}, qcat:{}, qmaster:{}, incollable:{} };
 }
 let S = defaultState();
 function loadState(){
@@ -2713,6 +2732,8 @@ const BADGES = [
   { id:"quiz",    e:"🎯", n:"Quiz",          d:"Un quiz terminé",        t:()=>S.quizzes>=1 },
   { id:"perfect", e:"💎", n:"Sans faute",    d:"Un quiz 10/10",          t:()=>S.perfectQuizzes>=1 },
   { id:"master",  e:"🧠", n:"Maîtrise",      d:"25 cartes bien ancrées", t:()=>masteredCount()>=25 },
+  { id:"incoll",  e:"🏅", n:"Incollable",    d:"Un sujet maîtrisé au quiz", t:()=>Object.keys(S.qmaster).length>=1 },
+  { id:"expert",  e:"🏆", n:"Expert",        d:"Incollable dans une catégorie", t:()=>Object.keys(S.incollable).length>=1 },
   { id:"explore", e:"🧭", n:"Explorateur",   d:"5 catégories visitées",  t:()=>catsSeenCount()>=5 }
 ];
 function checkBadges(){
@@ -3506,7 +3527,7 @@ function renderToday(){
       <button class="act" id="quizBtn">
         <div class="ic">🎯</div>
         <b>Quiz</b>
-        <span>10 questions</span>
+        <span>sur ce que tu sais</span>
       </button>
     </div>
     <div class="panel level-row">
@@ -3541,78 +3562,144 @@ function showResult(o){
 }
 
 /* ---------- QUIZ ---------- */
-const LANG_CATS = ["anglais","italien","luxembourgeois","darija"];
 let quizSel = "mix";
 let quiz = null;
+
+function isKnown(card){ const r = S.cards[card.id]; return !!(r && r.ok > 0); }
+const isYear = d => !!d && /\d{3,4}/.test(d);
+/* Indice d'une ligne « fait » : son résumé, sinon son premier point, à condition de ne pas contenir le titre. */
+function factClue(r){
+  const t = (r.title || "").toLowerCase();
+  const good = s => s && s.length >= 20 && !s.toLowerCase().includes(t);
+  if(good(r.summary)) return r.summary;
+  if(r.points && good(r.points[0])) return r.points[0];
+  return null;
+}
+/* Éléments testables : mots (langues) et repères (histoire, politique, géo…).
+   onlyKnown = uniquement les cartes où tu as répondu « Je savais ». */
+function quizPoolFor(catIds, onlyKnown){
+  const out = [];
+  catIds.forEach(catId=>{
+    CATEGORY_DATA[catId].deck.forEach(card=>{
+      if(onlyKnown && !isKnown(card)) return;
+      if(card.items){
+        card.items.forEach(([fr,tr,ph])=>out.push({ kind:"word", cardId:card.id, catId, fr, tr, ph }));
+      } else if(card.rows){
+        card.rows.forEach(r=>{
+          const clue = factClue(r), date = isYear(r.date) ? r.date : null;
+          if(!clue && !date) return;
+          out.push({ kind:"fact", cardId:card.id, catId, title:r.title, clue, date });
+        });
+      }
+    });
+  });
+  return out;
+}
+function quizKnownCount(sel){
+  const open = availableCats().map(c=>c.id).filter(id=>!isLockedCat(id));
+  return quizPoolFor(sel === "mix" ? open : [sel], true).length;
+}
 
 function renderQuizSetup(){
   const box = $("quizChips");
   box.innerHTML = "";
-  const opts = [{ id:"mix", label:"Mélange", icon:"🎲" }].concat(
-    LANG_CATS.map(id=>{ const c = catById(id); return { id, label:c.label, icon:iconHtml(c) }; })
+  const opts = [{ id:"mix", label:"Tout", icon:"🎲" }].concat(
+    availableCats().map(c=>({ id:c.id, label:c.label, icon:iconHtml(c) }))
   );
+  if(quizSel !== "mix" && quizKnownCount(quizSel) === 0 && quizKnownCount("mix") > 0) quizSel = "mix";
   opts.forEach(o=>{
     const b = document.createElement("button");
     const locked = o.id !== "mix" && isLockedCat(o.id);
-    b.className = "chip" + (quizSel===o.id ? " on" : "") + (locked ? " locked" : "");
-    b.innerHTML = `${o.icon} ${esc(o.label)}${locked?" 🔒":""}`;
+    const n = quizKnownCount(o.id);
+    b.className = "chip" + (quizSel===o.id ? " on" : "") + (locked || n===0 ? " locked" : "");
+    b.innerHTML = `${o.icon} ${esc(o.label)} · ${n}${locked?" 🔒":""}`;
     b.onclick = ()=>{
       if(locked){ openPaywall(); return; }
+      if(n === 0){ toast("Marque d'abord des cartes « Je savais »"); return; }
       quizSel = o.id; renderQuizSetup();
     };
     box.appendChild(b);
   });
+  const total = quizKnownCount(quizSel);
+  $("quizInfo").innerHTML = total > 0
+    ? `<b>${total}</b> élément${total>1?"s":""} à tester dans ta sélection.`
+    : "Rien à tester pour l'instant : réponds « Je savais » sur quelques cartes pour débloquer le quiz.";
+  $("quizStartBtn").disabled = total === 0;
 }
 function shuffle(a){
   a = a.slice();
   for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; }
   return a;
 }
-function quizPoolFor(catIds){
-  const out = [];
-  catIds.forEach(catId=>{
-    CATEGORY_DATA[catId].deck.forEach(card=>{
-      if(!card.items) return;
-      card.items.forEach(([fr,tr,ph])=>out.push({ cardId:card.id, catId, fr, tr, ph }));
-    });
-  });
-  return out;
-}
-function makeQuestion(item, catPool){
-  const trCount = catPool.filter(x=>x.tr===item.tr).length;
-  const reverse = trCount === 1 && Math.random() < 0.3;
-  const prompt = reverse ? item.tr : item.fr;
-  const answer = reverse ? item.fr : item.tr;
-  const key = reverse ? "fr" : "tr";
-  const cands = shuffle(catPool.filter(x=>x.cardId!==item.cardId || x.fr!==item.fr))
-    .filter(x=>x.fr!==item.fr && x.tr!==item.tr && x[key]!==answer)
-    .slice(0,30)
-    .sort((a,b)=> Math.abs(a[key].length-answer.length) - Math.abs(b[key].length-answer.length));
+function uniquePicks(cands, key, answer, n){
   const seen = new Set([answer]), picks = [];
   for(const c of cands){
     if(seen.has(c[key])) continue;
     seen.add(c[key]); picks.push(c[key]);
-    if(picks.length === 3) break;
+    if(picks.length === n) break;
   }
+  return picks;
+}
+function wordQuestion(item, catPool){
+  const trCount = catPool.filter(x=>x.kind==="word" && x.tr===item.tr).length;
+  const reverse = trCount === 1 && Math.random() < 0.3;
+  const prompt = reverse ? item.tr : item.fr;
+  const answer = reverse ? item.fr : item.tr;
+  const key = reverse ? "fr" : "tr";
+  const cands = shuffle(catPool.filter(x=>x.kind==="word" && x.fr!==item.fr && x.tr!==item.tr && x[key]!==answer))
+    .slice(0,30)
+    .sort((a,b)=> Math.abs(a[key].length-answer.length) - Math.abs(b[key].length-answer.length));
+  const picks = uniquePicks(cands, key, answer, 3);
   if(picks.length < 3) return null;
   return { item, prompt, answer, reverse, options: shuffle([answer, ...picks]) };
 }
+function factQuestion(item, catPool, allPool){
+  const modes = [];
+  if(item.clue) modes.push("what");
+  if(item.date) modes.push("when");
+  const mode = modes[Math.floor(Math.random()*modes.length)];
+  const key = mode === "what" ? "title" : "date";
+  const prompt = mode === "what" ? item.clue : item.title;
+  const answer = item[key];
+  const usable = x => x.kind==="fact" && x[key] && x[key]!==answer;
+  let picks = uniquePicks(shuffle(catPool.filter(usable)), key, answer, 3);
+  if(picks.length < 3){
+    const more = uniquePicks(shuffle(allPool.filter(usable)), key, answer, 3);
+    picks = picks.concat(more.filter(v=>!picks.includes(v))).slice(0,3);
+  }
+  if(picks.length < 3) return null;
+  return { item, prompt, answer, reverse:false, tag: mode==="what" ? "De quoi s'agit-il ?" : "Quand ?",
+           options: shuffle([answer, ...picks]) };
+}
+function makeQuestion(item, catPool, allPool){
+  return item.kind === "fact" ? factQuestion(item, catPool, allPool) : wordQuestion(item, catPool);
+}
 function startQuiz(){
   if(!quizAllowed()){ openPaywall(); return; }
-  const catIds = quizSel === "mix" ? LANG_CATS.filter(id=>!isLockedCat(id)) : [quizSel];
-  const pool = shuffle(quizPoolFor(catIds));
+  const open = availableCats().map(c=>c.id).filter(id=>!isLockedCat(id));
+  const known = quizPoolFor(quizSel === "mix" ? open : [quizSel], true);
+  if(!known.length){ toast("Marque d'abord des cartes « Je savais »"); return; }
+  const all = quizPoolFor(availableCats().map(c=>c.id), false);
   const byCat = {};
-  quizPoolFor(LANG_CATS).forEach(x=>{ (byCat[x.catId] = byCat[x.catId] || []).push(x); });
-  const qs = [], usedFr = new Set();
-  for(const it of pool){
-    if(qs.length >= 10) break;
-    const k = it.catId + "|" + it.fr;
-    if(usedFr.has(k)) continue;
-    const q = makeQuestion(it, byCat[it.catId]);
-    if(q){ usedFr.add(k); qs.push(q); }
+  all.forEach(x=>{ (byCat[x.catId] = byCat[x.catId] || []).push(x); });
+  /* une catégorie est tirée au hasard à chaque question, pour que les langues
+     (beaucoup de mots) n'écrasent pas l'histoire ou la politique */
+  const groups = {};
+  shuffle(known).forEach(x=>{ (groups[x.catId] = groups[x.catId] || []).push(x); });
+  const qs = [], used = new Set();
+  let guard = 0;
+  while(qs.length < 10 && guard++ < 500){
+    const keys = Object.keys(groups).filter(k=>groups[k].length);
+    if(!keys.length) break;
+    const k = keys[Math.floor(Math.random()*keys.length)];
+    const it = groups[k].pop();
+    const uk = it.catId + "|" + (it.kind==="word" ? it.fr : it.title);
+    if(used.has(uk)) continue;
+    const q = makeQuestion(it, byCat[it.catId], all);
+    if(q){ used.add(uk); qs.push(q); }
   }
-  if(qs.length < 4){ toast("Pas assez de mots pour ce quiz"); return; }
-  quiz = { qs, i:0, correct:0, locked:false, sel:quizSel };
+  if(!qs.length){ toast("Pas assez de contenu pour ce quiz"); return; }
+  quiz = { qs, i:0, correct:0, streak:0, bestStreak:0, locked:false, sel:quizSel, cats:{}, earned:[] };
   if(!isPremium()){
     const t = todayStr();
     S.quizDay = { d:t, n: (S.quizDay && S.quizDay.d===t ? S.quizDay.n : 0) + 1 };
@@ -3627,10 +3714,11 @@ function renderQuestion(){
   quiz.locked = false;
   $("quizCount").textContent = (quiz.i+1) + "/" + quiz.qs.length;
   $("quizBar").style.width = (quiz.i / quiz.qs.length * 100) + "%";
-  $("quizTag").innerHTML = `${iconHtml(cat)} ${esc(cat.label)} · ${q.reverse ? "Que veut dire ?" : "Comment dit-on ?"}`;
+  $("quizTag").innerHTML = `${iconHtml(cat)} ${esc(cat.label)} · ${q.tag || (q.reverse ? "Que veut dire ?" : "Comment dit-on ?")}`;
   const qEl = $("quizQ");
   qEl.textContent = q.prompt;
-  qEl.classList.toggle("long", q.prompt.length > 34);
+  qEl.classList.toggle("long", q.prompt.length > 34 && q.prompt.length <= 110);
+  qEl.classList.toggle("xl", q.prompt.length > 110);
   $("quizPh").textContent = q.reverse && q.item.ph ? `/${q.item.ph}/` : "";
   const box = $("quizOpts");
   box.innerHTML = "";
@@ -3641,20 +3729,70 @@ function renderQuestion(){
     box.appendChild(b);
   });
   $("quizNext").hidden = true;
+  $("quizFb").hidden = true;
+  const qc = document.querySelector("#quizView .quiz-card");
+  qc.classList.remove("flash-good","flash-bad");
+}
+const PRAISE = ["Bonne réponse !","Exact !","Bien vu !","Parfait !","Tu l'as !"];
+const MASTER_STREAK = 3;      // bonnes réponses d'affilée sur un sujet pour être « incollable »
+const EXPERT_MIN = 15;        // réponses minimum dans une catégorie…
+const EXPERT_RATE = 0.9;      // …avec au moins 90 % de réussite
+function subjectTitle(cardId){
+  const e = CARD_INDEX[cardId];
+  return e ? e.card.cat.replace(/\s*\(\d+\/\d+\)\s*$/,"") : "";
 }
 function answerQuiz(btn, opt){
   if(quiz.locked) return;
   quiz.locked = true;
   const q = quiz.qs[quiz.i];
   const ok = opt === q.answer;
+  const catId = q.item.catId, cardId = q.item.cardId;
+  const cat = catById(catId);
   [...$("quizOpts").children].forEach(b=>{
     if(b.textContent === q.answer) b.classList.add("good");
     else if(b === btn) b.classList.add("bad");
     else b.classList.add("dim");
   });
   touchDay(todayStr()).q++;
-  if(ok){ quiz.correct++; addXp(3); }
-  else quizMiss(q.item.cardId);
+
+  const cs = S.qstat[cardId] || (S.qstat[cardId] = { ok:0, streak:0 });
+  const cc = S.qcat[catId] || (S.qcat[catId] = { ok:0, n:0 });
+  const qr = quiz.cats[catId] || (quiz.cats[catId] = { ok:0, n:0 });
+  cc.n++; qr.n++;
+  const subj = subjectTitle(cardId);
+  let msg = "", sub = "", gold = "";
+  if(ok){
+    quiz.correct++; quiz.streak++; quiz.bestStreak = Math.max(quiz.bestStreak, quiz.streak);
+    cs.ok++; cs.streak++; cc.ok++; qr.ok++;
+    addXp(3);
+    msg = PRAISE[Math.floor(Math.random()*PRAISE.length)];
+    if(quiz.streak >= 3) msg += " 🔥 " + quiz.streak + " d'affilée";
+    if(S.qmaster[cardId]) sub = `Tu es toujours incollable sur « ${esc(subj)} ».`;
+    else if(cs.streak >= MASTER_STREAK){
+      S.qmaster[cardId] = todayStr(); addXp(15);
+      gold = `🏅 Incollable sur « ${esc(subj)} » !`;
+      quiz.earned.push(`🏅 Incollable sur « ${esc(subj)} »`);
+    } else sub = `« ${esc(subj)} » : ${cs.streak}/${MASTER_STREAK} pour être incollable.`;
+    if(!S.incollable[catId] && cc.n >= EXPERT_MIN && cc.ok/cc.n >= EXPERT_RATE){
+      S.incollable[catId] = todayStr(); addXp(30);
+      gold = `🏆 Tu es incollable en ${esc(cat.label)} !`;
+      quiz.earned.push(`🏆 Incollable en ${esc(cat.label)}`);
+    }
+  } else {
+    quiz.streak = 0; cs.streak = 0;
+    quizMiss(cardId);
+    msg = "Raté";
+    sub = "La bonne réponse est en vert. Cette carte revient dans ta révision.";
+  }
+  const fb = $("quizFb");
+  fb.className = "quiz-fb " + (ok ? "good" : "bad");
+  fb.innerHTML = `<b>${ok ? "✓ " : "✗ "}${msg}</b>${sub ? `<div>${sub}</div>` : ""}${gold ? `<div class="gold">${gold}</div>` : ""}`;
+  fb.hidden = false;
+  const qc = document.querySelector("#quizView .quiz-card");
+  void qc.offsetWidth;
+  qc.classList.add(ok ? "flash-good" : "flash-bad");
+  try{ if(navigator.vibrate) navigator.vibrate(ok ? 15 : [25,40,25]); }catch(e){}
+
   if(!q.reverse && q.item.ph) $("quizPh").textContent = `/${q.item.ph}/`;
   afterActivity();
   const last = quiz.i === quiz.qs.length - 1;
@@ -3668,17 +3806,20 @@ $("quizNext").addEventListener("click", ()=>{
   finishQuiz();
 });
 function finishQuiz(){
-  const total = quiz.qs.length, c = quiz.correct, perfect = c === total;
+  const total = quiz.qs.length, c = quiz.correct, flawless = c === total, perfect = flawless && total >= 10;
   S.quizzes++;
   if(perfect){ S.perfectQuizzes++; addXp(20); }
   afterActivity();
   const sel = quiz.sel;
+  const summaryLines = Object.keys(quiz.cats).map(id=>{ const c = catById(id), r = quiz.cats[id]; return `${esc(c.label)} : <b>${r.ok}/${r.n}</b>`; });
+  quiz.earned.forEach(m=>summaryLines.push(`<b>${m}</b>`));
   quiz = null;
   showResult({
-    emoji: perfect ? "💎" : c >= total*0.7 ? "🎉" : c >= total*0.4 ? "👍" : "💪",
+    emoji: flawless ? "💎" : c >= total*0.7 ? "🎉" : c >= total*0.4 ? "👍" : "💪",
     title: `${c}/${total}`,
     lines: [
-      perfect ? "Sans faute !" : c >= total*0.7 ? "Très bien joué." : "Les mots ratés sont dans ta révision.",
+      ...summaryLines,
+      flawless ? "Sans faute !" : c >= total*0.7 ? "Très bien joué." : "Les mots ratés sont dans ta révision.",
       `<b>+${c*3 + (perfect?20:0)} XP</b>`
     ],
     primary: { label:"REJOUER", fn:()=>{ quizSel = sel; startQuiz(); } },
@@ -3725,7 +3866,7 @@ function renderProfile(){
   const catRows = availableCats().map(c=>{
     const deck = CATEGORY_DATA[c.id].deck;
     const s = deck.filter(card=>S.cards[card.id] && S.cards[card.id].seen>0).length;
-    return `<div class="r"><span>${iconHtml(c)}</span><div><div>${esc(c.label)}</div><div class="bar" style="margin-top:4px"><i style="width:${s/deck.length*100}%"></i></div></div><small>${s}/${deck.length}</small></div>`;
+    return `<div class="r"><span>${iconHtml(c)}</span><div><div>${esc(c.label)}${S.incollable[c.id] ? " 🏆" : ""}</div><div class="bar" style="margin-top:4px"><i style="width:${s/deck.length*100}%"></i></div></div><small>${s}/${deck.length}</small></div>`;
   }).join("");
 
   const badges = BADGES.map(b=>`<div class="badge ${S.badges[b.id]?"":"off"}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("");
