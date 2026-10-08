@@ -48,6 +48,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<script>try{var __t=(JSON.parse(localStorage.getItem("iknow_state_v1"))||{}).theme;if(__t&&__t!=="papier")document.documentElement.setAttribute("data-theme",__t);}catch(e){}</script>
 <style>
   :root{
     --bg:#E8E2D5;
@@ -63,9 +64,12 @@
     --gold:#B8862E;
     --action-bg:#2C2523;
     --action-text:#F0EAE1;
+    --ink2:#332B24;
+    --title:#2C4A63;
+    --brown:#6B3A12;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-  html,body{margin:0;padding:0;background:#E8E2D5;}
+  html,body{margin:0;padding:0;background:var(--bg);}
   html{
     scrollbar-width:thin; scrollbar-color:rgba(26,20,18,0.25) transparent;
   }
@@ -286,8 +290,8 @@
     max-height:640px;
     display:flex;
     flex-direction:column;
-    background:#F0EAE1;
-    border:1px solid #D8CFC4;
+    background:var(--paper);
+    border:1px solid var(--card-border);
     border-radius:14px;
     padding:14px 14px 12px;
     position:relative;
@@ -322,7 +326,7 @@
     display:inline-block;
     font-family:'Fraunces', serif; font-weight:700; font-style:italic;
     font-size:16.5px;
-    color:#2C4A63;
+    color:var(--title);
   }
   .star-btn{
     background:none; border:none; cursor:pointer; padding:3px; color:var(--ink-soft);
@@ -364,7 +368,7 @@
     align-items:flex-end;
     justify-content:center;
     padding-bottom:2px;
-    background:linear-gradient(to bottom, rgba(240,234,225,0) 0%, #F0EAE1 70%);
+    background:linear-gradient(to bottom, transparent 0%, var(--paper) 70%);
     pointer-events:none;
     opacity:1;
     transition:opacity .25s ease;
@@ -395,32 +399,6 @@
   .items.scrollable::-webkit-scrollbar{ width:5px; }
   .items.scrollable::-webkit-scrollbar-track{ background:transparent; }
   .items.scrollable::-webkit-scrollbar-thumb{ background:rgba(44,37,35,0.32); border-radius:4px; }
-  .verb-table{
-    width:100%; border-collapse:collapse;
-    font-family:'IBM Plex Sans', sans-serif; font-size:11.5px;
-  }
-  .verb-table th{
-    text-align:left; font-weight:600; color:var(--ink-soft);
-    font-size:10px; letter-spacing:0.02em; text-transform:uppercase;
-    padding:0 4px 8px; border-bottom:1.5px solid rgba(26,20,18,0.16);
-  }
-  .verb-table td{
-    padding:9px 4px; border-bottom:1px solid rgba(26,20,18,0.09);
-    color:var(--ink);
-  }
-  .verb-table td.subj{ font-weight:700; font-family:'Fraunces', serif; font-style:italic; }
-  .verb-table tr:last-child td{ border-bottom:none; }
-  .contraction-table{ font-size:15px; }
-  .contraction-table th{ font-size:11px; }
-  .contraction-table td{ padding:11px 6px; }
-  .contraction-table td.subj{ color:#332B24; font-size:1.1em; }
-  .verb-note{
-    margin-top:18px; padding:14px 16px;
-    background:var(--paper-dark); border-radius:10px;
-    font-family:'IBM Plex Sans', sans-serif; font-size:13px;
-    color:var(--ink); line-height:1.65; white-space:pre-line;
-  }
-  .verb-note:first-child{ margin-top:0; margin-bottom:18px; }
   .item{
     padding:0.55em 0.1em 0.7em;
     border-bottom:1.5px solid rgba(26,20,18,0.16);
@@ -428,14 +406,14 @@
   }
   .item:last-child{ border-bottom:none; }
   .pair{ display:flex; flex-direction:column; align-items:flex-start; gap:0.2em; }
-  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:1.05em; color:#332B24; }
+  .pair .fr{ font-family:'Fraunces', serif; font-weight:500; font-size:1.05em; color:var(--ink2); }
   .pair .en{
     font-family:'Inter', sans-serif; font-weight:600; font-size:1.05em;
     letter-spacing:0.015em;
-    color:#1A1412;
+    color:var(--ink);
     line-height:1.3;
   }
-  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:#4A4038; margin-top:0.22em; }
+  .ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:0.72em; color:var(--ink-soft); margin-top:0.22em; }
 
   .fact-block{
     padding:0.8em 0.1em 1em;
@@ -445,15 +423,15 @@
   .fact-block:last-child{ border-bottom:none; }
   .fact-date{
     font-family:'IBM Plex Mono', monospace, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji'; font-weight:700; font-size:0.92em;
-    letter-spacing:0.03em; color:#6B3A12; margin-bottom:0.25em;
+    letter-spacing:0.03em; color:var(--brown); margin-bottom:0.25em;
   }
   .fact-title{
     font-family:'Fraunces', serif; font-weight:600; font-size:1.08em;
-    color:#1A1412; line-height:1.32; margin-bottom:0.65em;
+    color:var(--ink); line-height:1.32; margin-bottom:0.65em;
   }
   .fact-summary{
     font-family:'IBM Plex Sans', sans-serif; font-size:1em; font-weight:500;
-    color:#1A1412; line-height:1.7; margin-bottom:0.9em; white-space:pre-line;
+    color:var(--ink); line-height:1.7; margin-bottom:0.9em; white-space:pre-line;
   }
 
   .flip-fact{ perspective:800px; cursor:pointer; }
@@ -481,11 +459,11 @@
   .flip-hint:active{ transform:scale(0.85); }
   .flip-hint[hidden]{ display:none; }
   .flip-hint svg{ width:18px; height:18px; }
-  .fact-question{ font-style:italic; color:#4A4038; }
+  .fact-question{ font-style:italic; color:var(--ink-soft); }
   .fact-points{ margin:0.5em 0 0.8em; padding-left:1.3em; }
   .fact-points li{
     font-family:'IBM Plex Sans', sans-serif; font-size:1em; font-weight:500;
-    color:#1A1412; line-height:1.6; margin-bottom:0.6em;
+    color:var(--ink); line-height:1.6; margin-bottom:0.6em;
   }
 
   .card-actions{
@@ -499,7 +477,7 @@
     background:linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.05)), rgba(228,221,208,0.18);
     -webkit-backdrop-filter:blur(30px) saturate(210%);
     backdrop-filter:blur(30px) saturate(210%);
-    border:1px solid rgba(255,255,255,0.4); color:#2C2523;
+    border:1px solid rgba(255,255,255,0.4); color:var(--ink);
     border-radius:14px; corner-shape:squircle; padding:9px 8px; font-family:'IBM Plex Mono', monospace;
     font-size:10.5px; font-weight:600; letter-spacing:0.02em; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
@@ -805,6 +783,292 @@
     font-weight:700;
   }
   .nav-btn.active svg{ stroke-width:2.1; }
+
+  /* =====================================================================
+     V2 : habitude quotidienne (carte du jour, série, révision, quiz,
+     profil, thèmes, premium). Tout est en variables CSS pour que les
+     thèmes de couleur n'aient qu'à redéfinir quelques valeurs.
+     ===================================================================== */
+  :root[data-theme="sauge"]{ --bg:#DDE5D6; --paper:#EAF0E4; --paper-dark:#D9E3D0; --card-border:#C6D2BD; --line:#C6D2BD; }
+  :root[data-theme="ocean"]{ --bg:#D9E3EC; --paper:#E8F0F6; --paper-dark:#D3E0EA; --card-border:#C3D2DE; --line:#C3D2DE; }
+  :root[data-theme="rose"]{ --bg:#EEDDDC; --paper:#F7ECEA; --paper-dark:#EBD6D4; --card-border:#E0C9C7; --line:#E0C9C7; }
+  :root[data-theme="sepia"]{ --bg:#E3D3B8; --paper:#EEE1CA; --paper-dark:#E4D3B5; --card-border:#D2BE9C; --line:#D2BE9C; }
+  :root[data-theme="nuit"]{
+    color-scheme:dark;
+    --bg:#1B1816; --paper:#26211E; --paper-dark:#2F2925; --card-border:#3A332E; --line:#3A332E;
+    --ink:#F0EAE1; --ink2:#D9D0C4; --ink-soft:#B3A89B; --ph:#A39888;
+    --title:#9DB8D6; --brown:#E0B27A; --gold:#D9A441;
+  }
+  :root[data-theme="nuit"] #themeToggle{ color:var(--ink); background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), rgba(255,255,255,0.08); }
+  :root[data-theme="nuit"] #themeToggle .chev{ color:var(--ink); }
+  :root[data-theme="nuit"] .theme-toggle{ color:var(--ink); }
+  :root[data-theme="nuit"] .theme-toggle .chev{ color:var(--ink); }
+  :root[data-theme="nuit"] .btn-ghost{ background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02)), rgba(255,255,255,0.06); }
+  :root[data-theme="nuit"] .nav-inner{ background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)), rgba(30,26,23,0.7); }
+  :root[data-theme="nuit"] .nav-indicator{ background:rgba(255,255,255,0.14); border-top-color:rgba(255,255,255,0.18); }
+  :root[data-theme="nuit"] .nav-btn{ color:rgba(240,234,225,0.6); }
+  :root[data-theme="nuit"] .nav-btn.active{ color:var(--ink); }
+  :root[data-theme="nuit"] .card-exit-btn{ background:rgba(255,255,255,0.08); }
+  :root[data-theme="nuit"] .btn-solid, :root[data-theme="nuit"] .draw-btn{ border-color:rgba(255,255,255,0.25); }
+
+  .scroll-view{
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin; scrollbar-color:rgba(26,20,18,0.25) transparent;
+    padding-right:4px;
+  }
+  .scroll-view::-webkit-scrollbar{ width:5px; }
+  .scroll-view::-webkit-scrollbar-thumb{ background:rgba(26,20,18,0.25); border-radius:4px; }
+  .eyebrow{ font-size:10px; letter-spacing:0.16em; color:var(--ink-soft); text-transform:uppercase; }
+  .h-title{ font-family:'Fraunces', serif; font-weight:700; font-style:italic; font-size:24px; color:var(--ink); line-height:1.15; margin:4px 0 0; }
+  .sub{ font-family:'IBM Plex Sans', sans-serif; font-size:13px; color:var(--ink-soft); line-height:1.5; }
+  .panel{
+    background:var(--paper); border:1px solid var(--card-border); border-radius:14px;
+    padding:12px 14px; flex-shrink:0;
+  }
+  .bar{ height:8px; border-radius:99px; background:var(--paper-dark); overflow:hidden; border:1px solid var(--card-border); }
+  .bar > i{ display:block; height:100%; border-radius:99px; background:var(--gold); transition:width .5s cubic-bezier(.2,.8,.3,1); }
+
+  /* ---------- AUJOURD'HUI ---------- */
+  #todayView{ gap:12px; padding-bottom:6px; }
+  .today-head{ flex-shrink:0; margin-bottom:2px; }
+  .stat-row{ display:grid; grid-template-columns:1fr 1.25fr; gap:10px; flex-shrink:0; }
+  .streak-box{ display:flex; flex-direction:column; gap:2px; }
+  .streak-num{ font-family:'Fraunces', serif; font-weight:700; font-size:30px; color:var(--ink); line-height:1; display:flex; align-items:center; gap:6px; }
+  .streak-num .fl{ font-size:24px; }
+  .streak-lbl{ font-size:11px; color:var(--ink-soft); }
+  .week{ display:flex; gap:5px; margin-top:8px; }
+  .week span{
+    width:15px; height:15px; border-radius:50%;
+    border:1.5px solid var(--card-border); background:transparent;
+    font-size:8px; display:flex; align-items:center; justify-content:center; color:var(--ink-soft);
+  }
+  .week span.on{ background:var(--gold); border-color:var(--gold); color:#fff; }
+  .week span.today{ border-color:var(--ink-soft); }
+  .goal-box{ display:flex; flex-direction:column; justify-content:space-between; gap:10px; }
+  .goal-top{ display:flex; justify-content:space-between; align-items:baseline; }
+  .goal-top b{ font-family:'Fraunces', serif; font-size:22px; color:var(--ink); }
+  .goal-top span{ font-size:11px; color:var(--ink-soft); }
+  .goal-msg{ font-size:11px; color:var(--ink-soft); line-height:1.4; }
+
+  .daily-card{
+    position:relative; overflow:hidden; text-align:left; width:100%;
+    border:none; border-radius:16px; padding:16px 16px 14px;
+    cursor:pointer; flex-shrink:0; color:#20180F;
+    box-shadow:0 8px 20px -8px rgba(20,15,10,0.28);
+    font-family:inherit;
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
+  }
+  .daily-card:active{ transform:scale(0.975); }
+  .daily-card .eyebrow{ color:rgba(32,24,15,0.62); }
+  .dc-title{ font-family:'Fraunces', serif; font-weight:700; font-style:italic; font-size:21px; line-height:1.2; margin:6px 56px 4px 0; color:#20180F; }
+  .dc-sub{ font-size:11.5px; color:rgba(32,24,15,0.66); }
+  .dc-cta{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px;
+    font-size:11px; font-weight:700; letter-spacing:0.04em; color:#F0EAE1;
+    background:rgba(32,24,15,0.82); padding:7px 13px; border-radius:99px;
+  }
+  .dc-cta.done{ background:rgba(32,24,15,0.14); color:#20180F; }
+  .dc-emoji{ position:absolute; right:12px; top:12px; font-size:40px; line-height:1; opacity:0.92; transform:rotate(-6deg); }
+  .act-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; flex-shrink:0; }
+  .act{
+    text-align:left; cursor:pointer; font-family:inherit;
+    background:var(--paper); border:1px solid var(--card-border); border-radius:14px;
+    padding:12px 14px; color:var(--ink);
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
+  }
+  .act:active{ transform:scale(0.96); }
+  .act .ic{ font-size:20px; line-height:1; }
+  .act b{ display:block; font-family:'Fraunces', serif; font-size:17px; margin-top:6px; }
+  .act span{ font-size:11px; color:var(--ink-soft); }
+  .act .pill{
+    display:inline-block; margin-left:6px; min-width:20px; padding:1px 7px; border-radius:99px; text-align:center;
+    background:var(--stamp); color:#fff; font-size:11px; font-weight:700; vertical-align:2px;
+  }
+  .level-row{ display:flex; flex-direction:column; gap:7px; }
+  .level-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:11px; color:var(--ink-soft); }
+  .level-top b{ font-family:'Fraunces', serif; font-style:italic; font-size:15px; color:var(--ink); }
+
+  /* ---------- CARTE : deviner puis révéler ---------- */
+  .guess-hint{
+    flex-shrink:0; text-align:center; margin:-4px 0 8px;
+    font-family:'IBM Plex Sans', sans-serif; font-size:12px; color:var(--ink-soft); font-style:italic;
+  }
+  .guess-hint[hidden]{ display:none; }
+  .items.concealed .item:not(.shown){ cursor:pointer; }
+  .items.concealed .item:not(.shown) .en,
+  .items.concealed .item:not(.shown) .ph{
+    filter:blur(8px); opacity:0.6; user-select:none; -webkit-user-select:none;
+  }
+  .items.concealed .fact-block.plain:not(.shown){ cursor:pointer; }
+  .items.concealed .fact-block.plain:not(.shown) .fact-summary{ filter:blur(8px); opacity:0.6; user-select:none; -webkit-user-select:none; }
+  .fact-summary{ transition:filter .3s ease, opacity .3s ease; }
+  .item .en, .item .ph{ transition:filter .3s ease, opacity .3s ease; }
+  #gradeActions{ flex-shrink:0; display:flex; gap:8px; margin-top:10px; }
+  #gradeActions[hidden]{ display:none; }
+  .btn-ko, .btn-ok{
+    flex:1; min-height:42px; border-radius:14px; corner-shape:squircle; cursor:pointer;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; letter-spacing:0.02em;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
+  }
+  .btn-ko:active, .btn-ok:active{ transform:scale(0.95); }
+  .btn-ko{ background:rgba(163,47,31,0.10); border:1.5px solid rgba(163,47,31,0.45); color:var(--stamp); }
+  .btn-ok{ background:#2F6B45; border:1.5px solid #2F6B45; color:#fff; }
+  :root[data-theme="nuit"] .btn-ko{ color:#E8826F; border-color:rgba(232,130,111,0.5); }
+  .skip-link{
+    flex-shrink:0; align-self:center; margin-top:6px; background:none; border:none; cursor:pointer;
+    font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-soft); letter-spacing:0.04em; padding:4px 10px;
+  }
+  .skip-link[hidden]{ display:none; }
+
+  /* ---------- QUIZ ---------- */
+  #quizSetupView, #resultView{ gap:12px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600;
+    padding:8px 13px; border-radius:99px; color:var(--ink);
+    background:var(--paper); border:1.5px solid var(--card-border);
+    display:inline-flex; align-items:center; gap:6px;
+    transition:transform .12s ease;
+  }
+  .chip:active{ transform:scale(0.95); }
+  .chip.on{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+  .chip.locked{ opacity:0.55; }
+  .primary-btn{
+    width:100%; cursor:pointer; flex-shrink:0;
+    background:linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)), linear-gradient(155deg, rgba(64,54,49,0.78), rgba(18,14,12,0.86));
+    color:#F0EAE1; border:1px solid rgba(255,255,255,0.3); border-radius:16px; corner-shape:squircle;
+    padding:14px 18px; font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:12.5px; letter-spacing:0.05em;
+    box-shadow:0 14px 28px -10px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.35);
+    transition:transform .15s cubic-bezier(.32,1.5,.5,1);
+  }
+  .primary-btn:active{ transform:translateY(1px) scale(0.985); }
+  .primary-btn:disabled{ opacity:0.5; cursor:default; }
+  .secondary-btn{
+    width:100%; cursor:pointer; flex-shrink:0; background:transparent; color:var(--ink);
+    border:1.5px solid var(--card-border); border-radius:16px; padding:12px 18px;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:12px; letter-spacing:0.04em;
+  }
+  #quizView{ gap:10px; }
+  .quiz-top{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .quiz-top .bar{ flex:1; }
+  .quiz-top .count{ font-size:11px; color:var(--ink-soft); min-width:38px; text-align:right; }
+  .quiz-card{
+    background:var(--paper); border:1px solid var(--card-border); border-radius:14px; padding:18px 16px;
+    flex-shrink:0; text-align:center; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  }
+  .quiz-tag{ font-size:10px; letter-spacing:0.14em; color:var(--ink-soft); text-transform:uppercase; }
+  .quiz-q{ font-family:'Fraunces', serif; font-weight:600; font-size:23px; line-height:1.25; color:var(--ink); word-break:break-word; }
+  .quiz-q.long{ font-size:18px; }
+  .quiz-ph{ font-family:'IBM Plex Sans', sans-serif; font-style:italic; font-size:13px; color:var(--ink-soft); min-height:18px; }
+  .quiz-opts{ display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+  .opt{
+    text-align:left; cursor:pointer; padding:12px 14px; border-radius:12px;
+    background:var(--paper); border:1.5px solid var(--card-border); color:var(--ink);
+    font-family:'Inter', sans-serif; font-weight:600; font-size:14.5px; line-height:1.35;
+    transition:transform .12s ease, background .2s ease, border-color .2s ease;
+  }
+  .opt:active{ transform:scale(0.985); }
+  .opt.good{ background:#DCEBDD; border-color:#2F6B45; color:#1D4A2E; }
+  .opt.bad{ background:#F3D9D4; border-color:var(--stamp); color:#7A2418; }
+  .opt.dim{ opacity:0.55; }
+  :root[data-theme="nuit"] .opt.good{ background:#1F3A28; color:#BFE3C9; }
+  :root[data-theme="nuit"] .opt.bad{ background:#432019; color:#F0B3A6; }
+  .res-emoji{ font-size:54px; text-align:center; margin-top:10px; }
+  .res-title{ font-family:'Fraunces', serif; font-style:italic; font-weight:700; font-size:26px; text-align:center; color:var(--ink); margin:0; }
+  .res-lines{ text-align:center; font-family:'IBM Plex Sans', sans-serif; font-size:14px; color:var(--ink-soft); line-height:1.7; }
+  .res-lines b{ color:var(--ink); }
+
+  /* ---------- PROFIL ---------- */
+  #profileView{ gap:12px; padding-bottom:6px; }
+  .lvl-big{ display:flex; align-items:center; gap:12px; }
+  .lvl-badge{ width:52px; height:52px; border-radius:50%; background:var(--gold); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+  .lvl-big .t{ font-family:'Fraunces', serif; font-style:italic; font-weight:700; font-size:21px; color:var(--ink); }
+  .lvl-big .x{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .stats-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; flex-shrink:0; }
+  .stat{ background:var(--paper); border:1px solid var(--card-border); border-radius:12px; padding:10px 12px; }
+  .stat b{ display:block; font-family:'Fraunces', serif; font-size:22px; color:var(--ink); }
+  .stat span{ font-size:10.5px; color:var(--ink-soft); }
+  .week-chart{ display:flex; align-items:flex-end; gap:8px; height:72px; margin-top:10px; }
+  .week-chart div{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:4px; height:100%; }
+  .week-chart i{ width:100%; max-width:26px; border-radius:6px 6px 3px 3px; background:var(--paper-dark); border:1px solid var(--card-border); min-height:4px; }
+  .week-chart i.on{ background:var(--gold); border-color:var(--gold); }
+  .week-chart span{ font-size:9px; color:var(--ink-soft); }
+  .sec-title{ font-family:'Fraunces', serif; font-weight:700; font-size:15px; color:var(--ink); margin:0 0 8px; }
+  .cat-prog{ display:flex; flex-direction:column; gap:9px; }
+  .cat-prog .r{ display:grid; grid-template-columns:1.4em 1fr auto; gap:8px; align-items:center; font-size:12px; color:var(--ink); }
+  .cat-prog .r small{ color:var(--ink-soft); font-size:10.5px; }
+  .cat-prog .bar{ height:6px; }
+  .badges{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .badge{ text-align:center; padding:10px 4px 8px; border-radius:12px; background:var(--paper); border:1px solid var(--card-border); }
+  .badge .e{ font-size:24px; line-height:1; }
+  .badge b{ display:block; font-size:10.5px; margin-top:5px; color:var(--ink); font-family:'IBM Plex Sans', sans-serif; font-weight:600; }
+  .badge small{ display:block; font-size:9px; color:var(--ink-soft); margin-top:1px; line-height:1.25; font-family:'IBM Plex Sans', sans-serif; }
+  .badge.off{ opacity:0.4; filter:grayscale(1); }
+  .swatch{ width:14px; height:14px; border-radius:50%; border:1px solid rgba(0,0,0,0.25); display:inline-block; }
+  .danger-link{ background:none; border:none; cursor:pointer; color:var(--stamp); font-family:'IBM Plex Mono', monospace; font-size:10.5px; padding:8px; align-self:center; }
+  .premium-card{
+    background:linear-gradient(150deg, #2C2523, #14100E); color:#F0EAE1; border-radius:16px; padding:14px 16px;
+    cursor:pointer; flex-shrink:0; border:1px solid rgba(255,255,255,0.12); text-align:left; width:100%; font-family:inherit;
+  }
+  .premium-card b{ font-family:'Fraunces', serif; font-style:italic; font-size:18px; display:block; }
+  .premium-card span{ font-size:11.5px; opacity:0.78; line-height:1.5; display:block; margin-top:3px; }
+
+  /* ---------- PREMIUM ---------- */
+  #paywallView{ gap:12px; padding-bottom:6px; }
+  .pw-table{ border:1px solid var(--card-border); border-radius:14px; overflow:hidden; background:var(--paper); flex-shrink:0; }
+  .pw-row{ display:grid; grid-template-columns:1fr 76px 88px; align-items:center; border-top:1px solid var(--card-border); font-size:12.5px; color:var(--ink); }
+  .pw-row:first-child{ border-top:none; }
+  .pw-row > div{ padding:11px 6px; text-align:center; font-size:12px; }
+  .pw-row > div:first-child{ text-align:left; padding-left:12px; font-family:'Fraunces', serif; font-size:13.5px; }
+  .pw-row > div:last-child{ background:var(--paper-dark); font-weight:700; }
+  .pw-row.head{ font-size:9.5px; letter-spacing:0.14em; color:var(--ink-soft); }
+  .pw-row.head > div{ padding:10px 8px; }
+  .yes{ color:#2F6B45; font-weight:700; }
+  .no{ color:var(--ink-soft); opacity:0.6; }
+  .plans{ display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+  .plan{
+    position:relative; text-align:left; cursor:pointer; font-family:inherit; width:100%;
+    background:var(--paper); border:2px solid var(--card-border); border-radius:14px; padding:12px 14px; color:var(--ink);
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .plan.on{ border-color:var(--ink); }
+  .plan .pn{ font-family:'Fraunces', serif; font-weight:700; font-size:16px; }
+  .plan .ps{ font-size:11px; color:var(--ink-soft); margin-top:2px; }
+  .plan .pp{ font-family:'Fraunces', serif; font-weight:700; font-size:18px; text-align:right; }
+  .plan .tag{
+    position:absolute; right:12px; top:-9px; background:#2F6B45; color:#fff; font-size:9.5px; font-weight:700;
+    letter-spacing:0.06em; padding:3px 9px; border-radius:99px;
+  }
+
+  /* ---------- ONBOARDING ---------- */
+  #onboarding{
+    position:fixed; inset:0; z-index:3000; background:var(--bg);
+    display:none; flex-direction:column; align-items:center; justify-content:space-between;
+    padding:max(env(safe-area-inset-top,0px),44px) 24px calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  #onboarding.showing{ display:flex; }
+  .ob-skip{ align-self:flex-end; background:none; border:none; cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); padding:6px; }
+  .ob-body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:360px; gap:14px; }
+  .ob-emoji{ font-size:64px; line-height:1; }
+  .ob-h{ font-family:'Fraunces', serif; font-style:italic; font-weight:700; font-size:28px; color:var(--ink); margin:0; line-height:1.15; }
+  .ob-p{ font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--ink-soft); line-height:1.6; margin:0; }
+  .ob-dots{ display:flex; gap:7px; margin-bottom:16px; }
+  .ob-dots i{ width:7px; height:7px; border-radius:50%; background:var(--card-border); }
+  .ob-dots i.on{ background:var(--ink); }
+  .ob-foot{ width:100%; max-width:360px; display:flex; flex-direction:column; align-items:center; }
+
+  /* ---------- TOAST ---------- */
+  #toast{
+    position:fixed; left:50%; bottom:calc(86px + env(safe-area-inset-bottom,0px)); transform:translate(-50%,12px);
+    z-index:2500; max-width:86vw; padding:10px 16px; border-radius:99px;
+    background:rgba(32,24,15,0.92); color:#F0EAE1; font-family:'IBM Plex Mono', monospace; font-size:12px; font-weight:600;
+    opacity:0; pointer-events:none; transition:opacity .22s ease, transform .22s ease; text-align:center;
+  }
+  #toast.show{ opacity:1; transform:translate(-50%,0); }
+  .scroll-view > *{ flex-shrink:0; }
+  .scroll-view{ padding-bottom:20px; }
+  .nav-btn{ font-size:8px; }
 </style>
 </head>
 <body>
@@ -834,6 +1098,7 @@
         <div class="card-title-wrap">
           <span class="card-title" id="cardTitle">Titre</span>
         </div>
+        <div class="guess-hint" id="guessHint" hidden>Devine d'abord, puis touche pour révéler.</div>
         <div class="items-outer">
           <div class="items" id="itemsWrap"></div>
           <div class="scroll-hint" id="scrollHint">
@@ -847,11 +1112,16 @@
           <button class="btn-ghost" id="prevBtn">◂ Précédent</button>
           <button class="btn-solid" id="anotherBtn">Autre carte</button>
         </div>
+        <div id="gradeActions" hidden>
+          <button class="btn-ko" id="koBtn">↺ À revoir</button>
+          <button class="btn-ok" id="okBtn">✓ Je savais</button>
+        </div>
+        <button class="skip-link" id="skipBtn" hidden>Passer ▸</button>
       </div>
     </div>
 
     <!-- CATEGORIES -->
-    <div class="view showing" id="categoriesView">
+    <div class="view" id="categoriesView">
       <p class="category-lead">Choisis une catégorie</p>
       <div class="grid-list" id="categoryGrid"></div>
       <button class="theme-toggle" id="globalDrawBtn">
@@ -932,6 +1202,44 @@
       <div class="fav-list" id="favCardList"></div>
     </div>
 
+    <!-- TODAY -->
+    <div class="view scroll-view showing" id="todayView"></div>
+
+    <!-- QUIZ : choix -->
+    <div class="view scroll-view" id="quizSetupView">
+      <button class="back-link" id="quizSetupBack">◂ Aujourd'hui</button>
+      <div><div class="eyebrow">QUIZ</div><h1 class="h-title">Teste-toi</h1></div>
+      <p class="sub">10 questions à choix multiple, tirées des mots de l'app. Une erreur remet le mot dans ta révision.</p>
+      <div class="eyebrow">Langue</div>
+      <div class="chips" id="quizChips"></div>
+      <button class="primary-btn" id="quizStartBtn">LANCER LE QUIZ</button>
+    </div>
+
+    <!-- QUIZ : questions -->
+    <div class="view" id="quizView">
+      <div class="quiz-top">
+        <button class="card-exit-btn" id="quizExit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="bar"><i id="quizBar" style="width:0%"></i></div>
+        <div class="count" id="quizCount">1/10</div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-tag" id="quizTag"></div>
+        <div class="quiz-q" id="quizQ"></div>
+        <div class="quiz-ph" id="quizPh"></div>
+      </div>
+      <div class="quiz-opts" id="quizOpts"></div>
+      <button class="primary-btn" id="quizNext" hidden>SUIVANT ▸</button>
+    </div>
+
+    <!-- RÉSULTAT (quiz / révision) -->
+    <div class="view scroll-view" id="resultView"></div>
+
+    <!-- PROFIL -->
+    <div class="view scroll-view" id="profileView"></div>
+
+    <!-- PREMIUM -->
+    <div class="view scroll-view" id="paywallView"></div>
+
   </div>
 
 </div>
@@ -939,7 +1247,11 @@
 <div class="bottomnav">
   <div class="nav-inner">
     <div class="nav-indicator" id="navIndicator"></div>
-    <button class="nav-btn active" data-tab="categories">
+    <button class="nav-btn active" data-tab="today">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      Aujourd'hui
+    </button>
+    <button class="nav-btn" data-tab="categories">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Catégories
     </button>
@@ -947,8 +1259,15 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8-5.1-4.7 6.9-.8L12 2z"/></svg>
       <span id="favLabel">Favoris</span>
     </button>
+    <button class="nav-btn" data-tab="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>
+      Profil
+    </button>
   </div>
 </div>
+
+<div id="onboarding"></div>
+<div id="toast"></div>
 
 <script>
 const DECK = [
@@ -1516,192 +1835,6 @@ const DECK = [
     ["Ami / pote (UK informel)","Mate","méite"],
     ["Génial ! (UK)","Brilliant!","bri-lieunte"]
   ]},
-  { id:"verb-be", cat:"To Be — Être", type:"conjugation", rows:[
-    {s:"I", pr:"am", ps:"was", pc:"was being", fu:"will be"},
-    {s:"You", pr:"are", ps:"were", pc:"were being", fu:"will be"},
-    {s:"He / She", pr:"is", ps:"was", pc:"was being", fu:"will be"},
-    {s:"We", pr:"are", ps:"were", pc:"were being", fu:"will be"},
-    {s:"They", pr:"are", ps:"were", pc:"were being", fu:"will be"}
-  ], note:"TO BE sert aussi d'auxiliaire pour le présent continu (I am eating). Il décrit un état permanent (I am French) ou temporaire (I am tired).\n\nContrairement au français, on ne dit jamais 'j'ai' pour l'âge : 'I am 25' (pas 'I have 25')."},
-  { id:"verb-have", cat:"To Have — Avoir", type:"conjugation", rows:[
-    {s:"I", pr:"have", ps:"had", pc:"was having", fu:"will have"},
-    {s:"You", pr:"have", ps:"had", pc:"were having", fu:"will have"},
-    {s:"He / She", pr:"has", ps:"had", pc:"was having", fu:"will have"},
-    {s:"We", pr:"have", ps:"had", pc:"were having", fu:"will have"},
-    {s:"They", pr:"have", ps:"had", pc:"were having", fu:"will have"}
-  ], note:"HAVE sert aussi d'auxiliaire pour le Present Perfect (I have eaten). En anglais britannique, on dit souvent HAVE GOT pour la possession : 'I've got a car' = 'I have a car', même sens, juste plus courant à l'oral au Royaume-Uni."},
-  { id:"verb-do", cat:"To Do / Make — Faire", type:"conjugation", rows:[
-    {s:"I", pr:"do / make", ps:"did / made", pc:"was doing", fu:"will do"},
-    {s:"You", pr:"do / make", ps:"did / made", pc:"were doing", fu:"will do"},
-    {s:"He / She", pr:"does / makes", ps:"did / made", pc:"was doing", fu:"will do"},
-    {s:"We", pr:"do / make", ps:"did / made", pc:"were doing", fu:"will do"},
-    {s:"They", pr:"do / make", ps:"did / made", pc:"were doing", fu:"will do"}
-  ], note:"DO = une action, une activité, une obligation générale (do homework, do the dishes, do a favor). MAKE = créer ou fabriquer quelque chose de concret (make a cake, make a decision, make a mistake). Astuce : DO pour ce qu'on accomplit, MAKE pour ce qu'on produit."},
-  { id:"verb-go", cat:"To Go — Aller", type:"conjugation", rows:[
-    {s:"I", pr:"go", ps:"went", pc:"was going", fu:"will go"},
-    {s:"You", pr:"go", ps:"went", pc:"were going", fu:"will go"},
-    {s:"He / She", pr:"goes", ps:"went", pc:"was going", fu:"will go"},
-    {s:"We", pr:"go", ps:"went", pc:"were going", fu:"will go"},
-    {s:"They", pr:"go", ps:"went", pc:"were going", fu:"will go"}
-  ], note:"GO + -ING pour les activités et loisirs (go swimming, go shopping, go hiking). GO TO + lieu pour une destination précise (go to school, go to the cinema). Piège fréquent : jamais 'go to swimming'."},
-  { id:"contractions1", cat:"Contractions — Be / Have (1/3)", type:"contractions", rows:[
-    {full:"I am", short:"I'm"}, {full:"You are", short:"You're"},
-    {full:"He is", short:"He's"}, {full:"She is", short:"She's"},
-    {full:"It is", short:"It's"}, {full:"That is", short:"That's"},
-    {full:"I have", short:"I've"}, {full:"You have", short:"You've"}
-  ], note:"Les contractions sont OBLIGATOIRES dans la langue naturelle.\n\n'I am' sonne formel ou robotique : 'I'm' est la norme, à l'écrit comme à l'oral."},
-  { id:"contractions2", cat:"Contractions — Be / Have (2/3)", type:"contractions", rows:[
-    {full:"We are", short:"We're"}, {full:"They are", short:"They're"},
-    {full:"He has", short:"He's"}, {full:"She has", short:"She's"},
-    {full:"We have", short:"We've"}, {full:"They have", short:"They've"},
-    {full:"I would", short:"I'd"}, {full:"I will", short:"I'll"}
-  ]},
-  { id:"contractions3", cat:"Contractions — Négations (3/3)", type:"contractions", rows:[
-    {full:"do not", short:"don't"}, {full:"does not", short:"doesn't"},
-    {full:"did not", short:"didn't"}, {full:"will not", short:"won't"},
-    {full:"cannot", short:"can't"}, {full:"is not", short:"isn't"},
-    {full:"are not", short:"aren't"}, {full:"could not", short:"couldn't"}
-  ], note:"'He's' peut vouloir dire 'He is' OU 'He has' selon le contexte : 'He's tired' (is) mais 'He's finished' (has). Le verbe qui suit indique lequel."},
-  { id:"verb2-come", cat:"To Come — Venir", type:"conjugation", rows:[
-    {s:"I", pr:"come", ps:"came", pc:"was coming", fu:"will come"},
-    {s:"You", pr:"come", ps:"came", pc:"were coming", fu:"will come"},
-    {s:"He / She", pr:"comes", ps:"came", pc:"was coming", fu:"will come"},
-    {s:"We", pr:"come", ps:"came", pc:"were coming", fu:"will come"},
-    {s:"They", pr:"come", ps:"came", pc:"were coming", fu:"will come"}
-  ], note:"COME = venir, se déplacer vers la personne qui parle ou vers le lieu dont on parle (Come here! / She's coming to my party). GO = aller, se déplacer loin du locuteur (I'm going to Paris). Le sens dépend du point de vue : si tu invites quelqu'un chez toi, il 'comes', pas 'goes'."},
-  { id:"verb2-stay", cat:"To Stay — Rester", type:"conjugation", rows:[
-    {s:"I", pr:"stay", ps:"stayed", pc:"was staying", fu:"will stay"},
-    {s:"You", pr:"stay", ps:"stayed", pc:"were staying", fu:"will stay"},
-    {s:"He / She", pr:"stays", ps:"stayed", pc:"was staying", fu:"will stay"},
-    {s:"We", pr:"stay", ps:"stayed", pc:"were staying", fu:"will stay"},
-    {s:"They", pr:"stay", ps:"stayed", pc:"were staying", fu:"will stay"}
-  ], note:"STAY se construit avec des prépositions précises : stay AT a hotel, stay IN a city/country, stay WITH friends (chez quelqu'un). 'Stay at home' est l'expression figée pour 'rester à la maison'."},
-  { id:"verb2-eat", cat:"To Eat — Manger", type:"conjugation", rows:[
-    {s:"I", pr:"eat", ps:"ate", pc:"was eating", fu:"will eat"},
-    {s:"You", pr:"eat", ps:"ate", pc:"were eating", fu:"will eat"},
-    {s:"He / She", pr:"eats", ps:"ate", pc:"was eating", fu:"will eat"},
-    {s:"We", pr:"eat", ps:"ate", pc:"were eating", fu:"will eat"},
-    {s:"They", pr:"eat", ps:"ate", pc:"were eating", fu:"will eat"}
-  ], note:"Attention à la prononciation du passé : 'ate' se dit [eyt] en anglais américain et [et] en anglais britannique.\n\nLes deux sont corrects, mais tu entendras l'un ou l'autre selon l'interlocuteur."},
-  { id:"verb2-drink", cat:"To Drink — Boire", type:"conjugation", rows:[
-    {s:"I", pr:"drink", ps:"drank", pc:"was drinking", fu:"will drink"},
-    {s:"You", pr:"drink", ps:"drank", pc:"were drinking", fu:"will drink"},
-    {s:"He / She", pr:"drinks", ps:"drank", pc:"was drinking", fu:"will drink"},
-    {s:"We", pr:"drink", ps:"drank", pc:"were drinking", fu:"will drink"},
-    {s:"They", pr:"drink", ps:"drank", pc:"were drinking", fu:"will drink"}
-  ]},
-  { id:"verb2-sleep", cat:"To Sleep — Dormir", type:"conjugation", rows:[
-    {s:"I", pr:"sleep", ps:"slept", pc:"was sleeping", fu:"will sleep"},
-    {s:"You", pr:"sleep", ps:"slept", pc:"were sleeping", fu:"will sleep"},
-    {s:"He / She", pr:"sleeps", ps:"slept", pc:"was sleeping", fu:"will sleep"},
-    {s:"We", pr:"sleep", ps:"slept", pc:"were sleeping", fu:"will sleep"},
-    {s:"They", pr:"sleep", ps:"slept", pc:"were sleeping", fu:"will sleep"}
-  ], note:"SLEEP décrit l'état de dormir. Pour l'action de s'endormir/aller se coucher, on utilise plutôt 'go to sleep' ou 'fall asleep' (s'endormir soudainement) : 'I fell asleep on the sofa.'"},
-  { id:"verb2-understand", cat:"To Understand — Comprendre", type:"conjugation", rows:[
-    {s:"I", pr:"understand", ps:"understood", pc:"was understanding", fu:"will understand"},
-    {s:"You", pr:"understand", ps:"understood", pc:"were understanding", fu:"will understand"},
-    {s:"He / She", pr:"understands", ps:"understood", pc:"was understanding", fu:"will understand"},
-    {s:"We", pr:"understand", ps:"understood", pc:"were understanding", fu:"will understand"},
-    {s:"They", pr:"understand", ps:"understood", pc:"were understanding", fu:"will understand"}
-  ], note:"UNDERSTAND décrit un état (comprendre), pas vraiment une action en train de se faire.\n\nOn l'utilise donc très rarement au continu ('was understanding' sonne bizarre) : préfère simplement 'I understand' ou 'I understood'."},
-  { id:"verb2-leave", cat:"To Leave — Partir / Quitter", type:"conjugation", rows:[
-    {s:"I", pr:"leave", ps:"left", pc:"was leaving", fu:"will leave"},
-    {s:"You", pr:"leave", ps:"left", pc:"were leaving", fu:"will leave"},
-    {s:"He / She", pr:"leaves", ps:"left", pc:"was leaving", fu:"will leave"},
-    {s:"We", pr:"leave", ps:"left", pc:"were leaving", fu:"will leave"},
-    {s:"They", pr:"leave", ps:"left", pc:"were leaving", fu:"will leave"}
-  ], note:"LEAVE = partir ou quitter un lieu/une personne (I leave at 8am / She left him). Ne pas confondre avec LET = laisser faire, autoriser (Let me help you). Les deux se traduisent parfois par 'laisser' en français, mais le sens est très différent."},
-  { id:"verb2-buy", cat:"To Buy — Acheter", type:"conjugation", rows:[
-    {s:"I", pr:"buy", ps:"bought", pc:"was buying", fu:"will buy"},
-    {s:"You", pr:"buy", ps:"bought", pc:"were buying", fu:"will buy"},
-    {s:"He / She", pr:"buys", ps:"bought", pc:"was buying", fu:"will buy"},
-    {s:"We", pr:"buy", ps:"bought", pc:"were buying", fu:"will buy"},
-    {s:"They", pr:"buy", ps:"bought", pc:"were buying", fu:"will buy"}
-  ]},
-  { id:"verb2-see", cat:"To See — Voir", type:"conjugation", rows:[
-    {s:"I", pr:"see", ps:"saw", pc:"was seeing", fu:"will see"},
-    {s:"You", pr:"see", ps:"saw", pc:"were seeing", fu:"will see"},
-    {s:"He / She", pr:"sees", ps:"saw", pc:"was seeing", fu:"will see"},
-    {s:"We", pr:"see", ps:"saw", pc:"were seeing", fu:"will see"},
-    {s:"They", pr:"see", ps:"saw", pc:"were seeing", fu:"will see"}
-  ], note:"Trois verbes à ne pas confondre : SEE = voir sans effort particulier (I see a bird in the sky). WATCH = regarder quelque chose qui bouge, avec attention et sur la durée (watch a movie, watch TV). LOOK (AT) = regarder volontairement, diriger son regard (Look at this photo!)."},
-  { id:"verb2-give", cat:"To Give — Donner", type:"conjugation", rows:[
-    {s:"I", pr:"give", ps:"gave", pc:"was giving", fu:"will give"},
-    {s:"You", pr:"give", ps:"gave", pc:"were giving", fu:"will give"},
-    {s:"He / She", pr:"gives", ps:"gave", pc:"was giving", fu:"will give"},
-    {s:"We", pr:"give", ps:"gave", pc:"were giving", fu:"will give"},
-    {s:"They", pr:"give", ps:"gave", pc:"were giving", fu:"will give"}
-  ]},
-  { id:"verb2-take", cat:"To Take — Prendre", type:"conjugation", rows:[
-    {s:"I", pr:"take", ps:"took", pc:"was taking", fu:"will take"},
-    {s:"You", pr:"take", ps:"took", pc:"were taking", fu:"will take"},
-    {s:"He / She", pr:"takes", ps:"took", pc:"was taking", fu:"will take"},
-    {s:"We", pr:"take", ps:"took", pc:"were taking", fu:"will take"},
-    {s:"They", pr:"take", ps:"took", pc:"were taking", fu:"will take"}
-  ], note:"TAKE = emporter quelque chose loin d'ici, ou prendre un moyen de transport (Take an umbrella! / Take the bus). BRING = apporter quelque chose vers le lieu où on se trouve ou où on va (Bring a gift when you come to the party). Le point de vue (d'où vers où) change le verbe, comme pour come/go."},
-  { id:"verb2-find", cat:"To Find — Trouver", type:"conjugation", rows:[
-    {s:"I", pr:"find", ps:"found", pc:"was finding", fu:"will find"},
-    {s:"You", pr:"find", ps:"found", pc:"were finding", fu:"will find"},
-    {s:"He / She", pr:"finds", ps:"found", pc:"was finding", fu:"will find"},
-    {s:"We", pr:"find", ps:"found", pc:"were finding", fu:"will find"},
-    {s:"They", pr:"find", ps:"found", pc:"were finding", fu:"will find"}
-  ]},
-  { id:"irregular1", cat:"Passé irrégulier (1/4)", type:"irregular", rows:[
-    {inf:"be", past:"was / were", part:"been"},
-    {inf:"go", past:"went", part:"gone"},
-    {inf:"do", past:"did", part:"done"},
-    {inf:"have", past:"had", part:"had"},
-    {inf:"come", past:"came", part:"come"},
-    {inf:"say", past:"said", part:"said"},
-    {inf:"get", past:"got", part:"got / gotten"},
-    {inf:"make", past:"made", part:"made"},
-    {inf:"know", past:"knew", part:"known"},
-    {inf:"think", past:"thought", part:"thought"},
-    {inf:"take", past:"took", part:"taken"},
-    {inf:"see", past:"saw", part:"seen"}
-  ], note:"Rappel : sujet + PAST SIMPLE pour raconter (I went).\n\nPour les questions et les négations : DID + verbe de base. 'Did you go?' / 'I didn't go' (jamais 'Did you went')."},
-  { id:"irregular2", cat:"Passé irrégulier (2/4)", type:"irregular", rows:[
-    {inf:"give", past:"gave", part:"given"},
-    {inf:"find", past:"found", part:"found"},
-    {inf:"tell", past:"told", part:"told"},
-    {inf:"write", past:"wrote", part:"written"},
-    {inf:"eat", past:"ate", part:"eaten"},
-    {inf:"drink", past:"drank", part:"drunk"},
-    {inf:"sleep", past:"slept", part:"slept"},
-    {inf:"buy", past:"bought", part:"bought"},
-    {inf:"bring", past:"brought", part:"brought"},
-    {inf:"put", past:"put", part:"put"},
-    {inf:"read", past:"read", part:"read"},
-    {inf:"run", past:"ran", part:"run"}
-  ], note:"Astuce pour repérer les verbes réguliers vs irréguliers : si le passé se forme en ajoutant -ED (comme walk → walked), c'est régulier. Tous les verbes de cette liste sont irréguliers : leur forme au passé ne suit pas cette règle et doit se retenir par cœur."},
-  { id:"irregular3", cat:"Passé irrégulier (3/4)", type:"irregular", rows:[
-    {inf:"win", past:"won", part:"won"},
-    {inf:"lose", past:"lost", part:"lost"},
-    {inf:"meet", past:"met", part:"met"},
-    {inf:"leave", past:"left", part:"left"},
-    {inf:"speak", past:"spoke", part:"spoken"},
-    {inf:"stand", past:"stood", part:"stood"},
-    {inf:"understand", past:"understood", part:"understood"},
-    {inf:"send", past:"sent", part:"sent"},
-    {inf:"spend", past:"spent", part:"spent"},
-    {inf:"hold", past:"held", part:"held"},
-    {inf:"build", past:"built", part:"built"},
-    {inf:"drive", past:"drove", part:"driven"}
-  ]},
-  { id:"irregular4", cat:"Passé irrégulier (4/4)", type:"irregular", rows:[
-    {inf:"fly", past:"flew", part:"flown"},
-    {inf:"grow", past:"grew", part:"grown"},
-    {inf:"fall", past:"fell", part:"fallen"},
-    {inf:"keep", past:"kept", part:"kept"},
-    {inf:"cut", past:"cut", part:"cut"},
-    {inf:"sit", past:"sat", part:"sat"},
-    {inf:"hit", past:"hit", part:"hit"},
-    {inf:"begin", past:"began", part:"begun"},
-    {inf:"choose", past:"chose", part:"chosen"},
-    {inf:"forget", past:"forgot", part:"forgotten"},
-    {inf:"wear", past:"wore", part:"worn"},
-    {inf:"wake", past:"woke", part:"woken"}
-  ], note:"Le participe passé (3e colonne) s'utilise avec HAVE pour le Present Perfect (I have eaten, She has gone).\n\nIl ne s'utilise jamais seul pour raconter une action passée simple : pour ça, c'est la 2e colonne (Past Simple) qu'il faut, 'I ate' et non 'I have ate'."}
 ];
 
 const FAMILIES = [
@@ -1743,11 +1876,7 @@ const FAMILIES = [
   { id:"courses", label:"Faire les courses", cardIds:["courses1"] },
   { id:"allergies", label:"Allergies et régimes", cardIds:["allergies1"] },
   { id:"cultureuk", label:"Café et culture britannique", cardIds:["cultureuk1"] },
-  { id:"verbes", label:"Verbes piliers", cardIds:["verb-be","verb-have","verb-do","verb-go"] },
-  { id:"contractions", label:"Contractions", cardIds:["contractions1","contractions2","contractions3"] },
-  { id:"verbes2", label:"Verbes utiles (groupe 2)", cardIds:["verb2-come","verb2-stay","verb2-eat","verb2-drink","verb2-sleep","verb2-understand","verb2-leave","verb2-buy","verb2-see","verb2-give","verb2-take","verb2-find"] },
-  { id:"irreguliers", label:"Passé irrégulier", cardIds:["irregular1","irregular2","irregular3","irregular4"] }
-];
+        ];
 
 /* Style visuel (couleur + emoji) par thème — façon tuiles de quiz. */
 const THEME_STYLE = {
@@ -1770,10 +1899,6 @@ const THEME_STYLE = {
   loisirs:{bg:"#F4C9A8", emoji:"🎯"}, politesse:{bg:"#F4B8C8", emoji:"🙏"},
   logement:{bg:"#F7D488", emoji:"🔑"}, courses:{bg:"#BFE3A0", emoji:"🛒"},
   allergies:{bg:"#A8DCE8", emoji:"🥗"}, cultureuk:{bg:"#D8B4E8", emoji:"☕"},
-  verbes:{bg:"#F4A0A0", emoji:"🔤"},
-  contractions:{bg:"#D8B4E8", emoji:"✂️"},
-  verbes2:{bg:"#F5B971", emoji:"🧩"},
-  irreguliers:{bg:"#BFE3A0", emoji:"🌀"}
 };
 
 /* ---------- LUXEMBOURGEOIS ----------
@@ -1841,24 +1966,24 @@ const DECK_LUX = [
     ["C'est midi","Et ass Mëtteg","èt ass meuteuch"],["C'est minuit","Et ass Hallefnuecht","èt ass halleuf-nouecht"],
     ["Aujourd'hui","haut","haot"],["Hier","gëschter","gueshteur"],["Demain","muer","mouer"]
   ]},
-  { id:"lux-genre1", cat:"Le genre des noms (den...) 1/2", items:[
+  { id:"lux-genre1", cat:"Mots du quotidien (1/2)", items:[
     ["La pomme","den Apel","de'n apeul"],["Le gendre","den Edem","de'n édeum"],["L'âne","den Iesel","de'n ïezeul"],
     ["Le boeuf","den Ochs","de'n oksse"],["Le pommier","den Äppelbam","de'n éppeulbam"],["L'oeuf","den Ëe","de'n eue"],
     ["L'ouvre-boîte","den Öffner","de'n eufneur"],["Le fourneau","den Uewen","de'n ouéveun"],
     ["La table","den Dësch","de'n deush"],["Le tiroir","den Tirang","de'n tirangue"],
     ["Le sucre","den Zocker","de'n tsoka"],["Le chien","den Hond","de'n honnt"]
-  ], note:"Ces noms utilisent tous l'article DEN, quel que soit leur genre réel en français. C'est ce qu'on appelle la 'règle de l'Eiffel'.\n\nDEN apparaît devant les mots commençant par une voyelle ou par D/T/Z/H/N. Devant les autres consonnes, on utilise DE (voir la carte suivante)."},
-  { id:"lux-genre2", cat:"Le genre des noms (de...) 2/2", items:[
+  ]},
+  { id:"lux-genre2", cat:"Mots du quotidien (2/2)", items:[
     ["Le poirier","de Birebam","deu bireubam"],["Le coiffeur","de Coiffeur","deu koaffeur"],
     ["Le forain","de Fouermann","deu fouermann"],["Le kilo","de Kilo","deu kilo"],
     ["L'homme","de Mann","deu mann"],["Le père","de Papp","deu papp"],
     ["Le fromage blanc","de Quark","deu kwark"],["Le dimanche","de Sonndeg","deu sonndeuch"],
     ["L'association","de Veräin","deu véraïn"],["Le vin","de Wäin","deu vaïn"]
-  ], note:"DE apparaît devant les mots qui commencent par une consonne autre que D/T/Z/H/N (ici B, C, F, K, M, P, Q, S, V, W).\n\nC'est un phénomène purement phonétique, pas une histoire de genre grammatical. 'de Mann' (l'homme) et 'de Papp' (le père) sont bien masculins, mais suivent la même règle sonore que les autres."},
+  ]},
   { id:"lux-deplacer1", cat:"Se déplacer : aller, venir", items:[
     ["Aller à pied","goen","goueun"],["Se déplacer motorisé","fueren","foueureun"],
     ["Aller à cheval","reiden","raïdeun"],["Prendre l'avion","fléien","fléieun"]
-  ], note:"Le luxembourgeois distingue le moyen de transport dès le verbe : GOEN pour marcher, FUEREN pour un véhicule à moteur, REIDEN à cheval, FLÉIEN en avion.\n\nLà où le français utilise souvent juste 'aller' + le moyen."}
+  ]}
 ];
 
 const FAMILIES_LUX = [
@@ -1869,7 +1994,7 @@ const FAMILIES_LUX = [
   { id:"lux-mois", label:"Mois", cardIds:["lux-mois1","lux-mois2"] },
   { id:"lux-jours", label:"Jours et saisons", cardIds:["lux-jours1"] },
   { id:"lux-heure", label:"L'heure et le temps", cardIds:["lux-heure1"] },
-  { id:"lux-genre", label:"Le genre des noms", cardIds:["lux-genre1","lux-genre2"] },
+  { id:"lux-genre", label:"Mots du quotidien", cardIds:["lux-genre1","lux-genre2"] },
   { id:"lux-deplacer", label:"Se déplacer", cardIds:["lux-deplacer1"] }
 ];
 
@@ -1913,7 +2038,7 @@ const DECK_ITALIEN = [
     ["soixante-huit","sessantotto","sè-san-tot-to"],["quatre-vingt-un","ottantuno","ot-tan-tou-no"],
     ["cent un","centouno","tchèn-to-ou-no"],["deux cents","duecento","dou-é-tchèn-to"],
     ["deux mille","duemila","dou-é-mi-la"]
-  ], note:"La règle : dizaine + unité collés en un seul mot, et la voyelle finale de la dizaine tombe devant UNO et OTTO. Ventuno (pas ventiuno), ventotto (pas ventiotto). Au-delà de cent, CENTO ne prend pas d'article : centouno, non 'il centouno'."},
+  ]},
   { id:"it-indispensables", cat:"Les indispensables", items:[
     ["Oui","Sì","si"],["Non","No","no"],["S'il vous plaît","Per favore","pèr fa-vo-ré"],
     ["Merci","Grazie","grat-tsi-é"],["De rien / Je vous en prie","Prego","prè-go"],
@@ -1951,7 +2076,7 @@ const DECK_ITALIEN = [
     ["Sans gluten, s'il vous plaît","Senza glutine, per favore","sèn-tsa glou-ti-né"],
     ["C'est délicieux !","È buonissimo!","è bouo-nis-si-mo"],
     ["On paie séparément","Paghiamo separatamente","pa-gya-mo sé-pa-ra-ta-mèn-té"]
-  ], note:"'Al banco' (au comptoir) coûte souvent moitié moins cher que 'al tavolo' (en salle) — surtout pour un simple café. Et cappuccino jamais après 11h pour un vrai Italien !"},
+  ]},
   { id:"it-hotel", cat:"À l'hôtel", items:[
     ["J'ai une réservation","Ho una prenotazione","o ou-na pré-no-ta-tsio-né"],
     ["La clim ne marche pas","L'aria condizionata non funziona","la-ria con-di-tsio-na-ta non foun-tsio-na"],
@@ -1969,7 +2094,7 @@ const DECK_ITALIEN = [
     ["On m'a volé mon portefeuille","Mi hanno rubato il portafoglio","mi an-no rou-ba-to il por-ta-fo-lyo"],
     ["J'ai mal à la gorge","Ho mal di gola","o mal di go-la"],
     ["Je ne me sens pas bien","Non mi sento bene","non mi sèn-to bé-né"]
-  ], note:"En Italie, le 118 est le numéro d'urgence médicale dédié (le 112 européen fonctionne aussi partout)."},
+  ]},
   { id:"it-idiomes", cat:"Expressions idiomatiques", items:[
     ["C'est à toi de voir","Fai come vuoi","fa-i co-mé vouoï"],
     ["Pas de problème","Non c'è problema","non tché pro-blè-ma"],
@@ -1981,67 +2106,13 @@ const DECK_ITALIEN = [
     ["Allez ! / Courage !","Dai!","da-i"],
     ["Si seulement !","Magari!","ma-ga-ri"],
     ["Bonne idée !","Ottima idea!","ot-ti-ma i-dé-a"]
-  ], note:"'Dai!' est LE mot universel italien : encouragement, impatience, incrédulité, accord — tout dépend du ton !"},
-  { id:"it-verb-essere", cat:"Essere — Être", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"sono", ps:"sono stato/a", pc:"ero", fu:"sarò"},
-    {s:"Tu", pr:"sei", ps:"sei stato/a", pc:"eri", fu:"sarai"},
-    {s:"Lui/Lei", pr:"è", ps:"è stato/a", pc:"era", fu:"sarà"},
-    {s:"Noi", pr:"siamo", ps:"siamo stati/e", pc:"eravamo", fu:"saremo"},
-    {s:"Voi", pr:"siete", ps:"siete stati/e", pc:"eravate", fu:"sarete"},
-    {s:"Loro", pr:"sono", ps:"sono stati/e", pc:"erano", fu:"saranno"}
-  ], note:"ESSERE forme son propre passé composé avec lui-même comme auxiliaire (sono stato/a), et le participe s'accorde en genre et en nombre avec le sujet — contrairement au français avec 'être'."},
-  { id:"it-verb-avere", cat:"Avere — Avoir", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"ho", ps:"ho avuto", pc:"avevo", fu:"avrò"},
-    {s:"Tu", pr:"hai", ps:"hai avuto", pc:"avevi", fu:"avrai"},
-    {s:"Lui/Lei", pr:"ha", ps:"ha avuto", pc:"aveva", fu:"avrà"},
-    {s:"Noi", pr:"abbiamo", ps:"abbiamo avuto", pc:"avevamo", fu:"avremo"},
-    {s:"Voi", pr:"avete", ps:"avete avuto", pc:"avevate", fu:"avrete"},
-    {s:"Loro", pr:"hanno", ps:"hanno avuto", pc:"avevano", fu:"avranno"}
-  ], note:"AVERE sert d'auxiliaire pour la plupart des verbes italiens au passé composé (ho mangiato, ho visto...). Comme en français, on l'utilise aussi pour l'âge : 'Ho 25 anni' = 'J'ai 25 ans'."},
-  { id:"it-verb-andare", cat:"Andare — Aller", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"vado", ps:"sono andato/a", pc:"andavo", fu:"andrò"},
-    {s:"Tu", pr:"vai", ps:"sei andato/a", pc:"andavi", fu:"andrai"},
-    {s:"Lui/Lei", pr:"va", ps:"è andato/a", pc:"andava", fu:"andrà"},
-    {s:"Noi", pr:"andiamo", ps:"siamo andati/e", pc:"andavamo", fu:"andremo"},
-    {s:"Voi", pr:"andate", ps:"siete andati/e", pc:"andavate", fu:"andrete"},
-    {s:"Loro", pr:"vanno", ps:"sono andati/e", pc:"andavano", fu:"andranno"}
-  ], note:"ANDARE est un verbe de mouvement : il prend ESSERE comme auxiliaire au passé composé, pas AVERE. C'est pour ça qu'on dit 'sono andato' (littéralement 'je suis allé') et non 'ho andato'."},
-  { id:"it-verb-fare", cat:"Fare — Faire", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"faccio", ps:"ho fatto", pc:"facevo", fu:"farò"},
-    {s:"Tu", pr:"fai", ps:"hai fatto", pc:"facevi", fu:"farai"},
-    {s:"Lui/Lei", pr:"fa", ps:"ha fatto", pc:"faceva", fu:"farà"},
-    {s:"Noi", pr:"facciamo", ps:"abbiamo fatto", pc:"facevamo", fu:"faremo"},
-    {s:"Voi", pr:"fate", ps:"avete fatto", pc:"facevate", fu:"farete"},
-    {s:"Loro", pr:"fanno", ps:"hanno fatto", pc:"facevano", fu:"faranno"}
-  ], note:"FARE est irrégulier au présent (faccio, non 'faro') mais très régulier ailleurs. Il sert dans énormément d'expressions : fare una domanda (poser une question), fare shopping, fare sport."},
-  { id:"it-verb-potere", cat:"Potere — Pouvoir", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"posso", ps:"ho potuto", pc:"potevo", fu:"potrò"},
-    {s:"Tu", pr:"puoi", ps:"hai potuto", pc:"potevi", fu:"potrai"},
-    {s:"Lui/Lei", pr:"può", ps:"ha potuto", pc:"poteva", fu:"potrà"},
-    {s:"Noi", pr:"possiamo", ps:"abbiamo potuto", pc:"potevamo", fu:"potremo"},
-    {s:"Voi", pr:"potete", ps:"avete potuto", pc:"potevate", fu:"potrete"},
-    {s:"Loro", pr:"possono", ps:"hanno potuto", pc:"potevano", fu:"potranno"}
-  ], note:"Au conditionnel, POTERE devient 'potrei' (je pourrais) — bien plus poli que 'posso' pour demander un service : 'Potrei avere un caffè?' plutôt que 'Posso avere...'"},
-  { id:"it-verb-volere", cat:"Volere — Vouloir", type:"conjugation",
-    headers:["Presente","Passato Composto","Imperfetto","Futuro"], rows:[
-    {s:"Io", pr:"voglio", ps:"ho voluto", pc:"volevo", fu:"vorrò"},
-    {s:"Tu", pr:"vuoi", ps:"hai voluto", pc:"volevi", fu:"vorrai"},
-    {s:"Lui/Lei", pr:"vuole", ps:"ha voluto", pc:"voleva", fu:"vorrà"},
-    {s:"Noi", pr:"vogliamo", ps:"abbiamo voluto", pc:"volevamo", fu:"vorremo"},
-    {s:"Voi", pr:"volete", ps:"avete voluto", pc:"volevate", fu:"vorrete"},
-    {s:"Loro", pr:"vogliono", ps:"hanno voluto", pc:"volevano", fu:"vorranno"}
-  ], note:"'Voglio' (je veux) sonne brutal en italien. Au conditionnel, 'vorrei' (je voudrais) est LA forme polie à utiliser partout — au restaurant, au magasin, à l'hôtel."},
+  ]},
   { id:"it-couleurs", cat:"Les couleurs", items:[
     ["Rouge","Rosso","ros-so"],["Bleu","Blu","blou"],["Vert","Verde","vèr-dé"],
     ["Jaune","Giallo","dja-lo"],["Blanc","Bianco","bi-an-co"],["Noir","Nero","né-ro"],
     ["Gris","Grigio","gri-djo"],["Orange","Arancione","a-ran-tcho-né"],
     ["Rose","Rosa","ro-za"],["Violet","Viola","vio-la"]
-  ], note:"'Azzurro' désigne spécifiquement le bleu ciel — c'est aussi le nom donné à l'équipe nationale italienne, à cause de la couleur de son maillot."},
+  ]},
   { id:"it-mois1", cat:"Les mois (1/2)", items:[
     ["Janvier","Gennaio","dje-na-yo"],["Février","Febbraio","feb-brai-o"],["Mars","Marzo","mar-tso"],
     ["Avril","Aprile","a-pri-lé"],["Mai","Maggio","madj-djo"],["Juin","Giugno","djou-nyo"]
@@ -2106,7 +2177,7 @@ const DECK_ITALIEN = [
     ["Confetto","Dragée (pas confettis !)","confettis = coriandoli"],
     ["Morbido","Doux / Moelleux (pas morbide !)","morbide = macabro"],
     ["Annoiato","Ennuyé (pas annoyé !)","agacé = infastidito"]
-  ], note:"Ces mots ressemblent au français mais ont un sens totalement différent en italien — un piège classique pour les francophones."},
+  ]},
   { id:"it-phrases-pratiques", cat:"Phrases pratiques", items:[
     ["Je pense que...","Penso che...","pèn-so ké"],
     ["Il faut...","Bisogna...","bi-zo-nya"],
@@ -2118,7 +2189,7 @@ const DECK_ITALIEN = [
     ["Je suis désolé(e)","Mi dispiace","mi dis-pya-tché"],
     ["Un instant, s'il vous plaît","Un momento, prego","oun mo-mèn-to prè-go"],
     ["À tout à l'heure !","A dopo!","a do-po"]
-  ], note:"'In bocca al lupo' (littéralement 'dans la gueule du loup') = 'bonne chance !' — la réponse traditionnelle est 'Crepi!' ('qu'il [le loup] meure !'), jamais 'grazie'."}
+  ]}
 ];
 
 const FAMILIES_ITALIEN = [
@@ -2130,8 +2201,7 @@ const FAMILIES_ITALIEN = [
   { id:"it-hotel-f", label:"À l'hôtel", cardIds:["it-hotel"] },
   { id:"it-urgences-f", label:"Urgences & santé", cardIds:["it-urgences"] },
   { id:"it-idiomes-f", label:"Expressions idiomatiques", cardIds:["it-idiomes"] },
-  { id:"it-verbes", label:"Verbes essentiels", cardIds:["it-verb-essere","it-verb-avere","it-verb-andare","it-verb-fare","it-verb-potere","it-verb-volere"] },
-  { id:"it-couleurs-f", label:"Les couleurs", cardIds:["it-couleurs"] },
+    { id:"it-couleurs-f", label:"Les couleurs", cardIds:["it-couleurs"] },
   { id:"it-mois-f", label:"Mois & saisons", cardIds:["it-mois1","it-mois2","it-saisons"] },
   { id:"it-famille-f", label:"Famille & sentiments", cardIds:["it-famille"] },
   { id:"it-shopping-f", label:"Shopping & argent", cardIds:["it-shopping"] },
@@ -2147,7 +2217,7 @@ const ITALIEN_THEME_STYLE = {
   "it-presenter-f":{bg:"#F4B8C8", emoji:"👋"}, "it-directions-f":{bg:"#A8DCE8", emoji:"🧭"},
   "it-resto-f":{bg:"#F5B971", emoji:"☕"}, "it-hotel-f":{bg:"#D8B4E8", emoji:"🛎️"},
   "it-urgences-f":{bg:"#F4A0A0", emoji:"🚑"}, "it-idiomes-f":{bg:"#BFE3A0", emoji:"🎯"},
-  "it-verbes":{bg:"#E89B7D", emoji:"📖"}, "it-couleurs-f":{bg:"#D8B4E8", emoji:"🎨"},
+  "it-couleurs-f":{bg:"#D8B4E8", emoji:"🎨"},
   "it-mois-f":{bg:"#F5B971", emoji:"🍂"}, "it-famille-f":{bg:"#F4B8C8", emoji:"👨‍👩‍👧"},
   "it-shopping-f":{bg:"#F7D488", emoji:"🛍️"}, "it-transports-f":{bg:"#AEC6E8", emoji:"🚆"},
   "it-meteo-f":{bg:"#A8DCE8", emoji:"⛅"}, "it-numerique-f":{bg:"#C9E8A0", emoji:"📱"},
@@ -2168,9 +2238,9 @@ const DECK_DARIJA = [
   { id:"darija-nb1", cat:"Les chiffres 0 à 10 (1/3)", items:[["Zéro","Sifr","Sifr"],["Un","Wahed","Wahed"],["Deux","Zouj","Zouj"],["Trois","Tlata","Tlata"],["Quatre","Arb3a","Arbaa"],["Cinq","Khamsa","Khamsa"],["Six","Setta","Setta"],["Sept","Seb3a","Sebaa"],["Huit","Tmenya","Tmenya"],["Neuf","Tes3a","Tesaa"],["Dix","3achra","aachra"]] },
   { id:"darija-nb2", cat:"Les chiffres 11 à 19 (2/3)", items:[["Onze","Hdach","Hdach"],["Douze","Tnach","Tnach"],["Treize","Tletach","Tletach"],["Quatorze","Arba3tach","Arbaatach"],["Quinze","Khmestach","Khmestach"],["Seize","Sttach","Sttach"],["Dix-sept","Saba3tach","Sabaatach"],["Dix-huit","Tmentach","Tmentach"],["Dix-neuf","Tsa3tach","Tsaatach"]] },
   { id:"darija-nb3", cat:"Dizaines et grands nombres (3/3)", items:[["Vingt","3achrin","aachrin"],["Trente","Tlatin","Tlatin"],["Quarante","Rab3in","Rabain"],["Cinquante","Khamsin","Khamsin"],["Soixante","Settin","Settin"],["Soixante-dix","Seb3in","Sebain"],["Quatre-vingts","Tmanin","Tmanin"],["Quatre-vingt-dix","Tes3in","Tesain"],["Cent","Miya","Miya"],["Mille","Alf","Alf"]] },
-  { id:"darija-presentation1", cat:"Se présenter", items:[["Comment tu t'appelles ?","Wach ismak ?","Wach ismak ?"],["Je m'appelle Yanis","Ana ismi Yanis","Ana ismi Yanis"],["Je viens de...","Ana min...","Ana min..."],["J'habite à / en...","Neskon fi...","Neskon fi..."],["J'habite en France","Neskon fi franssa","Neskon fi franssa"],["Je suis d'Algérie","Ana men ljazayer","Ana men ljazayer"]], note:"Ana min... et Ana men... sont deux variantes entendues pour dire 'je viens de / je suis de' selon les régions." },
-  { id:"darija-presentation2", cat:"Questions de présentation", items:[["Qui es-tu ?","Chkoun nta ? Nti ?","Chkoun nta ? Nti ?"],["Tu as quel âge ?","Ch7al fi 3omrak ?","Chhal fi aomrak ?"],["J'ai 30 ans","3andi tlatin sna","aandi tlatin sna"],["Tu habites où ?","Win teskon ?","Win teskon ?"],["Et toi ?","W nta ? W nti ?","W nta ? W nti ?"],["Enchanté(e)","Matcharfin","Matcharfin"]], note:"'Omri' (mon âge) s'utilise aussi comme mot doux/mignon, un peu comme 'mon amour' en français." },
-  { id:"darija-pronoms", cat:"Les pronoms personnels", items:[["Je","Ana","Ana"],["Tu (homme)","Nta","Nta"],["Tu (femme)","Nti","Nti"],["Il","Howa","Howa"],["Elle","Hia","Hia"],["Nous","Hna","Hna"],["Vous","Ntouma","Ntouma"],["Ils / Elles","Houma","Houma"]], note:"Exemples : Ana nahdar (je parle), Howa ysama3 (il écoute), Nta takhdam (tu travailles)." },
+  { id:"darija-presentation1", cat:"Se présenter", items:[["Comment tu t'appelles ?","Wach ismak ?","Wach ismak ?"],["Je m'appelle Yanis","Ana ismi Yanis","Ana ismi Yanis"],["Je viens de...","Ana min...","Ana min..."],["J'habite à / en...","Neskon fi...","Neskon fi..."],["J'habite en France","Neskon fi franssa","Neskon fi franssa"],["Je suis d'Algérie","Ana men ljazayer","Ana men ljazayer"]] },
+  { id:"darija-presentation2", cat:"Questions de présentation", items:[["Qui es-tu ?","Chkoun nta ? Nti ?","Chkoun nta ? Nti ?"],["Tu as quel âge ?","Ch7al fi 3omrak ?","Chhal fi aomrak ?"],["J'ai 30 ans","3andi tlatin sna","aandi tlatin sna"],["Tu habites où ?","Win teskon ?","Win teskon ?"],["Et toi ?","W nta ? W nti ?","W nta ? W nti ?"],["Enchanté(e)","Matcharfin","Matcharfin"]] },
+  { id:"darija-pronoms", cat:"Les pronoms personnels", items:[["Je","Ana","Ana"],["Tu (homme)","Nta","Nta"],["Tu (femme)","Nti","Nti"],["Il","Howa","Howa"],["Elle","Hia","Hia"],["Nous","Hna","Hna"],["Vous","Ntouma","Ntouma"],["Ils / Elles","Houma","Houma"]] },
   { id:"darija-famille", cat:"La famille", items:[["Ma famille","3ayalti","aayalti"],["Mon frère","Khoya","Khoya"],["Ma sœur","Khti","Khti"],["Mon mari","Rajli","Rajli"],["Ma femme","Marti","Marti"],["Mes enfants","Wladi","Wladi"],["Mes filles","Bnati","Bnati"],["Mes frères","Khawti","Khawti"],["Mes sœurs","Khwatati","Khwatati"],["Vous êtes combien dans la famille ?","Ntouma fi gadeh f l3ayla ?","Ntouma fi gadeh f laayla ?"]] },
   { id:"darija-enfants", cat:"Parler de ses enfants", items:[["Tu as des enfants ?","3andak wlad ?","aandak wlad ?"],["Tu as combien d'enfants ?","Gadeh / chhal 3andak louled ?","Gadeh / chhal aandak louled ?"],["J'ai 3 enfants","3andi talt wlad","aandi talt wlad"],["Je n'ai pas d'enfants","Ma3andich louled","Maaandich louled"],["Quel âge a ton enfant ?","Chhal fi 3omrou waldak ?","Chhal fi aomrou waldak ?"],["Mon fils a 4 ans","Waldi fi 3omrou rab3 snin","Waldi fi aomrou raba snin"]] },
   { id:"darija-etat-civil", cat:"État civil", items:[["Je me présente","N3araf b rohi","Naaraf b rohi"],["On se présente","N3arfou b rohna","Naarfou b rohna"],["Présente-toi","3araf b rohak","aaraf b rohak"],["Tu es marié ?","Rak matzawaj ?","Rak matzawaj ?"],["Tu es mariée ?","Raki matzawja ?","Raki matzawja ?"],["Je suis divorcé","Rani mtala9","Rani mtalaq"],["Je suis divorcée","Rani mtal9a","Rani mtalqa"]] },
@@ -2180,9 +2250,9 @@ const DECK_DARIJA = [
   { id:"darija-imperatifs1", cat:"Demandes et ordres (1)", items:[["Attends-moi","Stenani","Stenani"],["Donne-moi","A3tini","Aatini"],["Suis-moi","Tebba3ni","Tebbaani"],["Écoute-moi","Sma3ni","Smaani"],["Aide-moi","3aweni","aaweni"]] },
   { id:"darija-imperatifs2", cat:"Demandes et ordres (2)", items:[["Rappelle-moi","Fakkerni","Fakkerni"],["Réponds-moi","Djawebni","Djawebni"],["Comprends-moi","Efhamni","Efhamni"],["Crois-moi","Ammeni","Ammeni"],["Convaincs-moi","Qenna3ni","Qennaani"]] },
   { id:"darija-imperatifs3", cat:"Demandes et ordres (3)", items:[["Montre-moi","Werili","Werili"],["Dis-moi","Qoli","Qoli"],["Pardonne-moi","Sma7li","Smahli"],["Appelle-moi","3ayatli","aayatli"],["Explique-moi","Fahhemni","Fahhemni"]] },
-  { id:"darija-negation-etre", cat:"Négation : je ne suis pas...", items:[["Je ne suis pas","Ma rani-ch","Ma rani-ch"],["Tu n'es pas (homme)","Ma rak-ch","Ma rak-ch"],["Tu n'es pas (femme)","Ma raki-ch","Ma raki-ch"],["Il n'est pas","Ma rahou-ch","Ma rahou-ch"],["Elle n'est pas","Ma rahi-ch","Ma rahi-ch"],["Nous ne sommes pas","Ma rana-ch","Ma rana-ch"],["Vous n'êtes pas","Ma rakoum-ch","Ma rakoum-ch"],["Ils / Elles ne sont pas","Ma rahoum-ch","Ma rahoum-ch"]], note:"La négation en darija encadre le verbe avec 'ma...ch' : ici elle s'ajoute à rani/rak/raki/rahou/rahi/rana/rakoum/rahoum (je suis/tu es/il est...)." },
+  { id:"darija-negation-etre", cat:"Négation : je ne suis pas...", items:[["Je ne suis pas","Ma rani-ch","Ma rani-ch"],["Tu n'es pas (homme)","Ma rak-ch","Ma rak-ch"],["Tu n'es pas (femme)","Ma raki-ch","Ma raki-ch"],["Il n'est pas","Ma rahou-ch","Ma rahou-ch"],["Elle n'est pas","Ma rahi-ch","Ma rahi-ch"],["Nous ne sommes pas","Ma rana-ch","Ma rana-ch"],["Vous n'êtes pas","Ma rakoum-ch","Ma rakoum-ch"],["Ils / Elles ne sont pas","Ma rahoum-ch","Ma rahoum-ch"]] },
   { id:"darija-negation-avoir", cat:"Négation : je n'ai pas...", items:[["Je n'ai pas","Ma 3andi-ch","Ma aandi-ch"],["Tu n'as pas (homme)","Ma 3andek-ch","Ma aandek-ch"],["Il n'a pas","Ma 3andouch","Ma aandouch"],["Elle n'a pas","Ma 3andhach","Ma aandhach"],["Nous n'avons pas","Ma 3andnech","Ma aandnech"],["Vous n'avez pas","Ma 3andkomch","Ma aandkomch"],["Ils / Elles n'ont pas","Ma 3andhomch","Ma aandhomch"]] },
-  { id:"darija-possessifs", cat:"Les possessifs (à moi, à toi...)", items:[["Mon / Ma (à moi)","Ta3i","Taai"],["Ton / Ta (à toi)","Ta3ek","Taaek"],["Son / Sa (à lui)","Ta3o","Taao"],["Son / Sa (à elle)","Ta3ha","Taaha"],["Notre","Ta3na","Taana"],["Votre","Ta3koum","Taakoum"],["Leur","Ta3houm","Taahoum"]], note:"On entend aussi la variante 'Taw3i, Taw3ek, Taw3o...' selon les locuteurs.\n\nLes deux formes sont correctes et désignent la même idée de possession ('à moi', 'à toi'...)." },
+  { id:"darija-possessifs", cat:"Les possessifs (à moi, à toi...)", items:[["Mon / Ma (à moi)","Ta3i","Taai"],["Ton / Ta (à toi)","Ta3ek","Taaek"],["Son / Sa (à lui)","Ta3o","Taao"],["Son / Sa (à elle)","Ta3ha","Taaha"],["Notre","Ta3na","Taana"],["Votre","Ta3koum","Taakoum"],["Leur","Ta3houm","Taahoum"]] },
   { id:"darija-comparatifs", cat:"Les comparatifs", items:[["Plus que moi","Kthar menni","Kthar menni"],["Plus que toi","Kthar mennek","Kthar mennek"],["Plus que lui","Kthar mennou","Kthar mennou"],["Plus qu'elle","Kthar menha","Kthar menha"],["Plus que nous","Kthar menna","Kthar menna"],["Plus que vous","Kthar menkoum","Kthar menkoum"],["Plus qu'eux","Kthar menhom","Kthar menhom"],["Plus qu'elles","Kthar menhom","Kthar menhom"]] },
   { id:"darija-opposes", cat:"Adjectifs opposés", items:[["Long","Twil","Twil"],["Court","Qsir","Qsir"],["Lourd","Thqil","Thqil"],["Léger","Khfif","Khfif"],["Facile","Sahel","Sahel"],["Difficile","Wa3er","Waaer"],["Loin","B3id","Baid"],["Près","Qrib","Qrib"]] },
   { id:"darija-personnalite", cat:"Adjectifs de personnalité", items:[["Gentil","3aqel","aaqel"],["Intelligent","Fahem","Fahem"],["Courageux","Chater","Chater"],["Modeste","Metwadha3","Metwadhaa"],["Beau","Chbeb","Chbeb"],["Belle","Chabba","Chabba"],["Méchant","Qbi7","Qbih"],["Stupide","7abbes","habbes"],["Fainéant","Fenyane","Fenyane"],["Arrogant","Met7abbar","Methabbar"],["Menteur","Keddab","Keddab"],["Moche","Mechi chbeb","Mechi chbeb"]] },
@@ -2200,14 +2270,13 @@ const DECK_DARIJA = [
   { id:"darija-sens", cat:"Verbes des sens et de la pensée", items:[["Je parle","Nahder","Nahder"],["J'écoute","Nesma3","Nesmaa"],["Je vois","Nchouf","Nchouf"],["Je réfléchis","Nkhamem","Nkhamem"],["Je mange","Nakoul","Nakoul"],["Je goûte","Ndhouq","Ndhouq"],["Je touche","Nmess","Nmess"]] },
   { id:"darija-amour", cat:"Expressions affectives", items:[["Je t'aime","Nta3bek","Ntaabek"],["Je te pardonne","Nsam7ek","Nsamhek"],["Je te déteste","Nekrahek","Nekrahek"],["Je pense à toi","Nkhamem fik","Nkhamem fik"],["Tu me manques","Twahachtek","Twahachtek"],["Tu me plais","Ta3djebni","Taadjebni"]] },
   { id:"darija-prepositions", cat:"Prépositions de lieu", items:[["Sous","Ta7t","Taht"],["Sur","3la / fouq","ala / fouq"],["Dans","Fi","Fi"],["À côté de","Qeddam","Qeddam"],["Derrière","Mor","Mor"],["Entre","Bin","Bin"],["Entre","Edkhol","Edkhol"],["Sors","Ekhrodj","Ekhrodj"],["Reviens","Welli","Welli"],["Reste","Riyeh","Riyeh"]] },
-  { id:"darija-vouloir", cat:"Vouloir / ne pas vouloir", items:[["Je veux manger","Rani 7eb nakoul","Rani heb nakoul"],["Je veux dormir","Rani 7eb nergod","Rani heb nergod"],["Je veux l'acheter","Rani 7eb nachrih","Rani heb nachrih"],["Je ne veux pas y aller","Ma ranich 7eb nrou7","Ma ranich heb nrouh"],["Je ne veux pas rester ici","Ma ranich 7eb nriya7 hna","Ma ranich heb nriyah hna"],["Je ne veux pas faire ça","Ma ranich 7eb ndir hakdha","Ma ranich heb ndir hakdha"]], note:"'Rani 7eb' se prononce 'rani heb' (m) ou 'rabbi heb' (f : rabbi 7ebba selon les locuteurs).\n\nLa forme change légèrement au féminin." },
+  { id:"darija-vouloir", cat:"Vouloir / ne pas vouloir", items:[["Je veux manger","Rani 7eb nakoul","Rani heb nakoul"],["Je veux dormir","Rani 7eb nergod","Rani heb nergod"],["Je veux l'acheter","Rani 7eb nachrih","Rani heb nachrih"],["Je ne veux pas y aller","Ma ranich 7eb nrou7","Ma ranich heb nrouh"],["Je ne veux pas rester ici","Ma ranich 7eb nriya7 hna","Ma ranich heb nriyah hna"],["Je ne veux pas faire ça","Ma ranich 7eb ndir hakdha","Ma ranich heb ndir hakdha"]] },
   { id:"darija-questions-pratiques", cat:"Questions pratiques", items:[["T'es où ?","Win rak ?","Win rak ?"],["Je suis au travail","Rani f lkhedma","Rani f lkhedma"],["Je suis dehors","Rani barra","Rani barra"],["C'est quoi ça ?","Wech hadha ?","Wech hadha ?"],["Combien ?","Ch7al ?","Chhal ?"],["C'est tout ce que j'ai","Hadha wech 3andi","Hadha wech aandi"],["Je n'ai rien d'autre","Ma3andich 7adja wa7dokhra","Maaandich hadja wahdokhra"],["C'est tout","Hadha mahou","Hadha mahou"]] },
   { id:"darija-expressions", cat:"Expressions courantes", items:[["Lâche l'affaire","Akhtik","Akhtik"],["Ça suffit","Bezzaf","Bezzaf"],["Arrête un peu","7abbes chwiya","habbes chwiya"],["Je m'en fous","Ma yehmnich","Ma yehmnich"],["Ça m'est égal","Ma keench ma dekhelni","Ma keench ma dekhelni"],["T'as raison","3andek l'7eq","aandek l'heq"],["T'as tort","Rak ghalet","Rak ghalet"]] },
-  { id:"darija-proverbe", cat:"Une expression imagée", items:[["Quand les poules auront des dents","Ki ynawer el mel7","Ki ynawer el melh"]], note:"Équivalent algérien de notre 'quand les poules auront des dents'.\n\nLittéralement : 'quand le sel fleurira', pour dire jamais." },
+  { id:"darija-proverbe", cat:"Une expression imagée", items:[["Quand les poules auront des dents","Ki ynawer el mel7","Ki ynawer el melh"]] },
   { id:"darija-nettoyage", cat:"Verbes du ménage", items:[["Je lave","Noghsel","Noghsel"],["Je rince","Nchellel","Nchellel"],["Je nettoie","Naqqi","Naqqi"],["Je frotte","N7ok","Nhok"],["Je sèche","Nechef","Nechef"]] },
   { id:"darija-commerce", cat:"Verbes du commerce", items:[["Je vends","Nbi3","Nbia"],["J'achète","Nechri","Nechri"],["Je loue","Nekri","Nekri"],["Je paie","Nkhalles","Nkhalles"]] },
   { id:"darija-quotidien", cat:"Petites phrases du quotidien", items:[["Quoi de neuf ?","Kech jdid ?","Kech jdid ?"],["Comme d'habitude","Kima l3ada","Kima laada"],["Apparemment","3la 7seb echofa","ala hseb echofa"],["Apparemment (2)","Tbenli","Tbenli"]] },
-  { id:"darija-conjug-temps", cat:"Conjuguer dans le temps", items:[["Hier, j'ai mangé","L'bara7, klit","L'barah, klit"],["Maintenant, je mange","Dhoka, rani nakol","Dhoka, rani nakol"],["Demain, je mangerai","Ghedwa, nakol","Ghedwa, nakol"],["Hier, j'ai travaillé","L'bara7, khdamt","L'barah, khdamt"],["Maintenant, je travaille","Dhoka, rani nakhdam","Dhoka, rani nakhdam"],["Demain, je travaillerai","Ghedwa, nakhdam","Ghedwa, nakhdam"],["Hier, j'ai demandé","L'bara7, saqsit","L'barah, saqsit"],["Maintenant, je demande","Dhoka, rani nsaqsi","Dhoka, rani nsaqsi"],["Demain, je demanderai","Ghedwa, nsaqsi","Ghedwa, nsaqsi"]], note:"Le darija marque souvent le temps avec un simple mot (l'bara7 = hier, dhoka = maintenant, ghedwa = demain) plutôt qu'en changeant toute la conjugaison du verbe." },
   { id:"darija-arrivee", cat:"Arriver, être en route", items:[["J'arrive","Rani djey","Rani djey"],["Je suis en route","Rani f triq","Rani f triq"],["Je suis arrivé","Rani l7aqt","Rani lhaqt"]] },
   { id:"darija-etais", cat:"T'étais où ?", items:[["T'étais là ?","Kount hna ?","Kount hna ?"],["T'étais où ?","Win kount ?","Win kount ?"],["T'étais là-bas ?","Kount lhih ?","Kount lhih ?"]] }
 ];
@@ -2227,7 +2296,7 @@ const FAMILIES_DARIJA = [
   { id:"darija-avec-prepositions", label:"Avec... et prépositions", cardIds:["darija-avec","darija-prepositions"] },
   { id:"darija-questions", label:"Les questions", cardIds:["darija-questions","darija-questions-pratiques"] },
   { id:"darija-connecteurs", label:"Petits mots utiles", cardIds:["darija-connecteurs","darija-conjonctions"] },
-  { id:"darija-passe", label:"Le passé et le temps", cardIds:["darija-passe","darija-etre-passe","darija-conjug-temps"] },
+  { id:"darija-passe", label:"Le passé et le temps", cardIds:["darija-passe","darija-etre-passe"] },
   { id:"darija-demonstratifs", label:"Démonstratifs", cardIds:["darija-demonstratifs"] },
   { id:"darija-verbes-action", label:"Verbes d'action et des sens", cardIds:["darija-action1","darija-action2","darija-sens"] },
   { id:"darija-amour", label:"Expressions affectives", cardIds:["darija-amour"] },
@@ -2420,7 +2489,7 @@ const DECK_GEOGRAPHIE = [
   { id:"geo-schengen", cat:"L'espace Schengen", type:"facts", rows:[{date:"1985", title:"Les accords de Schengen", summary:"Signés par 5 pays (France, Allemagne, Belgique, Pays-Bas, Luxembourg) dans le village de Schengen, au Luxembourg."},{date:"1995", title:"Entrée en vigueur", summary:"Les contrôles aux frontières intérieures entre pays signataires sont supprimés."},{date:"Aujourd'hui", title:"Qui en fait partie ?", summary:"La quasi-totalité des pays de l'UE, plus 4 pays non-membres : Norvège, Islande, Suisse et Liechtenstein."},{date:"Exception", title:"Schengen ≠ Union européenne", summary:"L'Irlande a un opt-out historique ; Chypre n'y est pas encore pleinement intégrée : être dans l'UE ne veut donc pas toujours dire être dans Schengen."}] },
   { id:"geo-zone-euro", cat:"La zone euro", type:"facts", rows:[{date:"1999", title:"Naissance de l'euro", summary:"L'euro est créé comme monnaie comptable ; les pièces et billets arrivent en 2002."},{date:"Aujourd'hui", title:"21 pays sur 27", summary:"Tous les pays de l'UE n'ont pas adopté l'euro : certains ont leur propre monnaie (Pologne, Hongrie, Suède...) par choix ou parce qu'ils ne remplissent pas encore les critères."},{date:"Bon à savoir", title:"Euro ≠ Union européenne", summary:"Quelques micro-États hors UE utilisent aussi l'euro par accord (Monaco, Saint-Marin, Vatican, Andorre)."}] },
   { id:"geo-merveilles-antique", cat:"Les 7 Merveilles du monde antique", type:"facts", rows:[{date:"🇪🇬", title:"La Grande Pyramide de Gizeh (Égypte)", summary:"Seule merveille antique encore debout aujourd'hui."},{date:"🇮🇶", title:"Les Jardins suspendus de Babylone (Irak)", summary:"Édifice légendaire attribué à Nabuchodonosor II."},{date:"🇬🇷", title:"La Statue de Zeus à Olympie (Grèce)", summary:"Sculpture monumentale d'or et d'ivoire réalisée par Phidias."},{date:"🇹🇷", title:"Le Temple d'Artémis à Éphèse (Turquie)", summary:"Sanctuaire géant dédié à la déesse de la chasse."},{date:"🇹🇷", title:"Le Mausolée d'Halicarnasse (Turquie)", summary:"Tombeau monumental qui a donné le mot « mausolée »."},{date:"🇬🇷", title:"Le Colosse de Rhodes (Grèce)", summary:"Gigantesque statue en bronze gardant l'entrée du port."},{date:"🇪🇬", title:"Le Phare d'Alexandrie (Égypte)", summary:"Tour guidant les navires, symbole de la puissance hellénistique."}] },
-  { id:"geo-merveilles-moderne", cat:"Les 7 Merveilles du monde moderne", type:"facts", rows:[{date:"🇨🇳", title:"La Grande Muraille de Chine (Chine)", summary:"Fortification militaire géante construite pour protéger l'empire."},{date:"🇮🇳", title:"Le Taj Mahal (Inde)", summary:"Mausolée en marbre blanc édifié par l'empereur Shah Jahan par amour."},{date:"🇵🇪", title:"Le Machu Picchu (Pérou)", summary:"Cité inca spectaculaire nichée dans les montagnes des Andes."},{date:"🇲🇽", title:"Chichén Itzá (Mexique)", summary:"Cité maya célèbre pour sa grande pyramide (El Castillo)."},{date:"🇮🇹", title:"Le Colisée de Rome (Italie)", summary:"Grand amphithéâtre romain accueillant les combats de gladiateurs."},{date:"🇧🇷", title:"Le Christ Rédempteur (Brésil)", summary:"Statue emblématique surplombant la baie de Rio de Janeiro."},{date:"🇯🇴", title:"Pétra (Jordanie)", summary:"Cité antique nabatéenne taillée à même les falaises de roche rose."}], note:"Désignées en 2007 suite à un vote mondial de la New7Wonders Foundation." }
+  { id:"geo-merveilles-moderne", cat:"Les 7 Merveilles du monde moderne", type:"facts", rows:[{date:"🇨🇳", title:"La Grande Muraille de Chine (Chine)", summary:"Fortification militaire géante construite pour protéger l'empire."},{date:"🇮🇳", title:"Le Taj Mahal (Inde)", summary:"Mausolée en marbre blanc édifié par l'empereur Shah Jahan par amour."},{date:"🇵🇪", title:"Le Machu Picchu (Pérou)", summary:"Cité inca spectaculaire nichée dans les montagnes des Andes."},{date:"🇲🇽", title:"Chichén Itzá (Mexique)", summary:"Cité maya célèbre pour sa grande pyramide (El Castillo)."},{date:"🇮🇹", title:"Le Colisée de Rome (Italie)", summary:"Grand amphithéâtre romain accueillant les combats de gladiateurs."},{date:"🇧🇷", title:"Le Christ Rédempteur (Brésil)", summary:"Statue emblématique surplombant la baie de Rio de Janeiro."},{date:"🇯🇴", title:"Pétra (Jordanie)", summary:"Cité antique nabatéenne taillée à même les falaises de roche rose."}] }
 ];
 
 const FAMILIES_GEOGRAPHIE = [
@@ -2528,6 +2597,185 @@ const CATEGORIES = [
   { id:"sante", label:"Santé", available:false, icon:"🩺", accent:"#A3302F", bg:"#F4A0A0" }
 ];
 
+/* =====================================================================
+   V2 : PROGRESSION (localStorage), série, objectif, révision espacée
+   ===================================================================== */
+const STATE_KEY = "iknow_state_v1";
+
+/* ---- Premium -------------------------------------------------------
+   Tarifs : 1,99 € / mois ou 10 € / an.
+   PAYWALL_ACTIVE = false  → rien n'est verrouillé, l'écran Premium est
+   seulement une vitrine ("bientôt"). Passer à true quand le paiement
+   est branché : coller les Stripe Payment Links dans CHECKOUT_URLS, et
+   marquer S.premium = true côté serveur (Firebase) après paiement. */
+const PAYWALL_ACTIVE = false;
+const CHECKOUT_URLS = { month:"", year:"" };
+const FREE_CATEGORIES = ["anglais"];
+const FREE_THEMES = ["papier"];
+const FREE_QUIZ_PER_DAY = 1;
+function isPremium(){ return !PAYWALL_ACTIVE || !!S.premium; }
+function isLockedCat(id){ return !isPremium() && !FREE_CATEGORIES.includes(id); }
+function isLockedTheme(id){ return !isPremium() && !FREE_THEMES.includes(id); }
+function quizAllowed(){
+  if(isPremium()) return true;
+  const q = S.quizDay;
+  return !(q && q.d === todayStr() && q.n >= FREE_QUIZ_PER_DAY);
+}
+
+function defaultState(){
+  return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
+           onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
+           dailyDone:"", quizDay:null };
+}
+let S = defaultState();
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STATE_KEY);
+    if(raw) S = Object.assign(defaultState(), JSON.parse(raw));
+  }catch(e){}
+}
+function saveState(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} }
+
+/* Index rapide id → carte/catégorie */
+const CARD_INDEX = {};
+for(const catId in CATEGORY_DATA){
+  CATEGORY_DATA[catId].deck.forEach(c=>{ CARD_INDEX[c.id] = { card:c, catId }; });
+}
+function catById(id){ return CATEGORIES.find(c=>c.id===id); }
+function availableCats(){ return CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id]); }
+
+/* ---- dates ---- */
+function ymd(d){ const z=n=>String(n).padStart(2,"0"); return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate()); }
+function todayStr(){ return ymd(new Date()); }
+function addDays(str,n){ const [y,m,d]=str.split("-").map(Number); return ymd(new Date(y,m-1,d+n)); }
+function dayNumber(str){ const [y,m,d]=str.split("-").map(Number); return Math.floor(Date.UTC(y,m-1,d)/86400000); }
+
+/* ---- jours, objectif, série ---- */
+function touchDay(t){ return S.days[t] || (S.days[t] = { n:0, q:0, g:S.goal }); }
+function dayInfo(t){ return S.days[t] || { n:0, q:0 }; }
+function dayScore(t){ const i = dayInfo(t); return i.n + Math.floor(i.q/2); }
+function goalMet(t){ return dayScore(t) >= (dayInfo(t).g || S.goal); }
+function currentStreak(){
+  let d = todayStr(), n = 0;
+  if(!goalMet(d)) d = addDays(d,-1);
+  while(goalMet(d)){ n++; d = addDays(d,-1); }
+  return n;
+}
+function setGoal(n){
+  S.goal = n;
+  const d = S.days[todayStr()]; if(d) d.g = n;
+  saveState();
+}
+
+/* ---- toasts ---- */
+const toastQ = []; let toastBusy = false;
+function toast(msg, ms){ toastQ.push({ msg, ms: ms || 1500 }); if(!toastBusy) nextToast(); }
+function nextToast(){
+  const el = document.getElementById("toast");
+  const t = toastQ.shift();
+  if(!t){ toastBusy = false; return; }
+  toastBusy = true;
+  el.textContent = t.msg; el.classList.add("show");
+  setTimeout(()=>{ el.classList.remove("show"); setTimeout(nextToast, 240); }, t.ms);
+}
+
+/* ---- XP, niveaux, badges ---- */
+const LEVELS = [
+  { n:"Novice", xp:0 }, { n:"Curieux", xp:100 }, { n:"Initié", xp:300 },
+  { n:"Érudit", xp:700 }, { n:"Sage", xp:1500 }, { n:"Légende", xp:3000 }
+];
+const LEVEL_EMOJI = ["🌱","🔎","📖","🎓","🦉","👑"];
+function levelInfo(){
+  let i = 0;
+  while(i < LEVELS.length-1 && S.xp >= LEVELS[i+1].xp) i++;
+  const cur = LEVELS[i], nxt = LEVELS[i+1];
+  return { i, cur, nxt, pct: nxt ? (S.xp-cur.xp)/(nxt.xp-cur.xp) : 1 };
+}
+function addXp(n){
+  const before = levelInfo().i;
+  S.xp += n;
+  const after = levelInfo().i;
+  if(after > before) toast("✨ Niveau « " + LEVELS[after].n + " »", 2000);
+}
+function cardRecords(){ return Object.keys(S.cards).filter(id=>CARD_INDEX[id]); }
+function seenCount(){ return cardRecords().filter(id=>S.cards[id].seen>0).length; }
+function masteredCount(){ return cardRecords().filter(id=>S.cards[id].box>=4).length; }
+function catsSeenCount(){
+  return new Set(cardRecords().filter(id=>S.cards[id].seen>0).map(id=>CARD_INDEX[id].catId)).size;
+}
+const BADGES = [
+  { id:"first",   e:"🌱", n:"Premier pas",   d:"Une carte révisée",      t:()=>seenCount()>=1 },
+  { id:"c25",     e:"📘", n:"25 cartes",     d:"25 cartes vues",         t:()=>seenCount()>=25 },
+  { id:"c100",    e:"📚", n:"100 cartes",    d:"100 cartes vues",        t:()=>seenCount()>=100 },
+  { id:"s3",      e:"🔥", n:"3 jours",       d:"Série de 3 jours",       t:()=>S.bestStreak>=3 },
+  { id:"s7",      e:"⚡", n:"7 jours",       d:"Série de 7 jours",       t:()=>S.bestStreak>=7 },
+  { id:"s30",     e:"🏆", n:"30 jours",      d:"Série de 30 jours",      t:()=>S.bestStreak>=30 },
+  { id:"quiz",    e:"🎯", n:"Quiz",          d:"Un quiz terminé",        t:()=>S.quizzes>=1 },
+  { id:"perfect", e:"💎", n:"Sans faute",    d:"Un quiz 10/10",          t:()=>S.perfectQuizzes>=1 },
+  { id:"master",  e:"🧠", n:"Maîtrise",      d:"25 cartes bien ancrées", t:()=>masteredCount()>=25 },
+  { id:"explore", e:"🧭", n:"Explorateur",   d:"5 catégories visitées",  t:()=>catsSeenCount()>=5 }
+];
+function checkBadges(){
+  BADGES.forEach(b=>{
+    if(!S.badges[b.id] && b.t()){ S.badges[b.id] = todayStr(); toast(b.e + " Badge : " + b.n, 1900); }
+  });
+}
+function afterActivity(){
+  const t = todayStr(), d = touchDay(t);
+  if(!d.hit && dayScore(t) >= (d.g || S.goal)){
+    d.hit = true;
+    toast("🎯 Objectif du jour atteint · série " + currentStreak(), 2000);
+  }
+  const st = currentStreak();
+  if(st > S.bestStreak) S.bestStreak = st;
+  checkBadges();
+  saveState();
+}
+
+/* ---- révision espacée (boîtes de Leitner) ----
+   Boîte 1 → revient demain · 2 → 2 j · 3 → 4 j · 4 → 8 j · 5 → 16 j.
+   « À revoir » ramène la carte en boîte 1. */
+const INTERVALS = [0,1,2,4,8,16];
+function ensureRec(id){
+  return S.cards[id] || (S.cards[id] = { box:0, due:todayStr(), seen:0, ok:0, ko:0 });
+}
+function gradeCard(id, knew){
+  const t = todayStr(), c = ensureRec(id);
+  c.seen++; c.last = t;
+  if(knew){ c.ok++; c.box = c.box === 0 ? 2 : Math.min(5, c.box+1); }
+  else { c.ko++; c.box = 1; }
+  c.due = addDays(t, knew ? INTERVALS[c.box] : 1);
+  touchDay(t).n++;
+  addXp(knew ? 10 : 4);
+  afterActivity();
+}
+function quizMiss(id){
+  const c = ensureRec(id);
+  c.ko++; c.box = 1; c.due = todayStr();
+}
+function dueIds(){
+  const t = todayStr();
+  return cardRecords()
+    .filter(id=>S.cards[id].seen>0 || S.cards[id].ko>0)
+    .filter(id=>S.cards[id].due <= t)
+    .sort((a,b)=> S.cards[a].due.localeCompare(S.cards[b].due));
+}
+function cardWeight(c){
+  const s = S.cards[c.id];
+  if(!s) return 3;
+  if(s.due <= todayStr()) return 3;
+  return s.box >= 4 ? 0.4 : 1;
+}
+
+/* ---- carte du jour : une carte par jour, rotation sur toutes les catégories ---- */
+function dailyCard(){
+  const cats = availableCats().map(c=>c.id);
+  const n = dayNumber(todayStr());
+  const deck = CATEGORY_DATA[cats[n % cats.length]].deck;
+  return deck[Math.floor(n / cats.length) % deck.length];
+}
+function cardSize(card){ return card.items ? card.items.length : card.rows.length; }
+
 const FAV_KEY = "carnet_anglais_favoris";
 let lastId = null;
 let lastCatId = null;
@@ -2536,7 +2784,7 @@ let ctx = { origin:"favorites", categoryId:null, pool:null };
 
 function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }catch(e){ return []; } }
 function setFavs(arr){
-  localStorage.setItem(FAV_KEY, JSON.stringify(arr));
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(arr)); }catch(e){}
   document.getElementById("favLabel").textContent = arr.length ? `Favoris (${arr.length})` : "Favoris";
 }
 function toggleFav(id){
@@ -2553,17 +2801,32 @@ const views = {
   category: document.getElementById("categoryView"),
   favorites: document.getElementById("favView"),
   favThemes: document.getElementById("favThemesView"),
-  favCards: document.getElementById("favCardsView")
+  favCards: document.getElementById("favCardsView"),
+  today: document.getElementById("todayView"),
+  quizSetup: document.getElementById("quizSetupView"),
+  quiz: document.getElementById("quizView"),
+  result: document.getElementById("resultView"),
+  profile: document.getElementById("profileView"),
+  paywall: document.getElementById("paywallView")
 };
 const navBtns = document.querySelectorAll(".nav-btn");
 
+function tabFor(name){
+  if(["today","quizSetup","quiz","result"].includes(name)) return "today";
+  if(name === "category") return "categories";
+  if(name === "favThemes" || name === "favCards") return "favorites";
+  if(name === "profile" || name === "paywall") return "profile";
+  if(name === "card"){
+    if(ctx.origin === "favorites") return "favorites";
+    if(ctx.origin === "daily" || ctx.origin === "review") return "today";
+    return "categories";
+  }
+  return name;
+}
 function showView(name){
   Object.values(views).forEach(v=>v.classList.remove("showing"));
   views[name].classList.add("showing");
-  let activeTab = name;
-  if(name === "category") activeTab = "categories";
-  if(name === "favThemes" || name === "favCards") activeTab = "favorites";
-  if(name === "card") activeTab = ctx.origin === "favorites" ? "favorites" : "categories";
+  const activeTab = tabFor(name);
   navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===activeTab));
   moveNavIndicator();
 }
@@ -2582,18 +2845,21 @@ function pickRandom(pool, deck){
   const source = pool ? deck.filter(c=>pool.includes(c.id)) : deck;
   let choices = source;
   if(source.length > 1) choices = source.filter(c=>c.id!==lastId);
-  const card = choices[Math.floor(Math.random()*choices.length)];
+  /* Tirage pondéré : les cartes jamais vues ou à revoir sortent plus
+     souvent, les cartes bien ancrées plus rarement. */
+  const weights = choices.map(cardWeight);
+  const total = weights.reduce((a,b)=>a+b,0);
+  let r = Math.random()*total, card = choices[choices.length-1];
+  for(let i=0;i<choices.length;i++){ r -= weights[i]; if(r<=0){ card = choices[i]; break; } }
   lastId = card.id;
   return card;
 }
 
 /* Tirage "au hasard" cross-catégories : on tire d'abord une catégorie
-   au hasard (chaque catégorie a la même chance), puis une carte au
-   hasard DANS cette catégorie — plutôt que de piocher directement
-   dans le tas complet de toutes les cartes, ce qui écraserait tout
-   au profit des catégories les plus fournies (ex. Anglais). */
+   au hasard (chaque catégorie a la même chance), puis une carte
+   pondérée DANS cette catégorie. */
 function pickRandomGlobal(){
-  const cats = CATEGORIES.filter(c=>c.available && CATEGORY_DATA[c.id]);
+  const cats = availableCats().filter(c=>!isLockedCat(c.id));
   let catChoices = cats;
   if(cats.length > 1) catChoices = cats.filter(c=>c.id!==lastCatId);
   const cat = catChoices[Math.floor(Math.random()*catChoices.length)];
@@ -2615,6 +2881,73 @@ document.getElementById("itemsWrap").addEventListener("scroll", updateScrollHint
 
 let cardHistory = [];
 let currentCard = null;
+/* browse   : carte non notable (thème complet en favori)
+   hidden   : on devine, la réponse est masquée
+   revealed : réponse visible, on note « À revoir / Je savais » */
+let cardState = "browse";
+let review = null;
+
+function flipFacts(){
+  const wrap = document.getElementById("itemsWrap");
+  const blocks = wrap.querySelectorAll(".flip-fact");
+  blocks.forEach(block=>{
+    block.classList.add("flipping");
+    setTimeout(()=>block.classList.remove("flipping"), 260);
+  });
+  setTimeout(()=>{
+    blocks.forEach(block=>{
+      block.querySelectorAll(".fact-flip-face").forEach(f=>f.hidden = !f.hidden);
+    });
+  }, 130);
+  if(cardState === "hidden") setCardState("revealed");
+}
+
+function setCardState(st){
+  cardState = st;
+  const wrap = document.getElementById("itemsWrap");
+  if(st === "revealed"){
+    wrap.classList.remove("concealed");
+    wrap.querySelectorAll(".item, .fact-block.plain").forEach(i=>i.classList.add("shown"));
+  }
+  applyCardUI();
+}
+
+function isFlippable(card){ return card.type === "facts" && card.rows.some(r=>r.points && !r.noFlip); }
+function applyCardUI(){
+  const card = currentCard;
+  if(!card) return;
+  const prevBtn = document.getElementById("prevBtn");
+  const anotherBtn = document.getElementById("anotherBtn");
+  const actions = document.getElementById("cardActions");
+  const grade = document.getElementById("gradeActions");
+  const skip = document.getElementById("skipBtn");
+  const hint = document.getElementById("guessHint");
+  const isFacts = card.type === "facts";
+  const gradable = !card.merged;
+  let poolSize = null;
+  if(ctx.pool) poolSize = ctx.pool.length;
+  else if(ctx.categoryId && CATEGORY_DATA[ctx.categoryId]) poolSize = CATEGORY_DATA[ctx.categoryId].deck.length;
+  const guided = ["daily","review","favorites"].includes(ctx.origin);
+  const canNext = gradable && !guided && poolSize !== 1;
+  const showPrev = !guided && poolSize !== 1;
+
+  const revealed = cardState === "revealed" && gradable;
+  grade.hidden = !revealed;
+  skip.hidden = !(revealed && ctx.origin !== "daily");
+  actions.style.display = revealed ? "none" : "";
+  hint.hidden = cardState !== "hidden";
+
+  prevBtn.style.display = showPrev ? "" : "none";
+  prevBtn.disabled = cardHistory.length === 0;
+  if(cardState === "hidden"){
+    anotherBtn.textContent = isFlippable(card) ? "Retourner" : "Révéler";
+    anotherBtn.style.display = "";
+  } else {
+    anotherBtn.textContent = "Autre carte";
+    anotherBtn.style.display = canNext ? "" : "none";
+    if(!revealed && !showPrev && !canNext) actions.style.display = "none";
+  }
+}
 
 function renderCard(card, fromHistory){
   if(!fromHistory && currentCard){
@@ -2629,62 +2962,9 @@ function renderCard(card, fromHistory){
   const wrap = document.getElementById("itemsWrap");
   wrap.innerHTML = "";
   wrap.onclick = null;
-  if(card.type === "conjugation"){
-    const table = document.createElement("table");
-    table.className = "verb-table";
-    const h = card.headers || ["Présent","Passé simple","Passé continu","Futur"];
-    table.innerHTML = `<thead><tr><th></th><th>${h[0]}</th><th>${h[1]}</th><th>${h[2]}</th><th>${h[3]}</th></tr></thead>`;
-    const tbody = document.createElement("tbody");
-    card.rows.forEach(r=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td class="subj">${r.s}</td><td>${r.pr}</td><td>${r.ps}</td><td>${r.pc}</td><td>${r.fu}</td>`;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    wrap.appendChild(table);
-    if(card.note){
-      const note = document.createElement("div");
-      note.className = "verb-note";
-      note.textContent = card.note;
-      wrap.appendChild(note);
-    }
-  } else if(card.type === "contractions"){
-    const table = document.createElement("table");
-    table.className = "verb-table contraction-table";
-    table.innerHTML = `<thead><tr><th>Forme pleine</th><th>Contraction</th></tr></thead>`;
-    const tbody = document.createElement("tbody");
-    card.rows.forEach(r=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${r.full}</td><td class="subj">${r.short}</td>`;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    wrap.appendChild(table);
-    if(card.note){
-      const note = document.createElement("div");
-      note.className = "verb-note";
-      note.textContent = card.note;
-      wrap.appendChild(note);
-    }
-  } else if(card.type === "irregular"){
-    const table = document.createElement("table");
-    table.className = "verb-table";
-    table.innerHTML = `<thead><tr><th>Infinitif</th><th>Passé</th><th>Participe</th></tr></thead>`;
-    const tbody = document.createElement("tbody");
-    card.rows.forEach(r=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td class="subj">${r.inf}</td><td>${r.past}</td><td>${r.part}</td>`;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    wrap.appendChild(table);
-    if(card.note){
-      const note = document.createElement("div");
-      note.className = "verb-note";
-      note.textContent = card.note;
-      wrap.appendChild(note);
-    }
-  } else if(card.type === "facts"){
+  wrap.classList.remove("concealed");
+  let flippable = false;
+  if(card.type === "facts"){
     card.rows.forEach(r=>{
       const div = document.createElement("div");
       if(r.points && r.noFlip){
@@ -2707,35 +2987,15 @@ function renderCard(card, fromHistory){
             <ul class="fact-points">${pointsHtml}</ul>
           </div>`;
       } else {
-        div.className = "fact-block";
+        div.className = "fact-block plain";
         const dateHtml = r.date ? `<div class="fact-date">${r.date}</div>` : "";
         div.innerHTML = `${dateHtml}<div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
       }
       wrap.appendChild(div);
     });
-    if(card.rows.some(r=>r.points && !r.noFlip)){
-      wrap.onclick = ()=>{
-        const blocks = wrap.querySelectorAll(".flip-fact");
-        blocks.forEach(block=>{
-          block.classList.add("flipping");
-          setTimeout(()=>block.classList.remove("flipping"), 260);
-        });
-        setTimeout(()=>{
-          blocks.forEach(block=>{
-            block.querySelectorAll(".fact-flip-face").forEach(f=>f.hidden = !f.hidden);
-          });
-        }, 130);
-      };
-    } else {
-      wrap.onclick = null;
-    }
+    flippable = card.rows.some(r=>r.points && !r.noFlip);
+    if(flippable) wrap.onclick = flipFacts;
   } else {
-    if(card.note){
-      const note = document.createElement("div");
-      note.className = "verb-note";
-      note.textContent = card.note;
-      wrap.appendChild(note);
-    }
     card.items.forEach(([fr,en,ph])=>{
       const div = document.createElement("div");
       div.className = "item";
@@ -2744,41 +3004,47 @@ function renderCard(card, fromHistory){
     });
   }
 
+  if(card.merged) cardState = "browse";
+  else if(card.type === "facts" && flippable) cardState = "hidden";
+  else if(card.type === "facts"){
+    const plainBlocks = wrap.querySelectorAll(".fact-block.plain");
+    if(plainBlocks.length){
+      cardState = "hidden";
+      wrap.classList.add("concealed");
+      plainBlocks.forEach(it=>{
+        it.addEventListener("click", ()=>{
+          if(cardState !== "hidden") return;
+          it.classList.add("shown");
+          if(!wrap.querySelector(".fact-block.plain:not(.shown)")) setCardState("revealed");
+        });
+      });
+    } else cardState = "revealed";
+  } else {
+    cardState = "hidden";
+    wrap.classList.add("concealed");
+    wrap.querySelectorAll(".item").forEach(it=>{
+      it.addEventListener("click", ()=>{
+        if(cardState !== "hidden") return;
+        it.classList.add("shown");
+        if(!wrap.querySelector(".item:not(.shown)")) setCardState("revealed");
+      });
+    });
+  }
+
   const starBtn = document.getElementById("starBtn");
-  const anotherBtn = document.getElementById("anotherBtn");
-  const prevBtn = document.getElementById("prevBtn");
   const scrollHint = document.getElementById("scrollHint");
   const flipHint = document.getElementById("flipHint");
-  const merged = !!card.merged;
-  const count = card.items ? card.items.length : card.rows.length;
   wrap.classList.add("scrollable");
   scrollHint.classList.add("showing");
-  prevBtn.disabled = cardHistory.length === 0;
-  flipHint.hidden = !(card.type === "facts" && card.rows.some(r=>r.points && !r.noFlip));
-  flipHint.onclick = ()=>{
-    if(wrap.onclick) wrap.onclick();
-  };
+  flipHint.hidden = !flippable;
+  flipHint.onclick = ()=>{ if(wrap.onclick) wrap.onclick(); };
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
   const catLabel = catForCard ? iconHtml(catForCard) + " " + catForCard.label : "";
-  document.getElementById("cardNum").innerHTML = catLabel;
-  let poolSize = null;
-  if(ctx.pool){
-    poolSize = ctx.pool.length;
-  } else if(ctx.categoryId && CATEGORY_DATA[ctx.categoryId]){
-    poolSize = CATEGORY_DATA[ctx.categoryId].deck.length;
-  }
-  const singleCard = poolSize === 1;
-  if(merged || singleCard){
-    anotherBtn.style.display = "none";
-  } else {
-    anotherBtn.style.display = "";
-  }
-  prevBtn.style.display = singleCard ? "none" : "";
-  document.getElementById("cardActions").style.display = singleCard ? "none" : "";
+  document.getElementById("cardNum").innerHTML =
+    (ctx.origin === "review" && review) ? `RÉVISION ${Math.min(review.done+1, review.total)}/${review.total}` : catLabel;
   starBtn.style.display = "";
-  const isFav = getFavs().includes(card.id);
-  starBtn.classList.toggle("active", isFav);
+  starBtn.classList.toggle("active", getFavs().includes(card.id));
   starBtn.onclick = ()=>{
     const nowFav = toggleFav(card.id);
     starBtn.classList.toggle("active", nowFav);
@@ -2786,9 +3052,67 @@ function renderCard(card, fromHistory){
   document.getElementById("cardTitle").textContent =
     (ctx.origin === "categoryTheme" && ctx.familyLabel && card.type === "facts") ? ctx.familyLabel : card.cat;
 
+  applyCardUI();
   showView("card");
   wrap.scrollTop = 0;
   requestAnimationFrame(()=>{ wrap.scrollTop = 0; updateScrollHint(); });
+}
+
+function nextCard(){
+  if(ctx.origin === "globalRandom"){ renderCard(pickRandomGlobal()); return; }
+  if(ctx.categoryId && CATEGORY_DATA[ctx.categoryId]){
+    renderCard(pickRandom(ctx.pool, CATEGORY_DATA[ctx.categoryId].deck));
+  } else exitCardView();
+}
+
+function onGrade(knew){
+  const card = currentCard;
+  if(!card || card.merged) return;
+  toast(knew ? "✓ Bien joué" : "↺ On y revient bientôt", 900);
+  gradeCard(card.id, knew);
+  if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); exitCardView(); return; }
+  if(ctx.origin === "review"){ reviewNext(knew); return; }
+  if(ctx.origin === "favorites"){ exitCardView(); return; }
+  nextCard();
+}
+function onSkip(){
+  if(ctx.origin === "review"){ reviewNext(null); return; }
+  if(ctx.origin === "favorites"){ exitCardView(); return; }
+  nextCard();
+}
+document.getElementById("okBtn").addEventListener("click", ()=>onGrade(true));
+document.getElementById("koBtn").addEventListener("click", ()=>onGrade(false));
+document.getElementById("skipBtn").addEventListener("click", onSkip);
+
+/* ---- séance de révision ---- */
+function startReview(){
+  const ids = dueIds().slice(0,20);
+  if(!ids.length){ toast("Rien à réviser pour l'instant 🎉"); return; }
+  review = { queue:ids, total:ids.length, done:0, ok:0, ko:0, retried:new Set() };
+  cardHistory = []; currentCard = null;
+  ctx = { origin:"review", categoryId:null, pool:null };
+  renderCard(CARD_INDEX[review.queue.shift()].card);
+}
+function reviewNext(knew){
+  const id = currentCard.id;
+  review.done++;
+  if(knew === true) review.ok++;
+  if(knew === false){
+    review.ko++;
+    if(!review.retried.has(id)){ review.retried.add(id); review.queue.push(id); review.total++; }
+  }
+  if(!review.queue.length){
+    const r = review; review = null;
+    cardHistory = []; currentCard = null;
+    showResult({
+      emoji: r.ko === 0 ? "🌟" : "👏",
+      title: "Révision terminée",
+      lines: [`<b>${r.ok}</b> retenue${r.ok>1?"s":""} · <b>${r.ko}</b> à revoir`, `Les cartes ratées reviennent demain.`],
+      primary: { label:"RETOUR", fn:()=>{ renderToday(); showView("today"); } }
+    });
+    return;
+  }
+  renderCard(CARD_INDEX[review.queue.shift()].card);
 }
 
 /* Retrouve une carte à partir de son id, qu'il s'agisse d'une carte
@@ -2875,7 +3199,7 @@ function renderFavThemes(catId){
   const byFamily = {};
   cards.forEach(card=>{
     const famId = familyIdForCard(card);
-    const fam = FAMILIES.find(f=>f.id===famId);
+    const fam = CATEGORY_DATA[catId].families.find(f=>f.id===famId);
     const label = fam ? fam.label : card.cat;
     if(!byFamily[famId]) byFamily[famId] = { label, cards:[] };
     byFamily[famId].cards.push(card);
@@ -2992,8 +3316,11 @@ function openFavorite(card){
 
 document.getElementById("categoryStackWrap").addEventListener("click", drawCategoryRandom);
 document.getElementById("anotherBtn").addEventListener("click", ()=>{
-  if(ctx.origin === "globalRandom"){ renderCard(pickRandomGlobal()); return; }
-  renderCard(pickRandom(ctx.pool, CATEGORY_DATA[ctx.categoryId].deck));
+  if(cardState === "hidden"){
+    if(currentCard && isFlippable(currentCard)) flipFacts(); else setCardState("revealed");
+    return;
+  }
+  nextCard();
 });
 document.getElementById("prevBtn").addEventListener("click", ()=>{
   if(cardHistory.length === 0) return;
@@ -3003,6 +3330,9 @@ document.getElementById("prevBtn").addEventListener("click", ()=>{
 function exitCardView(){
   cardHistory = [];
   currentCard = null;
+  if(ctx.origin === "daily" || ctx.origin === "review"){
+    review = null; renderToday(); showView("today"); return;
+  }
   if(ctx.origin === "categoryRandom" || ctx.origin === "categoryTheme"){
     const cat = CATEGORIES.find(c=>c.id===ctx.categoryId) || currentCategory;
     openCategory(cat, { expandThemes: ctx.origin === "categoryTheme" });
@@ -3068,8 +3398,9 @@ function renderCategories(){
     tile.className = "tile tile-theme" + (cat.available ? " tile-available" : " tile-soon");
     tile.style.background = cat.bg;
     if(cat.available){
-      tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div>`;
-      tile.addEventListener("click", ()=> openCategory(cat));
+      const locked = isLockedCat(cat.id);
+      tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div>${locked ? '<div class="count">🔒 Premium</div>' : ""}`;
+      tile.addEventListener("click", ()=> locked ? openPaywall() : openCategory(cat));
     } else {
       tile.innerHTML = `<span class="theme-emoji">${iconHtml(cat)}</span><div class="name">${cat.label}</div><div class="count">Bientôt</div>`;
     }
@@ -3099,21 +3430,466 @@ function renderThemesForCategory(cat){
 
 navBtns.forEach(btn=>{
   btn.addEventListener("click", ()=>{
-    cardHistory = []; currentCard = null;
+    cardHistory = []; currentCard = null; review = null; quiz = null;
     const tab = btn.dataset.tab;
+    if(tab === "today") renderToday();
     if(tab === "categories") renderCategories();
     if(tab === "favorites") renderFavCategories();
+    if(tab === "profile") renderProfile();
     showView(tab);
   });
 });
+
+/* =====================================================================
+   V2 : ÉCRANS (Aujourd'hui, quiz, résultat, profil, premium, onboarding)
+   ===================================================================== */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------- AUJOURD'HUI ---------- */
+function renderToday(){
+  const el = $("todayView");
+  const t = todayStr();
+  const streak = currentStreak();
+  const score = dayScore(t);
+  const goal = (dayInfo(t).g || S.goal);
+  const pct = Math.min(1, score/goal);
+  const due = dueIds().length;
+  const dc = dailyCard();
+  const dcat = catById(categoryIdForCard(dc));
+  const done = S.dailyDone === t;
+  const lv = levelInfo();
+  const dateTxt = new Date().toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long" });
+
+  let week = "";
+  for(let i=6;i>=0;i--){
+    const d = addDays(t,-i);
+    const [y,m,dd] = d.split("-").map(Number);
+    const letter = ["D","L","M","M","J","V","S"][new Date(y,m-1,dd).getDay()];
+    week += `<span class="${goalMet(d)?"on":""} ${i===0?"today":""}">${letter}</span>`;
+  }
+  const goalMsg = score >= goal ? "Objectif atteint 🎉"
+    : (streak > 0 ? `Encore ${goal-score} pour garder ta série` : `${goal} cartes pour lancer ta série`);
+
+  el.innerHTML = `
+    <div class="today-head">
+      <div class="eyebrow">${esc(dateTxt)}</div>
+      <h1 class="h-title">Aujourd'hui</h1>
+    </div>
+    <div class="stat-row">
+      <div class="panel streak-box">
+        <div class="streak-num"><span class="fl">🔥</span>${streak}</div>
+        <div class="streak-lbl">${streak>1?"jours de suite":"jour de suite"}</div>
+        <div class="week">${week}</div>
+      </div>
+      <div class="panel goal-box">
+        <div>
+          <div class="goal-top"><b>${Math.min(score,goal)}/${goal}</b><span>objectif</span></div>
+          <div class="bar" style="margin-top:8px"><i style="width:${pct*100}%"></i></div>
+        </div>
+        <div class="goal-msg">${goalMsg}</div>
+      </div>
+    </div>
+    <button class="daily-card" id="dailyBtn" style="background:${dcat.bg}">
+      <div class="eyebrow">Carte du jour</div>
+      <div class="dc-emoji">${iconHtml(dcat)}</div>
+      <div class="dc-title">${esc(dc.cat)}</div>
+      <div class="dc-sub">${esc(dcat.label)} · ${cardSize(dc)} ${(()=>{ const u = dcat.unit || "mots"; return cardSize(dc)>1 ? u : u.replace(/s$/,""); })()}</div>
+      <span class="dc-cta ${done?"done":""}">${done ? "✓ Faite aujourd'hui" : "Découvrir ▸"}</span>
+    </button>
+    <div class="act-row">
+      <button class="act" id="reviewBtn">
+        <div class="ic">🔁</div>
+        <b>Réviser${due>0?`<span class="pill">${due}</span>`:""}</b>
+        <span>${due>0 ? "cartes à revoir" : "rien pour l'instant"}</span>
+      </button>
+      <button class="act" id="quizBtn">
+        <div class="ic">🎯</div>
+        <b>Quiz</b>
+        <span>10 questions</span>
+      </button>
+    </div>
+    <div class="panel level-row">
+      <div class="level-top"><b>${LEVEL_EMOJI[lv.i]} ${lv.cur.n}</b><span>${lv.nxt ? `${S.xp}/${lv.nxt.xp} XP` : `${S.xp} XP`}</span></div>
+      <div class="bar"><i style="width:${lv.pct*100}%"></i></div>
+    </div>`;
+  $("dailyBtn").onclick = ()=>{
+    cardHistory = []; currentCard = null;
+    ctx = { origin:"daily", categoryId:null, pool:null };
+    renderCard(dc);
+  };
+  $("reviewBtn").onclick = startReview;
+  $("quizBtn").onclick = ()=>{ renderQuizSetup(); showView("quizSetup"); };
+}
+
+/* ---------- RÉSULTAT (quiz / révision) ---------- */
+function showResult(o){
+  const el = $("resultView");
+  el.innerHTML = `
+    <div class="res-emoji">${o.emoji}</div>
+    <h2 class="res-title">${o.title}</h2>
+    <div class="res-lines">${o.lines.join("<br>")}</div>`;
+  const p = document.createElement("button");
+  p.className = "primary-btn"; p.textContent = o.primary.label; p.onclick = o.primary.fn;
+  el.appendChild(p);
+  if(o.secondary){
+    const s = document.createElement("button");
+    s.className = "secondary-btn"; s.textContent = o.secondary.label; s.onclick = o.secondary.fn;
+    el.appendChild(s);
+  }
+  showView("result");
+}
+
+/* ---------- QUIZ ---------- */
+const LANG_CATS = ["anglais","italien","luxembourgeois","darija"];
+let quizSel = "mix";
+let quiz = null;
+
+function renderQuizSetup(){
+  const box = $("quizChips");
+  box.innerHTML = "";
+  const opts = [{ id:"mix", label:"Mélange", icon:"🎲" }].concat(
+    LANG_CATS.map(id=>{ const c = catById(id); return { id, label:c.label, icon:iconHtml(c) }; })
+  );
+  opts.forEach(o=>{
+    const b = document.createElement("button");
+    const locked = o.id !== "mix" && isLockedCat(o.id);
+    b.className = "chip" + (quizSel===o.id ? " on" : "") + (locked ? " locked" : "");
+    b.innerHTML = `${o.icon} ${esc(o.label)}${locked?" 🔒":""}`;
+    b.onclick = ()=>{
+      if(locked){ openPaywall(); return; }
+      quizSel = o.id; renderQuizSetup();
+    };
+    box.appendChild(b);
+  });
+}
+function shuffle(a){
+  a = a.slice();
+  for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; }
+  return a;
+}
+function quizPoolFor(catIds){
+  const out = [];
+  catIds.forEach(catId=>{
+    CATEGORY_DATA[catId].deck.forEach(card=>{
+      if(!card.items) return;
+      card.items.forEach(([fr,tr,ph])=>out.push({ cardId:card.id, catId, fr, tr, ph }));
+    });
+  });
+  return out;
+}
+function makeQuestion(item, catPool){
+  const trCount = catPool.filter(x=>x.tr===item.tr).length;
+  const reverse = trCount === 1 && Math.random() < 0.3;
+  const prompt = reverse ? item.tr : item.fr;
+  const answer = reverse ? item.fr : item.tr;
+  const key = reverse ? "fr" : "tr";
+  const cands = shuffle(catPool.filter(x=>x.cardId!==item.cardId || x.fr!==item.fr))
+    .filter(x=>x.fr!==item.fr && x.tr!==item.tr && x[key]!==answer)
+    .slice(0,30)
+    .sort((a,b)=> Math.abs(a[key].length-answer.length) - Math.abs(b[key].length-answer.length));
+  const seen = new Set([answer]), picks = [];
+  for(const c of cands){
+    if(seen.has(c[key])) continue;
+    seen.add(c[key]); picks.push(c[key]);
+    if(picks.length === 3) break;
+  }
+  if(picks.length < 3) return null;
+  return { item, prompt, answer, reverse, options: shuffle([answer, ...picks]) };
+}
+function startQuiz(){
+  if(!quizAllowed()){ openPaywall(); return; }
+  const catIds = quizSel === "mix" ? LANG_CATS.filter(id=>!isLockedCat(id)) : [quizSel];
+  const pool = shuffle(quizPoolFor(catIds));
+  const byCat = {};
+  quizPoolFor(LANG_CATS).forEach(x=>{ (byCat[x.catId] = byCat[x.catId] || []).push(x); });
+  const qs = [], usedFr = new Set();
+  for(const it of pool){
+    if(qs.length >= 10) break;
+    const k = it.catId + "|" + it.fr;
+    if(usedFr.has(k)) continue;
+    const q = makeQuestion(it, byCat[it.catId]);
+    if(q){ usedFr.add(k); qs.push(q); }
+  }
+  if(qs.length < 4){ toast("Pas assez de mots pour ce quiz"); return; }
+  quiz = { qs, i:0, correct:0, locked:false, sel:quizSel };
+  if(!isPremium()){
+    const t = todayStr();
+    S.quizDay = { d:t, n: (S.quizDay && S.quizDay.d===t ? S.quizDay.n : 0) + 1 };
+    saveState();
+  }
+  showView("quiz");
+  renderQuestion();
+}
+function renderQuestion(){
+  const q = quiz.qs[quiz.i];
+  const cat = catById(q.item.catId);
+  quiz.locked = false;
+  $("quizCount").textContent = (quiz.i+1) + "/" + quiz.qs.length;
+  $("quizBar").style.width = (quiz.i / quiz.qs.length * 100) + "%";
+  $("quizTag").innerHTML = `${iconHtml(cat)} ${esc(cat.label)} · ${q.reverse ? "Que veut dire ?" : "Comment dit-on ?"}`;
+  const qEl = $("quizQ");
+  qEl.textContent = q.prompt;
+  qEl.classList.toggle("long", q.prompt.length > 34);
+  $("quizPh").textContent = q.reverse && q.item.ph ? `/${q.item.ph}/` : "";
+  const box = $("quizOpts");
+  box.innerHTML = "";
+  q.options.forEach(opt=>{
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = opt;
+    b.onclick = ()=>answerQuiz(b, opt);
+    box.appendChild(b);
+  });
+  $("quizNext").hidden = true;
+}
+function answerQuiz(btn, opt){
+  if(quiz.locked) return;
+  quiz.locked = true;
+  const q = quiz.qs[quiz.i];
+  const ok = opt === q.answer;
+  [...$("quizOpts").children].forEach(b=>{
+    if(b.textContent === q.answer) b.classList.add("good");
+    else if(b === btn) b.classList.add("bad");
+    else b.classList.add("dim");
+  });
+  touchDay(todayStr()).q++;
+  if(ok){ quiz.correct++; addXp(3); }
+  else quizMiss(q.item.cardId);
+  if(!q.reverse && q.item.ph) $("quizPh").textContent = `/${q.item.ph}/`;
+  afterActivity();
+  const last = quiz.i === quiz.qs.length - 1;
+  const nx = $("quizNext");
+  nx.textContent = last ? "VOIR LE RÉSULTAT" : "SUIVANT ▸";
+  nx.hidden = false;
+}
+$("quizNext").addEventListener("click", ()=>{
+  if(!quiz) return;
+  if(quiz.i < quiz.qs.length - 1){ quiz.i++; renderQuestion(); return; }
+  finishQuiz();
+});
+function finishQuiz(){
+  const total = quiz.qs.length, c = quiz.correct, perfect = c === total;
+  S.quizzes++;
+  if(perfect){ S.perfectQuizzes++; addXp(20); }
+  afterActivity();
+  const sel = quiz.sel;
+  quiz = null;
+  showResult({
+    emoji: perfect ? "💎" : c >= total*0.7 ? "🎉" : c >= total*0.4 ? "👍" : "💪",
+    title: `${c}/${total}`,
+    lines: [
+      perfect ? "Sans faute !" : c >= total*0.7 ? "Très bien joué." : "Les mots ratés sont dans ta révision.",
+      `<b>+${c*3 + (perfect?20:0)} XP</b>`
+    ],
+    primary: { label:"REJOUER", fn:()=>{ quizSel = sel; startQuiz(); } },
+    secondary: { label:"RETOUR", fn:()=>{ renderToday(); showView("today"); } }
+  });
+}
+$("quizStartBtn").addEventListener("click", startQuiz);
+$("quizSetupBack").addEventListener("click", ()=>{ renderToday(); showView("today"); });
+$("quizExit").addEventListener("click", ()=>{ quiz = null; renderToday(); showView("today"); });
+
+/* ---------- THÈMES ---------- */
+const THEMES = [
+  { id:"papier", name:"Papier", color:"#E8E2D5" },
+  { id:"sauge",  name:"Sauge",  color:"#DDE5D6" },
+  { id:"ocean",  name:"Océan",  color:"#D9E3EC" },
+  { id:"rose",   name:"Rose",   color:"#EEDDDC" },
+  { id:"sepia",  name:"Sépia",  color:"#E3D3B8" },
+  { id:"nuit",   name:"Nuit",   color:"#1B1816" }
+];
+function applyTheme(id){
+  const root = document.documentElement;
+  if(id && id !== "papier") root.setAttribute("data-theme", id); else root.removeAttribute("data-theme");
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", getComputedStyle(root).getPropertyValue("--bg").trim() || "#E8E2D5");
+}
+
+/* ---------- PROFIL ---------- */
+function renderProfile(){
+  const el = $("profileView");
+  const t = todayStr();
+  const lv = levelInfo();
+  const seen = seenCount(), mastered = masteredCount();
+
+  /* 7 derniers jours */
+  const days = [];
+  for(let i=6;i>=0;i--){ const d = addDays(t,-i); days.push({ d, s:dayScore(d), on:goalMet(d) }); }
+  const maxS = Math.max(S.goal, ...days.map(x=>x.s), 1);
+  const chart = days.map(x=>{
+    const [y,m,dd] = x.d.split("-").map(Number);
+    const letter = ["D","L","M","M","J","V","S"][new Date(y,m-1,dd).getDay()];
+    return `<div><i class="${x.on?"on":""}" style="height:${Math.max(4, x.s/maxS*100)}%"></i><span>${letter}</span></div>`;
+  }).join("");
+
+  const catRows = availableCats().map(c=>{
+    const deck = CATEGORY_DATA[c.id].deck;
+    const s = deck.filter(card=>S.cards[card.id] && S.cards[card.id].seen>0).length;
+    return `<div class="r"><span>${iconHtml(c)}</span><div><div>${esc(c.label)}</div><div class="bar" style="margin-top:4px"><i style="width:${s/deck.length*100}%"></i></div></div><small>${s}/${deck.length}</small></div>`;
+  }).join("");
+
+  const badges = BADGES.map(b=>`<div class="badge ${S.badges[b.id]?"":"off"}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("");
+
+  el.innerHTML = `
+    <div class="today-head"><div class="eyebrow">Ta progression</div><h1 class="h-title">Profil</h1></div>
+    <div class="panel lvl-big">
+      <div class="lvl-badge">${LEVEL_EMOJI[lv.i]}</div>
+      <div style="flex:1">
+        <div class="t">${lv.cur.n}</div>
+        <div class="x">${lv.nxt ? `${S.xp} / ${lv.nxt.xp} XP vers « ${lv.nxt.n} »` : `${S.xp} XP · niveau max`}</div>
+        <div class="bar" style="margin-top:7px"><i style="width:${lv.pct*100}%"></i></div>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat"><b>🔥 ${currentStreak()}</b><span>série en cours</span></div>
+      <div class="stat"><b>${S.bestStreak}</b><span>meilleure série</span></div>
+      <div class="stat"><b>${seen}</b><span>cartes vues</span></div>
+      <div class="stat"><b>${mastered}</b><span>cartes bien ancrées</span></div>
+    </div>
+    <div class="panel">
+      <h3 class="sec-title">7 derniers jours</h3>
+      <div class="week-chart">${chart}</div>
+    </div>
+    <div class="panel">
+      <h3 class="sec-title">Par catégorie</h3>
+      <div class="cat-prog">${catRows}</div>
+    </div>
+    <div class="panel">
+      <h3 class="sec-title">Badges</h3>
+      <div class="badges">${badges}</div>
+    </div>
+    <div class="panel">
+      <h3 class="sec-title">Objectif quotidien</h3>
+      <div class="chips" id="goalChips"></div>
+    </div>
+    <div class="panel">
+      <h3 class="sec-title">Thème</h3>
+      <div class="chips" id="themeChips"></div>
+    </div>
+    <button class="premium-card" id="premiumBtn"></button>
+    <button class="danger-link" id="resetBtn">Réinitialiser ma progression</button>`;
+
+  const gc = $("goalChips");
+  [3,5,10,20].forEach(n=>{
+    const b = document.createElement("button");
+    b.className = "chip" + (S.goal===n ? " on" : "");
+    b.textContent = n + " / jour";
+    b.onclick = ()=>{ setGoal(n); renderProfile(); };
+    gc.appendChild(b);
+  });
+  const tc = $("themeChips");
+  THEMES.forEach(th=>{
+    const locked = isLockedTheme(th.id);
+    const b = document.createElement("button");
+    b.className = "chip" + ((S.theme||"papier")===th.id ? " on" : "") + (locked ? " locked" : "");
+    b.innerHTML = `<span class="swatch" style="background:${th.color}"></span>${th.name}${locked?" 🔒":""}`;
+    b.onclick = ()=>{
+      if(locked){ openPaywall(); return; }
+      S.theme = th.id; saveState(); applyTheme(th.id); renderProfile();
+    };
+    tc.appendChild(b);
+  });
+  const pb = $("premiumBtn");
+  if(PAYWALL_ACTIVE && S.premium){
+    pb.innerHTML = `<b>I Know Premium ✓</b><span>Merci ! Toutes les catégories, quiz et thèmes sont débloqués.</span>`;
+  } else {
+    pb.innerHTML = `<b>I Know Premium${PAYWALL_ACTIVE?"":" · bientôt"}</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · toutes les catégories, quiz illimités, tous les thèmes.</span>`;
+  }
+  pb.onclick = openPaywall;
+  $("resetBtn").onclick = ()=>{
+    if(!confirm("Effacer ta série, tes niveaux et ta révision ? Tes favoris sont conservés.")) return;
+    S = defaultState(); S.onboarded = true; saveState(); applyTheme("papier"); renderProfile(); renderToday();
+    toast("Progression réinitialisée");
+  };
+}
+
+/* ---------- PREMIUM ---------- */
+const PRICE_TXT = { month:"1,99 €", year:"10 €", yearPerMonth:"0,83 €" };
+let plan = "year";
+function openPaywall(){ renderPaywall(); showView("paywall"); }
+function renderPaywall(){
+  const el = $("paywallView");
+  const row = (label,a,b)=>`<div class="pw-row"><div>${label}</div><div>${a}</div><div>${b}</div></div>`;
+  const Y = '<span class="yes">✓</span>', N = '<span class="no">✕</span>';
+  const canBuy = PAYWALL_ACTIVE && CHECKOUT_URLS[plan];
+  el.innerHTML = `
+    <button class="back-link" id="pwBack">◂ Retour</button>
+    <div><div class="eyebrow">I Know Premium</div><h1 class="h-title">Ce que tu débloques</h1></div>
+    <div class="pw-table">
+      <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM</div></div>
+      ${row("Carte du jour",Y,Y)}
+      ${row("Révision espacée",Y,Y)}
+      ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
+      ${row("Catégories",`<small>Anglais</small>`,"Toutes")}
+      ${row("Thèmes de couleur",`<small>1</small>`,"6")}
+    </div>
+    <div class="plans">
+      <button class="plan ${plan==="year"?"on":""}" data-plan="year">
+        <span class="tag">−58 %</span>
+        <div><div class="pn">Annuel</div><div class="ps">soit ${PRICE_TXT.yearPerMonth} par mois</div></div>
+        <div class="pp">${PRICE_TXT.year}<div class="ps">par an</div></div>
+      </button>
+      <button class="plan ${plan==="month"?"on":""}" data-plan="month">
+        <div><div class="pn">Mensuel</div><div class="ps">facturé chaque mois</div></div>
+        <div class="pp">${PRICE_TXT.month}<div class="ps">par mois</div></div>
+      </button>
+    </div>
+    <button class="primary-btn" id="pwCta" ${canBuy?"":"disabled"}>${PAYWALL_ACTIVE ? "PASSER PREMIUM" : "BIENTÔT DISPONIBLE"}</button>
+    <p class="sub" style="text-align:center;margin:0">${PAYWALL_ACTIVE ? "" : "Le paiement n'est pas encore ouvert : tout reste gratuit pour l'instant."}</p>`;
+  $("pwBack").onclick = ()=>{ renderProfile(); showView("profile"); };
+  el.querySelectorAll(".plan").forEach(b=> b.onclick = ()=>{ plan = b.dataset.plan; renderPaywall(); });
+  $("pwCta").onclick = ()=>{ if(canBuy) window.location.href = CHECKOUT_URLS[plan]; };
+}
+
+/* ---------- ONBOARDING ---------- */
+const OB_STEPS = [
+  { e:"📚", h:"Un savoir par jour", p:"I Know te propose une carte chaque jour, en plus de toutes les catégories : langues, histoire, politique, géographie, nutrition…" },
+  { e:"🤔", h:"Devine, puis révèle", p:"Essaie de trouver la réponse avant de la voir : c'est comme ça qu'on retient. Dis « Je savais » ou « À revoir » : les cartes difficiles reviennent plus vite." },
+  { e:"🎯", h:"Ton objectif", p:"Combien de cartes par jour ? Atteins-le pour faire grandir ta série.", goal:true }
+];
+let obIndex = 0;
+function startOnboarding(){ obIndex = 0; $("onboarding").classList.add("showing"); renderOnboarding(); }
+function endOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); }
+function renderOnboarding(){
+  const s = OB_STEPS[obIndex], last = obIndex === OB_STEPS.length-1;
+  const el = $("onboarding");
+  el.innerHTML = `
+    <button class="ob-skip" id="obSkip">${last?"":"Passer"}</button>
+    <div class="ob-body">
+      <div class="ob-emoji">${s.e}</div>
+      <h2 class="ob-h">${s.h}</h2>
+      <p class="ob-p">${s.p}</p>
+      ${s.goal ? '<div class="chips" id="obGoals" style="justify-content:center"></div>' : ""}
+    </div>
+    <div class="ob-foot">
+      <div class="ob-dots">${OB_STEPS.map((_,i)=>`<i class="${i===obIndex?"on":""}"></i>`).join("")}</div>
+      <button class="primary-btn" id="obNext">${last ? "COMMENCER" : "SUIVANT"}</button>
+    </div>`;
+  $("obSkip").onclick = endOnboarding;
+  $("obNext").onclick = ()=>{ if(last) endOnboarding(); else { obIndex++; renderOnboarding(); } };
+  if(s.goal){
+    const box = $("obGoals");
+    [3,5,10,20].forEach(n=>{
+      const b = document.createElement("button");
+      b.className = "chip" + (S.goal===n ? " on" : "");
+      b.textContent = n + " / jour";
+      b.onclick = ()=>{ setGoal(n); renderOnboarding(); };
+      box.appendChild(b);
+    });
+  }
+}
 
 function syncNavHeight(){
   const navH = document.querySelector(".bottomnav").offsetHeight;
   document.documentElement.style.setProperty("--navh", navH + "px");
 }
 
-setFavs(getFavs());
+loadState();
+applyTheme(S.theme);
+setFavs(getFavs().filter(id=>resolveCardById(id)));
 renderCategories();
+renderToday();
+showView("today");
 syncNavHeight();
 const navIndicatorEl = document.getElementById("navIndicator");
 navIndicatorEl.style.transition = "none";
@@ -3126,6 +3902,12 @@ window.addEventListener("resize", ()=>{
   }
 });
 window.addEventListener("orientationchange", syncNavHeight);
+if(!S.onboarded) startOnboarding();
+
+/* Hors ligne : le service worker garde l'app en cache (sw.js, à la racine du site). */
+if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
+  window.addEventListener("load", ()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); });
+}
 
 /* © 2026 Yanis Bensaadi. I Know. Tous droits réservés. */
 console.log("%cI Know %c· © 2026 Yanis Bensaadi. Tous droits réservés. Auteur domicilié en France.", "font-weight:700;color:#2C2523;font-size:13px;", "color:#6B5F55;font-size:12px;");
