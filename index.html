@@ -3167,11 +3167,16 @@ function moveNavIndicator(){
 }
 window.addEventListener("resize", moveNavIndicator);
 
+/* Historique des cartes tirées au hasard : on évite de reproposer
+   les ~30 dernières (ou la moitié du paquet si il est petit). */
+let recentIds = [];
 function pickRandom(pool, deck){
   deck = deck || DECK;
   const source = pool ? deck.filter(c=>pool.includes(c.id)) : deck;
-  let choices = source;
-  if(source.length > 1) choices = source.filter(c=>c.id!==lastId);
+  const keep = Math.min(30, Math.floor(source.length/2));
+  let choices = source.filter(c=>!recentIds.slice(-keep).includes(c.id));
+  if(!choices.length) choices = source.filter(c=>c.id!==lastId);
+  if(!choices.length) choices = source;
   /* Tirage pondéré : les cartes jamais vues ou à revoir sortent plus
      souvent, les cartes bien ancrées plus rarement. */
   const weights = choices.map(cardWeight);
@@ -3179,19 +3184,25 @@ function pickRandom(pool, deck){
   let r = Math.random()*total, card = choices[choices.length-1];
   for(let i=0;i<choices.length;i++){ r -= weights[i]; if(r<=0){ card = choices[i]; break; } }
   lastId = card.id;
+  recentIds.push(card.id); if(recentIds.length>80) recentIds.shift();
   return card;
 }
 
-/* Tirage "au hasard" cross-catégories : on tire d'abord une catégorie
-   au hasard (chaque catégorie a la même chance), puis une carte
-   pondérée DANS cette catégorie. */
+/* Tirage "au hasard" cross-catégories : catégorie tirée avec un poids
+   proportionnel à la racine de sa taille (les grosses sortent plus, sans
+   écraser les petites), en évitant les 2 dernières, puis carte pondérée
+   en évitant les cartes récentes. */
+let recentCats = [];
 function pickRandomGlobal(){
   let cats = activeCats().filter(c=>!isLockedCat(c.id));
   if(!cats.length) cats = availableCats().filter(c=>!isLockedCat(c.id));
-  let catChoices = cats;
-  if(cats.length > 1) catChoices = cats.filter(c=>c.id!==lastCatId);
-  const cat = catChoices[Math.floor(Math.random()*catChoices.length)];
+  let catChoices = cats.filter(c=>!recentCats.slice(-Math.min(2,cats.length-1)).includes(c.id));
+  if(!catChoices.length) catChoices = cats;
+  const w = catChoices.map(c=>Math.sqrt(CATEGORY_DATA[c.id].deck.length));
+  let r = Math.random()*w.reduce((a,b)=>a+b,0), cat = catChoices[catChoices.length-1];
+  for(let i=0;i<catChoices.length;i++){ r -= w[i]; if(r<=0){ cat = catChoices[i]; break; } }
   lastCatId = cat.id;
+  recentCats.push(cat.id); if(recentCats.length>6) recentCats.shift();
   return pickRandom(null, CATEGORY_DATA[cat.id].deck);
 }
 
