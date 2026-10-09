@@ -5970,7 +5970,7 @@ function maybeTip(tab, viewName){
 
 function syncNavHeight(){
   const navH = document.querySelector(".bottomnav").offsetHeight;
-  document.documentElement.style.setProperty("--navh", navH + "px");
+  document.documentElement.style.setProperty("--navh", (navH + 14) + "px");
 }
 
 loadState();
