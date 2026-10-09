@@ -1757,6 +1757,9 @@
   :root[data-theme="nuit"] .nav-btn.active{ color:#9DB4FF; }
   :root[data-theme="nuit"] .ob-plan .pw-row > div:last-child, :root[data-theme="nuit"] #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(240,194,94,.22),rgba(240,194,94,.10)) !important; color:#F5D27A !important; }
   :root[data-theme="nuit"] .ob-plan .plan.on .ps, :root[data-theme="nuit"] #paywallView .plan.on .ps{ color:#5A3F10; }
+  #quizView.scroll-view{ padding-bottom:calc(var(--navh,70px) + 24px); }
+  #quizView .quiz-card{ min-height:0; padding:16px 16px; }
+  @media (max-height:760px){ #quizView .quiz-opts{ gap:6px; } #quizView .opt{ padding-top:10px; padding-bottom:10px; } }
   .ob-welcome{ gap:10px; }
   .ob-logo{ width:112px; height:112px; border-radius:26px; box-shadow:0 18px 40px -16px rgba(22,48,143,.45); animation:splashIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
   .ob-brand{ font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:40px; color:var(--ink); margin-top:8px; }
@@ -2004,7 +2007,7 @@
     </div>
 
     <!-- QUIZ : questions -->
-    <div class="view" id="quizView">
+    <div class="view scroll-view" id="quizView">
       <div class="quiz-top">
         <button class="card-exit-btn" id="quizExit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         <div class="bar"><i id="quizBar" style="width:0%"></i></div>
@@ -5379,7 +5382,7 @@ function renderQuestion(){
     b.onclick = ()=>answerQuiz(b, opt);
     box.appendChild(b);
   });
-  $("quizNext").hidden = true;
+  $("quizNext").hidden = true; try{ $("quizView").scrollTop = 0; }catch(e){}
   $("quizFb").hidden = true;
   const qc = document.querySelector("#quizView .quiz-card");
   qc.classList.remove("flash-good","flash-bad");
@@ -5450,6 +5453,7 @@ function answerQuiz(btn, opt){
   const nx = $("quizNext");
   nx.textContent = last ? "VOIR LE RÉSULTAT" : "SUIVANT ▸";
   nx.hidden = false;
+  setTimeout(()=>{ try{ nx.scrollIntoView({block:"center", behavior:"smooth"}); }catch(e){} }, 150);
 }
 $("quizNext").addEventListener("click", ()=>{
   if(!quiz) return;
