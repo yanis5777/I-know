@@ -5000,7 +5000,7 @@ function wordQuestion(item, catPool){
 function factQuestion(item, catPool, allPool, fresh){
   const modes = [];
   const detailOf = x => (x.points||[]).filter(p=>p && p.length>=25 && p.length<=95);
-  if(item.clue) modes.push("what");
+  if(item.clue && !/\?\s*$/.test(item.title)) modes.push("what");
   if(item.date) modes.push("when");
   if(detailOf(item).length) modes.push("detail");
   /* juste après la lecture d'une carte, le titre est encore à l'écran : on teste un détail ou la date */
@@ -5028,7 +5028,7 @@ function factQuestion(item, catPool, allPool, fresh){
   const key = m2 === "what" ? "title" : "date";
   const prompt = m2 === "what" ? item.clue : item.title;
   const answer = item[key];
-  const usable = x => x.kind==="fact" && x[key] && x[key]!==answer;
+  const usable = x => x.kind==="fact" && x[key] && x[key]!==answer && !(key==="title" && /\?\s*$/.test(x.title));
   let picks = [];
   if(m2 === "when"){
     /* fausses dates de même forme que la bonne, proches dans le temps */
@@ -5038,8 +5038,10 @@ function factQuestion(item, catPool, allPool, fresh){
   } else {
     /* faux titres de même nature : même présence de dates entre parenthèses, longueur voisine */
     const hasP = t => /\(\s*[\d~c.\-–]/.test(t), len = answer.length;
-    const like = shuffle(catPool.filter(usable)).filter(x=>hasP(x.title)===hasP(answer) && x.title.length>len*0.5 && x.title.length<len*2+6);
-    picks = uniquePicks(like, key, answer, 3);
+    const okT = x => !/\?\s*$/.test(x.title);
+    const sib = shuffle(catPool.filter(x=>usable(x) && okT(x) && x.cardId===item.cardId));
+    const like = shuffle(catPool.filter(x=>usable(x) && okT(x) && x.cardId!==item.cardId)).filter(x=>hasP(x.title)===hasP(answer) && x.title.length>len*0.5 && x.title.length<len*2+6);
+    picks = uniquePicks(sib.concat(like), key, answer, 3);
   }
   if(picks.length < 3) picks = uniquePicks(shuffle(catPool.filter(usable)), key, answer, 3);
   if(picks.length < 3){
