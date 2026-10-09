@@ -476,6 +476,11 @@
   .fact-block.hero.txt-s .fact-summary{ font-size:1.05em !important; line-height:1.5 !important; }
   .fact-block.hero.txt-xs .fact-summary{ font-size:0.95em !important; line-height:1.45 !important; max-width:none !important; }
   .fact-block.hero.ttl-s .fact-title{ font-size:1.5em !important; }
+  .fact-summary p{ margin:0 0 0.85em; } .fact-summary p:last-child{ margin-bottom:0; }
+  .fact-block.hero.txt-s .fact-summary, .fact-block.hero.txt-xs .fact-summary{ text-align:left; line-height:1.65 !important; white-space:normal; }
+  .fact-block.hero.txt-s .fact-title, .fact-block.hero.txt-xs .fact-title{ margin-bottom:0.5em; }
+  .fact-block.hero.txt-xs .fact-summary{ font-size:1em !important; }
+
   .fact-block.hero .fact-flip-face.back .fact-date{ display:none; }
   .fact-block.flip-fact.hero .fact-flip-face.back .fact-points{ font-size:0.98em; }
 
@@ -1154,9 +1159,9 @@
   .tile-edit{ background:var(--paper)!important; border:1.5px dashed var(--ink-soft,#6b6058); }
   .primary-btn:disabled{ opacity:.5; }
 
-  #miniq, #failq{ position:fixed; inset:0; z-index:3000; display:none; align-items:flex-end; justify-content:center; background:rgba(26,20,18,0.45); }
+  #miniq, #failq{ position:fixed; inset:0; z-index:3000; display:none; align-items:center; justify-content:center; padding:20px; background:var(--bg); -webkit-backdrop-filter:blur(24px); backdrop-filter:blur(24px); }
   #miniq.showing, #failq.showing{ display:flex; }
-  .mq-sheet{ width:100%; max-width:460px; background:var(--bg); border-radius:26px 26px 0 0; padding:20px 18px calc(22px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:12px; box-shadow:0 -12px 40px rgba(26,20,18,0.25); animation:mqUp .28s cubic-bezier(.2,.9,.3,1.1); max-height:92dvh; overflow-y:auto; }
+  .mq-sheet{ width:100%; max-width:460px; background:var(--paper,var(--bg)); border:1px solid var(--card-border); border-radius:26px; padding:22px 18px; max-height:calc(100% - 40px); overflow-y:auto; display:flex; flex-direction:column; gap:12px; box-shadow:0 24px 60px rgba(26,20,18,0.25); animation:mqPop .28s cubic-bezier(.2,.9,.3,1.1); max-height:92dvh; overflow-y:auto; }
   @media (min-width:600px){
     #miniq, #failq{ align-items:center; padding:24px; }
     .mq-sheet{ border-radius:26px; padding:24px 22px; max-width:480px; box-shadow:0 24px 60px rgba(26,20,18,0.35); animation:mqPop .25s cubic-bezier(.2,.9,.3,1.1); }
@@ -1188,8 +1193,8 @@
   .set-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--card-border); }
   .set-row:last-child{ border-bottom:none; }
   .set-row.col{ flex-direction:column; align-items:stretch; gap:10px; }
-  #goalChips{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
-  #goalChips .chip{ padding-left:4px; padding-right:4px; text-align:center; justify-content:center; }
+  #goalChips{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  #goalChips .ob-t{ text-align:left; }
   .set-lbl{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:15px; color:var(--ink); display:flex; flex-direction:column; gap:2px; min-width:0; }
   .set-lbl small{ font-weight:400; font-size:12.5px; color:var(--ink-soft); line-height:1.4; }
 
@@ -1205,6 +1210,10 @@
   .hero-title{ font-family:'Fraunces',serif; font-weight:700; font-style:italic; font-size:30px; line-height:1.12; color:#20180F; margin-top:auto; padding-top:18px; }
   .hero-sub{ font-size:14px; font-weight:500; color:rgba(32,24,15,0.82); margin:6px 0 16px; }
   .hero-cta{ align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:99px; background:var(--royal-btn,#2447C9); color:#fff; font-weight:700; font-size:15px; letter-spacing:.02em; box-shadow:0 8px 18px rgba(36,71,201,0.35); }
+  .hero-cta.big{ align-self:stretch; justify-content:center; padding:16px 20px; font-size:16px; animation:ctaPulse 1.8s ease-in-out infinite; }
+  @keyframes ctaPulse{ 0%,100%{ transform:scale(1); box-shadow:0 8px 18px rgba(36,71,201,0.35); } 50%{ transform:scale(1.03); box-shadow:0 12px 26px rgba(36,71,201,0.5); } }
+  @media (prefers-reduced-motion:reduce){ .hero-cta.big{ animation:none; } }
+  .new-hint{ margin:6px 4px 0; text-align:center; font-family:'IBM Plex Sans',sans-serif; font-size:14px; line-height:1.5; color:var(--ink-soft); }
   .hero-cta.done{ background:rgba(32,24,15,0.14); color:#20180F; box-shadow:none; }
   .more-link{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 10px; width:100%; background:none; border:none; cursor:pointer; padding:2px 0; font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14.5px; color:var(--royal); flex-shrink:0; }
   .more-link small{ font-weight:400; font-size:12.5px; color:var(--ink-soft); }
@@ -1279,6 +1288,288 @@
   .acct-box{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
   .acct-mail{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:15px; color:var(--ink); word-break:break-all; }
   .acct-sub{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:var(--ink-soft); line-height:1.5; }
+
+  /* Onboarding interactif */
+  .ob-demo{ width:100%; background:var(--card, #F1EBE1); border:1px solid var(--card-border); border-radius:22px; padding:22px 18px 16px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; box-shadow:0 18px 36px -18px rgba(0,0,0,.25); min-height:230px; justify-content:center; }
+  .ob-demo .d-date{ font-family:'IBM Plex Sans',sans-serif; font-weight:700; font-size:13px; color:#2447C9; background:rgba(36,71,201,.1); padding:4px 12px; border-radius:999px; }
+  .ob-demo .d-title{ font-family:'Fraunces',serif; font-weight:700; font-size:30px; color:var(--ink); line-height:1.1; }
+  .ob-demo .d-txt{ font-family:'IBM Plex Sans',sans-serif; font-weight:500; font-size:15.5px; line-height:1.5; color:var(--ink); }
+  .ob-demo ul{ margin:0; padding-left:1.2em; text-align:left; font-family:'IBM Plex Sans',sans-serif; font-size:15px; line-height:1.55; color:var(--ink); }
+  .ob-demo.flipping{ animation:factFlip .26s ease; }
+  .ob-act{ width:100%; display:flex; gap:10px; margin-top:12px; min-height:48px; }
+  .ob-act button{ flex:1; border-radius:14px; padding:13px 10px; font-family:'IBM Plex Sans',sans-serif; font-weight:700; font-size:13px; cursor:pointer; border:1.5px solid transparent; }
+  .ob-act .a-flip{ background:linear-gradient(155deg,#4A6BE0,#2447C9); color:#fff; box-shadow:0 10px 20px -8px rgba(36,71,201,.5); }
+  .ob-act .a-flip svg{ width:18px; height:18px; margin-right:8px; vertical-align:-3px; animation:flipBounce 1.8s ease-in-out infinite, flipSpin 1.8s ease-in-out infinite; }
+  .ob-act .a-ko{ background:#E8D7CF; color:#9A2E1F; border-color:#C98F82; }
+  .ob-act .a-ok{ background:#2E6B48; color:#fff; }
+  .ob-act button.dim{ opacity:.35; }
+  #onboarding .ob-body:has(.ob-plan){ justify-content:flex-start; overflow-y:auto; max-width:420px; width:100%; gap:10px; padding-top:4px; }
+  .ob-plan{ gap:12px; }
+  .ob-plan .plans{ display:flex; flex-direction:column; gap:8px; }
+  .ob-plan .plan{ cursor:pointer; }
+  /* Écran Premium de l'onboarding */
+  #onboarding .ob-body:has(.ob-plan) .ob-emoji{ font-size:40px; }
+  #onboarding .ob-body:has(.ob-plan) .ob-h{ font-size:26px; }
+  #onboarding .ob-body:has(.ob-plan) .ob-p{ font-size:14px; margin:0; }
+  .ob-plan .pw-table{ border:none; background:var(--paper); border-radius:18px; box-shadow:0 14px 30px -18px rgba(22,48,143,.45), 0 0 0 1px var(--card-border); overflow:hidden; }
+  #paywallView .pw-table{ border:none; background:var(--paper); border-radius:18px; box-shadow:0 14px 30px -18px rgba(22,48,143,.45), 0 0 0 1px var(--card-border); overflow:hidden; }
+  .ob-plan .pw-row{ grid-template-columns:1fr 84px 96px; }
+  #paywallView .pw-row{ grid-template-columns:1fr 84px 96px; }
+  .ob-plan .pw-row > div{ padding:9px 6px; }
+  #paywallView .pw-row > div{ padding:9px 6px; }
+  .ob-plan .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(36,71,201,.14),rgba(36,71,201,.07)); color:var(--royal-d,#16308F); }
+  #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(36,71,201,.14),rgba(36,71,201,.07)); color:var(--royal-d,#16308F); }
+  .ob-plan .pw-row.head > div:last-child{ background:linear-gradient(155deg,#4A6BE0,#2447C9); color:#fff; letter-spacing:.1em; font-weight:700; }
+  #paywallView .pw-row.head > div:last-child{ background:linear-gradient(155deg,#4A6BE0,#2447C9); color:#fff; letter-spacing:.1em; font-weight:700; }
+  .ob-plan .pw-row .yes{ display:inline-flex; width:20px; height:20px; border-radius:50%; align-items:center; justify-content:center; background:#2E6B48; color:#fff; font-size:12px; }
+  #paywallView .pw-row .yes{ display:inline-flex; width:20px; height:20px; border-radius:50%; align-items:center; justify-content:center; background:#2E6B48; color:#fff; font-size:12px; }
+  .ob-plan .pw-row .no{ display:inline-flex; width:20px; height:20px; border-radius:50%; align-items:center; justify-content:center; background:rgba(192,57,43,.14); font-size:11px; }
+  #paywallView .pw-row .no{ display:inline-flex; width:20px; height:20px; border-radius:50%; align-items:center; justify-content:center; background:rgba(192,57,43,.14); font-size:11px; }
+  .ob-plan .plan{ position:relative; display:flex; align-items:center; gap:12px; padding:14px 16px 14px 14px; border-radius:18px; border:2px solid var(--card-border); background:var(--paper); text-align:left; transition:transform .15s, box-shadow .15s, border-color .15s; }
+  #paywallView .plan{ position:relative; display:flex; align-items:center; gap:12px; padding:14px 16px 14px 14px; border-radius:18px; border:2px solid var(--card-border); background:var(--paper); text-align:left; transition:transform .15s, box-shadow .15s, border-color .15s; }
+  .ob-plan .plan > div:nth-of-type(1){ flex:1; }
+  #paywallView .plan > div:nth-of-type(1){ flex:1; }
+  .ob-plan .plan.on{ border-color:#2447C9; background:linear-gradient(180deg,rgba(36,71,201,.10),rgba(36,71,201,.04)); box-shadow:0 12px 26px -14px rgba(36,71,201,.6); }
+  #paywallView .plan.on{ border-color:#2447C9; background:linear-gradient(180deg,rgba(36,71,201,.10),rgba(36,71,201,.04)); box-shadow:0 12px 26px -14px rgba(36,71,201,.6); }
+  .ob-plan .plan .chk{ flex:none; width:22px; height:22px; border-radius:50%; border:2px solid var(--card-border); background:#fff; }
+  #paywallView .plan .chk{ flex:none; width:22px; height:22px; border-radius:50%; border:2px solid var(--card-border); background:#fff; }
+  .ob-plan .plan.on .chk{ border-color:#2447C9; background:#2447C9 radial-gradient(circle,#fff 0 3.5px,transparent 4px); }
+  #paywallView .plan.on .chk{ border-color:#2447C9; background:#2447C9 radial-gradient(circle,#fff 0 3.5px,transparent 4px); }
+  .ob-plan .plan .tag{ position:absolute; top:-10px; right:14px; left:auto; background:linear-gradient(155deg,#E8A33D,#C97F14); color:#fff; font-size:9.5px; letter-spacing:.08em; font-weight:700; padding:3px 9px; border-radius:99px; }
+  #paywallView .plan .tag{ position:absolute; top:-10px; right:14px; left:auto; background:linear-gradient(155deg,#E8A33D,#C97F14); color:#fff; font-size:9.5px; letter-spacing:.08em; font-weight:700; padding:3px 9px; border-radius:99px; }
+  .ob-plan .plan .pn{ font-family:'Fraunces',serif; font-size:18px; font-weight:700; }
+  #paywallView .plan .pn{ font-family:'Fraunces',serif; font-size:18px; font-weight:700; }
+  .ob-plan .plan .pp{ font-family:'Fraunces',serif; font-size:22px; font-weight:700; text-align:right; }
+  #paywallView .plan .pp{ font-family:'Fraunces',serif; font-size:22px; font-weight:700; text-align:right; }
+  .ob-plan .plan .ps{ font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:500; color:var(--ink-soft); }
+  #paywallView .plan .ps{ font-family:'IBM Plex Sans',sans-serif; font-size:12px; font-weight:500; color:var(--ink-soft); }
+
+  .ob-t{ gap:12px; border-radius:18px; border-width:2px; background:var(--paper); }
+  .ob-t em{ font-style:normal; font-size:26px; width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:rgba(36,71,201,.08); flex:none; }
+  .ob-t .ob-t-m{ flex:1; display:flex; flex-direction:column; align-items:flex-start; gap:1px; }
+  .ob-t u{ text-decoration:none; font-family:'IBM Plex Sans',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .ob-t .chk{ flex:none; width:22px; height:22px; border-radius:50%; border:2px solid var(--card-border); background:#fff; }
+  .ob-t.on{ border-color:#2447C9; background:linear-gradient(180deg,rgba(36,71,201,.10),rgba(36,71,201,.04)); box-shadow:0 12px 26px -14px rgba(36,71,201,.6); }
+  .ob-t.on .chk{ border-color:#2447C9; background:#2447C9 radial-gradient(circle,#fff 0 3.5px,transparent 4px); }
+  .ob-t.on u{ color:#2447C9; }
+
+  /* ===== Profil : style cartes modernes ===== */
+  .lvl-big{ background:linear-gradient(150deg,#3F62DB,#16308F) !important; border:none !important; color:#fff; padding:18px 16px !important; box-shadow:0 16px 30px -16px rgba(22,48,143,.7); }
+  .lvl-big .t{ color:#fff !important; font-size:24px !important; }
+  .lvl-big .x{ color:rgba(255,255,255,.8) !important; font-size:12px !important; }
+  .lvl-big .lvl-badge{ width:58px; height:58px; background:rgba(255,255,255,.18) !important; box-shadow:inset 0 0 0 2px rgba(255,255,255,.45); font-size:28px; }
+  .lvl-big .bar{ background:rgba(255,255,255,.22) !important; border:none !important; height:9px; }
+  .lvl-big .bar i{ background:linear-gradient(90deg,#F5C86A,#E8A33D) !important; }
+  .stat{ position:relative; padding:12px 14px !important; border-radius:18px !important; box-shadow:0 10px 22px -16px rgba(0,0,0,.35); }
+  .stat .s-ic{ font-style:normal; width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:19px; margin-bottom:8px; }
+  .stat .s-ic.c1{ background:rgba(232,120,40,.16); } .stat .s-ic.c2{ background:rgba(232,163,61,.2); }
+  .stat .s-ic.c3{ background:rgba(36,71,201,.13); } .stat .s-ic.c4{ background:rgba(46,107,72,.16); }
+  .stat b{ font-size:26px !important; line-height:1; }
+  .stat span{ display:block; margin-top:3px; font-size:11.5px; }
+  .week-chart div.today span{ color:#2447C9; font-weight:700; }
+  .week-chart i{ background:rgba(36,71,201,.10) !important; border:none !important; }
+  .week-chart i.on{ background:linear-gradient(180deg,#4A6BE0,#2447C9) !important; }
+  .cat-prog .r{ padding:9px 10px; border-radius:14px; background:rgba(255,255,255,.4); border:1px solid var(--card-border); }
+  .cat-prog .bar{ height:7px; border:none !important; }
+  .cat-prog .bar i{ background:linear-gradient(90deg,#4A6BE0,#2447C9) !important; }
+  .cat-prog .r small{ font-weight:700; color:#2447C9; background:rgba(36,71,201,.1); padding:3px 8px; border-radius:99px; }
+  .badge{ border-radius:16px !important; }
+  .badge.got{ background:linear-gradient(180deg,rgba(232,163,61,.2),rgba(232,163,61,.06)) !important; border-color:rgba(201,127,20,.5) !important; box-shadow:0 8px 18px -12px rgba(201,127,20,.6); }
+  .seg{ border-radius:16px !important; }
+  .premium-card{ position:relative; border-radius:22px !important; padding:18px 18px 16px !important; box-shadow:0 18px 34px -16px rgba(22,48,143,.7); background:linear-gradient(150deg,#3F62DB,#16308F) !important; overflow:hidden; }
+  .premium-card::after{ content:""; position:absolute; right:-40px; top:-40px; width:140px; height:140px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.22),transparent 65%); }
+  .premium-card .pc-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .premium-card .pc-top em{ font-style:normal; font-size:26px; }
+  .premium-card .pc-top u{ text-decoration:none; font-family:'IBM Plex Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:.1em; color:#fff; background:linear-gradient(155deg,#E8A33D,#C97F14); padding:4px 10px; border-radius:99px; }
+  .premium-card b{ font-size:22px !important; }
+  .premium-card span{ font-size:12.5px !important; opacity:.88 !important; }
+  .set-panel{ border-radius:20px !important; }
+  .goal-grid{ display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .goal-grid .ob-t{ width:auto; min-width:0; }
+  .ob-t.compact{ padding:10px 10px; gap:9px; }
+  .ob-t.compact em{ width:36px; height:36px; font-size:20px; border-radius:11px; }
+  .ob-t.compact .ob-t-m b{ font-size:15px; }
+  .ob-t.compact .ob-t-m span{ font-size:11.5px; }
+  .ob-t.compact .chk{ width:20px; height:20px; }
+  .switch{ display:inline-flex; align-items:center; gap:10px; padding:6px 14px 6px 6px; border-radius:99px; border:1.5px solid var(--card-border); background:var(--paper); cursor:pointer; font-family:'IBM Plex Sans',sans-serif; font-weight:700; font-size:13px; color:var(--ink-soft); align-self:flex-start; }
+  .switch i{ width:44px; height:26px; border-radius:99px; background:#CFC7BC; position:relative; transition:background .2s; flex:none; }
+  .switch i::after{ content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,.3); transition:transform .2s; }
+  .switch.on i{ background:#2E6B48; } .switch.on i::after{ transform:translateX(18px); } .switch.on{ color:#2E6B48; border-color:rgba(46,107,72,.45); }
+  #themeChips .chip{ position:relative; padding-right:14px; }
+  #themeChips .chip.on{ box-shadow:0 0 0 2px #2447C9 inset; }
+  .tchk{ font-style:normal; font-size:11px; font-weight:700; }
+
+  /* Choix des catégories */
+  .int-body{ justify-content:flex-start !important; overflow-y:auto; width:100%; max-width:420px; gap:10px; padding-top:4px; }
+  .int-body .ob-emoji{ font-size:40px; } .int-body .ob-h{ font-size:25px; }
+  .int-note{ width:100%; text-align:left; font-family:'IBM Plex Sans',sans-serif; font-size:13px; line-height:1.45; padding:11px 14px; border-radius:14px; color:var(--ink); }
+  .int-note.free{ background:rgba(192,57,43,.09); border:1px solid rgba(192,57,43,.3); }
+  .int-note.prem{ background:rgba(36,71,201,.08); border:1px solid rgba(36,71,201,.25); }
+  .int-note u{ color:#2447C9; font-weight:700; cursor:pointer; }
+  .int-list{ width:100%; display:flex; flex-direction:column; gap:8px; padding-bottom:6px; }
+  .int-card{ position:relative; display:flex; align-items:center; gap:12px; width:100%; padding:10px 14px 10px 10px; border-radius:18px; border:2px solid var(--card-border); background:var(--paper); cursor:pointer; text-align:left; color:var(--ink); transition:transform .12s, box-shadow .15s; }
+  .int-card:active{ transform:scale(.985); }
+  .int-card .ic{ width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:23px; flex:none; }
+  .int-card .nm{ flex:1; display:flex; flex-direction:column; gap:1px; min-width:0; }
+  .int-card .nm b{ font-family:'Fraunces',serif; font-size:17px; }
+  .int-card .nm small{ font-family:'IBM Plex Sans',sans-serif; font-size:12px; color:var(--ink-soft); }
+  .int-card .nw{ text-decoration:none; font-family:'IBM Plex Sans',sans-serif; font-size:9.5px; font-weight:700; letter-spacing:.08em; color:#fff; background:linear-gradient(155deg,#E8A33D,#C97F14); padding:3px 8px; border-radius:99px; }
+  .int-card i{ flex:none; width:24px; height:24px; border-radius:50%; border:2px solid var(--card-border); background:#fff; font-style:normal; font-size:14px; font-weight:700; color:#fff; display:flex; align-items:center; justify-content:center; }
+  .int-card i.cb{ border-radius:8px; }
+  .int-card.on{ border-color:#2447C9; background:linear-gradient(180deg,rgba(36,71,201,.10),rgba(36,71,201,.04)); box-shadow:0 12px 26px -14px rgba(36,71,201,.6); }
+  .int-card.on i{ border-color:#2447C9; background:#2447C9; }
+  .int-card.on i.rd{ background:#2447C9 radial-gradient(circle,#fff 0 4px,transparent 4.5px); }
+  .mycats{ display:flex; flex-wrap:wrap; gap:7px; }
+  .mycat > *:first-child{ margin-right:2px; }
+  .mycat{ display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:99px; background:rgba(36,71,201,.09); border:1px solid rgba(36,71,201,.22); font-family:'IBM Plex Sans',sans-serif; font-size:12.5px; font-weight:600; color:var(--ink); }
+  .mycats-btn{ width:100%; padding:13px; border-radius:14px; border:none; cursor:pointer; font-family:'IBM Plex Sans',sans-serif; font-weight:700; font-size:14px; color:#fff; background:linear-gradient(155deg,#4A6BE0,#2447C9); box-shadow:0 10px 20px -10px rgba(36,71,201,.6); }
+
+  .more-card{ display:flex; align-items:center; gap:14px; width:100%; padding:14px 16px; border-radius:20px; border:none; cursor:pointer; text-align:left; flex-shrink:0; font-family:'IBM Plex Sans',sans-serif; transition:transform .12s; }
+  .more-card:active{ transform:scale(.985); }
+  .more-card.prem .mc-ic{ font-size:34px; }
+  .more-card .mc-ic{ font-family:'IBM Plex Sans',sans-serif; font-weight:300; width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; flex:none; background:rgba(255,255,255,.2); }
+  .more-card .mc-tx{ flex:1; display:flex; flex-direction:column; gap:2px; }
+  .more-card b{ font-family:'Fraunces',serif; font-size:19px; }
+  .more-card small{ font-size:13px; font-weight:500; color:inherit !important; opacity:.92; }
+  .more-card.prem b, .more-card.prem small, .more-card.prem .mc-go, .more-card.prem .mc-ic{ color:#fff !important; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+  .more-card.lock b{ color:#20180F !important; } .more-card.lock small{ color:#4A3A22 !important; }
+  .more-card b{ font-weight:700; }
+  .more-card.prem{ color:#fff; background:linear-gradient(150deg,#4A6BE0,#2447C9 55%,#16308F); box-shadow:0 16px 28px -14px rgba(22,48,143,.75); }
+  .more-card .mc-go{ font-size:28px; line-height:1; padding-bottom:3px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; flex:none; animation:mcNudge 1.6s ease-in-out infinite; }
+  @keyframes mcNudge{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(4px); } }
+  @media (prefers-reduced-motion:reduce){ .more-card .mc-go{ animation:none; } }
+  .more-card.lock{ color:var(--ink); background:linear-gradient(180deg,rgba(232,163,61,.2),rgba(232,163,61,.07)); border:1.5px solid rgba(201,127,20,.55); box-shadow:0 12px 24px -16px rgba(201,127,20,.7); }
+  .more-card.lock .mc-ic{ background:rgba(232,163,61,.25); }
+  .more-card .mc-badge{ text-decoration:none; font-size:10px; font-weight:700; letter-spacing:.1em; color:#fff; background:linear-gradient(155deg,#E8A33D,#C97F14); padding:5px 10px; border-radius:99px; flex:none; }
+
+  /* Carte du jour : nouveau design */
+  .hero-card{ overflow:hidden; border-radius:28px !important; padding:18px 18px 18px !important; min-height:250px !important; box-shadow:0 22px 40px -22px rgba(26,20,18,.55), inset 0 0 0 1px rgba(255,255,255,.55) !important; background-blend-mode:normal; }
+  .hero-card::before{ content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,.55), transparent 55%); pointer-events:none; }
+  .hero-card > *{ position:relative; }
+  .hero-wm{ position:absolute !important; right:-18px; bottom:-26px; font-size:150px; line-height:1; opacity:.16; transform:rotate(-8deg); pointer-events:none; filter:grayscale(.2); }
+  .hero-wm .flag-icon{ font-size:130px; }
+  .hero-pill{ display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; color:#20180F; background:rgba(255,255,255,.82); padding:8px 13px; border-radius:99px; box-shadow:0 4px 10px -6px rgba(0,0,0,.35); }
+  .hero-emoji{ width:54px; height:54px; border-radius:18px; background:rgba(255,255,255,.7); display:flex; align-items:center; justify-content:center; font-size:30px !important; box-shadow:0 8px 16px -10px rgba(0,0,0,.4); filter:none !important; }
+  .hero-emoji .flag-icon{ font-size:28px !important; }
+  .hero-title{ font-size:34px !important; line-height:1.08 !important; letter-spacing:-.01em; margin-top:auto; padding-top:26px !important; text-shadow:0 1px 0 rgba(255,255,255,.35); }
+  .hero-chips{ display:flex; flex-wrap:wrap; gap:7px; margin:10px 0 16px; }
+  .hero-chips span{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:12.5px; color:#20180F; background:rgba(32,24,15,.1); padding:5px 11px; border-radius:99px; }
+  .hero-cta{ align-self:stretch !important; justify-content:center; padding:15px 20px !important; font-size:16px !important; border-radius:18px !important; background:linear-gradient(155deg,#4A6BE0,#2447C9) !important; box-shadow:0 14px 24px -12px rgba(36,71,201,.8) !important; }
+  .hero-cta.done{ background:rgba(32,24,15,.14) !important; color:#20180F !important; box-shadow:none !important; }
+
+  /* Boutons de la carte : nouveau style */
+  .card-exit-btn, .star-btn{ width:42px !important; height:42px !important; padding:0 !important; border-radius:15px !important; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:rgba(255,255,255,.75) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; border:1px solid var(--card-border) !important; box-shadow:0 8px 16px -10px rgba(26,20,18,.45) !important; color:var(--ink) !important; cursor:pointer; }
+  .card-exit-btn svg{ width:18px !important; height:18px !important; }
+  .star-btn svg{ width:22px !important; height:22px !important; }
+  .star-btn.active{ background:linear-gradient(155deg,rgba(245,200,106,.55),rgba(232,163,61,.35)) !important; border-color:rgba(201,127,20,.6) !important; color:#B26A0A !important; box-shadow:0 8px 16px -8px rgba(201,127,20,.7) !important; }
+  .star-btn.active svg{ fill:#E8A33D !important; stroke:#B26A0A; }
+  :root[data-theme="nuit"] .card-exit-btn, :root[data-theme="nuit"] .star-btn{ background:rgba(255,255,255,.1) !important; color:#F0EAE1 !important; }
+  .btn-ko, .btn-ok{ min-height:52px !important; border-radius:18px !important; font-size:14px !important; }
+  .btn-ok{ background:linear-gradient(155deg,#3F8A5C,#2E6B48) !important; border:none !important; box-shadow:0 14px 24px -12px rgba(46,107,72,.85); }
+  .btn-ko{ background:rgba(192,57,43,.1) !important; }
+
+  .qlead{ display:block; font-family:'IBM Plex Sans',sans-serif; font-style:normal; font-weight:600; font-size:14px !important; letter-spacing:0; color:#2447C9; margin-bottom:10px; line-height:1.35; }
+
+  /* ---------- Soft UI : Quiz + Favoris ---------- */
+  .opt[data-l]{ display:flex; align-items:center; gap:12px; padding:13px 14px; border-radius:18px; border:2px solid #E3E6F1; background:#fff; box-shadow:0 6px 18px -8px rgba(36,71,201,.18); color:#1A1412; }
+  .opt[data-l]::before{ content:attr(data-l); flex:none; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font:800 12px 'Inter',sans-serif; color:#2447C9; background:#EAEFFD; transition:all .2s; }
+  .opt[data-l]:active{ border-color:#2447C9; background:#F4F7FF; }
+  .opt[data-l].good{ background:#EAF8EF; border-color:#1E8E4E; color:#14532D; box-shadow:0 10px 24px -10px rgba(30,142,78,.45); }
+  .opt[data-l].good::before{ content:"✓"; background:#1E8E4E; color:#fff; font-size:15px; }
+  .opt[data-l].bad{ background:#FDECEA; border-color:#C0392B; color:#7A1F16; }
+  .opt[data-l].bad::before{ content:"✕"; background:#C0392B; color:#fff; font-size:14px; }
+  .opt[data-l].dim{ opacity:.5; }
+  :root[data-theme="nuit"] .opt[data-l]{ background:#1f2433; border-color:#33405f; color:#EDEFF7; }
+  :root[data-theme="nuit"] .opt[data-l]::before{ background:#2c3a6b; color:#AFC0FF; }
+  :root[data-theme="nuit"] .opt[data-l].good{ background:#143222; border-color:#2fae6a; color:#BFE3C9; }
+  :root[data-theme="nuit"] .opt[data-l].bad{ background:#3a1a16; border-color:#d9574a; color:#F0B3A6; }
+  #quizView .quiz-card{ border-radius:24px; border:1px solid rgba(36,71,201,.1); background:#fff; box-shadow:0 18px 40px -16px rgba(36,71,201,.25); padding:22px 18px; }
+  :root[data-theme="nuit"] #quizView .quiz-card{ background:#1f2433; }
+  #quizView .quiz-tag{ background:#EAEFFD; color:#2447C9; padding:5px 12px; border-radius:999px; font-weight:700; }
+  .quiz-fb{ border-radius:18px; padding:14px 16px; }
+  #quizNext{ border-radius:18px; background:linear-gradient(135deg,#4A6BE0,#2447C9 55%,#16308F); border:0; color:#fff; box-shadow:0 14px 28px -10px rgba(36,71,201,.6); padding:16px 18px; }
+  #quizView .bar{ height:8px; border-radius:99px; }
+  .fav-row{ background:#fff; border:1px solid rgba(36,71,201,.1); border-radius:18px; padding:14px 16px; box-shadow:0 8px 22px -12px rgba(36,71,201,.25); gap:10px; }
+  .fav-row::after{ content:"›"; order:3; font-size:22px; color:#2447C9; font-weight:700; line-height:1; }
+  .fav-row .count{ margin-left:auto; background:#EAEFFD; color:#2447C9; padding:4px 10px; border-radius:999px; font-weight:700; font-size:11.5px; }
+  :root[data-theme="nuit"] .fav-row{ background:#1f2433; }
+  .fav-empty .fav-star{ width:84px; height:84px; border-radius:50%; background:linear-gradient(135deg,#F2C75C,#C97F14); display:flex; align-items:center; justify-content:center; font-size:40px; box-shadow:0 16px 34px -10px rgba(201,127,20,.6); margin-bottom:18px; }
+  .fav-empty .fav-box{ background:#fff; border-radius:24px; padding:26px 22px; box-shadow:0 18px 44px -16px rgba(36,71,201,.25); border:1px solid rgba(36,71,201,.08); display:flex; flex-direction:column; align-items:center; color:#4a4540; }
+  :root[data-theme="nuit"] .fav-empty .fav-box{ background:#1f2433; color:#c9ccd9; }
+  .fav-empty .fav-box b{ color:var(--ink); font-size:17px; font-family:'Fraunces',serif; }
+  .fav-empty .fav-box p{ margin-top:6px; }
+  .fav-empty .fav-btn{ margin-top:16px; width:100%; border:0; border-radius:16px; padding:15px; color:#fff; font:700 13px 'Inter',sans-serif; letter-spacing:.04em; background:linear-gradient(135deg,#4A6BE0,#2447C9 55%,#16308F); box-shadow:0 14px 28px -10px rgba(36,71,201,.6); cursor:pointer; }
+  .fav-empty .fav-btn.gold{ background:linear-gradient(135deg,#E8A33D,#C97F14); box-shadow:0 14px 28px -10px rgba(201,127,20,.6); }
+  #favThemesView .tile{ background:#fff; border:1px solid rgba(36,71,201,.1); border-radius:20px; box-shadow:0 10px 26px -14px rgba(36,71,201,.3); padding:16px; position:relative; }
+  #favThemesView .tile .count{ display:inline-block; background:#EAEFFD; color:#2447C9; padding:3px 10px; border-radius:999px; font-weight:700; font-size:11.5px; margin-top:6px; }
+  #favView .tile{ border-radius:22px; box-shadow:0 12px 28px -14px rgba(36,71,201,.35); }
+  :root[data-theme="nuit"] #favThemesView .tile{ background:#1f2433; }
+  /* Accueil aéré */
+  #todayView{ gap:16px !important; padding-bottom:calc(var(--navh, 70px) + 40px) !important; }
+  #todayView .today-head{ margin-bottom:6px; }
+  #todayView .stat-row, #todayView .act-row2{ gap:14px; }
+  #todayView .act2{ padding:16px 14px; border-radius:20px; }
+  #todayView .hero-card{ padding:20px !important; min-height:232px !important; }
+  #todayView .more-card{ padding:16px 18px; }
+  #todayView .panel{ padding:16px 18px; border-radius:20px; }
+  #onboarding.welcome{ background:radial-gradient(120% 60% at 50% 0%, rgba(74,107,224,.22), transparent 60%), radial-gradient(90% 50% at 100% 100%, rgba(232,163,61,.18), transparent 60%), var(--bg); }
+  .ob-welcome{ justify-content:center !important; }
+  .ob-welcome .ob-p{ margin-top:6px; max-width:300px; }
+  .wl-list{ width:100%; max-width:380px; display:flex; flex-direction:column; gap:12px; margin-top:22px; }
+  .wl-it{ display:flex; align-items:center; gap:14px; background:#fff; border:1px solid rgba(36,71,201,.08); border-radius:20px; padding:14px 16px; box-shadow:0 12px 28px -16px rgba(36,71,201,.35); text-align:left; }
+  .wl-it i{ flex:none; width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-style:normal; font-size:22px; }
+  .wl-it b{ display:block; font-family:'Fraunces',serif; font-size:16px; color:#1A1412; }
+  .wl-it span{ display:block; font:13px/1.35 'IBM Plex Sans',sans-serif; color:#6b645d; margin-top:2px; }
+  #obStart{ border-radius:20px; padding:17px 18px; font-size:14px; background:linear-gradient(135deg,#4A6BE0,#2447C9 55%,#16308F); box-shadow:0 16px 30px -10px rgba(36,71,201,.6); border:0; color:#fff; }
+  :root[data-theme="nuit"] .wl-it{ background:#1f2433; } :root[data-theme="nuit"] .wl-it b{ color:#EDEFF7; }
+  .mq-sheet .opt[data-l]{ font-size:14px; padding:11px 12px; border-radius:16px; }
+  .mq-choices{ gap:10px; margin-top:14px; }
+  .mq-choices .primary-btn{ border-radius:18px; padding:16px; font-size:14px; background:linear-gradient(135deg,#4A6BE0,#2447C9 55%,#16308F); border:0; color:#fff; box-shadow:0 14px 28px -10px rgba(36,71,201,.6); }
+  .mq-alt{ border-radius:18px; padding:14px; background:#fff; border:1.5px solid #D9DEEF; color:#2447C9; font-weight:700; }
+  .mq-alt.tonal{ background:#EAEFFD; border-color:transparent; color:#2447C9; }
+  .mq-alt.mq-end{ background:transparent; border:0; color:var(--ink-soft); font-weight:600; font-size:13.5px; padding:8px; text-decoration:underline; text-underline-offset:3px; }
+  :root[data-theme="nuit"] .mq-alt{ background:#1f2433; border-color:#33405f; color:#AFC0FF; }
+  :root[data-theme="nuit"] .mq-alt.tonal{ background:#2c3a6b; }
+  .mq-pair{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .mq-pair .mq-alt{ padding:13px 8px; font-size:14px; }
+  .mq-choices .primary-btn.mq-go{ background:linear-gradient(135deg,#34B36A,#1E8E4E 55%,#146B3A); box-shadow:0 14px 28px -10px rgba(30,142,78,.6); }
+  .mq-alt.mq-stop{ background:#FDECEA; border:1.5px solid #F2B8B1; color:#C0392B; font-weight:800; letter-spacing:.04em; font-size:13px; text-decoration:none; padding:14px; }
+  :root[data-theme="nuit"] .mq-alt.mq-stop{ background:#3a1a16; border-color:#7a3027; color:#F0B3A6; }
+  .mq-alt.warn{ background:linear-gradient(135deg,#F5A83B,#E0801A); border:0; color:#fff; box-shadow:0 10px 22px -10px rgba(224,128,26,.65); }
+  .mq-alt.tonal#mqReread{ background:#EAEFFD; color:#2447C9; }
+  .mq-alt{ background:var(--paper-dark) !important; border:1.5px solid var(--card-border) !important; color:var(--royal) !important; }
+  .mq-alt.warn{ background:linear-gradient(135deg,#F5A83B,#E0801A) !important; border:0 !important; color:#fff !important; }
+  .mq-alt.mq-stop{ background:linear-gradient(135deg,#EE5A48,#C0392B 55%,#962217) !important; border:0 !important; color:#fff !important; box-shadow:0 14px 28px -10px rgba(192,57,43,.6); padding:16px !important; font-size:14px; font-weight:800; }
+  .mq-alt.tonal#mqReread{ background:linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)), linear-gradient(155deg,var(--btn-a),var(--btn-b)) !important; border:1px solid rgba(255,255,255,.3) !important; color:#F0EAE1 !important; box-shadow:0 12px 24px -10px rgba(22,48,143,.55), inset 0 1px 1px rgba(255,255,255,.35); }
+  .ob-welcome{ gap:10px; }
+  .ob-logo{ width:112px; height:112px; border-radius:26px; box-shadow:0 18px 40px -16px rgba(22,48,143,.45); animation:splashIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
+  .ob-brand{ font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:40px; color:var(--ink); margin-top:8px; }
+  .ob-brand b{ color:var(--royal,#2447C9); }
+  .ob-tag{ font-family:'IBM Plex Sans',sans-serif; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); }
+  .ob-welcome .ob-p{ margin-top:14px; }
+  .ob-time{ width:100%; display:flex; flex-direction:column; gap:10px; }
+  .ob-t{ display:flex; justify-content:space-between; align-items:center; width:100%; padding:15px 18px; border-radius:16px; background:rgba(255,255,255,.45); border:1.5px solid var(--card-border); cursor:pointer; font-family:'IBM Plex Sans',sans-serif; color:var(--ink); text-align:left; }
+  .ob-t b{ font-family:'Fraunces',serif; font-size:21px; }
+  .ob-t span{ font-size:14px; color:var(--ink-soft); }
+  .ob-t.on{ border-color:#2447C9; background:rgba(36,71,201,.1); box-shadow:0 0 0 2px rgba(36,71,201,.25); }
+  .ob-plan{ width:100%; display:flex; flex-direction:column; gap:10px; align-items:center; }
+  .ob-perks{ list-style:none; margin:4px 0 0; padding:0; text-align:left; font-family:'IBM Plex Sans',sans-serif; font-size:14px; color:var(--ink); display:flex; flex-direction:column; gap:6px; }
+  .ob-perks li::before{ content:"✓ "; color:#2E6B48; font-weight:700; }
+  .ob-fb.ok{ color:#1F5A3A; font-weight:700; font-size:15px; animation:tipIn .35s ease; }
+  .ob-fb{ font-family:'IBM Plex Sans',sans-serif; font-size:13.5px; color:var(--ink-soft); line-height:1.45; min-height:2.9em; margin-top:8px; }
+  .tour{ position:fixed; inset:0; z-index:9500; background:rgba(26,20,18,.5); display:flex; align-items:flex-end; justify-content:center; animation:tipIn .3s ease; }
+  .tour-sheet{ width:100%; max-width:420px; background:var(--paper,#E8E4D9); border-radius:26px 26px 0 0; padding:26px 22px calc(26px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; }
+  .tour-emoji{ font-size:46px; line-height:1; }
+  .tour-list{ list-style:none; margin:4px 0 12px; padding:0; width:100%; display:flex; flex-direction:column; gap:10px; text-align:left; }
+  .tour-list li{ display:flex; gap:12px; align-items:center; background:rgba(255,255,255,.45); border:1px solid var(--card-border); border-radius:14px; padding:11px 13px; font-family:'IBM Plex Sans',sans-serif; font-size:14px; line-height:1.35; color:var(--ink); }
+  .tour-list li i{ font-style:normal; font-size:22px; }
+  .tour-list li b{ display:block; font-size:15px; }
+  /* Bulles d'aide */
+  .tip{ position:fixed; left:16px; right:16px; z-index:9000; bottom:calc(var(--navh,76px) + 24px); max-width:360px; margin:0 auto; background:#20180F; color:#F6F0E6; border-radius:16px; padding:13px 40px 13px 15px; font-family:'IBM Plex Sans',sans-serif; font-size:13.5px; line-height:1.45; box-shadow:0 16px 34px -10px rgba(0,0,0,.45); animation:tipIn .35s cubic-bezier(.32,1.4,.5,1); }
+  .tip b{ font-weight:700; }
+  .tip::after{ content:""; position:absolute; bottom:-7px; left:var(--tx,50%); width:14px; height:14px; background:#20180F; transform:translateX(-50%) rotate(45deg); border-radius:3px; }
+  .tip button{ position:absolute; top:6px; right:6px; width:30px; height:30px; border:none; background:none; color:#F6F0E6; font-size:18px; cursor:pointer; opacity:.8; }
+  @keyframes tipIn{ from{ opacity:0; transform:translateY(10px) scale(.96); } to{ opacity:1; transform:none; } }
 
   .ob-skip{ align-self:flex-end; background:none; border:none; cursor:pointer; font-family:'IBM Plex Sans', -apple-system, 'SF Pro Text', system-ui, sans-serif; font-size:11px; color:var(--ink-soft); padding:6px; }
   .ob-body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:360px; gap:14px; }
@@ -3447,7 +3738,7 @@ function defaultState(){
   return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
            onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
            dailyDone:"", quizDay:null, interests:[], freeCat:"", trialStart:"", failed:{},
-           qstat:{}, qcat:{}, qmaster:{}, incollable:{} };
+           qstat:{}, qcat:{}, qmaster:{}, incollable:{}, tips:{} };
 }
 let S = defaultState();
 function loadState(){
@@ -3685,6 +3976,7 @@ function showView(name){
   const activeTab = tabFor(name);
   navBtns.forEach(b=> b.classList.toggle("active", b.dataset.tab===activeTab));
   moveNavIndicator();
+  if(typeof maybeTip==="function") maybeTip(activeTab, name);
 }
 
 function moveNavIndicator(){
@@ -3820,6 +4112,17 @@ function applyCardUI(){
   }
 }
 
+function airy(t){
+  t = String(t||"").trim();
+  if(t.length < 130) return t;
+  let paras = t.split(/\n\s*\n|\n/).map(x=>x.trim()).filter(Boolean);
+  if(paras.length === 1){
+    const sents = t.split(/(?<=[.!?»])\s+(?=[A-ZÀ-ÝÉ«“"])/);
+    paras = [];
+    for(let i=0;i<sents.length;i+=2) paras.push(sents.slice(i,i+2).join(" "));
+  }
+  return paras.map(x=>`<p>${x}</p>`).join("");
+}
 function heroSize(r){
   const t=(r.intro||r.summary||"").length, h=(r.title||"").length, o=[];
   if(t>200) o.push("txt-xs"); else if(t>110) o.push("txt-s");
@@ -3866,7 +4169,7 @@ function renderCard(card, fromHistory){
           <div class="fact-flip-face front">
             ${dateHtml}
             <div class="fact-title">${r.title}</div>
-            <div class="fact-summary">${r.intro || r.question || ""}</div>
+            <div class="fact-summary">${card.rows.length===1 ? airy(r.intro || r.question || "") : (r.intro || r.question || "")}</div>
           </div>
           <div class="fact-flip-face back" hidden>
             ${dateHtml}
@@ -3877,7 +4180,7 @@ function renderCard(card, fromHistory){
         div.className = "fact-block plain" + (card.rows.length===1 ? " hero" : "");
         if(card.rows.length===1) div.classList.add(...heroSize(r));
         const dateHtml = (r.date && /[0-9A-Za-zÀ-ÿ]/.test(r.date)) ? `<div class="fact-date">${r.date}</div>` : "";
-        div.innerHTML = `${dateHtml}<div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
+        div.innerHTML = `${dateHtml}<div class="fact-title">${r.title}</div><div class="fact-summary">${card.rows.length===1 ? airy(r.summary) : r.summary}</div>`;
       }
       wrap.appendChild(div);
     });
@@ -3996,19 +4299,23 @@ function openFailedList(){
   $("fqGrab").addEventListener("touchend", ()=>{ sh.style.transition = ""; if(dy > 90) close(); sh.style.transform = ""; y0 = null; });
 }
 function endAfterGrade(card, knew){
+  const first = Object.keys(S.cards||{}).length===0 && !S.tourDone;
   gradeCard(card.id, knew);
+  if(first){ S.tourDone = 1; saveState(); setTimeout(showWelcomeTour, 500); }
   if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); }
   exitCardView();
 }
 function startMoreCard(){
-  if(!isPremium()){ paywallReason="limit"; renderPaywall(); showView("paywall"); return; }
+  if(!isPremium()){ paywallReason = (S.dailyDone===todayStr()) ? "limit" : "more"; renderPaywall(); showView("paywall"); return; }
   cardHistory = []; currentCard = null;
   ctx = { origin:"globalRandom", categoryId:null, pool:null };
   renderCard(pickRandomGlobal());
 }
 function finishGrade(card, knew){
+  const first = Object.keys(S.cards||{}).length===0 && !S.tourDone;
   toast(knew ? "✓ Bien joué" : "↺ On y revient bientôt", 900);
   gradeCard(card.id, knew);
+  if(first){ S.tourDone = 1; if(ctx.origin==="daily"){ S.dailyDone = todayStr(); } saveState(); exitCardView(); setTimeout(showWelcomeTour, 500); return; }
   if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); exitCardView(); return; }
   if(ctx.origin === "review"){ reviewNext(knew); return; }
   if(ctx.origin === "favorites" || ctx.origin === "failed"){ exitCardView(); return; }
@@ -4032,19 +4339,36 @@ function miniQuestion(card){
     const mine = catPool.filter(x=>x.cardId===card.id);
     const all = quizPoolFor(availableCats().map(c=>c.id), false);
     for(const it of shuffle(mine.slice())){
-      const q = makeQuestion(it, catPool, all);
+      const q = makeQuestion(it, catPool, all, true);
       if(q) return q;
     }
   }catch(e){}
   return null;
 }
 function hideMqAgain(){}
+function showWelcomeTour(){
+  const el = document.createElement("div"); el.id="tour"; el.className="tour";
+  el.innerHTML = `<div class="tour-sheet">
+    <div class="tour-emoji">🎉</div>
+    <h2 class="ob-h" style="font-size:25px">Première carte faite !</h2>
+    <p class="ob-p" style="margin:0 0 6px">Voici comment se repérer dans Kultos :</p>
+    <ul class="tour-list">
+      <li><i>☀️</i><span><b>Aujourd'hui</b> ta carte du jour, tes révisions et ton quiz</span></li>
+      <li><i>🗂️</i><span><b>Catégories</b> pioche une carte dans le sujet que tu veux</span></li>
+      <li><i>⭐</i><span><b>Favoris</b> les cartes que tu as gardées</span></li>
+      <li><i>👤</i><span><b>Profil</b> ta série, tes stats et tes réglages</span></li>
+    </ul>
+    <button class="primary-btn" id="tourOk">C'EST PARTI</button>
+  </div>`;
+  document.body.appendChild(el);
+  $("tourOk").onclick = ()=>{ el.remove(); renderToday(); showView("today"); };
+}
 function showMiniQuiz(card, q){
   const el = $("miniq"), cat = catById(categoryIdForCard(card));
   const sz = q.prompt.length > 110 ? "xl" : q.prompt.length > 34 ? "long" : "";
   el.innerHTML = `<div class="mq-sheet">
-    <div class="mq-head"><div class="quiz-tag">⚡ Mini-test · ${esc(q.tag || (q.reverse ? "Que veut dire ?" : "Comment dit-on ?"))}</div><button class="mq-skip" id="mqSkip">Passer</button></div>
-    <div class="quiz-q ${sz}">${esc(q.prompt)}</div>
+    <div class="mq-head"><div class="quiz-tag">⚡ Mini-test · ${esc(q.tag || (q.reverse ? "Que veut dire ?" : "Comment dit-on ?"))}</div>${ctx.origin !== "failed" ? "" : '<button class="mq-skip" id="mqSkip">Passer</button>'}</div>
+    <div class="quiz-q ${sz}">${q.lead ? `<span class="qlead">${esc(q.lead)}</span>` : ""}${esc(q.prompt)}</div>
     <div class="quiz-ph">${q.reverse && q.item.ph ? "/"+esc(q.item.ph)+"/" : ""}</div>
     <div class="quiz-opts" id="mqOpts"></div>
     <div id="mqFb"></div>
@@ -4052,10 +4376,10 @@ function showMiniQuiz(card, q){
   el.classList.add("showing");
   let done = false;
   const close = knew=>{ el.classList.remove("showing"); el.innerHTML=""; finishGrade(card, knew); };
-  $("mqSkip").onclick = ()=>{ if(done) return; if(ctx.origin === "failed"){ el.classList.remove("showing"); el.innerHTML=""; return; } close(true); };
+  if($("mqSkip")) $("mqSkip").onclick = ()=>{ if(done) return; if(ctx.origin === "failed"){ el.classList.remove("showing"); el.innerHTML=""; return; } close(true); };
   q.options.forEach(opt=>{
     const b = document.createElement("button");
-    b.className = "opt"; b.textContent = opt;
+    b.className = "opt"; b.textContent = opt; b.dataset.l = "ABCD"[$("mqOpts").children.length] || "•";
     b.onclick = ()=>{
       if(done) return; done = true;
       const ok = opt === q.answer;
@@ -4066,11 +4390,9 @@ function showMiniQuiz(card, q){
       if(ok){ addXp(5); }
       if(ok){
         $("mqFb").innerHTML = `<div class="mq-fb good"><b>Validé !</b>Tu la connais vraiment. +5 XP.</div>
-          <div class="mq-choices"><button class="primary-btn" id="mqNext">CONTINUER</button><button class="mq-alt" id="mqEnd">✕ Terminer</button></div>`;
+          <div class="mq-choices"><button class="primary-btn mq-go" id="mqNext">CONTINUER</button><button class="mq-alt mq-stop" id="mqEnd">✕ TERMINER</button></div>`;
         $("mqNext").onclick = ()=>{
-          const wasDaily = ctx.origin === "daily";
-          close(true);
-          if(wasDaily) startMoreCard();   /* Premium : nouvelle carte · gratuit : plan de paiement */
+          close(true);   /* carte du jour : retour à l'écran Aujourd'hui */
         };
         $("mqEnd").onclick = ()=>{ el.classList.remove("showing"); el.innerHTML=""; endAfterGrade(card, true); };
         return;
@@ -4078,19 +4400,16 @@ function showMiniQuiz(card, q){
       const prem = isPremium();
       $("mqFb").innerHTML = `<div class="mq-fb bad"><b>Pas tout à fait</b>La bonne réponse : « ${esc(q.answer)} ». Que veux-tu faire ?</div>
         <div class="mq-choices">
-          <button class="primary-btn" id="mqRetry">↻ RÉESSAYER</button>
-          <button class="mq-alt" id="mqReread">📖 Relire la carte</button>
-          <button class="mq-alt" id="mqNew">${prem ? "➕ Nouvelle carte" : "Continuer"}</button>
-          <button class="mq-alt" id="mqEnd">✕ Terminer</button>
+          <div class="mq-pair"><button class="mq-alt warn" id="mqRetry">↻ Réessayer</button><button class="mq-alt tonal" id="mqReread">📖 Relire</button></div>
+          <button class="primary-btn mq-go" id="mqNew">CONTINUER</button>
+          <button class="mq-alt mq-stop" id="mqEnd">✕ TERMINER</button>
         </div>`;
       $("mqEnd").onclick = ()=>{ el.classList.remove("showing"); el.innerHTML=""; endAfterGrade(card, false); };
       $("mqRetry").onclick = ()=>{ el.classList.remove("showing"); showMiniQuiz(card, miniQuestion(card) || q); };
       $("mqReread").onclick = ()=>{ quizMiss(card.id); saveState(); el.classList.remove("showing"); el.innerHTML=""; if(cardState === "hidden") setCardState("revealed"); toast("📖 Relis, puis « Je savais »", 2200); };
       $("mqNew").onclick = ()=>{
         el.classList.remove("showing"); el.innerHTML="";
-        const wasDaily = ctx.origin === "daily";
         finishGrade(card, false);
-        if(wasDaily) startMoreCard();
       };
     };
     $("mqOpts").appendChild(b);
@@ -4179,27 +4498,14 @@ function renderFavCategories(){
   const cards = getFavs().map(resolveCardById).filter(Boolean);
   if(!isPremium()){
     grid.innerHTML = `
-      <div class="fav-empty" style="width:100%;max-width:300px;margin:0 auto;align-items:center;text-align:center">
-        <div style="font-size:44px">⭐</div>
-        <p><b>Les favoris sont réservés à Premium.</b><br>Garde tes cartes préférées sous la main et retrouve-les ici à tout moment.</p>
-        <button class="primary-btn" id="favUnlock" style="margin-top:14px;width:100%">DÉBLOQUER PREMIUM</button>
-      </div>`;
+      <div class="fav-empty" style="width:100%;max-width:320px;margin:0 auto"><div class="fav-box"><div class="fav-star">⭐</div><b>Tes favoris, toujours sous la main</b><p>Garde tes cartes préférées et retrouve-les ici à tout moment avec Premium.</p><button class="fav-btn gold" id="favUnlock">DÉBLOQUER PREMIUM</button></div></div>`;
     $("favUnlock").onclick = ()=>{ paywallReason="fav"; renderPaywall(); showView("paywall"); };
     return;
   }
   if(cards.length === 0){
     grid.innerHTML = `
-      <div class="fav-empty">
-        <svg class="fav-empty-art" viewBox="0 0 120 100" fill="none">
-          <rect x="18" y="38" width="70" height="48" rx="8" fill="var(--paper-dark)" stroke="var(--card-border)" stroke-width="2" transform="rotate(-6 53 62)"/>
-          <rect x="28" y="34" width="70" height="48" rx="8" fill="var(--paper)" stroke="var(--card-border)" stroke-width="2" transform="rotate(3 63 58)"/>
-          <rect x="24" y="30" width="70" height="48" rx="8" fill="#F0EAE1" stroke="var(--card-border)" stroke-width="2"/>
-          <line x1="34" y1="46" x2="80" y2="46" stroke="var(--card-border)" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="34" y1="58" x2="70" y2="58" stroke="var(--card-border)" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M78 10 L82.5 19 L92.5 20.5 L85 27.5 L86.5 37.5 L78 32.5 L69.5 37.5 L71 27.5 L63.5 20.5 L73.5 19 Z" fill="var(--gold)"/>
-        </svg>
-        <p><b>Retrouve ici tes fiches favorites.</b><br>Ouvre une carte et appuie sur l'étoile pour la garder ici.</p>
-      </div>`;
+      <div class="fav-empty" style="width:100%;max-width:320px;margin:0 auto"><div class="fav-box"><div class="fav-star">⭐</div><b>Retrouve ici tes fiches favorites</b><p>Ouvre une carte et appuie sur l'étoile pour la garder ici.</p><button class="fav-btn" id="favGo">VOIR LA CARTE DU JOUR</button></div></div>`;
+    $("favGo").onclick = ()=>{ const t=document.querySelector('[data-tab="today"]'); if(t) t.click(); };
     return;
   }
   const catIds = [...new Set(cards.map(categoryIdForCard))];
@@ -4518,31 +4824,38 @@ function renderToday(){
   const unit = (()=>{ const u = dcat.unit || "mots"; return cardSize(dc)>1 ? u : u.replace(/s$/,""); })();
   const R = 30, C = 2*Math.PI*R;
   const prem = isPremium();
+  const seen = Object.keys(S.cards||{}).length;
+  const isNew = seen===0 && !done;
   el.innerHTML = `
     <div class="t2-head">
-      <div><div class="eyebrow">${esc(dateTxt)}</div><h1 class="h-title">Aujourd'hui</h1></div>
+      <div><div class="eyebrow">${isNew ? "Prêt ? C'est simple" : esc(dateTxt)}</div><h1 class="h-title">${isNew ? "Bienvenue 👋" : "Aujourd'hui"}</h1></div>
       <div class="streak-pill" title="Série en cours"><span>🔥</span><b>${streak}</b></div>
     </div>
     <button class="hero-card" id="dailyBtn" style="background:${dcat.bg}">
-      <div class="hero-top"><span class="eyebrow">Carte du jour</span><span class="hero-emoji">${iconHtml(dcat)}</span></div>
+      <span class="hero-wm" aria-hidden="true">${iconHtml(dcat)}</span>
+      <div class="hero-top"><span class="hero-pill">✦ CARTE DU JOUR</span><span class="hero-emoji">${iconHtml(dcat)}</span></div>
       <div class="hero-title">${esc(dc.cat)}</div>
-      <div class="hero-sub">${esc(dcat.label)} · ${cardSize(dc)} ${unit}</div>
-      <span class="hero-cta ${done?"done":""}">${done ? "✓ Faite aujourd'hui" : "Découvrir ▸"}</span>
+      <div class="hero-chips"><span>${esc(dcat.label)}</span><span>${cardSize(dc)} ${unit}</span></div>
+      <span class="hero-cta ${done?"done":""} ${isNew?"big":""}">${done ? "✓ Faite aujourd'hui" : (isNew ? "Ouvrir ma première carte ▸" : "Découvrir ▸")}</span>
     </button>
-    ${(prem || done) ? `<button class="more-link" id="moreBtn">${prem ? "➕ Une autre carte" : "🔒 Une autre carte · Premium"}<small>${prem ? "sans limite, quand tu veux" : "apprends sans limite chaque jour"}</small></button>` : ""}
-    <div class="panel track">
+    ${isNew ? `<p class="new-hint">Une carte par jour suffit pour progresser. Touche la carte ci-dessus pour commencer.</p>` : ""}
+    ${!isNew ? `<button class="more-card ${prem?"prem":"lock"}" id="moreBtn">
+      <span class="mc-ic">${prem ? "+" : "🔒"}</span>
+      <span class="mc-tx"><b>Une autre carte</b><small>${prem ? "Continue d'apprendre, sans limite" : "Cartes illimitées"}</small></span>
+      ${prem ? '<span class="mc-go">›</span>' : '<u class="mc-badge">PREMIUM</u>'}
+    </button>` : ""}
+    ${isNew ? "" : `<div class="panel track">
       <svg class="ring2" viewBox="0 0 72 72" width="72" height="72"><circle cx="36" cy="36" r="${R}" class="rg-bg"/><circle cx="36" cy="36" r="${R}" class="rg-fg" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 36 36)"/><text x="36" y="41" text-anchor="middle" class="rg-tx">${Math.min(score,goal)}/${goal}</text></svg>
       <div class="track-r">
         <div class="track-msg">${goalMsg}</div>
         <div class="week">${week}</div>
       </div>
-    </div>
-    ${!failedIds().length ? `<div class="failed-bubble empty"><span class="fb-ic">✅</span><span class="fb-tx"><b>À retravailler</b><small>Aucune carte ratée pour l'instant</small></span></div>` : ""}
+    </div>`}
     ${failedIds().length ? `<button class="failed-bubble" id="failedBtn"><span class="fb-ic">⚠️</span><span class="fb-tx"><b>À retravailler</b><small>${failedIds().length} carte${failedIds().length>1?"s":""} ratée${failedIds().length>1?"s":""} à reprendre</small></span><span class="fb-n">${failedIds().length}</span></button>` : ""}
-    <div class="act-row2">
+    ${isNew ? "" : `<div class="act-row2">
       <button class="act2" id="reviewBtn"><span class="ic">🔁</span><span class="tx"><b>Réviser</b><small>${due>0 ? due+" à revoir" : "rien pour l'instant"}</small></span>${due>0?`<span class="pill">${due}</span>`:""}</button>
       <button class="act2" id="quizBtn"><span class="ic">🎯</span><span class="tx"><b>Quiz</b><small>sur ce que tu sais</small></span></button>
-    </div>`;
+    </div>`}`;
   $("dailyBtn").onclick = ()=>{
     cardHistory = []; currentCard = null;
     ctx = { origin:"daily", categoryId:null, pool:null };
@@ -4550,8 +4863,8 @@ function renderToday(){
   };
   if($("moreBtn")) $("moreBtn").onclick = startMoreCard;
   if($("failedBtn")) $("failedBtn").onclick = openFailedList;
-  $("reviewBtn").onclick = startReview;
-  $("quizBtn").onclick = ()=>{ renderQuizSetup(); showView("quizSetup"); };
+  if($("reviewBtn")) $("reviewBtn").onclick = startReview;
+  if($("quizBtn")) $("quizBtn").onclick = ()=>{ renderQuizSetup(); showView("quizSetup"); };
 }
 
 /* ---------- RÉSULTAT (quiz / révision) ---------- */
@@ -4581,7 +4894,7 @@ let quizSel = "mix";
 let quiz = null;
 
 function isKnown(card){ const r = S.cards[card.id]; return !!(r && r.ok > 0); }
-const isYear = d => !!d && /\d{3,4}/.test(d);
+const isYear = d => !!d && /\d{3,4}/.test(d) && !/\d\s*(m|km|kg|g|%|hab|habitants|millions?|milliards?)\b/i.test(d);
 /* Indice d'une ligne « fait » : son résumé, sinon son premier point, à condition de ne pas contenir le titre. */
 function factClue(r){
   const t = (r.title || "").toLowerCase();
@@ -4603,7 +4916,7 @@ function quizPoolFor(catIds, onlyKnown){
         card.rows.forEach(r=>{
           const clue = factClue(r), date = isYear(r.date) ? r.date : null;
           if(!clue && !date) return;
-          out.push({ kind:"fact", cardId:card.id, catId, title:r.title, clue, date });
+          out.push({ kind:"fact", cardId:card.id, catId, title:r.title, clue, date, points:r.points||null });
         });
       }
     });
@@ -4684,26 +4997,62 @@ function wordQuestion(item, catPool){
   if(picks.length < 3) return null;
   return { item, prompt, answer, reverse, options: shuffle([answer, ...picks]) };
 }
-function factQuestion(item, catPool, allPool){
+function factQuestion(item, catPool, allPool, fresh){
   const modes = [];
+  const detailOf = x => (x.points||[]).filter(p=>p && p.length>=25 && p.length<=95);
   if(item.clue) modes.push("what");
   if(item.date) modes.push("when");
+  if(detailOf(item).length) modes.push("detail");
+  /* juste après la lecture d'une carte, le titre est encore à l'écran : on teste un détail ou la date */
+  if(fresh && modes.length > 1) modes.splice(modes.indexOf("what") >= 0 ? modes.indexOf("what") : modes.length, 1);
   const mode = modes[Math.floor(Math.random()*modes.length)];
-  const key = mode === "what" ? "title" : "date";
-  const prompt = mode === "what" ? item.clue : item.title;
+  const shape = d => String(d).replace(/\d/g,"9");
+  const num = d => { const m = String(d).match(/\d{3,4}/); return m ? +m[0] : 0; };
+  if(mode === "detail"){
+    const mine = detailOf(item), answer = mine[Math.floor(Math.random()*mine.length)];
+    const mineSet = new Set(item.points);
+    const hasP = t => /\(\s*[\d~c.\-–]/.test(t);
+    const pre = t => (t.split(":")[0]||"").length < 18 && t.includes(":") ? t.split(":")[0] : "";
+    const words = t => (t.toLowerCase().match(/[a-zéèêàçîôû]{4,}/g)||[]).filter(w=>!["avec","dans","pour","roi","reine","empire"].includes(w));
+    const mw = new Set(words(item.title));
+    const cand = allPool.filter(x=>x.kind==="fact" && x.title!==item.title && x.points && !words(x.title).some(w=>mw.has(w)));
+    const rank = x => (x.catId===item.catId ? 0 : 4) + (hasP(x.title)===hasP(item.title) ? 0 : 2);
+    const scored = shuffle(cand).flatMap(x=>detailOf(x).filter(p=>!mineSet.has(p)).map(p=>({p, r:rank(x) + (pre(p)&&pre(p)===pre(answer)?-1:0) + Math.abs(p.length-answer.length)/60})));
+    const near = scored.sort((a,b)=>a.r-b.r).slice(0,8).map(o=>o.p);
+    const picks = shuffle(near).slice(0,3);
+    if(picks.length === 3) return { item, prompt:item.title, answer, reverse:false, tag:"Détail", lead:"Laquelle de ces phrases est vraie ?", options: shuffle([answer, ...picks]) };
+    const i = modes.indexOf("detail"); if(i>=0) modes.splice(i,1);
+    if(!modes.length) return null;
+  }
+  const m2 = (mode === "detail") ? modes[Math.floor(Math.random()*modes.length)] : mode;
+  const key = m2 === "what" ? "title" : "date";
+  const prompt = m2 === "what" ? item.clue : item.title;
   const answer = item[key];
   const usable = x => x.kind==="fact" && x[key] && x[key]!==answer;
-  let picks = uniquePicks(shuffle(catPool.filter(usable)), key, answer, 3);
+  let picks = [];
+  if(m2 === "when"){
+    /* fausses dates de même forme que la bonne, proches dans le temps */
+    const same = allPool.filter(x=>usable(x) && isYear(x.date) && shape(x.date)===shape(answer));
+    const near = same.map(x=>({x, d:Math.abs(num(x.date)-num(answer)) + Math.random()*40})).sort((a,b)=>a.d-b.d).map(o=>o.x);
+    picks = uniquePicks(near.slice(0,14), key, answer, 3);
+  } else {
+    /* faux titres de même nature : même présence de dates entre parenthèses, longueur voisine */
+    const hasP = t => /\(\s*[\d~c.\-–]/.test(t), len = answer.length;
+    const like = shuffle(catPool.filter(usable)).filter(x=>hasP(x.title)===hasP(answer) && x.title.length>len*0.5 && x.title.length<len*2+6);
+    picks = uniquePicks(like, key, answer, 3);
+  }
+  if(picks.length < 3) picks = uniquePicks(shuffle(catPool.filter(usable)), key, answer, 3);
   if(picks.length < 3){
     const more = uniquePicks(shuffle(allPool.filter(usable)), key, answer, 3);
     picks = picks.concat(more.filter(v=>!picks.includes(v))).slice(0,3);
   }
   if(picks.length < 3) return null;
-  return { item, prompt, answer, reverse:false, tag: mode==="what" ? "De quoi s'agit-il ?" : "Quand ?",
+  return { item, prompt, answer, reverse:false, tag: m2==="what" ? "Identifier" : "Date",
+           lead: m2==="what" ? "À quoi ou à qui correspond cette description ?" : (/^\d{3,4}$/.test(String(answer).trim()) ? "En quelle année ?" : "À quelle date ou période ?"),
            options: shuffle([answer, ...picks]) };
 }
-function makeQuestion(item, catPool, allPool){
-  return item.kind === "fact" ? factQuestion(item, catPool, allPool) : wordQuestion(item, catPool);
+function makeQuestion(item, catPool, allPool, fresh){
+  return item.kind === "fact" ? factQuestion(item, catPool, allPool, fresh) : wordQuestion(item, catPool);
 }
 function startQuiz(){
   if(!quizAllowed()){ openPaywall(); return; }
@@ -4750,7 +5099,7 @@ function renderQuestion(){
   $("quizBar").style.width = (quiz.i / quiz.qs.length * 100) + "%";
   $("quizTag").innerHTML = `${iconHtml(cat)} ${esc(cat.label)} · ${q.tag || (q.reverse ? "Que veut dire ?" : "Comment dit-on ?")}`;
   const qEl = $("quizQ");
-  qEl.textContent = q.prompt;
+  qEl.innerHTML = (q.lead ? `<span class="qlead">${esc(q.lead)}</span>` : "") + esc(q.prompt);
   qEl.classList.toggle("long", q.prompt.length > 34 && q.prompt.length <= 110);
   qEl.classList.toggle("xl", q.prompt.length > 110);
   $("quizPh").textContent = q.reverse && q.item.ph ? `/${q.item.ph}/` : "";
@@ -4758,7 +5107,7 @@ function renderQuestion(){
   box.innerHTML = "";
   q.options.forEach(opt=>{
     const b = document.createElement("button");
-    b.className = "opt"; b.textContent = opt;
+    b.className = "opt"; b.textContent = opt; b.dataset.l = "ABCD"[box.children.length] || "•";
     b.onclick = ()=>answerQuiz(b, opt);
     box.appendChild(b);
   });
@@ -4895,7 +5244,7 @@ function renderProfile(){
   const chart = days.map(x=>{
     const [y,m,dd] = x.d.split("-").map(Number);
     const letter = ["D","L","M","M","J","V","S"][new Date(y,m-1,dd).getDay()];
-    return `<div><i class="${x.on?"on":""}" style="height:${Math.max(4, x.s/maxS*100)}%"></i><span>${letter}</span></div>`;
+    return `<div class="${x.d===t?"today":""}"><i class="${x.on?"on":""}" style="height:${Math.max(4, x.s/maxS*100)}%"></i><span>${letter}</span></div>`;
   }).join("");
 
   const catRows = activeCats().map(c=>{
@@ -4904,7 +5253,7 @@ function renderProfile(){
     return `<div class="r"><span>${iconHtml(c)}</span><div><div>${esc(c.label)}${S.incollable[c.id] ? " 🏆" : ""}</div><div class="bar" style="margin-top:4px"><i style="width:${s/deck.length*100}%"></i></div></div><small>${s}/${deck.length}</small></div>`;
   }).join("");
 
-  const badges = BADGES.map(b=>`<div class="badge ${S.badges[b.id]?"":"off"}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("");
+  const badges = BADGES.map(b=>`<div class="badge ${S.badges[b.id]?"got":"off"}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("");
 
   const unlocked = BADGES.filter(b=>S.badges[b.id]).length;
   const tabs = `<div class="seg" role="tablist"><button class="${profTab==="progres"?"on":""}" id="tabProg">📈 Progrès</button><button class="${profTab==="reglages"?"on":""}" id="tabSet">⚙️ Réglages</button></div>`;
@@ -4918,10 +5267,10 @@ function renderProfile(){
       </div>
     </div>
     <div class="stats-grid">
-      <div class="stat"><b>🔥 ${currentStreak()}</b><span>série en cours</span></div>
-      <div class="stat"><b>🏅 ${S.bestStreak}</b><span>meilleure série</span></div>
-      <div class="stat"><b>📖 ${seen}</b><span>cartes vues</span></div>
-      <div class="stat"><b>🧠 ${mastered}</b><span>bien ancrées</span></div>
+      <div class="stat"><em class="s-ic c1">🔥</em><b>${currentStreak()}</b><span>série en cours</span></div>
+      <div class="stat"><em class="s-ic c2">🏅</em><b>${S.bestStreak}</b><span>meilleure série</span></div>
+      <div class="stat"><em class="s-ic c3">📖</em><b>${seen}</b><span>cartes vues</span></div>
+      <div class="stat"><em class="s-ic c4">🧠</em><b>${mastered}</b><span>bien ancrées</span></div>
     </div>
     <div class="panel"><h3 class="sec-title">Cette semaine</h3><div class="week-chart">${chart}</div></div>
     <div class="panel"><h3 class="sec-title">Par catégorie</h3><div class="cat-prog">${catRows}</div></div>
@@ -4932,7 +5281,9 @@ function renderProfile(){
     <div class="set-group">
       <div class="set-title">Apprentissage</div>
       <div class="panel set-panel">
-        <div class="set-row"><div class="set-lbl">Mes catégories<small>${activeCats().map(c=>esc(c.label)).join(", ")}</small></div><button class="chip" onclick="openInterests(false)">${isPremium() ? "🎯 Modifier" : "🔒 Modifier"}</button></div>
+        <div class="set-row col"><div class="set-lbl">Mes catégories<small>${isPremium() ? "Tu peux en suivre plusieurs et en changer quand tu veux." : "Version gratuite : 1 catégorie, choix définitif."}</small></div>
+          <div class="mycats">${activeCats().map(c=>`<span class="mycat">${iconHtml(c)}${esc(c.label)}</span>`).join("")}</div>
+          <button class="mycats-btn" onclick="openInterests(false)">${isPremium() ? "✏️ Modifier mes catégories" : "🔒 Changer de catégorie · Premium"}</button></div>
         <div class="set-row col"><div class="set-lbl">Objectif quotidien<small>Cartes par jour pour garder ta série</small></div><div class="chips" id="goalChips"></div></div>
         <div class="set-row col"><div class="set-lbl">Mini-test après « Je savais »<small>Une question rapide pour vérifier. Une erreur remet la carte à revoir.</small></div><div class="chips" id="mqBox"></div></div>
       </div>
@@ -4964,10 +5315,11 @@ function renderProfile(){
   if(profTab==="progres") return;
 
   const gc = $("goalChips");
-  [3,5,10,20].forEach(n=>{
+  gc.classList.add("goal-grid");
+  [[3,"🌱","2 min"],[5,"🔥","5 min"],[10,"🚀","10 min"],[20,"🏆","20 min"]].forEach(([n,e,m])=>{
     const b = document.createElement("button");
-    b.className = "chip" + (S.goal===n ? " on" : "");
-    b.textContent = n + "/jour";
+    b.className = "ob-t compact" + (S.goal===n ? " on" : "");
+    b.innerHTML = `<em>${e}</em><div class="ob-t-m"><b>${n}/jour</b><span>${m}</span></div><i class="chk"></i>`;
     b.onclick = ()=>{ setGoal(n); renderProfile(); };
     gc.appendChild(b);
   });
@@ -4976,7 +5328,7 @@ function renderProfile(){
     const locked = isLockedTheme(th.id);
     const b = document.createElement("button");
     b.className = "chip" + ((S.theme||"papier")===th.id ? " on" : "") + (locked ? " locked" : "");
-    b.innerHTML = `<span class="swatch" style="background:${th.color}"></span>${th.name}${locked?" 🔒":""}`;
+    b.innerHTML = `<span class="swatch" style="background:${th.color}"></span>${th.name}${locked?" 🔒":""}${(S.theme||"papier")===th.id ? '<i class="tchk">✓</i>' : ""}`;
     b.onclick = ()=>{
       if(locked){ openPaywall(); return; }
       S.theme = th.id; saveState(); applyTheme(th.id); renderProfile();
@@ -4996,7 +5348,7 @@ function renderProfile(){
   } else if(PAYWALL_ACTIVE && trialDaysLeft() > 0){
     pb.innerHTML = `<b>Essai Premium : ${trialDaysLeft()} jour${trialDaysLeft()>1?"s":""} restant${trialDaysLeft()>1?"s":""}</b><span>Tout est débloqué pendant l'essai. Passe Premium pour garder tes avantages.</span>`;
   } else {
-    pb.innerHTML = `<b>Kultos Premium${PAYWALL_ACTIVE?"":" · bientôt"}</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, quiz illimités, tous les thèmes.</span>`;
+    pb.innerHTML = `<div class="pc-top"><em>👑</em><u>${PAYWALL_ACTIVE?"OFFRE":"BIENTÔT"}</u></div><b>Kultos Premium</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, quiz illimités, tous les thèmes.</span>`;
   }
   pb.onclick = openPaywall;
   renderMiniToggle();
@@ -5039,7 +5391,7 @@ async function initAccounts(){
       refreshAll();
       if(!u && REQUIRE_ACCOUNT) openAuth("login", "", true);
     });
-  }catch(e){ console.warn("Comptes indisponibles", e); }
+  }catch(e){ /* comptes indisponibles : silencieux */ }
 }
 function saveLocalOnly(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} }
 function refreshAll(){ try{ renderToday(); renderCategories(); renderProfile(); renderFavCategories(); setFavs(getFavs()); }catch(e){} }
@@ -5134,9 +5486,8 @@ function openAuth(mode, intro, forced){
 function renderMiniToggle(){
   const box = $("mqBox"); if(!box) return;
   const on = S.miniQuiz !== false;
-  box.innerHTML = `<button class="chip ${on?"on":""}" id="mqOn">Activé</button><button class="chip ${on?"":"on"}" id="mqOff">Désactivé</button>`;
-  $("mqOn").onclick = ()=>{ S.miniQuiz = true; saveState(); renderProfile(); };
-  $("mqOff").onclick = ()=>{ S.miniQuiz = false; saveState(); renderProfile(); };
+  box.innerHTML = `<button class="switch ${on?"on":""}" id="mqSw" role="switch" aria-checked="${on}"><i></i><span>${on?"Activé":"Désactivé"}</span></button>`;
+  $("mqSw").onclick = ()=>{ S.miniQuiz = !on; saveState(); renderProfile(); };
 }
 function renderAccountPanel(){
   if(!ACCOUNTS_ACTIVE) return;
@@ -5176,12 +5527,13 @@ function renderPaywall(){
   const canBuy = PAYWALL_ACTIVE && CHECKOUT_URLS[plan];
   el.innerHTML = `
     <button class="back-link" id="pwBack">‹ Retour</button>
-    <div><div class="eyebrow">Kultos Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":paywallReason==="cat"?"Changer de catégorie":paywallReason==="fav"?"Tes favoris":"Ce que tu débloques"}</h1></div>
+    <div><div class="eyebrow">Kultos Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":paywallReason==="more"?"Plus de cartes":paywallReason==="cat"?"Changer de catégorie":paywallReason==="fav"?"Tes favoris":"Ce que tu débloques"}</h1></div>
     ${paywallReason==="fav"?`<p class="sub" style="margin:0">Retrouver une carte mise en favori est une option Premium.</p>`:""}
     ${paywallReason==="cat"?`<p class="sub" style="margin:0">En version gratuite, tu travailles une seule catégorie, choisie au départ. Premium te laisse en suivre plusieurs et en changer quand tu veux.</p>`:""}
+    ${paywallReason==="more"?`<p class="sub" style="margin:0">En version gratuite, tu as 1 nouvelle carte par jour. Premium te donne autant de cartes que tu veux, quand tu veux.</p>`:""}
     ${paywallReason==="limit"?`<p class="sub" style="margin:0">Gratuit : 1 nouvelle carte par jour. Reviens demain, ou passe Premium pour un nombre de cartes illimité.</p>`:""}
     <div class="pw-table">
-      <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM</div></div>
+      <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM ★</div></div>
       ${row("Nouvelles cartes",`<small>1/jour</small>`,"Illimité")}
       ${row("Révision espacée",Y,Y)}
       ${row("Favoris",N,Y)}
@@ -5192,11 +5544,11 @@ function renderPaywall(){
     </div>
     <div class="plans">
       <button class="plan ${plan==="year"?"on":""}" data-plan="year">
-        <span class="tag">−58 %</span>
+        <span class="tag">MEILLEUR CHOIX · −58 %</span><i class="chk"></i>
         <div><div class="pn">Annuel</div><div class="ps">soit ${PRICE_TXT.yearPerMonth} par mois</div></div>
         <div class="pp">${PRICE_TXT.year}<div class="ps">par an</div></div>
       </button>
-      <button class="plan ${plan==="month"?"on":""}" data-plan="month">
+      <button class="plan ${plan==="month"?"on":""}" data-plan="month"><i class="chk"></i>
         <div><div class="pn">Mensuel</div><div class="ps">facturé chaque mois</div></div>
         <div class="pp">${PRICE_TXT.month}<div class="ps">par mois</div></div>
       </button>
@@ -5216,14 +5568,34 @@ function renderPaywall(){
 
 /* ---------- ONBOARDING ---------- */
 const OB_STEPS = [
-  { e:"📚", h:"Un savoir par jour", p:"Kultos te propose une carte chaque jour, en plus de toutes les catégories : langues, histoire, politique, géographie, nutrition…" },
-  { e:"🤔", h:"Devine, puis révèle", p:"Essaie de trouver la réponse avant de la voir : c'est comme ça qu'on retient. Dis « Je savais » ou « À revoir » : les cartes difficiles reviennent plus vite." },
-  { e:"🎯", h:"Ton objectif", p:"Combien de cartes par jour ? Atteins-le pour faire grandir ta série.", goal:true }
+  { kind:"time", e:"⏱️", h:"Combien de temps par jour ?", p:"Choisis un rythme tenable : mieux vaut peu, mais tous les jours." },
+  { kind:"plan", e:"👑", h:"Gratuit ou Premium ?", p:"Choisis ta façon d'apprendre. Tu pourras changer plus tard." },
+  { kind:"flip", h:"Comment ça marche", p:"Chaque carte cache sa réponse. Devine, puis touche « Retourner »." },
+  { kind:"grade", h:"Dis si tu savais", p:"Sois honnête : Kultos te représentera les cartes difficiles plus vite." }
 ];
+const OB_DEMO = { date:"1759", title:"Candide", intro:"Conte philosophique satirique de Voltaire, qui se moque de l'optimisme.", points:["Auteur : Voltaire.","Satire de l'optimisme de Leibniz.","Phrase finale : « Il faut cultiver notre jardin »."] };
+let obFlipped = false, obGraded = false;
 let obIndex = 0;
-function startOnboarding(){ obIndex = 0; $("onboarding").classList.add("showing"); renderOnboarding(); }
-function endOnboarding(){ openInterests(true); }
-function finishOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); }
+function startOnboarding(){
+  obIndex = 0; obFlipped = false; obGraded = false;
+  const el = $("onboarding"); el.classList.add("showing","welcome");
+  el.innerHTML = `<span></span>
+    <div class="ob-body ob-welcome">
+      <img src="${(document.querySelector('#splash img')||{}).src||'logo-192.png'}" alt="" class="ob-logo">
+      <div class="ob-brand"><b>Kultos</b></div>
+      <div class="ob-tag">Cultivez votre savoir</div>
+      <p class="ob-p">Une carte par jour, et tu apprends sans t'en rendre compte.</p>
+      <div class="wl-list">
+        <div class="wl-it"><i style="background:#EAEFFD">🗂️</i><div><b>Une carte par jour</b><span>Langues, histoire, culture G…</span></div></div>
+        <div class="wl-it"><i style="background:#FFF1D6">🎯</i><div><b>Teste-toi</b><span>Mini-quiz pour vraiment retenir</span></div></div>
+        <div class="wl-it"><i style="background:#E3F6EA">🔥</i><div><b>Garde ta série</b><span>5 minutes par jour suffisent</span></div></div>
+      </div>
+    </div>
+    <div class="ob-foot"><button class="primary-btn" id="obStart">DÉMARRER  ›</button></div>`;
+  $("obStart").onclick = ()=>{ el.classList.remove("welcome"); openInterests(true); };
+}
+function endOnboarding(){ finishOnboarding(); }
+function finishOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); maybeTip("today","today"); }
 let intDraft = [];
 function openInterests(first){
   const single = !isPremium();           /* gratuit : choix unique */
@@ -5232,31 +5604,42 @@ function openInterests(first){
   if(!single && !intDraft.length && !first) intDraft = availableCats().map(c=>c.id);
   const el = $("onboarding");
   el.classList.add("showing");
+  const NEWC = ["litterature","culture-g"];
   const draw = ()=>{
+    const n = intDraft.length;
+    const oldBody = el.querySelector(".int-body"), keepB = oldBody ? oldBody.scrollTop : 0, keepE = el.scrollTop;
     el.innerHTML = `
       ${first ? "<span></span>" : '<button class="ob-skip" id="intCancel">Annuler</button>'}
-      <div class="ob-body" style="width:100%;max-width:420px">
+      <div class="ob-body int-body">
         <div class="ob-emoji">🎯</div>
-        <h2 class="ob-h">Qu'est-ce que tu veux apprendre ?</h2>
-        <p class="ob-p">${single ? "Choisis la catégorie que tu veux travailler. En version gratuite ce choix est définitif ; Premium permet d'en suivre plusieurs et d'en changer." : "Choisis tes thèmes. L'appli (carte du jour, quiz, révisions) ne tournera que sur eux. Tu pourras changer à tout moment."}</p>
-        <div class="int-grid" id="intGrid"></div>
+        <h2 class="ob-h">${first ? "Qu'est-ce que tu veux apprendre ?" : "Mes catégories"}</h2>
+        <div class="int-note ${single?"free":"prem"}">${single
+          ? "<b>🔒 Version gratuite</b> · 1 seule catégorie, choix définitif. <u id=\"intPrem\">Voir Premium</u>"
+          : "<b>✨ Choisis-en autant que tu veux.</b> Tu pourras changer à tout moment."}</div>
+        <div class="int-list" id="intGrid"></div>
       </div>
-      <div class="ob-foot"><button class="primary-btn" id="intOk" ${intDraft.length?"":"disabled"}>${first?"COMMENCER":"ENREGISTRER"}</button></div>`;
+      <div class="ob-foot"><button class="primary-btn" id="intOk" ${n?"":"disabled"}>${first?"SUIVANT":"ENREGISTRER"}${(!single && n)?" · "+n+" catégorie"+(n>1?"s":""):""}</button></div>`;
     const g = $("intGrid");
+    const restore = ()=>{ const nb = el.querySelector(".int-body"); if(nb) nb.scrollTop = keepB; el.scrollTop = keepE; };
     availableCats().forEach(c=>{
       const on = intDraft.includes(c.id);
+      const cnt = CATEGORY_DATA[c.id].deck.length;
       const b = document.createElement("button");
-      b.className = "int-tile" + (on?" on":"");
-      b.style.background = c.bg;
-      b.innerHTML = `<span>${iconHtml(c)}</span>${esc(c.label)}${on?'<i>✓</i>':""}`;
-      b.onclick = ()=>{ intDraft = single ? [c.id] : (on ? intDraft.filter(x=>x!==c.id) : intDraft.concat(c.id)); draw(); };
+      b.className = "int-card" + (on?" on":"");
+      b.innerHTML = `<span class="ic" style="background:${c.bg}">${iconHtml(c)}</span>
+        <span class="nm"><b>${esc(c.label)}</b><small>${cnt} cartes</small></span>
+        ${NEWC.includes(c.id) ? '<u class="nw">NOUVEAU</u>' : ""}
+        <i class="${single?"rd":"cb"}">${(!single && on) ? "✓" : ""}</i>`;
+      b.onclick = ()=>{ intDraft = single ? [c.id] : (on ? intDraft.filter(x=>x!==c.id) : intDraft.concat(c.id)); draw(); const gg=$("intGrid"); };
       g.appendChild(b);
     });
+    restore(); requestAnimationFrame(restore);
+    if($("intPrem")) $("intPrem").onclick = ()=>{ el.classList.remove("showing"); paywallReason=""; renderPaywall(); showView("paywall"); };
     $("intOk").onclick = ()=>{
       if(!intDraft.length) return;
       S.interests = intDraft.slice(); if(single) S.freeCat = intDraft[0]; saveState();
       quizSel = "mix";
-      if(first) finishOnboarding(); else el.classList.remove("showing");
+      if(first){ if(S.onboarded){ finishOnboarding(); } else { obIndex = 0; renderOnboarding(); } } else el.classList.remove("showing");
       renderCategories(); renderToday(); renderProfile();
     };
     if(!first) $("intCancel").onclick = ()=>el.classList.remove("showing");
@@ -5266,20 +5649,74 @@ function openInterests(first){
 function renderOnboarding(){
   const s = OB_STEPS[obIndex], last = obIndex === OB_STEPS.length-1;
   const el = $("onboarding");
+  const d = OB_DEMO, ico = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 16"/><path d="M20 5v6h-6"/></svg>';
+  let mid = "";
+  if(s.kind==="time"){
+    const opts=[[3,"2 min","3 cartes par jour","🌱","Découverte"],[5,"5 min","5 cartes par jour","🔥","Équilibré"],[10,"10 min","10 cartes par jour","🚀","Motivé"],[20,"20 min","20 cartes par jour","🏆","Intensif"]];
+    mid = `<div class="ob-time">${opts.map(o=>`<button class="ob-t ${S.goal===o[0]?"on":""}" data-n="${o[0]}"><em>${o[3]}</em><div class="ob-t-m"><b>${o[1]}</b><span>${o[2]}</span></div><u>${o[4]}</u><i class="chk"></i></button>`).join("")}</div>`;
+  } else if(s.kind==="plan"){
+    const row=(l,x,y)=>`<div class="pw-row"><div>${l}</div><div>${x}</div><div>${y}</div></div>`;
+    const Y='<span class="yes">✓</span>', N='<span class="no">✕</span>';
+    mid = `<div class="ob-plan">
+      <div class="pw-table" style="width:100%">
+        <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM ★</div></div>
+        ${row("Nouvelles cartes",`<small>1/jour</small>`,"Illimité")}
+        ${row("Révision espacée",Y,Y)}
+        ${row("Favoris",N,Y)}
+        ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
+        ${row("Toutes les catégories",`<small>1 au choix</small>`,"Toutes")}
+        ${row("Changer de catégorie",N,Y)}
+        ${row("Thèmes de couleur",`<small>1</small>`,"6")}
+      </div>
+      <div class="plans" style="width:100%">
+        <button class="plan ${plan==="year"?"on":""}" data-plan="year"><span class="tag">MEILLEUR CHOIX · −58 %</span><i class="chk"></i><div><div class="pn">Annuel</div><div class="ps">soit ${PRICE_TXT.yearPerMonth} par mois</div></div><div class="pp">${PRICE_TXT.year}<div class="ps">par an</div></div></button>
+        <button class="plan ${plan==="month"?"on":""}" data-plan="month"><i class="chk"></i><div><div class="pn">Mensuel</div><div class="ps">facturé chaque mois</div></div><div class="pp">${PRICE_TXT.month}<div class="ps">par mois</div></div></button>
+      </div>
+      <p class="ob-p" style="margin:2px 0 0;font-size:13px">${PAYWALL_ACTIVE ? "Essai gratuit de "+TRIAL_DAYS+" jours, sans engagement, résiliable à tout moment." : "<b>Tout est gratuit pendant le lancement.</b> Le paiement n'est pas encore ouvert."}</p>
+    </div>`;
+  } else if(s.kind==="flip"){
+    mid = `<div class="ob-demo" id="obDemo">${obFlipped ? `<div class="d-title" style="font-size:24px">${d.title}</div><ul>${d.points.map(x=>`<li>${x}</li>`).join("")}</ul>` : `<div class="d-date">${d.date}</div><div class="d-title">${d.title}</div><div class="d-txt">${d.intro}</div>`}</div>
+      <div class="ob-act">${obFlipped ? "" : `<button class="a-flip" id="obFlip">${ico}Retourner</button>`}</div>`;
+  } else if(s.kind==="grade"){
+    mid = `<div class="ob-demo" id="obDemo"><div class="d-title" style="font-size:24px">${d.title}</div><ul>${d.points.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+      <div class="ob-act"><button class="a-ko ${obGraded?"dim":""}" id="obKo">↺ À revoir</button><button class="a-ok ${obGraded?"dim":""}" id="obOk">✓ Je savais</button></div>
+      <div class="ob-fb ${obGraded?"ok":""}" id="obFb">${obGraded ? obGraded : "👆 Essaie : touche l'un des deux boutons."}</div>`;
+  }
   el.innerHTML = `
-    <button class="ob-skip" id="obSkip">${last?"":"Passer"}</button>
+    <button class="ob-skip" id="obSkip">${(last||s.kind==="time"||s.kind==="plan")?"":"Passer"}</button>
     <div class="ob-body">
-      <div class="ob-emoji">${s.e}</div>
+      ${s.e ? `<div class="ob-emoji">${s.e}</div>` : ""}
       <h2 class="ob-h">${s.h}</h2>
       <p class="ob-p">${s.p}</p>
+      ${mid}
       ${s.goal ? '<div class="chips" id="obGoals" style="justify-content:center"></div>' : ""}
     </div>
     <div class="ob-foot">
       <div class="ob-dots">${OB_STEPS.map((_,i)=>`<i class="${i===obIndex?"on":""}"></i>`).join("")}</div>
-      <button class="primary-btn" id="obNext">${last ? "COMMENCER" : "SUIVANT"}</button>
+      <button class="primary-btn" id="obNext">${s.kind==="plan" ? (PAYWALL_ACTIVE ? "ESSAYER GRATUITEMENT" : "CONTINUER GRATUITEMENT") : (last ? "COMMENCER" : "SUIVANT")}</button>
+      ${s.kind==="plan" && PAYWALL_ACTIVE ? '<button class="ob-skip" id="obFree" style="align-self:center;margin-top:8px;font-size:13px">Continuer en version gratuite</button>' : ""}
     </div>`;
+  const next = $("obNext");
+  const locked = (s.kind==="flip" && !obFlipped) || (s.kind==="grade" && !obGraded);
+  if(locked){ next.disabled = true; }
   $("obSkip").onclick = endOnboarding;
-  $("obNext").onclick = ()=>{ if(last) endOnboarding(); else { obIndex++; renderOnboarding(); } };
+  next.onclick = ()=>{ if(next.disabled) return; if(last) endOnboarding(); else { obIndex++; renderOnboarding(); } };
+  if(s.kind==="flip" && !obFlipped){
+    $("obFlip").onclick = ()=>{ const dm=$("obDemo"); dm.classList.add("flipping"); setTimeout(()=>{ obFlipped = true; renderOnboarding(); }, 130); };
+    $("obDemo").onclick = ()=>$("obFlip").click();
+  }
+  if(s.kind==="plan") el.querySelectorAll(".plan").forEach(b=>b.onclick=()=>{ plan=b.dataset.plan; renderOnboarding(); });
+  if(s.kind==="time"){
+    el.querySelectorAll(".ob-t").forEach(b=>b.onclick=()=>{ setGoal(+b.dataset.n); renderOnboarding(); });
+  }
+  if($("obFree")) $("obFree").onclick = ()=>{ obIndex++; renderOnboarding(); };
+  if(s.kind==="grade"){
+    const adv = ()=>{ const at=obIndex; setTimeout(()=>{ if(obIndex===at && $("onboarding").classList.contains("showing")){ finishOnboarding(); } }, 1900); };
+    if(!obGraded){
+      $("obKo").onclick = ()=>{ obGraded = "↺ Noté ! Cette carte reviendra vite dans tes révisions."; renderOnboarding(); adv(); };
+      $("obOk").onclick = ()=>{ obGraded = "✓ Bravo ! Cette carte reviendra plus tard, espacée dans le temps."; renderOnboarding(); adv(); };
+    }
+  }
   if(s.goal){
     const box = $("obGoals");
     [3,5,10,20].forEach(n=>{
@@ -5290,6 +5727,34 @@ function renderOnboarding(){
       box.appendChild(b);
     });
   }
+}
+
+/* ---------- BULLES D'AIDE (une seule fois par onglet) ---------- */
+const TIPS = {
+  categories:{ t:"<b>Choisis une catégorie</b>, puis pioche une carte. Les thèmes te permettent d'aller plus précisément." },
+  favorites:{ t:"<b>Tes favoris.</b> Touche l'étoile ☆ d'une carte pour la retrouver ici." },
+  profile:{ t:"<b>Ton profil.</b> Ta série, tes statistiques, ton objectif et tes réglages." }
+};
+function hideTip(){ const t=document.getElementById("tipBubble"); if(t) t.remove(); }
+function maybeTip(tab, viewName){
+  hideTip();
+  if(!TIPS[tab] || !S.onboarded || (S.tips||{})[tab]) return;
+  if(viewName && !["today","categories","favorites","profile"].includes(viewName)) return;
+  setTimeout(()=>{
+    const ob = document.getElementById("onboarding");
+    if(ob && ob.classList.contains("showing")) return;
+    const active = document.querySelector(".nav-btn.active");
+    if(!active || active.dataset.tab!==tab || (S.tips||{})[tab]) return;
+    S.tips = S.tips||{}; S.tips[tab] = 1; saveState();
+    const b = document.createElement("div"); b.className="tip"; b.id="tipBubble";
+    b.innerHTML = TIPS[tab].t + '<button aria-label="Fermer">×</button>';
+    document.body.appendChild(b);
+    const r = active.getBoundingClientRect(), br = b.getBoundingClientRect();
+    b.style.setProperty("--tx", Math.max(24, Math.min(br.width-24, r.left + r.width/2 - br.left)) + "px");
+    const close = ()=>{ b.remove(); };
+    b.onclick = close;
+    setTimeout(close, 9000);
+  }, 700);
 }
 
 function syncNavHeight(){
@@ -5336,7 +5801,6 @@ if("serviceWorker" in navigator && location.protocol.indexOf("http") === 0){
 }
 
 /* © 2026 Yanis Bensaadi. Kultos. Tous droits réservés. */
-console.log("%cKultos %c· © 2026 Yanis Bensaadi. Tous droits réservés. Auteur domicilié en France.", "font-weight:700;color:#2C2523;font-size:13px;", "color:#6B5F55;font-size:12px;");
 </script>
 </body>
 </html>

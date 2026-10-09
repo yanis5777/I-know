@@ -1,7 +1,7 @@
 /* Kultos : service worker (hors ligne).
    - pages : réseau d'abord (les mises à jour arrivent tout de suite), cache en secours
    - le reste (polices, icônes, manifest) : cache d'abord, rafraîchi en arrière-plan */
-const CACHE = "iknow-v5";
+const CACHE = "iknow-v40";
 const SHELL = ["./", "index.html", "manifest.json", "icon-32.png", "apple-touch-icon.png", "og-image.jpg"];
 
 self.addEventListener("install", e=>{
