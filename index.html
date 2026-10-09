@@ -1731,6 +1731,17 @@
   .ob-plan .plan.on .pn, .ob-plan .plan.on .pp, #paywallView .plan.on .pn, #paywallView .plan.on .pp{ color:#2A1B05; } .ob-plan .plan.on .ps, #paywallView .plan.on .ps{ color:#5A3F10; }
   .ob-plan .pw-row.head > div:last-child, #paywallView .pw-row.head > div:last-child{ background:linear-gradient(155deg,#F9DC8A,#E3AC3E 60%,#B8862E) !important; color:#2A1B05 !important; }
   .ob-plan .pw-row > div:last-child, #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(240,194,94,.42),rgba(240,194,94,.22)) !important; color:#5A3F10 !important; }
+  /* Onboarding : tient dans Safari (barres visibles) et défile au besoin */
+  #onboarding{ padding-top:max(env(safe-area-inset-top,0px),20px); padding-bottom:calc(14px + env(safe-area-inset-bottom,0px)); }
+  #onboarding .ob-body{ min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; gap:10px; width:100%; }
+  #onboarding .ob-emoji{ font-size:44px; }
+  #onboarding .ob-h{ font-size:24px; }
+  #onboarding .ob-p{ font-size:14.5px; margin:0; }
+  #onboarding .ob-t{ padding:10px 14px; }
+  .ob-time{ gap:8px; }
+  .ob-dots{ margin-bottom:10px; flex:none; }
+  #onboarding .ob-foot{ flex:none; }
+  @media (max-height:720px){ #onboarding .ob-emoji{ font-size:34px; } #onboarding .ob-h{ font-size:22px; } #onboarding .ob-t{ padding:8px 12px; } }
   .ob-welcome{ gap:10px; }
   .ob-logo{ width:112px; height:112px; border-radius:26px; box-shadow:0 18px 40px -16px rgba(22,48,143,.45); animation:splashIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
   .ob-brand{ font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:40px; color:var(--ink); margin-top:8px; }
