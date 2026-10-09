@@ -1742,6 +1742,21 @@
   .ob-dots{ margin-bottom:10px; flex:none; }
   #onboarding .ob-foot{ flex:none; }
   @media (max-height:720px){ #onboarding .ob-emoji{ font-size:34px; } #onboarding .ob-h{ font-size:22px; } #onboarding .ob-t{ padding:8px 12px; } }
+  /* Les écrans qui défilent passent sous la barre en verre : plus de bande vide */
+  .shell:has(.view.scroll-view.showing) .content{ margin-bottom:calc(-1 * var(--navh,70px)); }
+  .view.scroll-view{ inset:0 !important; }
+  .shell:has(#categoriesView.showing, #categoryView.showing, #favView.showing, #favThemesView.showing, #favCardsView.showing) .content{ margin-bottom:calc(-1 * var(--navh,70px)); }
+  #categoriesView, #categoryView, #favView, #favThemesView, #favCardsView{ margin-bottom:0 !important; padding-bottom:calc(var(--navh,70px) + 20px); }
+  #categoryView{ padding-bottom:0 !important; }
+  /* lisibilité de la barre quand du contenu passe dessous */
+  .bottomnav::before{ opacity:.95 !important; height:130px !important; background:linear-gradient(to top, var(--bg) 35%, transparent) !important; }
+  .nav-inner{ background:linear-gradient(160deg, rgba(255,255,255,.62), rgba(255,255,255,.34)), color-mix(in srgb, var(--bg) 70%, transparent) !important; -webkit-backdrop-filter:blur(22px) saturate(160%) !important; backdrop-filter:blur(22px) saturate(160%) !important; }
+  :root[data-theme="nuit"] .nav-inner{ background:linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,255,255,.04)), rgba(34,31,29,.82) !important; border:1px solid rgba(255,255,255,.14) !important; box-shadow:0 18px 36px -12px rgba(0,0,0,.7), inset 0 1px 1px rgba(255,255,255,.14) !important; }
+  :root[data-theme="nuit"] .nav-indicator{ background:linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.1)) !important; box-shadow:0 8px 18px -6px rgba(0,0,0,.6), inset 0 1px 1px rgba(255,255,255,.2) !important; }
+  :root[data-theme="nuit"] .nav-btn{ color:rgba(240,234,225,.62); }
+  :root[data-theme="nuit"] .nav-btn.active{ color:#9DB4FF; }
+  :root[data-theme="nuit"] .ob-plan .pw-row > div:last-child, :root[data-theme="nuit"] #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(240,194,94,.22),rgba(240,194,94,.10)) !important; color:#F5D27A !important; }
+  :root[data-theme="nuit"] .ob-plan .plan.on .ps, :root[data-theme="nuit"] #paywallView .plan.on .ps{ color:#5A3F10; }
   .ob-welcome{ gap:10px; }
   .ob-logo{ width:112px; height:112px; border-radius:26px; box-shadow:0 18px 40px -16px rgba(22,48,143,.45); animation:splashIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
   .ob-brand{ font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:40px; color:var(--ink); margin-top:8px; }
