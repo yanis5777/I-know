@@ -473,6 +473,12 @@
   .fact-block.flip-fact.hero .fact-flip-face.front .fact-summary{ font-size:1.2em; line-height:1.55; max-width:19em; margin-top:0.6em; margin-bottom:0; }
   .fact-block.flip-fact.hero .fact-flip-face.back .fact-title{ font-size:1.5em; text-align:center; }
 
+  .fact-block.hero.txt-s .fact-summary{ font-size:1.05em !important; line-height:1.5 !important; }
+  .fact-block.hero.txt-xs .fact-summary{ font-size:0.95em !important; line-height:1.45 !important; max-width:none !important; }
+  .fact-block.hero.ttl-s .fact-title{ font-size:1.5em !important; }
+  .fact-block.hero .fact-flip-face.back .fact-date{ display:none; }
+  .fact-block.flip-fact.hero .fact-flip-face.back .fact-points{ font-size:0.98em; }
+
   .flip-fact{ perspective:800px; cursor:pointer; }
   .flip-fact.flipping{ animation:factFlip .26s ease; }
   @keyframes factFlip{
@@ -497,14 +503,16 @@
   }
   .flip-hint:active{ transform:scale(0.85); }
   .flip-hint[hidden]{ display:none; }
-  .flip-hint{ align-self:center; width:46px; height:46px; margin-top:10px;
+  .btn-flip-ico{ width:18px; height:18px; margin-right:8px; vertical-align:-3px; animation:flipBounce 1.8s ease-in-out infinite; }
+  .flip-hint{ align-self:center; width:36px; height:36px; margin-top:4px;
     background:linear-gradient(155deg,#4A6BE0,#2447C9); border:1px solid rgba(255,255,255,0.5);
     box-shadow:0 12px 24px -8px rgba(36,71,201,0.55), inset 0 1px 1px rgba(255,255,255,0.4);
-    animation:flipBounce 1.8s ease-in-out infinite; }
-  .flip-hint svg{ width:23px; height:23px; animation:flipSpin 1.8s ease-in-out infinite; }
-  @keyframes flipBounce{ 0%,55%,100%{ transform:translateY(0); } 15%{ transform:translateY(-12px); } 30%{ transform:translateY(0); } 42%{ transform:translateY(-5px); } }
+    }
+  .flip-hint svg{ width:18px; height:18px; }
+  .btn-flip-ico{ animation:flipBounce 1.8s ease-in-out infinite, flipSpin 1.8s ease-in-out infinite; }
+  @keyframes flipBounce{ 0%,55%,100%{ transform:translateY(0); } 15%{ transform:translateY(-8px); } 30%{ transform:translateY(0); } 42%{ transform:translateY(-3px); } }
   @keyframes flipSpin{ 0%,10%{ transform:rotate(0); } 40%,100%{ transform:rotate(360deg); } }
-  @media (prefers-reduced-motion:reduce){ .flip-hint, .flip-hint svg{ animation:none; } }
+  @media (prefers-reduced-motion:reduce){ .btn-flip-ico{ animation:none; } }
   .fact-question{ font-style:italic; color:var(--ink-soft); }
   .fact-points{ margin:0.5em 0 0.8em; padding-left:1.3em; }
   .fact-points li{
@@ -3796,11 +3804,14 @@ function applyCardUI(){
   skip.hidden = !(revealed && ctx.origin !== "daily");
   actions.style.display = revealed ? "none" : "";
   hint.hidden = cardState !== "hidden";
+  const fh = document.getElementById("flipHint");
+  if(fh) fh.hidden = !isFlippable(card) || cardState === "hidden";
 
   prevBtn.style.display = showPrev ? "" : "none";
   prevBtn.disabled = cardHistory.length === 0;
   if(cardState === "hidden"){
-    anotherBtn.textContent = isFlippable(card) ? "Retourner" : "Révéler";
+    if(isFlippable(card)) anotherBtn.innerHTML = '<svg class="btn-flip-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11A8 8 0 1 0 18.5 16"/><path d="M20 5v6h-6"/></svg>Retourner';
+    else anotherBtn.textContent = "Révéler";
     anotherBtn.style.display = "";
   } else {
     anotherBtn.textContent = "Autre carte";
@@ -3809,6 +3820,12 @@ function applyCardUI(){
   }
 }
 
+function heroSize(r){
+  const t=(r.intro||r.summary||"").length, h=(r.title||"").length, o=[];
+  if(t>200) o.push("txt-xs"); else if(t>110) o.push("txt-s");
+  if(h>22) o.push("ttl-s");
+  return o;
+}
 function renderCard(card, fromHistory){
   hideMqAgain();
   if(!fromHistory){
@@ -3842,8 +3859,9 @@ function renderCard(card, fromHistory){
         div.innerHTML = `<div class="fact-title">${r.title}</div><div class="fact-summary">${r.intro || ""}</div><ul class="fact-points">${pointsHtml}</ul>`;
       } else if(r.points){
         div.className = "fact-block flip-fact" + (card.rows.length===1 ? " hero" : "");
+        if(card.rows.length===1) div.classList.add(...heroSize(r));
         const pointsHtml = r.points.map(p=>`<li>${p}</li>`).join("");
-        const dateHtml = r.date ? `<div class="fact-date">${r.date}</div>` : "";
+        const dateHtml = (r.date && /[0-9A-Za-zÀ-ÿ]/.test(r.date)) ? `<div class="fact-date">${r.date}</div>` : "";
         div.innerHTML = `
           <div class="fact-flip-face front">
             ${dateHtml}
@@ -3857,7 +3875,8 @@ function renderCard(card, fromHistory){
           </div>`;
       } else {
         div.className = "fact-block plain" + (card.rows.length===1 ? " hero" : "");
-        const dateHtml = r.date ? `<div class="fact-date">${r.date}</div>` : "";
+        if(card.rows.length===1) div.classList.add(...heroSize(r));
+        const dateHtml = (r.date && /[0-9A-Za-zÀ-ÿ]/.test(r.date)) ? `<div class="fact-date">${r.date}</div>` : "";
         div.innerHTML = `${dateHtml}<div class="fact-title">${r.title}</div><div class="fact-summary">${r.summary}</div>`;
       }
       wrap.appendChild(div);
@@ -3905,7 +3924,7 @@ function renderCard(card, fromHistory){
   const flipHint = document.getElementById("flipHint");
   wrap.classList.add("scrollable");
   scrollHint.classList.add("showing");
-  flipHint.hidden = !flippable;
+  flipHint.hidden = !flippable || cardState === "hidden";
   flipHint.onclick = ()=>{ if(wrap.onclick) wrap.onclick(); };
 
   const catForCard = CATEGORIES.find(c=>c.id===categoryIdForCard(card));
