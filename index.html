@@ -58,7 +58,7 @@
     --paper-dark:#EAE2D5;
     --card-border:#D8CFC4;
     --ink:#1A1412;
-    --ink-soft:#4F453C;
+    --ink-soft:#3A322B;
     --ph:#6B5F55;
     --stamp:#A32F1F;
     --airmail:#2B4C7E;
@@ -1063,7 +1063,8 @@
   .premium-card b{ font-family:'Fraunces', serif; font-style:italic; font-size:18px; display:block; }
   .premium-card span{ font-size:11.5px; opacity:0.78; line-height:1.5; display:block; margin-top:3px; }
 
-  /* ---------- PREMIUM ---------- */
+  
+/* ---------- PREMIUM ---------- */
   #paywallView{ gap:12px; }
   .pw-table{ border:1px solid var(--card-border); border-radius:14px; overflow:hidden; background:var(--paper); flex-shrink:0; }
   .pw-row{ display:grid; grid-template-columns:1fr 76px 88px; align-items:center; border-top:1px solid var(--card-border); font-size:12.5px; color:var(--ink); }
@@ -1104,6 +1105,81 @@
   .int-link{ margin-top:8px; background:var(--paper); border:1px solid var(--card-border,#D8CFC4); border-radius:999px; padding:6px 12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink); cursor:pointer; }
   .tile-edit{ background:var(--paper)!important; border:1.5px dashed var(--ink-soft,#6b6058); }
   .primary-btn:disabled{ opacity:.5; }
+
+  #miniq{ position:fixed; inset:0; z-index:3000; display:none; align-items:flex-end; justify-content:center; background:rgba(26,20,18,0.45); }
+  #miniq.showing{ display:flex; }
+  .mq-sheet{ width:100%; max-width:460px; background:var(--bg); border-radius:26px 26px 0 0; padding:20px 18px calc(22px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:12px; box-shadow:0 -12px 40px rgba(26,20,18,0.25); animation:mqUp .28s cubic-bezier(.2,.9,.3,1.1); max-height:92dvh; overflow-y:auto; }
+  @keyframes mqUp{ from{ transform:translateY(40px); opacity:0; } to{ transform:none; opacity:1; } }
+  .mq-head{ display:flex; justify-content:space-between; align-items:center; }
+  .mq-skip{ background:none; border:none; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-soft); cursor:pointer; padding:6px; }
+  .mq-fb{ font-family:'IBM Plex Sans',sans-serif; font-size:13.5px; line-height:1.5; border-radius:12px; padding:11px 14px; }
+  .mq-fb.good{ background:#DCEBDD; border:1px solid #2F6B45; color:#1D4A2E; }
+  .mq-fb.bad{ background:#F3D9D4; border:1px solid var(--stamp); color:#7A2418; }
+  .mq-fb b{ display:block; font-family:'Fraunces',serif; font-size:17px; margin-bottom:2px; }
+
+  .more-card{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer; padding:12px 14px; border-radius:16px; background:var(--paper); border:1.5px dashed var(--royal); color:var(--ink); font-family:'IBM Plex Sans',sans-serif; }
+  .more-card:active{ transform:scale(0.99); }
+  .more-card .mc-ic{ font-size:20px; width:36px; height:36px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--card-border); }
+  .more-card .mc-tx{ display:flex; flex-direction:column; flex:1; min-width:0; }
+  .more-card b{ font-family:'Fraunces',serif; font-size:16px; }
+  .more-card small{ font-size:12px; color:var(--ink-soft); line-height:1.4; }
+  .more-card .mc-go{ color:var(--royal); font-size:16px; }
+
+  .seg{ display:flex; gap:4px; padding:4px; border-radius:14px; background:var(--paper-dark); border:1px solid var(--card-border); flex-shrink:0; }
+  .seg button{ flex:1; border:none; background:transparent; padding:10px 8px; border-radius:11px; font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px; color:var(--ink-soft); cursor:pointer; transition:background .2s, color .2s; }
+  .seg button.on{ background:var(--paper); color:var(--royal); box-shadow:0 2px 8px rgba(26,20,18,0.12); }
+  .sec-count{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; font-weight:600; color:var(--ink-soft); margin-left:6px; }
+  .set-group{ display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+  .set-title{ font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); opacity:.7; padding:0 4px; }
+  .set-panel{ padding:4px 14px; }
+  .set-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid var(--card-border); }
+  .set-row:last-child{ border-bottom:none; }
+  .set-row.col{ flex-direction:column; align-items:stretch; gap:10px; }
+  #goalChips{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+  #goalChips .chip{ padding-left:4px; padding-right:4px; text-align:center; justify-content:center; }
+  .set-lbl{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:15px; color:var(--ink); display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .set-lbl small{ font-weight:400; font-size:12.5px; color:var(--ink-soft); line-height:1.4; }
+
+  .t2-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-shrink:0; }
+  .streak-pill{ display:flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px; background:var(--paper); border:1px solid var(--card-border); font-family:'Fraunces',serif; font-weight:700; font-size:20px; color:var(--ink); }
+  .streak-pill span{ font-size:18px; }
+  .hero-card{ position:relative; text-align:left; width:100%; border:none; border-radius:24px; padding:20px 20px 20px; min-height:230px; display:flex; flex-direction:column; cursor:pointer; box-shadow:0 6px 14px rgba(26,20,18,0.12); flex-shrink:0; transition:transform .15s; }
+  .hero-card:active{ transform:scale(0.99); }
+  .hero-top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .hero-card .eyebrow{ color:rgba(32,24,15,0.85); opacity:1; }
+  .hero-emoji{ font-size:46px; line-height:1; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.12)); }
+  .hero-emoji .flag-icon{ font-size:40px; }
+  .hero-title{ font-family:'Fraunces',serif; font-weight:700; font-style:italic; font-size:30px; line-height:1.12; color:#20180F; margin-top:auto; padding-top:18px; }
+  .hero-sub{ font-size:14px; font-weight:500; color:rgba(32,24,15,0.82); margin:6px 0 16px; }
+  .hero-cta{ align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:99px; background:var(--royal-btn,#2447C9); color:#fff; font-weight:700; font-size:15px; letter-spacing:.02em; box-shadow:0 8px 18px rgba(36,71,201,0.35); }
+  .hero-cta.done{ background:rgba(32,24,15,0.14); color:#20180F; box-shadow:none; }
+  .more-link{ display:flex; align-items:baseline; justify-content:center; flex-wrap:wrap; gap:4px 10px; width:100%; background:none; border:none; cursor:pointer; padding:2px 0; font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14.5px; color:var(--royal); flex-shrink:0; }
+  .more-link small{ font-weight:400; font-size:12.5px; color:var(--ink-soft); }
+  .track{ display:flex; align-items:center; gap:16px; padding:14px 16px; flex-shrink:0; }
+  .ring2 .rg-bg{ fill:none; stroke:var(--paper-dark); stroke-width:7; }
+  .ring2 .rg-fg{ fill:none; stroke:var(--royal); stroke-width:7; stroke-linecap:round; transition:stroke-dashoffset .6s ease; }
+  .ring2 .rg-tx{ font-family:'Fraunces',serif; font-weight:700; font-size:15px; fill:var(--ink); }
+  .track-r{ flex:1; min-width:0; display:flex; flex-direction:column; gap:10px; }
+  .track-msg{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14.5px; line-height:1.35; color:var(--ink); }
+  .track .week{ margin-top:0; }
+  .act-row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; flex-shrink:0; }
+  .act2{ position:relative; display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer; padding:14px 12px; border-radius:16px; background:var(--paper); border:1px solid var(--card-border); color:var(--ink); }
+  .act2:active{ transform:scale(0.98); }
+  .act2 .ic{ font-size:24px; }
+  .act2 .tx{ display:flex; flex-direction:column; min-width:0; }
+  .act2 b{ font-family:'Fraunces',serif; font-size:17px; }
+  .act2 small{ font-family:'IBM Plex Sans',sans-serif; font-size:12.5px; color:var(--ink-soft); line-height:1.3; }
+  .act2 .pill{ position:absolute; top:-7px; right:-5px; min-width:22px; padding:1px 7px; border-radius:99px; text-align:center; background:var(--stamp); color:#fff; font-size:12px; font-weight:700; }
+  .auth-in{ width:100%; padding:14px 16px; border-radius:14px; border:1.5px solid var(--card-border,#D8CFC4); background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans',sans-serif; font-size:16px; outline:none; }
+  .auth-in:focus{ border-color:var(--royal); }
+  .auth-msg{ min-height:18px; font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:#A8352A; text-align:left; }
+  .auth-google{ width:100%; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:10px; padding:13px; border-radius:14px; border:1.5px solid var(--card-border,#D8CFC4); background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:14px; cursor:pointer; }
+  .auth-links{ display:flex; justify-content:space-between; gap:12px; width:100%; margin-top:14px; font-family:'IBM Plex Sans',sans-serif; font-size:13px; }
+  .auth-links a{ color:var(--royal); cursor:pointer; text-decoration:underline; }
+  .acct-box{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+  .acct-mail{ font-family:'IBM Plex Sans',sans-serif; font-weight:600; font-size:15px; color:var(--ink); word-break:break-all; }
+  .acct-sub{ font-family:'IBM Plex Sans',sans-serif; font-size:13px; color:var(--ink-soft); line-height:1.5; }
+
   .ob-skip{ align-self:flex-end; background:none; border:none; cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); padding:6px; }
   .ob-body{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:360px; gap:14px; }
   .ob-emoji{ font-size:64px; line-height:1; }
@@ -1125,6 +1201,28 @@
   .scroll-view > *{ flex-shrink:0; }
   .view.scroll-view{ padding-bottom:calc(var(--navh, 70px) + 26px); }
   .nav-btn{ font-size:8px; }
+  .topbar .k1{ display:none; }
+  /* ---- Lisibilité : textes secondaires plus grands et plus contrastés ---- */
+  .eyebrow{ font-size:11.5px; font-weight:600; letter-spacing:0.13em; color:var(--ink); opacity:.78; }
+  .daily-card .eyebrow{ color:rgba(32,24,15,0.85); opacity:1; }
+  .dc-sub{ font-size:13.5px; font-weight:500; color:rgba(32,24,15,0.85); }
+  .dc-title{ font-size:23px; }
+  .dc-cta{ font-size:13px; padding:9px 16px; }
+  .streak-lbl{ font-size:13px; color:var(--ink); font-weight:500; }
+  .goal-top span{ font-size:13px; color:var(--ink); }
+  .goal-top b{ font-size:17px; }
+  .goal-msg{ font-size:13px; color:var(--ink); line-height:1.4; }
+  .act span{ font-size:13px; color:var(--ink); }
+  .act b{ font-size:17px; }
+  .week span{ font-size:10px; font-weight:600; color:var(--ink); width:17px; height:17px; }
+  .level-top span{ font-size:13px; color:var(--ink); }
+  .card-num{ font-size:12px; color:var(--ink); }
+  .tile .count, .fav-row .count{ font-size:12px; color:var(--ink); }
+  .sub, .acct-sub{ font-size:14px; color:var(--ink); }
+  .more-card small{ font-size:13px; color:var(--ink); }
+  .nav-btn{ font-size:9.5px; font-weight:600; }
+  :root[data-theme="nuit"] .eyebrow, :root[data-theme="nuit"] .streak-lbl, :root[data-theme="nuit"] .goal-msg, :root[data-theme="nuit"] .goal-top span, :root[data-theme="nuit"] .act span, :root[data-theme="nuit"] .level-top span, :root[data-theme="nuit"] .sub, :root[data-theme="nuit"] .acct-sub, :root[data-theme="nuit"] .more-card small{ color:var(--ink-soft); }
+  @media (max-width:350px){ .nav-btn{ font-size:8.5px; } }
 </style>
 </head>
 <body>
@@ -1134,7 +1232,7 @@
 
   <div class="topbar">
     <img src="data:image/png;base64,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" alt="I Know" class="logo-badge">
-    <span class="k1">BASE DE SAVOIR</span>
+    
     <span class="k2">I Know</span>
   </div>
 
@@ -1326,6 +1424,7 @@
 </div>
 
 <div id="onboarding"></div>
+<div id="miniq"></div>
 <div id="toast"></div>
 
 <script>
@@ -2890,7 +2989,14 @@ const STATE_KEY = "iknow_state_v1";
    est branché : coller les Stripe Payment Links dans CHECKOUT_URLS, et
    marquer S.premium = true côté serveur (Firebase) après paiement. */
 const PAYWALL_ACTIVE = false;
-const CHECKOUT_URLS = { month:"", year:"" };
+const CHECKOUT_URLS = { month:"", year:"" };   /* Stripe Payment Links (voir backend/SETUP.md) */
+const PORTAL_URL = "";                         /* lien du portail client Stripe (résiliation) */
+/* Comptes : coller ici la config Firebase (Paramètres du projet → Vos applications → Web).
+   Tant que apiKey est vide, l'appli reste 100 % locale, sans compte. */
+const FIREBASE_CONFIG = { apiKey:"", authDomain:"", projectId:"", appId:"" };
+const ACCOUNTS_ACTIVE = !!FIREBASE_CONFIG.apiKey;
+const REQUIRE_ACCOUNT = false;                 /* true = compte obligatoire pour utiliser l'appli */
+const TRIAL_DAYS = 7;                          /* essai Premium gratuit (si PAYWALL_ACTIVE) */
 const FREE_CATEGORIES = ["anglais"];
 const FREE_THEMES = ["papier"];
 const FREE_QUIZ_PER_DAY = 1;
@@ -2911,7 +3017,12 @@ function noteNewCard(card){
   if(!S.newDay.ids.includes(card.id)){ S.newDay.ids.push(card.id); saveState(); }
 }
 let paywallReason = "";
-function isPremium(){ return !PAYWALL_ACTIVE || !!S.premium; }
+function trialDaysLeft(){
+  if(!PAYWALL_ACTIVE || !S.trialStart) return 0;
+  const used = dayNumber(todayStr()) - dayNumber(S.trialStart);
+  return Math.max(0, TRIAL_DAYS - used);
+}
+function isPremium(){ return !PAYWALL_ACTIVE || !!S.premium || trialDaysLeft() > 0; }
 /* Gratuit : UNE catégorie au choix, définitive (S.freeCat). Premium : plusieurs + changement. */
 function isLockedCat(id){ return !isPremium() && !!S.freeCat && id!==S.freeCat; }
 function isLockedTheme(id){ return !isPremium() && !FREE_THEMES.includes(id); }
@@ -2924,7 +3035,7 @@ function quizAllowed(){
 function defaultState(){
   return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
            onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
-           dailyDone:"", quizDay:null, interests:[], freeCat:"",
+           dailyDone:"", quizDay:null, interests:[], freeCat:"", trialStart:"",
            qstat:{}, qcat:{}, qmaster:{}, incollable:{} };
 }
 let S = defaultState();
@@ -2934,7 +3045,7 @@ function loadState(){
     if(raw) S = Object.assign(defaultState(), JSON.parse(raw));
   }catch(e){}
 }
-function saveState(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} }
+function saveState(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} if(typeof cloudPush==="function") cloudPush(); }
 
 /* Index rapide id → carte/catégorie */
 const CARD_INDEX = {};
@@ -3113,6 +3224,7 @@ let ctx = { origin:"favorites", categoryId:null, pool:null };
 function getFavs(){ try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }catch(e){ return []; } }
 function setFavs(arr){
   try{ localStorage.setItem(FAV_KEY, JSON.stringify(arr)); }catch(e){}
+  if(typeof cloudPush==="function") cloudPush();
   document.getElementById("favLabel").textContent = arr.length ? `Favoris (${arr.length})` : "Favoris";
 }
 function toggleFav(id){
@@ -3415,15 +3527,69 @@ function nextCard(){
   } else exitCardView();
 }
 
-function onGrade(knew){
-  const card = currentCard;
-  if(!card || card.merged) return;
+function finishGrade(card, knew){
   toast(knew ? "✓ Bien joué" : "↺ On y revient bientôt", 900);
   gradeCard(card.id, knew);
   if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); exitCardView(); return; }
   if(ctx.origin === "review"){ reviewNext(knew); return; }
   if(ctx.origin === "favorites"){ exitCardView(); return; }
   nextCard();
+}
+function onGrade(knew){
+  const card = currentCard;
+  if(!card || card.merged) return;
+  if(knew && S.miniQuiz !== false){
+    const q = miniQuestion(card);
+    if(q){ showMiniQuiz(card, q); return; }
+  }
+  finishGrade(card, knew);
+}
+/* Mini-test après « Je savais » : une question tirée de la carte.
+   Bonne réponse → carte validée (+XP). Mauvaise → la carte repasse « À revoir ». */
+function miniQuestion(card){
+  try{
+    const catId = categoryIdForCard(card);
+    const catPool = quizPoolFor([catId], false);
+    const mine = catPool.filter(x=>x.cardId===card.id);
+    const all = quizPoolFor(availableCats().map(c=>c.id), false);
+    for(const it of shuffle(mine.slice())){
+      const q = makeQuestion(it, catPool, all);
+      if(q) return q;
+    }
+  }catch(e){}
+  return null;
+}
+function showMiniQuiz(card, q){
+  const el = $("miniq"), cat = catById(categoryIdForCard(card));
+  const sz = q.prompt.length > 110 ? "xl" : q.prompt.length > 34 ? "long" : "";
+  el.innerHTML = `<div class="mq-sheet">
+    <div class="mq-head"><div class="quiz-tag">⚡ Mini-test · ${esc(q.tag || (q.reverse ? "Que veut dire ?" : "Comment dit-on ?"))}</div><button class="mq-skip" id="mqSkip">Passer</button></div>
+    <div class="quiz-q ${sz}">${esc(q.prompt)}</div>
+    <div class="quiz-ph">${q.reverse && q.item.ph ? "/"+esc(q.item.ph)+"/" : ""}</div>
+    <div class="quiz-opts" id="mqOpts"></div>
+    <div id="mqFb"></div>
+  </div>`;
+  el.classList.add("showing");
+  let done = false;
+  const close = knew=>{ el.classList.remove("showing"); el.innerHTML=""; finishGrade(card, knew); };
+  $("mqSkip").onclick = ()=>{ if(!done) close(true); };
+  q.options.forEach(opt=>{
+    const b = document.createElement("button");
+    b.className = "opt"; b.textContent = opt;
+    b.onclick = ()=>{
+      if(done) return; done = true;
+      const ok = opt === q.answer;
+      [...$("mqOpts").children].forEach(x=>{
+        if(x.textContent === q.answer) x.classList.add("good");
+        else if(x === b) x.classList.add("bad"); else x.classList.add("dim");
+      });
+      if(ok){ addXp(5); }
+      $("mqFb").innerHTML = `<div class="mq-fb ${ok?"good":"bad"}"><b>${ok ? "Validé !" : "Pas tout à fait"}</b>${ok ? "Tu la connais vraiment. +5 XP." : "La bonne réponse : « "+esc(q.answer)+" ». La carte repasse en « À revoir »."}</div>
+        <button class="primary-btn" id="mqNext" style="margin-top:10px">CONTINUER</button>`;
+      $("mqNext").onclick = ()=>close(ok);
+    };
+    $("mqOpts").appendChild(b);
+  });
 }
 function onSkip(){
   if(ctx.origin === "review"){ reviewNext(null); return; }
@@ -3837,53 +4003,42 @@ function renderToday(){
   const goalMsg = score >= goal ? "Objectif atteint 🎉"
     : (streak > 0 ? `Encore ${goal-score} pour garder ta série` : `${goal} cartes pour lancer ta série`);
 
+  const unit = (()=>{ const u = dcat.unit || "mots"; return cardSize(dc)>1 ? u : u.replace(/s$/,""); })();
+  const R = 30, C = 2*Math.PI*R;
+  const prem = isPremium();
   el.innerHTML = `
-    <div class="today-head">
-      <div class="eyebrow">${esc(dateTxt)}</div>
-      <h1 class="h-title">Aujourd'hui</h1>
-      <button class="int-link" onclick="openInterests(false)">🎯 ${!isPremium() ? "🔒 Ma catégorie · "+esc((activeCats()[0]||{}).label||"") : "Mes thèmes · "+(activeCats().length === availableCats().length && !(S.interests||[]).length ? "tous" : activeCats().length)}</button>
+    <div class="t2-head">
+      <div><div class="eyebrow">${esc(dateTxt)}</div><h1 class="h-title">Aujourd'hui</h1></div>
+      <div class="streak-pill" title="Série en cours"><span>🔥</span><b>${streak}</b></div>
     </div>
-    <div class="stat-row">
-      <div class="panel streak-box">
-        <div class="streak-num"><span class="fl">🔥</span>${streak}</div>
-        <div class="streak-lbl">${streak>1?"jours de suite":"jour de suite"}</div>
+    <button class="hero-card" id="dailyBtn" style="background:${dcat.bg}">
+      <div class="hero-top"><span class="eyebrow">Carte du jour</span><span class="hero-emoji">${iconHtml(dcat)}</span></div>
+      <div class="hero-title">${esc(dc.cat)}</div>
+      <div class="hero-sub">${esc(dcat.label)} · ${cardSize(dc)} ${unit}</div>
+      <span class="hero-cta ${done?"done":""}">${done ? "✓ Faite aujourd'hui" : "Découvrir ▸"}</span>
+    </button>
+    ${(prem || done) ? `<button class="more-link" id="moreBtn">${prem ? "➕ Une autre carte" : "🔒 Une autre carte · Premium"}<small>${prem ? "sans limite, quand tu veux" : "apprends sans limite chaque jour"}</small></button>` : ""}
+    <div class="panel track">
+      <svg class="ring2" viewBox="0 0 72 72" width="72" height="72"><circle cx="36" cy="36" r="${R}" class="rg-bg"/><circle cx="36" cy="36" r="${R}" class="rg-fg" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 36 36)"/><text x="36" y="41" text-anchor="middle" class="rg-tx">${Math.min(score,goal)}/${goal}</text></svg>
+      <div class="track-r">
+        <div class="track-msg">${goalMsg}</div>
         <div class="week">${week}</div>
       </div>
-      <div class="panel goal-box">
-        <div>
-          <div class="goal-top"><b>${Math.min(score,goal)}/${goal}</b><span>objectif</span></div>
-          <div class="bar" style="margin-top:8px"><i style="width:${pct*100}%"></i></div>
-        </div>
-        <div class="goal-msg">${goalMsg}</div>
-      </div>
     </div>
-    <button class="daily-card" id="dailyBtn" style="background:${dcat.bg}">
-      <div class="eyebrow">Carte du jour</div>
-      <div class="dc-emoji">${iconHtml(dcat)}</div>
-      <div class="dc-title">${esc(dc.cat)}</div>
-      <div class="dc-sub">${esc(dcat.label)} · ${cardSize(dc)} ${(()=>{ const u = dcat.unit || "mots"; return cardSize(dc)>1 ? u : u.replace(/s$/,""); })()}</div>
-      <span class="dc-cta ${done?"done":""}">${done ? "✓ Faite aujourd'hui" : "Découvrir ▸"}</span>
-    </button>
-    <div class="act-row">
-      <button class="act" id="reviewBtn">
-        <div class="ic">🔁</div>
-        <b>Réviser${due>0?`<span class="pill">${due}</span>`:""}</b>
-        <span>${due>0 ? "cartes à revoir" : "rien pour l'instant"}</span>
-      </button>
-      <button class="act" id="quizBtn">
-        <div class="ic">🎯</div>
-        <b>Quiz</b>
-        <span>sur ce que tu sais</span>
-      </button>
-    </div>
-    <div class="panel level-row">
-      <div class="level-top"><b>${LEVEL_EMOJI[lv.i]} ${lv.cur.n}</b><span>${lv.nxt ? `${S.xp}/${lv.nxt.xp} XP` : `${S.xp} XP`}</span></div>
-      <div class="bar"><i style="width:${lv.pct*100}%"></i></div>
+    <div class="act-row2">
+      <button class="act2" id="reviewBtn"><span class="ic">🔁</span><span class="tx"><b>Réviser</b><small>${due>0 ? due+" à revoir" : "rien pour l'instant"}</small></span>${due>0?`<span class="pill">${due}</span>`:""}</button>
+      <button class="act2" id="quizBtn"><span class="ic">🎯</span><span class="tx"><b>Quiz</b><small>sur ce que tu sais</small></span></button>
     </div>`;
   $("dailyBtn").onclick = ()=>{
     cardHistory = []; currentCard = null;
     ctx = { origin:"daily", categoryId:null, pool:null };
     renderCard(dc);
+  };
+  if($("moreBtn")) $("moreBtn").onclick = ()=>{
+    if(!isPremium()){ paywallReason="limit"; renderPaywall(); showView("paywall"); return; }
+    cardHistory = []; currentCard = null;
+    ctx = { origin:"globalRandom", categoryId:null, pool:null };
+    renderCard(pickRandomGlobal());
   };
   $("reviewBtn").onclick = startReview;
   $("quizBtn").onclick = ()=>{ renderQuizSetup(); showView("quizSetup"); };
@@ -4216,6 +4371,7 @@ function applyTheme(id){
 }
 
 /* ---------- PROFIL ---------- */
+let profTab = "progres";
 function renderProfile(){
   const el = $("profileView");
   const t = todayStr();
@@ -4240,8 +4396,9 @@ function renderProfile(){
 
   const badges = BADGES.map(b=>`<div class="badge ${S.badges[b.id]?"":"off"}"><div class="e">${b.e}</div><b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("");
 
-  el.innerHTML = `
-    <div class="today-head"><div class="eyebrow">Ta progression</div><h1 class="h-title">Profil</h1></div>
+  const unlocked = BADGES.filter(b=>S.badges[b.id]).length;
+  const tabs = `<div class="seg" role="tablist"><button class="${profTab==="progres"?"on":""}" id="tabProg">📈 Progrès</button><button class="${profTab==="reglages"?"on":""}" id="tabSet">⚙️ Réglages</button></div>`;
+  const progress = `
     <div class="panel lvl-big">
       <div class="lvl-badge">${LEVEL_EMOJI[lv.i]}</div>
       <div style="flex:1">
@@ -4252,52 +4409,55 @@ function renderProfile(){
     </div>
     <div class="stats-grid">
       <div class="stat"><b>🔥 ${currentStreak()}</b><span>série en cours</span></div>
-      <div class="stat"><b>${S.bestStreak}</b><span>meilleure série</span></div>
-      <div class="stat"><b>${seen}</b><span>cartes vues</span></div>
-      <div class="stat"><b>${mastered}</b><span>cartes bien ancrées</span></div>
+      <div class="stat"><b>🏅 ${S.bestStreak}</b><span>meilleure série</span></div>
+      <div class="stat"><b>📖 ${seen}</b><span>cartes vues</span></div>
+      <div class="stat"><b>🧠 ${mastered}</b><span>bien ancrées</span></div>
     </div>
-    <div class="panel">
-      <h3 class="sec-title">7 derniers jours</h3>
-      <div class="week-chart">${chart}</div>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">Par catégorie</h3>
-      <div class="cat-prog">${catRows}</div>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">Badges</h3>
-      <div class="badges">${badges}</div>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">Mes thèmes</h3>
-      <p class="sub" style="margin:0 0 10px">${activeCats().map(c=>esc(c.label)).join(", ")}</p>
-      <button class="chip" onclick="openInterests(false)">🎯 Modifier</button>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">Objectif quotidien</h3>
-      <div class="chips" id="goalChips"></div>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">Thème</h3>
-      <div class="chips" id="themeChips"></div>
-    </div>
-    <div class="panel">
-      <h3 class="sec-title">À propos</h3>
-      <p class="sub" style="margin:0 0 10px">I Know · une carte par jour. Fait par Yanis Bensaadi.</p>
-      <div class="about-links">
-        <button class="chip" id="shareBtn">📤 Partager l'appli</button>
-        <button class="chip" onclick="window.open('./presentation.html','_blank')">🌐 Présentation</button>
-        <button class="chip" onclick="window.open('./legal.html','_blank')">📄 Infos légales</button>
+    <div class="panel"><h3 class="sec-title">Cette semaine</h3><div class="week-chart">${chart}</div></div>
+    <div class="panel"><h3 class="sec-title">Par catégorie</h3><div class="cat-prog">${catRows}</div></div>
+    <div class="panel"><h3 class="sec-title">Badges <small class="sec-count">${unlocked}/${BADGES.length}</small></h3><div class="badges">${badges}</div></div>`;
+  const settings = `
+    <button class="premium-card" id="premiumBtn"></button>
+    ${ACCOUNTS_ACTIVE ? '<div class="panel acct-box" id="acctBox"></div>' : ""}
+    <div class="set-group">
+      <div class="set-title">Apprentissage</div>
+      <div class="panel set-panel">
+        <div class="set-row"><div class="set-lbl">Mes catégories<small>${activeCats().map(c=>esc(c.label)).join(", ")}</small></div><button class="chip" onclick="openInterests(false)">${isPremium() ? "🎯 Modifier" : "🔒 Modifier"}</button></div>
+        <div class="set-row col"><div class="set-lbl">Objectif quotidien<small>Cartes par jour pour garder ta série</small></div><div class="chips" id="goalChips"></div></div>
+        <div class="set-row col"><div class="set-lbl">Mini-test après « Je savais »<small>Une question rapide pour vérifier. Une erreur remet la carte à revoir.</small></div><div class="chips" id="mqBox"></div></div>
       </div>
     </div>
-    <button class="premium-card" id="premiumBtn"></button>
+    <div class="set-group">
+      <div class="set-title">Apparence</div>
+      <div class="panel set-panel">
+        <div class="set-row col"><div class="set-lbl">Thème de couleur</div><div class="chips" id="themeChips"></div></div>
+      </div>
+    </div>
+    <div class="set-group">
+      <div class="set-title">À propos</div>
+      <div class="panel set-panel">
+        <div class="set-row col"><div class="set-lbl">I Know<small>Une carte par jour. Fait par Yanis Bensaadi.</small></div>
+          <div class="about-links">
+            <button class="chip" id="shareBtn">📤 Partager l'appli</button>
+            <button class="chip" onclick="window.open('./presentation.html','_blank')">🌐 Présentation</button>
+            <button class="chip" onclick="window.open('./legal.html','_blank')">📄 Infos légales</button>
+          </div></div>
+      </div>
+    </div>
     <button class="danger-link" id="resetBtn">Réinitialiser ma progression</button>`;
+  el.innerHTML = `
+    <div class="today-head"><div class="eyebrow">${profTab==="progres" ? "Ta progression" : "Personnalise l'appli"}</div><h1 class="h-title">Profil</h1></div>
+    ${tabs}
+    ${profTab==="progres" ? progress : settings}`;
+  $("tabProg").onclick = ()=>{ profTab="progres"; renderProfile(); el.scrollTop=0; };
+  $("tabSet").onclick = ()=>{ profTab="reglages"; renderProfile(); el.scrollTop=0; };
+  if(profTab==="progres") return;
 
   const gc = $("goalChips");
   [3,5,10,20].forEach(n=>{
     const b = document.createElement("button");
     b.className = "chip" + (S.goal===n ? " on" : "");
-    b.textContent = n + " / jour";
+    b.textContent = n + "/jour";
     b.onclick = ()=>{ setGoal(n); renderProfile(); };
     gc.appendChild(b);
   });
@@ -4323,16 +4483,177 @@ function renderProfile(){
   const pb = $("premiumBtn");
   if(PAYWALL_ACTIVE && S.premium){
     pb.innerHTML = `<b>I Know Premium ✓</b><span>Merci ! Toutes les catégories, quiz et thèmes sont débloqués.</span>`;
+  } else if(PAYWALL_ACTIVE && trialDaysLeft() > 0){
+    pb.innerHTML = `<b>Essai Premium : ${trialDaysLeft()} jour${trialDaysLeft()>1?"s":""} restant${trialDaysLeft()>1?"s":""}</b><span>Tout est débloqué pendant l'essai. Passe Premium pour garder tes avantages.</span>`;
   } else {
     pb.innerHTML = `<b>I Know Premium${PAYWALL_ACTIVE?"":" · bientôt"}</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, quiz illimités, tous les thèmes.</span>`;
   }
   pb.onclick = openPaywall;
+  renderMiniToggle();
+  renderAccountPanel();
   $("resetBtn").onclick = ()=>{
     if(!confirm("Effacer ta série, tes niveaux et ta révision ? Tes favoris sont conservés.")) return;
-    S = defaultState(); S.onboarded = true; saveState(); applyTheme("papier"); renderProfile(); renderToday();
+    const keep={miniQuiz:S.miniQuiz,premium:S.premium,trialStart:S.trialStart,freeCat:S.freeCat,interests:S.interests}; S = Object.assign(defaultState(),keep); S.onboarded = true; saveState(); applyTheme("papier"); renderProfile(); renderToday();
     toast("Progression réinitialisée");
   };
 }
+
+/* =====================================================================
+   COMPTES + SAUVEGARDE CLOUD (Firebase) — inactif tant que FIREBASE_CONFIG est vide.
+   - progress/{uid} : progression (écrite par l'utilisateur)
+   - premium/{uid}  : statut Premium (écrit UNIQUEMENT par le serveur Stripe)
+   ===================================================================== */
+const acct = { user:null, ready:false, auth:null, db:null, unsubPremium:null, pushT:null, applying:false };
+function loadScript(src){
+  return new Promise((ok,ko)=>{ const t=document.createElement("script"); t.src=src; t.onload=ok; t.onerror=ko; document.head.appendChild(t); });
+}
+async function initAccounts(){
+  if(!ACCOUNTS_ACTIVE) return;
+  try{
+    const v="10.12.2", base="https://www.gstatic.com/firebasejs/"+v+"/firebase-";
+    await loadScript(base+"app-compat.js");
+    await Promise.all([loadScript(base+"auth-compat.js"), loadScript(base+"firestore-compat.js")]);
+    firebase.initializeApp(FIREBASE_CONFIG);
+    acct.auth = firebase.auth(); acct.db = firebase.firestore();
+    acct.auth.onAuthStateChanged(async u=>{
+      acct.user = u; acct.ready = true;
+      if(acct.unsubPremium){ acct.unsubPremium(); acct.unsubPremium=null; }
+      if(u){
+        $("onboarding").classList.contains("auth") && $("onboarding").classList.remove("showing","auth");
+        await cloudPull();
+        acct.unsubPremium = acct.db.collection("premium").doc(u.uid).onSnapshot(d=>{
+          const on = !!(d.exists && d.data().active);
+          if(on !== !!S.premium){ S.premium = on; saveLocalOnly(); refreshAll(); }
+        }, ()=>{});
+      }
+      refreshAll();
+      if(!u && REQUIRE_ACCOUNT) openAuth("login", "", true);
+    });
+  }catch(e){ console.warn("Comptes indisponibles", e); }
+}
+function saveLocalOnly(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} }
+function refreshAll(){ try{ renderToday(); renderCategories(); renderProfile(); renderFavCategories(); setFavs(getFavs()); }catch(e){} }
+function cloudPayload(){
+  const st = Object.assign({}, S); delete st.premium;
+  return { state: JSON.stringify(st), favs: getFavs(), updated: firebase.firestore.FieldValue.serverTimestamp() };
+}
+function cloudPush(){
+  if(!acct.user || !acct.db || acct.applying) return;
+  clearTimeout(acct.pushT);
+  acct.pushT = setTimeout(()=>{ acct.db.collection("progress").doc(acct.user.uid).set(cloudPayload()).catch(()=>{}); }, 1500);
+}
+/* Fusion à la connexion : on garde la progression la plus avancée, on réunit les favoris. */
+async function cloudPull(){
+  try{
+    const ref = acct.db.collection("progress").doc(acct.user.uid);
+    const d = await ref.get();
+    if(!d.exists){ await ref.set(cloudPayload()); return; }
+    const r = d.data(); let remote = {};
+    try{ remote = JSON.parse(r.state||"{}"); }catch(e){}
+    acct.applying = true;
+    const keepPremium = S.premium;
+    const earlier = (a,b)=> (a && b) ? (a<b?a:b) : (a||b||"");
+    const trial = earlier(S.trialStart, remote.trialStart);
+    const free = remote.freeCat || S.freeCat;
+    if((remote.xp||0) >= (S.xp||0)) S = Object.assign(defaultState(), remote);
+    S.premium = keepPremium; S.trialStart = trial; if(free) S.freeCat = free;
+    S.onboarded = true;
+    const favs = [...new Set([...(r.favs||[]), ...getFavs()])];
+    try{ localStorage.setItem(FAV_KEY, JSON.stringify(favs)); }catch(e){}
+    saveLocalOnly(); acct.applying = false;
+    applyTheme(S.theme||"papier");
+    await ref.set(cloudPayload());
+  }catch(e){ acct.applying = false; }
+}
+
+/* ---- écrans de connexion ---- */
+const GOOGLE_SVG = '<svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.5-4.2 7-10.3 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+const AUTH_ERR = {
+  "auth/invalid-email":"Adresse e-mail invalide.", "auth/missing-password":"Entre ton mot de passe.",
+  "auth/weak-password":"Mot de passe trop court (6 caractères minimum).", "auth/email-already-in-use":"Un compte existe déjà avec cet e-mail. Connecte-toi.",
+  "auth/invalid-credential":"E-mail ou mot de passe incorrect.", "auth/wrong-password":"E-mail ou mot de passe incorrect.",
+  "auth/user-not-found":"E-mail ou mot de passe incorrect.", "auth/too-many-requests":"Trop d'essais. Réessaie dans quelques minutes.",
+  "auth/network-request-failed":"Pas de connexion internet.", "auth/popup-closed-by-user":"Connexion annulée.",
+  "auth/requires-recent-login":"Pour des raisons de sécurité, déconnecte-toi puis reconnecte-toi avant de recommencer."
+};
+function authMsg(e){ return AUTH_ERR[e && e.code] || "Une erreur est survenue. Réessaie."; }
+function openAuth(mode, intro, forced){
+  if(!ACCOUNTS_ACTIVE){ toast("Les comptes arrivent bientôt", 1800); return; }
+  const el = $("onboarding"); el.classList.add("showing","auth");
+  let m = mode || "login", msg = "";
+  const draw = ()=>{
+    const T = {login:["Connexion","SE CONNECTER"], signup:["Créer mon compte","CRÉER MON COMPTE"], reset:["Mot de passe oublié","ENVOYER LE LIEN"]}[m];
+    el.innerHTML = `
+      ${forced ? "<span></span>" : '<button class="ob-skip" id="auClose">Fermer</button>'}
+      <div class="ob-body" style="width:100%;max-width:360px">
+        <div class="ob-emoji">${m==="reset"?"🔑":"👤"}</div>
+        <h2 class="ob-h">${T[0]}</h2>
+        <p class="ob-p">${esc(intro || (m==="signup" ? "Sauvegarde ta progression et retrouve-la sur tous tes appareils." : m==="reset" ? "On t'envoie un lien pour choisir un nouveau mot de passe." : "Retrouve ta progression."))}</p>
+        <form id="auForm" style="width:100%;display:flex;flex-direction:column;gap:10px" novalidate>
+          <input class="auth-in" id="auMail" type="email" autocomplete="email" placeholder="Adresse e-mail">
+          ${m==="reset" ? "" : `<input class="auth-in" id="auPass" type="password" autocomplete="${m==="signup"?"new-password":"current-password"}" placeholder="Mot de passe">`}
+          <div class="auth-msg" id="auMsg">${esc(msg)}</div>
+          <button class="primary-btn" id="auGo" type="submit">${T[1]}</button>
+        </form>
+        ${m==="reset" ? "" : `<button class="auth-google" id="auGoogle" type="button">${GOOGLE_SVG}Continuer avec Google</button>`}
+        <div class="auth-links">
+          ${m==="login" ? '<a id="auToSign">Créer un compte</a><a id="auToReset">Mot de passe oublié ?</a>' : m==="signup" ? '<a id="auToLogin">J\'ai déjà un compte</a>' : '<a id="auToLogin">← Retour</a>'}
+        </div>
+        ${m==="signup" ? `<p class="ob-p" style="font-size:11px">En créant un compte, tu acceptes les <a href="legal.html" target="_blank">conditions et la politique de confidentialité</a>.</p>` : ""}
+      </div>`;
+    const go = id=>$(id) && ($(id).onclick = ()=>{ m = id==="auToSign"?"signup":id==="auToReset"?"reset":"login"; msg=""; draw(); });
+    ["auToSign","auToReset","auToLogin"].forEach(go);
+    if($("auClose")) $("auClose").onclick = ()=>el.classList.remove("showing","auth");
+    if($("auGoogle")) $("auGoogle").onclick = async ()=>{
+      try{ await acct.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+      catch(e){ msg = authMsg(e); draw(); }
+    };
+    $("auForm").onsubmit = async ev=>{
+      ev.preventDefault();
+      const mail = $("auMail").value.trim(), pass = $("auPass") ? $("auPass").value : "";
+      $("auGo").disabled = true;
+      try{
+        if(m==="login") await acct.auth.signInWithEmailAndPassword(mail, pass);
+        else if(m==="signup") await acct.auth.createUserWithEmailAndPassword(mail, pass);
+        else { await acct.auth.sendPasswordResetEmail(mail); msg = "Lien envoyé. Regarde ta boîte mail (et les spams)."; $("auMsg").textContent = msg; $("auGo").disabled=false; return; }
+      }catch(e){ msg = authMsg(e); const keep = mail; draw(); $("auMail").value = keep; }
+    };
+  };
+  draw();
+}
+function renderMiniToggle(){
+  const box = $("mqBox"); if(!box) return;
+  const on = S.miniQuiz !== false;
+  box.innerHTML = `<button class="chip ${on?"on":""}" id="mqOn">Activé</button><button class="chip ${on?"":"on"}" id="mqOff">Désactivé</button>`;
+  $("mqOn").onclick = ()=>{ S.miniQuiz = true; saveState(); renderProfile(); };
+  $("mqOff").onclick = ()=>{ S.miniQuiz = false; saveState(); renderProfile(); };
+}
+function renderAccountPanel(){
+  if(!ACCOUNTS_ACTIVE) return;
+  const box = $("acctBox"); if(!box) return;
+  if(acct.user){
+    box.innerHTML = `<div class="eyebrow">COMPTE</div><div class="acct-mail">${esc(acct.user.email||"Connecté")}</div>
+      <div class="acct-sub">Ta progression est sauvegardée automatiquement.</div>
+      ${PAYWALL_ACTIVE && S.premium && PORTAL_URL ? '<button class="int-link" id="acManage">Gérer mon abonnement</button>' : ""}
+      <button class="int-link" id="acOut">Se déconnecter</button>
+      <button class="int-link" id="acDel" style="color:#A8352A">Supprimer mon compte</button>`;
+    $("acOut").onclick = ()=>{ acct.auth.signOut(); toast("Déconnecté"); };
+    if($("acManage")) $("acManage").onclick = ()=>{ window.location.href = PORTAL_URL + (PORTAL_URL.includes("?")?"&":"?") + "prefilled_email=" + encodeURIComponent(acct.user.email||""); };
+    $("acDel").onclick = async ()=>{
+      if(!confirm("Supprimer définitivement ton compte et ta progression sauvegardée ? Si tu as un abonnement, résilie-le d'abord via « Gérer mon abonnement ».")) return;
+      try{
+        await acct.db.collection("progress").doc(acct.user.uid).delete().catch(()=>{});
+        await acct.user.delete();
+        toast("Compte supprimé");
+      }catch(e){ toast(authMsg(e), 3500); }
+    };
+  } else {
+    box.innerHTML = `<div class="eyebrow">COMPTE</div><div class="acct-sub">Crée un compte pour sauvegarder ta progression et la retrouver sur un autre téléphone.</div>
+      <button class="primary-btn" id="acIn" style="margin-top:10px">SE CONNECTER / CRÉER UN COMPTE</button>`;
+    $("acIn").onclick = ()=>openAuth("login");
+  }
+}
+
 
 /* ---------- PREMIUM ---------- */
 const PRICE_TXT = { month:"1,99 €", year:"10 €", yearPerMonth:"0,83 €" };
@@ -4370,10 +4691,16 @@ function renderPaywall(){
       </button>
     </div>
     <button class="primary-btn" id="pwCta" ${canBuy?"":"disabled"}>${PAYWALL_ACTIVE ? "PASSER PREMIUM" : "BIENTÔT DISPONIBLE"}</button>
-    <p class="sub" style="text-align:center;margin:0">${PAYWALL_ACTIVE ? "" : "Le paiement n'est pas encore ouvert : tout reste gratuit pour l'instant."}</p>`;
+    <p class="sub" style="text-align:center;margin:0">${PAYWALL_ACTIVE ? (trialDaysLeft()>0 ? "Essai gratuit en cours : "+trialDaysLeft()+" jour(s) restant(s)." : "Sans engagement, résiliable à tout moment.") : "Le paiement n'est pas encore ouvert : tout reste gratuit pour l'instant."}</p>`;
   $("pwBack").onclick = ()=>{ const lim = paywallReason==="limit"; paywallReason=""; if(lim){ renderToday(); showView("today"); } else { renderProfile(); showView("profile"); } };
   el.querySelectorAll(".plan").forEach(b=> b.onclick = ()=>{ plan = b.dataset.plan; renderPaywall(); });
-  $("pwCta").onclick = ()=>{ if(canBuy) window.location.href = CHECKOUT_URLS[plan]; };
+  $("pwCta").onclick = ()=>{
+    if(!canBuy) return;
+    if(ACCOUNTS_ACTIVE && !acct.user){ openAuth("signup", "Crée ton compte pour passer Premium."); return; }
+    let u = CHECKOUT_URLS[plan];
+    if(acct.user){ u += (u.includes("?")?"&":"?") + "client_reference_id=" + encodeURIComponent(acct.user.uid) + "&prefilled_email=" + encodeURIComponent(acct.user.email||""); }
+    window.location.href = u;
+  };
 }
 
 /* ---------- ONBOARDING ---------- */
@@ -4477,8 +4804,10 @@ window.addEventListener("resize", ()=>{
   }
 });
 window.addEventListener("orientationchange", syncNavHeight);
+if(PAYWALL_ACTIVE && !S.trialStart){ S.trialStart = todayStr(); saveLocalOnly(); }
 if(!S.onboarded) startOnboarding();
 else if(!isPremium() && !S.freeCat) openInterests(true);
+initAccounts();
 /* Écran d'ouverture : une fois par session */
 (function(){
   const sp = document.getElementById("splash");
