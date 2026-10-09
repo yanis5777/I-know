@@ -1711,6 +1711,26 @@
   #onboarding.welcome .ob-foot{ padding-bottom:calc(10px + env(safe-area-inset-bottom,0px)); }
   #obStart{ padding:15px 18px; }
   @media (max-height:700px){ #onboarding.welcome .ob-logo{ width:64px; height:64px; border-radius:16px; } #onboarding.welcome .ob-brand{ font-size:30px; } .wl-it{ padding:8px 12px; } .wl-it i{ width:34px; height:34px; } #onboarding.welcome .ob-p{ display:none; } }
+  /* Premium en doré */
+  .ob-plan .plan.on, #paywallView .plan.on{ border-color:#D9A23A; background:linear-gradient(180deg,rgba(242,199,92,.28),rgba(242,199,92,.10)); box-shadow:0 12px 26px -14px rgba(184,134,46,.75); }
+  .ob-plan .plan.on .chk, #paywallView .plan.on .chk{ border-color:#C58A1E; background:#C58A1E radial-gradient(circle,#fff 0 3.5px,transparent 4px); }
+  #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(242,199,92,.30),rgba(242,199,92,.14)); color:#6B4A0E; }
+  #paywallView .pw-row.head > div:last-child{ background:linear-gradient(155deg,#F5D27A,#D9A23A 60%,#B8862E); color:#2A1B05; }
+  #paywallView .pw-table{ box-shadow:0 14px 30px -18px rgba(184,134,46,.6), 0 0 0 1px var(--card-border); }
+  #pwCta:not([disabled]), #paywallView #pwCta, .ob-plan + .ob-foot .primary-btn{ background:linear-gradient(155deg,#F5D27A,#D9A23A 55%,#B8862E); color:#2A1B05; box-shadow:0 14px 26px -12px rgba(184,134,46,.8); border:0; }
+  #pwCta[disabled]{ opacity:.7; }
+  .ob-plan .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(242,199,92,.30),rgba(242,199,92,.14)); color:#6B4A0E; }
+  .ob-plan .pw-row.head > div:last-child{ background:linear-gradient(155deg,#F5D27A,#D9A23A 60%,#B8862E); color:#2A1B05; }
+  .ob-plan .pw-table{ box-shadow:0 14px 30px -18px rgba(184,134,46,.6), 0 0 0 1px var(--card-border); }
+  .ob-plan .pw-row > div{ padding:6px 6px; } .ob-plan .pw-row > div:first-child{ font-size:13px; }
+  .ob-plan .plan{ padding:10px 14px 10px 12px; }
+  #onboarding .ob-body:has(.ob-plan) .ob-emoji{ font-size:30px; }
+  #onboarding .ob-body:has(.ob-plan) .ob-h{ font-size:23px; }
+  #onboarding .ob-body:has(.ob-plan){ gap:6px; }
+  .ob-plan .plan.on, #paywallView .plan.on{ background:linear-gradient(160deg,#FBE29A,#F0C25E 60%,#E3AC3E) !important; border-color:#B8862E !important; box-shadow:0 14px 28px -14px rgba(184,134,46,.9) !important; }
+  .ob-plan .plan.on .pn, .ob-plan .plan.on .pp, #paywallView .plan.on .pn, #paywallView .plan.on .pp{ color:#2A1B05; } .ob-plan .plan.on .ps, #paywallView .plan.on .ps{ color:#5A3F10; }
+  .ob-plan .pw-row.head > div:last-child, #paywallView .pw-row.head > div:last-child{ background:linear-gradient(155deg,#F9DC8A,#E3AC3E 60%,#B8862E) !important; color:#2A1B05 !important; }
+  .ob-plan .pw-row > div:last-child, #paywallView .pw-row > div:last-child{ background:linear-gradient(180deg,rgba(240,194,94,.42),rgba(240,194,94,.22)) !important; color:#5A3F10 !important; }
   .ob-welcome{ gap:10px; }
   .ob-logo{ width:112px; height:112px; border-radius:26px; box-shadow:0 18px 40px -16px rgba(22,48,143,.45); animation:splashIn .7s cubic-bezier(.2,.9,.3,1.2) both; }
   .ob-brand{ font-family:'Fraunces',serif; font-style:italic; font-weight:700; font-size:40px; color:var(--ink); margin-top:8px; }
