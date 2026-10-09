@@ -715,7 +715,7 @@
   .fav-empty{
     display:flex; flex-direction:column; align-items:center;
     text-align:center; color:var(--ink-soft); font-size:12.5px; line-height:1.6;
-    margin:auto; padding:0 24px;
+    margin:auto; padding:0 24px; grid-column:1 / -1;
   }
   .fav-empty-art{ width:120px; height:100px; margin-bottom:18px; }
   .fav-empty b{ color:var(--ink); font-size:1.05em; }
@@ -2912,7 +2912,8 @@ function noteNewCard(card){
 }
 let paywallReason = "";
 function isPremium(){ return !PAYWALL_ACTIVE || !!S.premium; }
-function isLockedCat(id){ return !isPremium() && !FREE_CATEGORIES.includes(id); }
+/* Gratuit : UNE catégorie au choix, définitive (S.freeCat). Premium : plusieurs + changement. */
+function isLockedCat(id){ return !isPremium() && !!S.freeCat && id!==S.freeCat; }
 function isLockedTheme(id){ return !isPremium() && !FREE_THEMES.includes(id); }
 function quizAllowed(){
   if(isPremium()) return true;
@@ -2923,7 +2924,7 @@ function quizAllowed(){
 function defaultState(){
   return { v:1, cards:{}, days:{}, xp:0, badges:{}, goal:5, theme:"papier",
            onboarded:false, premium:false, quizzes:0, perfectQuizzes:0, bestStreak:0,
-           dailyDone:"", quizDay:null, interests:[],
+           dailyDone:"", quizDay:null, interests:[], freeCat:"",
            qstat:{}, qcat:{}, qmaster:{}, incollable:{} };
 }
 let S = defaultState();
@@ -3392,7 +3393,9 @@ function renderCard(card, fromHistory){
     (ctx.origin === "review" && review) ? `RÉVISION ${Math.min(review.done+1, review.total)}/${review.total}` : catLabel;
   starBtn.style.display = "";
   starBtn.classList.toggle("active", getFavs().includes(card.id));
+  starBtn.classList.toggle("active", isPremium() && getFavs().includes(card.id));
   starBtn.onclick = ()=>{
+    if(!isPremium()){ paywallReason="fav"; renderPaywall(); showView("paywall"); return; }
     const nowFav = toggleFav(card.id);
     starBtn.classList.toggle("active", nowFav);
   };
@@ -3503,6 +3506,16 @@ function renderFavCategories(){
   const grid = document.getElementById("favCategoryGrid");
   grid.innerHTML = "";
   const cards = getFavs().map(resolveCardById).filter(Boolean);
+  if(!isPremium()){
+    grid.innerHTML = `
+      <div class="fav-empty" style="width:100%;max-width:300px;margin:0 auto;align-items:center;text-align:center">
+        <div style="font-size:44px">⭐</div>
+        <p><b>Les favoris sont réservés à Premium.</b><br>Garde tes cartes préférées sous la main et retrouve-les ici à tout moment.</p>
+        <button class="primary-btn" id="favUnlock" style="margin-top:14px;width:100%">DÉBLOQUER PREMIUM</button>
+      </div>`;
+    $("favUnlock").onclick = ()=>{ paywallReason="fav"; renderPaywall(); showView("paywall"); };
+    return;
+  }
   if(cards.length === 0){
     grid.innerHTML = `
       <div class="fav-empty">
@@ -3756,7 +3769,7 @@ function renderCategories(){
   });
   const more = document.createElement("div");
   more.className = "tile tile-theme tile-available tile-edit";
-  more.innerHTML = '<span class="theme-emoji">🎯</span><div class="name">Choisir mes thèmes</div>';
+  more.innerHTML = '<span class="theme-emoji">🎯</span><div class="name">'+(isPremium()?'Choisir mes thèmes':'🔒 Plus de catégories')+'</div>';
   more.addEventListener("click", ()=>openInterests(false));
   grid.appendChild(more);
 }
@@ -3828,7 +3841,7 @@ function renderToday(){
     <div class="today-head">
       <div class="eyebrow">${esc(dateTxt)}</div>
       <h1 class="h-title">Aujourd'hui</h1>
-      <button class="int-link" onclick="openInterests(false)">🎯 Mes thèmes · ${activeCats().length === availableCats().length && !(S.interests||[]).length ? "tous" : activeCats().length}</button>
+      <button class="int-link" onclick="openInterests(false)">🎯 ${!isPremium() ? "🔒 Ma catégorie · "+esc((activeCats()[0]||{}).label||"") : "Mes thèmes · "+(activeCats().length === availableCats().length && !(S.interests||[]).length ? "tous" : activeCats().length)}</button>
     </div>
     <div class="stat-row">
       <div class="panel streak-box">
@@ -4332,14 +4345,17 @@ function renderPaywall(){
   const canBuy = PAYWALL_ACTIVE && CHECKOUT_URLS[plan];
   el.innerHTML = `
     <button class="back-link" id="pwBack">◂ Retour</button>
-    <div><div class="eyebrow">I Know Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":"Ce que tu débloques"}</h1></div>
+    <div><div class="eyebrow">I Know Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":paywallReason==="cat"?"Changer de catégorie":paywallReason==="fav"?"Tes favoris":"Ce que tu débloques"}</h1></div>
+    ${paywallReason==="fav"?`<p class="sub" style="margin:0">Retrouver une carte mise en favori est une option Premium.</p>`:""}
+    ${paywallReason==="cat"?`<p class="sub" style="margin:0">En version gratuite, tu travailles une seule catégorie, choisie au départ. Premium te laisse en suivre plusieurs et en changer quand tu veux.</p>`:""}
     ${paywallReason==="limit"?`<p class="sub" style="margin:0">Gratuit : 1 nouvelle carte par jour. Reviens demain, ou passe Premium pour un nombre de cartes illimité.</p>`:""}
     <div class="pw-table">
       <div class="pw-row head"><div></div><div>GRATUIT</div><div>PREMIUM</div></div>
       ${row("Nouvelles cartes",`<small>1/jour</small>`,"Illimité")}
       ${row("Révision espacée",Y,Y)}
+      ${row("Favoris",N,Y)}
       ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
-      ${row("Catégories",`<small>Anglais</small>`,"Toutes")}
+      ${row("Catégories",`<small>1 au choix</small>`,"Toutes + changement")}
       ${row("Thèmes de couleur",`<small>1</small>`,"6")}
     </div>
     <div class="plans">
@@ -4372,8 +4388,10 @@ function endOnboarding(){ openInterests(true); }
 function finishOnboarding(){ S.onboarded = true; saveState(); $("onboarding").classList.remove("showing"); renderToday(); }
 let intDraft = [];
 function openInterests(first){
-  intDraft = (S.interests||[]).slice();
-  if(!intDraft.length && !first) intDraft = availableCats().map(c=>c.id);
+  const single = !isPremium();           /* gratuit : choix unique */
+  if(single && S.freeCat && !first){ paywallReason="cat"; renderPaywall(); showView("paywall"); return; }
+  intDraft = single ? [] : (S.interests||[]).slice();
+  if(!single && !intDraft.length && !first) intDraft = availableCats().map(c=>c.id);
   const el = $("onboarding");
   el.classList.add("showing");
   const draw = ()=>{
@@ -4382,7 +4400,7 @@ function openInterests(first){
       <div class="ob-body" style="width:100%;max-width:420px">
         <div class="ob-emoji">🎯</div>
         <h2 class="ob-h">Qu'est-ce que tu veux apprendre ?</h2>
-        <p class="ob-p">Choisis tes thèmes. L'appli (carte du jour, quiz, révisions) ne tournera que sur eux. Tu pourras changer à tout moment.</p>
+        <p class="ob-p">${single ? "Choisis la catégorie que tu veux travailler. En version gratuite ce choix est définitif ; Premium permet d'en suivre plusieurs et d'en changer." : "Choisis tes thèmes. L'appli (carte du jour, quiz, révisions) ne tournera que sur eux. Tu pourras changer à tout moment."}</p>
         <div class="int-grid" id="intGrid"></div>
       </div>
       <div class="ob-foot"><button class="primary-btn" id="intOk" ${intDraft.length?"":"disabled"}>${first?"COMMENCER":"ENREGISTRER"}</button></div>`;
@@ -4393,12 +4411,12 @@ function openInterests(first){
       b.className = "int-tile" + (on?" on":"");
       b.style.background = c.bg;
       b.innerHTML = `<span>${iconHtml(c)}</span>${esc(c.label)}${on?'<i>✓</i>':""}`;
-      b.onclick = ()=>{ intDraft = on ? intDraft.filter(x=>x!==c.id) : intDraft.concat(c.id); draw(); };
+      b.onclick = ()=>{ intDraft = single ? [c.id] : (on ? intDraft.filter(x=>x!==c.id) : intDraft.concat(c.id)); draw(); };
       g.appendChild(b);
     });
     $("intOk").onclick = ()=>{
       if(!intDraft.length) return;
-      S.interests = intDraft.slice(); saveState();
+      S.interests = intDraft.slice(); if(single) S.freeCat = intDraft[0]; saveState();
       quizSel = "mix";
       if(first) finishOnboarding(); else el.classList.remove("showing");
       renderCategories(); renderToday(); renderProfile();
@@ -4460,6 +4478,7 @@ window.addEventListener("resize", ()=>{
 });
 window.addEventListener("orientationchange", syncNavHeight);
 if(!S.onboarded) startOnboarding();
+else if(!isPremium() && !S.freeCat) openInterests(true);
 /* Écran d'ouverture : une fois par session */
 (function(){
   const sp = document.getElementById("splash");
