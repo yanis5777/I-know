@@ -1887,6 +1887,17 @@
 .mq-alt.mq-stop{ padding:12px !important; font-size:13px !important; border-radius:16px !important; }
 .mq-pair{ gap:8px !important; }
 .mq-pair .mq-alt{ padding:10px 8px !important; font-size:13.5px !important; border-radius:16px !important; }
+
+/* Pastille « Je révise » : bien visible et clairement cliquable */
+.focus-chip{ position:relative; display:flex; align-items:center; gap:12px; width:100%; margin:0 0 14px; padding:10px 10px 10px 12px; border-radius:20px; border:0 !important; background:linear-gradient(135deg,#4A6BE0,#2447C9 55%,#16308F) !important; color:#fff; box-shadow:0 8px 16px -10px rgba(36,71,201,.65), inset 0 1px 0 rgba(255,255,255,.25); }
+.focus-chip:active{ transform:scale(.985); }
+.focus-chip .fc-ic{ flex:none; width:40px; height:40px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:21px; background:rgba(255,255,255,.2); box-shadow:inset 0 0 0 1px rgba(255,255,255,.25); }
+.focus-chip .fc-tx{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.focus-chip .fc-l{ font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.72) !important; }
+.focus-chip b, .focus-chip.on b{ flex:none; color:#fff !important; font-family:'Fraunces',serif; font-size:17px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.focus-chip .fc-go{ flex:none; display:inline-flex; align-items:center; gap:6px; padding:9px 13px; border-radius:99px; background:#fff; color:#2447C9; font:700 13px 'IBM Plex Sans',sans-serif; box-shadow:0 6px 14px -8px rgba(0,0,0,.45); }
+.focus-chip .fc-go em{ font-style:normal; }
+.focus-chip:not(.on){ background:linear-gradient(135deg,#6C86E8,#3F5FD8 60%,#2A45B0) !important; }
 </style>
 </head>
 <body>
@@ -5138,7 +5149,7 @@ function renderToday(){
       <div><div class="eyebrow">${isNew ? "Prêt ? C'est simple" : esc(dateTxt)}</div><h1 class="h-title">${isNew ? "Bienvenue 👋" : "Aujourd'hui"}</h1></div>
       <div class="streak-pill" title="Série en cours"><span>🔥</span><b>${streak}</b></div>
     </div>
-    ${isNew ? "" : `<button class="focus-chip ${fi?"on":""}" id="focusBtn"><span class="fc-l">Je révise</span><b>${fi ? esc(fi.label) : "Tout mélangé"}</b><i>${prem ? "▾" : "🔒"}</i></button>`}
+    ${isNew ? "" : `<button class="focus-chip ${fi?"on":""}" id="focusBtn" aria-label="Choisir ce que je révise"><span class="fc-ic">🎯</span><span class="fc-tx"><span class="fc-l">Je révise</span><b>${fi ? esc(fi.label) : "Tout mélangé"}</b></span><span class="fc-go"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><em>${prem ? "Changer" : "Changer 🔒"}</em></span></button>`}
     <button class="hero-card" id="dailyBtn" style="background:${dcat.bg}">
       <span class="hero-wm" aria-hidden="true">${iconHtml(dcat)}</span>
       <div class="hero-top"><span class="hero-pill">✦ CARTE DU JOUR</span><span class="hero-emoji">${iconHtml(dcat)}</span></div>
