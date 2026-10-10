@@ -1898,6 +1898,21 @@
 .focus-chip .fc-go{ flex:none; display:inline-flex; align-items:center; gap:6px; padding:9px 13px; border-radius:99px; background:#fff; color:#2447C9; font:700 13px 'IBM Plex Sans',sans-serif; box-shadow:0 6px 14px -8px rgba(0,0,0,.45); }
 .focus-chip .fc-go em{ font-style:normal; }
 .focus-chip:not(.on){ background:linear-gradient(135deg,#6C86E8,#3F5FD8 60%,#2A45B0) !important; }
+
+/* « Je révise » : version claire (moins de bleu sur l'écran du jour) */
+.focus-chip, .focus-chip:not(.on){ background:rgba(255,255,255,.62) !important; color:var(--ink); border:1.5px solid rgba(36,71,201,.22) !important; box-shadow:0 6px 16px -12px rgba(26,20,18,.45); }
+.focus-chip .fc-ic{ background:rgba(36,71,201,.1); box-shadow:none; }
+.focus-chip .fc-l{ color:var(--ink-soft) !important; }
+.focus-chip b, .focus-chip.on b{ color:var(--ink) !important; }
+.focus-chip .fc-go{ background:linear-gradient(135deg,#4A6BE0,#2447C9 60%,#1B3AA8); color:#fff; box-shadow:0 8px 14px -8px rgba(36,71,201,.7); }
+:root[data-theme="nuit"] .focus-chip, :root[data-theme="nuit"] .focus-chip:not(.on){ background:rgba(255,255,255,.07) !important; border-color:rgba(157,180,255,.3) !important; }
+
+/* Carte Kultos Premium : dorée */
+.premium-card{ background:linear-gradient(150deg,#FBE3A0,#E9B94F 55%,#C99430) !important; color:#2A1B05 !important; box-shadow:0 16px 30px -16px rgba(184,134,46,.8), inset 0 1px 0 rgba(255,255,255,.6) !important; }
+.premium-card::after{ background:radial-gradient(circle,rgba(255,255,255,.55),transparent 65%) !important; }
+.premium-card b, .premium-card span{ color:#2A1B05 !important; }
+.premium-card span{ opacity:.82 !important; }
+.premium-card .pc-top u{ background:linear-gradient(135deg,#2447C9,#16308F) !important; color:#fff !important; }
 </style>
 </head>
 <body>
