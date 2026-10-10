@@ -5130,7 +5130,7 @@ function renderToday(){
       <div><div class="eyebrow">${isNew ? "Prêt ? C'est simple" : esc(dateTxt)}</div><h1 class="h-title">${isNew ? "Bienvenue 👋" : "Aujourd'hui"}</h1></div>
       <div class="streak-pill" title="Série en cours"><span>🔥</span><b>${streak}</b></div>
     </div>
-    ${isNew ? "" : `<button class="focus-chip ${fi?"on":""}" id="focusBtn"><span class="fc-l">Je révise</span><b>${fi ? esc(fi.label) : "Tout mélangé"}</b><i>▾</i></button>`}
+    ${isNew ? "" : `<button class="focus-chip ${fi?"on":""}" id="focusBtn"><span class="fc-l">Je révise</span><b>${fi ? esc(fi.label) : "Tout mélangé"}</b><i>${prem ? "▾" : "🔒"}</i></button>`}
     <button class="hero-card" id="dailyBtn" style="background:${dcat.bg}">
       <span class="hero-wm" aria-hidden="true">${iconHtml(dcat)}</span>
       <div class="hero-top"><span class="hero-pill">✦ CARTE DU JOUR</span><span class="hero-emoji">${iconHtml(dcat)}</span></div>
@@ -5162,7 +5162,7 @@ function renderToday(){
     renderCard(dc);
   };
   if($("moreBtn")) $("moreBtn").onclick = startMoreCard;
-  if($("focusBtn")) $("focusBtn").onclick = ()=>openFocusPicker();
+  if($("focusBtn")) $("focusBtn").onclick = ()=>{ if(!isPremium()){ paywallReason="focus"; renderPaywall(); showView("paywall"); return; } openFocusPicker(); };
   if($("failedBtn")) $("failedBtn").onclick = openFailedList;
   if($("reviewBtn")) $("reviewBtn").onclick = startReview;
   if($("quizBtn")) $("quizBtn").onclick = ()=>{ renderQuizSetup(); showView("quizSetup"); };
@@ -5683,7 +5683,7 @@ function renderProfile(){
   } else if(PAYWALL_ACTIVE && trialDaysLeft() > 0){
     pb.innerHTML = `<b>Essai Premium : ${trialDaysLeft()} jour${trialDaysLeft()>1?"s":""} restant${trialDaysLeft()>1?"s":""}</b><span>Tout est débloqué pendant l'essai. Passe Premium pour garder tes avantages.</span>`;
   } else {
-    pb.innerHTML = `<div class="pc-top"><em>👑</em><u>${PAYWALL_ACTIVE?"OFFRE":"BIENTÔT"}</u></div><b>Kultos Premium</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, quiz illimités, tous les thèmes.</span>`;
+    pb.innerHTML = `<div class="pc-top"><em>👑</em><u>${PAYWALL_ACTIVE?"OFFRE":"BIENTÔT"}</u></div><b>Kultos Premium</b><span>${PRICE_TXT.month} par mois ou ${PRICE_TXT.year} par an · cartes illimitées, toutes les catégories, choix illimité des thèmes à réviser, quiz illimités.</span>`;
   }
   pb.onclick = openPaywall;
   renderMiniToggle();
@@ -5862,8 +5862,9 @@ function renderPaywall(){
   const canBuy = PAYWALL_ACTIVE && CHECKOUT_URLS[plan];
   el.innerHTML = `
     <button class="back-link" id="pwBack">‹ Retour</button>
-    <div><div class="eyebrow">Kultos Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":paywallReason==="more"?"Plus de cartes":paywallReason==="cat"?"Changer de catégorie":paywallReason==="fav"?"Tes favoris":"Ce que tu débloques"}</h1></div>
+    <div><div class="eyebrow">Kultos Premium</div><h1 class="h-title">${paywallReason==="limit"?"Ta carte du jour est vue":paywallReason==="more"?"Plus de cartes":paywallReason==="cat"?"Changer de catégorie":paywallReason==="fav"?"Tes favoris":paywallReason==="focus"?"Choisis tes thèmes":"Ce que tu débloques"}</h1></div>
     ${paywallReason==="fav"?`<p class="sub" style="margin:0">Retrouver une carte mise en favori est une option Premium.</p>`:""}
+    ${paywallReason==="focus"?`<p class="sub" style="margin:0">En version gratuite, tu reçois un peu de tout. Premium te laisse choisir autant de catégories et de thèmes que tu veux (les rois de France, l'Antiquité…) et les réviser chaque jour ou d'affilée.</p>`:""}
     ${paywallReason==="cat"?`<p class="sub" style="margin:0">En version gratuite, tu travailles une seule catégorie, choisie au départ. Premium te laisse en suivre plusieurs et en changer quand tu veux.</p>`:""}
     ${paywallReason==="more"?`<p class="sub" style="margin:0">En version gratuite, tu as 1 nouvelle carte par jour. Premium te donne autant de cartes que tu veux, quand tu veux.</p>`:""}
     ${paywallReason==="limit"?`<p class="sub" style="margin:0">Gratuit : 1 nouvelle carte par jour. Reviens demain, ou passe Premium pour un nombre de cartes illimité.</p>`:""}
@@ -5875,6 +5876,7 @@ function renderPaywall(){
       ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
       ${row("Toutes les catégories",`<small>1 au choix</small>`,"Toutes")}
       ${row("Changer de catégorie",N,Y)}
+      ${row("Choix des thèmes à réviser",N,"Illimité")}
       ${row("Thèmes de couleur",`<small>1</small>`,"6")}
     </div>
     <div class="plans">
@@ -6001,6 +6003,7 @@ function renderOnboarding(){
         ${row("Quiz",`<small>1/jour</small>`,"Illimité")}
         ${row("Toutes les catégories",`<small>1 au choix</small>`,"Toutes")}
         ${row("Changer de catégorie",N,Y)}
+      ${row("Choix des thèmes à réviser",N,"Illimité")}
         ${row("Thèmes de couleur",`<small>1</small>`,"6")}
       </div>
       <div class="plans" style="width:100%">
