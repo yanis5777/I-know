@@ -1124,6 +1124,7 @@
   .pw-row:first-child{ border-top:none; }
   .pw-row > div{ padding:11px 6px; text-align:center; font-size:12px; }
   .pw-row > div:first-child{ text-align:left; padding-left:12px; font-family:'Fraunces', serif; font-size:13.5px; }
+  .pw-row{ align-items:stretch !important; } .pw-row > div{ display:flex; align-items:center; justify-content:center; } .pw-row > div:first-child{ justify-content:flex-start; }
   .pw-row > div:last-child{ background:var(--paper-dark); font-weight:700; }
   .pw-row.head{ font-size:9.5px; letter-spacing:0.14em; color:var(--ink-soft); }
   .pw-row.head > div{ padding:10px 8px; }
@@ -4463,7 +4464,7 @@ function endAfterGrade(card, knew){
   const first = Object.keys(S.cards||{}).length===0 && !S.tourDone;
   gradeCard(card.id, knew);
   if(first){ S.tourDone = 1; saveState(); setTimeout(showWelcomeTour, 500); }
-  if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); }
+  if(ctx.origin === "daily"){ S.dailyDone = todayStr(); S.dailyDoneId = card.id; saveState(); }
   exitCardView();
 }
 function startMoreCard(){
@@ -4483,8 +4484,8 @@ function finishGrade(card, knew){
   const first = Object.keys(S.cards||{}).length===0 && !S.tourDone;
   toast(knew ? "✓ Bien joué" : "↺ On y revient bientôt", 900);
   gradeCard(card.id, knew);
-  if(first){ S.tourDone = 1; if(ctx.origin==="daily"){ S.dailyDone = todayStr(); } saveState(); exitCardView(); setTimeout(showWelcomeTour, 500); return; }
-  if(ctx.origin === "daily"){ S.dailyDone = todayStr(); saveState(); exitCardView(); return; }
+  if(first){ S.tourDone = 1; if(ctx.origin==="daily"){ S.dailyDone = todayStr(); S.dailyDoneId = card.id; } saveState(); exitCardView(); setTimeout(showWelcomeTour, 500); return; }
+  if(ctx.origin === "daily"){ S.dailyDone = todayStr(); S.dailyDoneId = card.id; saveState(); exitCardView(); return; }
   if(ctx.origin === "review"){ reviewNext(knew); return; }
   if(ctx.origin === "favorites" || ctx.origin === "failed"){ exitCardView(); return; }
   nextCard();
@@ -5105,7 +5106,7 @@ function renderToday(){
   const due = dueIds().length;
   const dc = dailyCard();
   const dcat = catById(categoryIdForCard(dc));
-  const done = S.dailyDone === t;
+  const done = S.dailyDone === t && (!S.dailyDoneId || S.dailyDoneId === dc.id);
   const lv = levelInfo();
   const dateTxt = new Date().toLocaleDateString("fr-FR", { weekday:"long", day:"numeric", month:"long" });
 
